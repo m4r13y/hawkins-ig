@@ -13,8 +13,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Hawkins Insurance Group",
+  title: "The Insurance Hawk",
   description: "Save your money, keep your freedom",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -33,7 +38,6 @@ export default function RootLayout({
         {children}
         <Toaster />
         <PrelineScriptWrapper />
-        <script src="./../node_modules/preline/dist/preline.js"></script>
       </body>
     </html>
   );
