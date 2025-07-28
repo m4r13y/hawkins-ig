@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "The Insurance Hawk",
+  title: "The Hawkins Insurance Group",
   description: "Save your money, keep your freedom",
   icons: {
     icon: "/favicon.svg",

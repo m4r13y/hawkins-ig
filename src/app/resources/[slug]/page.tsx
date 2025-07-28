@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
     },
     publisher: {
       '@type': 'Organization',
-      name: 'The Insurance Hawk',
+      name: 'The Hawkins Insurance Group',
       logo: {
         '@type': 'ImageObject',
         url: 'https://www.yourwebsite.com/logo.png', // Replace with your actual logo URL

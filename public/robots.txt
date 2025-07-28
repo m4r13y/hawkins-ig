@@ -6,4 +6,4 @@ User-agent: *
 Disallow:
 
 # Sitemap location
-Sitemap: https://theinsurancehawk.com/sitemap.xml
+Sitemap: https://hawkinsig.com/sitemap.xml

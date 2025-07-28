@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 import { resourcesList } from '@/resources/resourcesList';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://theinsurancehawk.com';
+  const baseUrl = 'https://hawkinsig.com';
 
   // Static pages
   const staticRoutes = [
