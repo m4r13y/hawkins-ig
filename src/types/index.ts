@@ -1,4 +1,4 @@
-// Global type definitions for The Hawkins Insurance Group app
+// Global type definitions for Hawkins Insurance Group app
 
 export interface Plan {
   id: string;

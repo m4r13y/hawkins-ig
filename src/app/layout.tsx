@@ -3,9 +3,8 @@ import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import PrelineScriptWrapper from '../components/PrelineScriptWrapper';
-import { HeaderLower } from "@/components/ui/header-lower";
-import { HeaderUpper } from "@/components/ui/header-upper";
+import { MainNavigation } from "@/components/main-navigation";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "The Hawkins Insurance Group",
-  description: "Save your money, keep your freedom",
+  title: "Hawkins Insurance Group - The Insurance Hawk",
+  description: "Professional insurance solutions through our comprehensive ecosystem",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -29,15 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("font-sans antialiased", inter.variable)}>
-                <HeaderUpper />
-                <HeaderLower />
-              <main className="flex-1 p-4 sm:p-6 md:p-8">
-                {children}
-              </main>
-        {children}
+      <body className={cn("font-sans antialiased min-h-screen flex flex-col", inter.variable)}>
+        <MainNavigation />
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
         <Toaster />
-        <PrelineScriptWrapper />
       </body>
     </html>
   );
