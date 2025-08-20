@@ -2,10 +2,10 @@ import BackgroundStripes from "@/components/background-stripes"
 import AnimatedBackground from "@/components/animated-background"
 import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
-import ContactPage from "@/components/contact-page"
+import AgentsPage from "@/components/agents-page"
 import BackgroundPaths from "@/components/background-paths"
 
-export default function Contact() {
+export default function Agents() {
   return (
     <div className="relative min-h-screen bg-black">
       <BackgroundPaths />
@@ -14,7 +14,7 @@ export default function Contact() {
 
       <div className="relative z-10">
         <Navbar />
-        <ContactPage />
+        <AgentsPage />
         <AnimatedFooter />
       </div>
     </div>
