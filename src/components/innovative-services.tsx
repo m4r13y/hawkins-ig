@@ -238,13 +238,13 @@ export default function InnovativeServices() {
                 </div>
               </div>
 
-              <Link href="/quotes">
+              <Link href="/get-started">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 rounded-lg py-3 px-6 transition-all duration-300 font-medium"
                 >
-                  Get Quote
+                  Get Started
                 </motion.button>
               </Link>
             </motion.div>

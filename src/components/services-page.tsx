@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { ArrowRight, Heart, Users, Building, Shield, Phone, Plus } from "lucide-react"
 import AnimatedButton from "./animated-button"
+import Link from "next/link"
 
 export default function ServicesPage() {
   const [familySize, setFamilySize] = useState(2)
@@ -169,12 +170,14 @@ export default function ServicesPage() {
 
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold text-white">{service.price}</span>
-                    <AnimatedButton className="bg-white text-black hover:bg-gray-100">
-                      <span className="flex items-center">
-                        Get Quote
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </span>
-                    </AnimatedButton>
+                    <Link href="/get-started">
+                      <AnimatedButton className="bg-white text-black hover:bg-gray-100">
+                        <span className="flex items-center">
+                          Get Started
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </span>
+                      </AnimatedButton>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
