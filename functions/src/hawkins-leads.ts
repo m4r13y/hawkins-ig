@@ -14,12 +14,12 @@ if (!admin.apps.length) {
   admin.initializeApp();
 }
 
-// Get reference to your specific hawknest-database
-// Initialize with database configuration
+// Use Firestore with explicit database ID for hawknest-database
 const db = admin.firestore();
+// Set the database ID to hawknest-database
+db.settings({ databaseId: 'hawknest-database' });
 
-// For the multi-database setup, we'll use a workaround to target hawknest-database
-// We'll set the database reference through environment configuration
+// Collection reference for leads
 const leadsCollection = db.collection('leads');
 
 // Lead-specific interfaces (different from user/agent data)
