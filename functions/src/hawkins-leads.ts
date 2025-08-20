@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
+import { getApps } from 'firebase-admin/app';
 import { 
   rateLimit, 
   sanitizeObject, 
@@ -16,7 +17,6 @@ try {
   app = admin.initializeApp();
 } catch (error) {
   // App already initialized, get the default app
-  const { getApps } = require("firebase-admin/app");
   app = getApps()[0];
 }
 
@@ -302,6 +302,7 @@ export const updateLeadStatus = functions.https.onCall(async (data: {
 
 // Firestore trigger for new leads - sends notification
 export const onNewLeadCreated = functions.firestore
+  .database('hawknest-database')
   .document('leads/{leadId}')
   .onCreate(async (snap, context) => {
     const leadData = snap.data();

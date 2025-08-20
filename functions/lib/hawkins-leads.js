@@ -27,6 +27,7 @@ exports.getLeadAnalytics = exports.onNewLeadCreated = exports.updateLeadStatus =
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const firestore_1 = require("firebase-admin/firestore");
+const app_1 = require("firebase-admin/app");
 const security_1 = require("./security");
 // Initialize Firebase Admin with your existing configuration
 // Since you have existing functions, this should already be initialized
@@ -36,8 +37,7 @@ try {
 }
 catch (error) {
     // App already initialized, get the default app
-    const { getApps } = require("firebase-admin/app");
-    app = getApps()[0];
+    app = (0, app_1.getApps)()[0];
 }
 // Use Firestore with explicit database ID for hawknest-database
 // This follows the same pattern as your hawknest-admin functions
@@ -263,6 +263,7 @@ exports.updateLeadStatus = functions.https.onCall(async (data, context) => {
 });
 // Firestore trigger for new leads - sends notification
 exports.onNewLeadCreated = functions.firestore
+    .database('hawknest-database')
     .document('leads/{leadId}')
     .onCreate(async (snap, context) => {
     const leadData = snap.data();
