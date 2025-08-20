@@ -1,0 +1,85 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // SECURE: Deny all direct client access to sensitive collections
+    // All data access must go through Firebase Functions
+    
+    // Lead data - Only Functions can write, authenticated users can read
+    match /leads/{leadId} {
+      // Only allow reads by authenticated users (agents/admins)
+      allow read: if request.auth != null && request.auth.token.role in ['agent', 'admin'];
+      // Only Functions can create/update leads
+      allow write: if false;
+    }
+    
+    // Form submissions - Completely restricted (legacy)
+    match /form-submissions/{submissionId} {
+      allow read, write: if false;
+    }
+    
+    match /contact-submissions/{submissionId} {
+      allow read, write: if false;
+    }
+    
+    // User data - Only Functions and the user themselves can access
+    match /users/{userId} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == userId || request.auth.token.role in ['agent', 'admin']);
+    }
+    
+    // Agent data - Only Functions and authenticated agents/admins
+    match /agents/{agentId} {
+      allow read: if request.auth != null && request.auth.token.role in ['agent', 'admin'];
+      allow write: if request.auth != null && request.auth.token.role == 'admin';
+    }
+    
+    // Analytics and reporting data - Admin only
+    match /analytics/{document} {
+      allow read, write: if request.auth != null && request.auth.token.role == 'admin';
+    }
+    
+    // Quote data - Users can read their own quotes, agents can read assigned quotes
+    match /quotes/{quoteId} {
+      allow read: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.auth.token.role in ['agent', 'admin']);
+      allow write: if false; // Only Functions can create quotes
+    }
+    
+    // Policy data - Similar to quotes
+    match /policies/{policyId} {
+      allow read: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.auth.token.role in ['agent', 'admin']);
+      allow write: if false; // Only Functions can manage policies
+    }
+    
+    // Calendar events - Users can manage their own events
+    match /calendar/{userId}/events/{eventId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Medications - Users can manage their own medication data
+    match /medications/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Public data that can be read by anyone (but not written)
+    match /public/{document} {
+      allow read: if true;
+      allow write: if false;
+    }
+    
+    // System configuration - Admin only
+    match /config/{document} {
+      allow read, write: if request.auth != null && request.auth.token.role == 'admin';
+    }
+    
+    // Default deny all - Everything else is blocked
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

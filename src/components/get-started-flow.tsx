@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, ArrowLeft, Check, User, Users, Building, UserCheck, Heart, Shield, Phone, DollarSign, Calendar, MapPin } from "lucide-react"
 import AnimatedButton from "./animated-button"
 import Link from "next/link"
+import { submitGetStartedForm } from "@/lib/firebase-utils"
 
 const clientTypes = [
   {
@@ -150,7 +151,39 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
 
   const availableInsuranceTypes = getAvailableInsuranceTypes()
 
-  const nextStep = () => {
+  const nextStep = async () => {
+    // Check if this is the final step (contact form completion)
+    const finalStep = initialClientType ? 3 : 4;
+    
+    if (currentStep === finalStep) {
+      // Submit form data to Firestore
+      try {
+        const submissionId = await submitGetStartedForm({
+          clientType: formData.clientType || initialClientType || '',
+          age: formData.age,
+          familySize: formData.familySize,
+          employeeCount: formData.employeeCount,
+          agentType: formData.agentType,
+          insuranceTypes: formData.insuranceTypes,
+          urgency: formData.urgency,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          zipCode: formData.zipCode,
+          source: 'get-started-flow'
+        });
+        
+        if (submissionId) {
+          console.log('Form submitted successfully with ID:', submissionId);
+        } else {
+          console.error('Failed to submit form');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    }
+    
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1)
     }

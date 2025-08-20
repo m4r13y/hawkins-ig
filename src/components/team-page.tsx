@@ -8,7 +8,7 @@ import AnimatedButton from "./animated-button"
 const teamMembers = [
   {
     id: 1,
-    name: "Michael Hawkins",
+    name: "Jonathan Hawkins",
     title: "Founder & Senior Insurance Advisor",
     specialties: ["Medicare Supplements", "Life Insurance", "Business Insurance"],
     licenseNumber: "TX-2345678",
@@ -22,16 +22,16 @@ const teamMembers = [
       "2,500+ Families Protected",
       "Industry Excellence Award 2023"
     ],
-    image: "/team/michael-hawkins.jpg",
+    image: "/team/jonathan-hawkins.jpg",
     phone: "(817) 800-4253",
-    email: "info@hawkinsig.com",
-    linkedin: "https://linkedin.com/in/michael-hawkins",
+    email: "jhawk@hawkinsig.com",
+    linkedin: "https://linkedin.com/in/jonathan-hawkins",
     languages: ["English", "Spanish"],
     servingAreas: ["Dallas-Fort Worth", "Houston", "Austin", "San Antonio"]
   },
   {
     id: 2,
-    name: "Sarah Martinez",
+    name: "Kasey",
     title: "Senior Benefits Specialist",
     specialties: ["Group Health Insurance", "Employee Benefits", "COBRA Administration"],
     licenseNumber: "TX-3456789",
@@ -45,7 +45,7 @@ const teamMembers = [
       "Employee Benefits Excellence Award",
       "Client Retention Rate: 98%"
     ],
-    image: "/team/sarah-martinez.jpg",
+    image: "/team/kasey.jpg",
     phone: "(555) 234-5678",
     email: "info@hawkinsig.com",
     linkedin: "https://linkedin.com/in/sarah-martinez",
@@ -54,7 +54,7 @@ const teamMembers = [
   },
   {
     id: 3,
-    name: "David Chen",
+    name: "Calvin Marley",
     title: "Family Insurance Advisor",
     specialties: ["Individual Health Plans", "Family Coverage", "ACA Marketplace"],
     licenseNumber: "TX-4567890",
@@ -68,12 +68,12 @@ const teamMembers = [
       "Average Savings: $3,600/year",
       "Perfect Customer Satisfaction Score"
     ],
-    image: "/team/david-chen.jpg",
+    image: "/team/cal-marley.jpg",
     phone: "(555) 345-6789",
-    email: "info@hawkinsig.com",
-    linkedin: "https://linkedin.com/in/david-chen",
+    email: "cal@hawkinsig.com",
+    linkedin: "https://linkedin.com/in/calvin-marley",
     languages: ["English", "Mandarin"],
-    servingAreas: ["Houston", "Austin", "Central Texas"]
+    servingAreas: ["Fort Worth", "Austin", "Central Texas"]
   },
   {
     id: 4,
