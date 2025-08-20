@@ -1,7 +1,6 @@
 
-
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
-import { getFirestore, type Firestore, initializeFirestore, CACHE_SIZE_UNLIMITED, connectFirestoreEmulator } from "firebase/firestore";
+import { getFirestore, type Firestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getFunctions, type Functions } from "firebase/functions";
 import { getAnalytics } from "firebase/analytics";
@@ -18,42 +17,97 @@ const firebaseConfig = {
       };
 
 let app: FirebaseApp | null = null;
-// let auth: Auth | null = null;
 let db: Firestore | null = null;
 let storage: FirebaseStorage | null = null;
 let functions: Functions | null = null;
 let analytics: any = null;
 let isFirebaseConfigured = false;
 
-const hasEssentialConfig = !!(
+// Helper function to check if we're in browser environment
+const isBrowser = typeof window !== 'undefined';
+
+// Helper function to initialize Firebase
+const initializeFirebase = () => {
+  const hasEssentialConfig = !!(
     firebaseConfig.apiKey && 
     firebaseConfig.authDomain && 
     firebaseConfig.projectId &&
     firebaseConfig.storageBucket
-);
+  );
 
-if (hasEssentialConfig) {
+  if (!hasEssentialConfig) {
+    console.warn("Essential Firebase configuration is missing. Please check your environment variables.");
+    return false;
+  }
+
   try {
+    // Initialize Firebase App
     app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    // auth = getAuth(app);
+    
+    // Initialize Firestore (works on both server and client)
     db = getFirestore(app);
+    
+    // Initialize Storage (works on both server and client)  
     storage = getStorage(app);
+    
+    // Initialize Functions (works on both server and client)
     functions = getFunctions(app);
-    analytics = getAnalytics(app);
+    
+    // Initialize Analytics only in browser environment
+    if (isBrowser && firebaseConfig.measurementId) {
+      try {
+        analytics = getAnalytics(app);
+      } catch (analyticsError) {
+        console.warn("Failed to initialize Firebase Analytics:", analyticsError);
+      }
+    }
+    
     isFirebaseConfigured = true;
+    return true;
   } catch (e) {
     console.error("Firebase initialization error:", e);
     app = null;
-    // auth = null;
     db = null;
     storage = null;
     functions = null;
+    analytics = null;
     isFirebaseConfigured = false;
+    return false;
+  }
+};
+
+// Initialize Firebase immediately if in browser, or when called from client-side code
+if (isBrowser) {
+  initializeFirebase();
+} else {
+  // For server-side, initialize without analytics
+  const hasEssentialConfig = !!(
+    firebaseConfig.apiKey && 
+    firebaseConfig.authDomain && 
+    firebaseConfig.projectId &&
+    firebaseConfig.storageBucket
+  );
+
+  if (hasEssentialConfig) {
+    try {
+      app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+      db = getFirestore(app);
+      storage = getStorage(app);
+      functions = getFunctions(app);
+      isFirebaseConfigured = true;
+    } catch (e) {
+      console.error("Server-side Firebase initialization error:", e);
+      isFirebaseConfigured = false;
+    }
   }
 }
 
-if (!isFirebaseConfigured) {
-    console.warn("Firebase is not configured or failed to initialize. Please check your Firebase project setup. Database and storage features will be disabled.");
-}
+// Function to ensure Firebase is initialized (for client-side components)
+export const ensureFirebaseInitialized = () => {
+  if (!isFirebaseConfigured && isBrowser) {
+    return initializeFirebase();
+  }
+  return isFirebaseConfigured;
+};
 
 export { app, db, storage, functions, analytics, isFirebaseConfigured };

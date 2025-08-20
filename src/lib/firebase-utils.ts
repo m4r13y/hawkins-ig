@@ -1,5 +1,5 @@
 import { httpsCallable } from 'firebase/functions';
-import { functions } from './firebase';
+import { functions, ensureFirebaseInitialized } from './firebase';
 
 export interface FormSubmission {
   clientType: string;
@@ -29,12 +29,18 @@ export interface ContactFormData {
 let submitInsuranceLeadFunction: any = null;
 let submitContactLeadFunction: any = null;
 
-if (functions) {
-  submitInsuranceLeadFunction = httpsCallable(functions, 'submitInsuranceLead');
-  submitContactLeadFunction = httpsCallable(functions, 'submitContactLead');
-}
+// Initialize functions when called
+const initializeFunctions = () => {
+  ensureFirebaseInitialized();
+  if (functions && !submitInsuranceLeadFunction) {
+    submitInsuranceLeadFunction = httpsCallable(functions, 'submitInsuranceLead');
+    submitContactLeadFunction = httpsCallable(functions, 'submitContactLead');
+  }
+};
 
 export async function submitGetStartedForm(formData: FormSubmission): Promise<string | null> {
+  initializeFunctions();
+  
   if (!submitInsuranceLeadFunction) {
     console.error('Firebase Functions is not initialized');
     return null;
@@ -51,6 +57,8 @@ export async function submitGetStartedForm(formData: FormSubmission): Promise<st
 }
 
 export async function submitContactForm(contactData: ContactFormData): Promise<string | null> {
+  initializeFunctions();
+  
   if (!submitContactLeadFunction) {
     console.error('Firebase Functions is not initialized');
     return null;
