@@ -101,7 +101,7 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-gray-900/50 border border-gray-800 rounded-3xl p-8 backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-white mb-4">Why Choose Motion Records?</h3>
+              <h3 className="text-xl font-bold text-white mb-4">Why Choose Hawkins Insurance Group?</h3>
               <ul className="space-y-3">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>

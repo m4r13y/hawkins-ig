@@ -361,7 +361,7 @@ export default function GetStartedFlow() {
                 </div>
                 <h2 className="text-3xl font-bold text-white mb-4">You're all set!</h2>
                 <p className="text-xl text-gray-300 mb-6">
-                  Thank you for choosing Motion Records. We'll create a custom strategy based on your responses and get
+                  Thank you for choosing Hawkins Insurance Group. We'll create a custom strategy based on your responses and get
                   back to you within 24 hours.
                 </p>
                 <div className="bg-gray-800/50 rounded-2xl p-6 mb-8">

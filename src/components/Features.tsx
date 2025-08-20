@@ -1,42 +1,47 @@
-import { CheckCircle, Zap, Users, TrendingUp } from "lucide-react"
+import { Brain, Cloud, Shield, Zap } from "lucide-react"
 
 const features = [
   {
-    icon: <CheckCircle className="h-8 w-8 text-primary" />,
-    title: "Task Management",
-    description: "Organize and prioritize tasks with ease.",
+    name: "AI-Powered Analytics",
+    description: "Harness the power of machine learning to derive actionable insights from your data.",
+    icon: Brain,
   },
   {
-    icon: <Zap className="h-8 w-8 text-primary" />,
-    title: "Real-time Collaboration",
-    description: "Work together seamlessly in real-time.",
+    name: "Cloud-Native Architecture",
+    description: "Scalable, resilient, and efficient solutions built for the modern cloud ecosystem.",
+    icon: Cloud,
   },
   {
-    icon: <Users className="h-8 w-8 text-primary" />,
-    title: "Team Communication",
-    description: "Stay connected with built-in messaging.",
+    name: "Enterprise-Grade Security",
+    description: "State-of-the-art security measures to protect your most valuable assets.",
+    icon: Shield,
   },
   {
-    icon: <TrendingUp className="h-8 w-8 text-primary" />,
-    title: "Analytics Dashboard",
-    description: "Track progress and gain insights with powerful analytics.",
+    name: "High-Performance Systems",
+    description: "Optimized for speed and efficiency, our solutions deliver unparalleled performance.",
+    icon: Zap,
   },
 ]
 
 export default function Features() {
   return (
-    <section id="features" className="py-20 bg-gray-50">
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+    <section className="container space-y-16 py-24 md:py-32">
+      <div className="mx-auto max-w-[58rem] text-center">
+        <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Cutting-Edge Solutions</h2>
+        <p className="mt-4 text-muted-foreground sm:text-lg">
+          Discover how Amane Soft can transform your business with our innovative technologies.
+        </p>
+      </div>
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
+        {features.map((feature) => (
+          <div key={feature.name} className="relative overflow-hidden rounded-lg border bg-background p-8">
+            <div className="flex items-center gap-4">
+              <feature.icon className="h-8 w-8" />
+              <h3 className="font-bold">{feature.name}</h3>
             </div>
-          ))}
-        </div>
+            <p className="mt-2 text-muted-foreground">{feature.description}</p>
+          </div>
+        ))}
       </div>
     </section>
   )

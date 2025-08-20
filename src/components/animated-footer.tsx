@@ -85,7 +85,7 @@ export default function AnimatedFooter() {
             <div className="group flex justify-center lg:justify-start">
               <Image
                 src="/motion-records-logo.png"
-                alt="Motion Records LLC"
+                alt="Hawkins Insurance Group, LLC"
                 width={300}
                 height={100}
                 className="h-16 w-auto brightness-0 invert transition-transform duration-300 group-hover:scale-105"
@@ -206,7 +206,7 @@ export default function AnimatedFooter() {
         >
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 text-center sm:text-left">
             <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Motion Records LLC. All rights reserved.
+              © {new Date().getFullYear()} Hawkins Insurance Group, LLC. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
               <Link href="#" className="text-gray-500 hover:text-white transition-colors">

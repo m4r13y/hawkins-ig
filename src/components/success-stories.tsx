@@ -21,7 +21,7 @@ const successStories = [
       "Featured in Men's Health magazine",
     ],
     testimonial:
-      "Motion Records transformed our brand from just another local gym to a recognized fitness authority. Their marketing strategy helped us connect with our ideal audience and showcase what makes us different.",
+      "Hawkins Insurance Group transformed our brand from just another local gym to a recognized fitness authority. Their marketing strategy helped us connect with our ideal audience and showcase what makes us different.",
     person: {
       name: "Sarah Johnson",
       role: "Founder & CEO",
@@ -39,7 +39,7 @@ const successStories = [
       "Artist development strategy, playlist pitching campaign, content calendar, and targeted advertising to core demographics.",
     results: ["1.2M+ Spotify streams in 6 months", "Featured on 5 editorial playlists", "Sold-out first headline show"],
     testimonial:
-      "Before working with Motion Records, I was just another artist lost in the noise. Their team understood exactly what made my sound unique and how to get it in front of the right listeners. The growth has been incredible.",
+      "Before working with Hawkins Insurance Group, I was just another artist lost in the noise. Their team understood exactly what made my sound unique and how to get it in front of the right listeners. The growth has been incredible.",
     person: {
       name: "Marcus Webb",
       role: "Recording Artist",
@@ -61,7 +61,7 @@ const successStories = [
       "$12M in sales attributed to digital marketing",
     ],
     testimonial:
-      "Motion Records understood the luxury real estate market and helped us communicate our value proposition effectively. Their strategies have directly contributed to our most successful year in business.",
+      "Hawkins Insurance Group understood the luxury real estate market and helped us communicate our value proposition effectively. Their strategies have directly contributed to our most successful year in business.",
     person: {
       name: "David Chen",
       role: "Principal Broker",
