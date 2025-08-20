@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
 import { 
   rateLimit, 
   sanitizeObject, 
@@ -10,14 +11,18 @@ import {
 
 // Initialize Firebase Admin with your existing configuration
 // Since you have existing functions, this should already be initialized
-if (!admin.apps.length) {
-  admin.initializeApp();
+let app;
+try {
+  app = admin.initializeApp();
+} catch (error) {
+  // App already initialized, get the default app
+  const { getApps } = require("firebase-admin/app");
+  app = getApps()[0];
 }
 
 // Use Firestore with explicit database ID for hawknest-database
-const db = admin.firestore();
-// Set the database ID to hawknest-database
-db.settings({ databaseId: 'hawknest-database' });
+// This follows the same pattern as your hawknest-admin functions
+const db = getFirestore(app, "hawknest-database");
 
 // Collection reference for leads
 const leadsCollection = db.collection('leads');

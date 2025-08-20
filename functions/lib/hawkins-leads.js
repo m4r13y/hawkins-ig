@@ -26,17 +26,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLeadAnalytics = exports.onNewLeadCreated = exports.updateLeadStatus = exports.submitContactLead = exports.submitInsuranceLead = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
+const firestore_1 = require("firebase-admin/firestore");
 const security_1 = require("./security");
 // Initialize Firebase Admin with your existing configuration
 // Since you have existing functions, this should already be initialized
-if (!admin.apps.length) {
-    admin.initializeApp();
+let app;
+try {
+    app = admin.initializeApp();
 }
-// Get reference to your specific hawknest-database
-// Initialize with database configuration
-const db = admin.firestore();
-// For the multi-database setup, we'll use a workaround to target hawknest-database
-// We'll set the database reference through environment configuration
+catch (error) {
+    // App already initialized, get the default app
+    const { getApps } = require("firebase-admin/app");
+    app = getApps()[0];
+}
+// Use Firestore with explicit database ID for hawknest-database
+// This follows the same pattern as your hawknest-admin functions
+const db = (0, firestore_1.getFirestore)(app, "hawknest-database");
+// Collection reference for leads
 const leadsCollection = db.collection('leads');
 // Validation functions - moved to security.ts for reuse
 // Calculate lead score based on form data
