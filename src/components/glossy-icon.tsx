@@ -4,17 +4,17 @@ import type React from "react"
 
 interface GlossyIconProps {
   children: React.ReactNode
-  color: "purple" | "blue" | "green" | "orange" | "pink" | "indigo"
+  color: "red" | "blue" | "green" | "slate"
   size?: "sm" | "md" | "lg"
   className?: string
 }
 
 export default function GlossyIcon({ children, color, size = "md", className = "" }: GlossyIconProps) {
   const colorClasses = {
-    purple: {
-      bg: "bg-gradient-to-br from-purple-400 to-purple-600",
-      glow: "shadow-purple-500/25",
-      outerGlow: "shadow-[0_0_20px_rgba(147,51,234,0.15)]",
+    red: {
+      bg: "bg-gradient-to-br from-red-400 to-red-600",
+      glow: "shadow-red-500/25",
+      outerGlow: "shadow-[0_0_20px_rgba(239,68,68,0.15)]",
     },
     blue: {
       bg: "bg-gradient-to-br from-blue-400 to-blue-600",
@@ -26,20 +26,10 @@ export default function GlossyIcon({ children, color, size = "md", className = "
       glow: "shadow-green-500/25",
       outerGlow: "shadow-[0_0_20px_rgba(34,197,94,0.15)]",
     },
-    orange: {
-      bg: "bg-gradient-to-br from-orange-400 to-orange-600",
-      glow: "shadow-orange-500/25",
-      outerGlow: "shadow-[0_0_20px_rgba(249,115,22,0.15)]",
-    },
-    pink: {
-      bg: "bg-gradient-to-br from-pink-400 to-pink-600",
-      glow: "shadow-pink-500/25",
-      outerGlow: "shadow-[0_0_20px_rgba(236,72,153,0.15)]",
-    },
-    indigo: {
-      bg: "bg-gradient-to-br from-indigo-400 to-indigo-600",
-      glow: "shadow-indigo-500/25",
-      outerGlow: "shadow-[0_0_20px_rgba(99,102,241,0.15)]",
+    slate: {
+      bg: "bg-gradient-to-br from-slate-400 to-slate-600",
+      glow: "shadow-slate-500/25",
+      outerGlow: "shadow-[0_0_20px_rgba(100,116,139,0.15)]",
     },
   }
 

@@ -26,7 +26,7 @@ const backVariants = {
 }
 
 const sharedTransition = {
-  type: "spring",
+  type: "spring" as const,
   stiffness: 200,
   damping: 15,
   duration: 0.2,
@@ -65,18 +65,18 @@ export default function AnimatedButton({
       whileHover={disabled ? undefined : "hover"}
       initial="initial"
     >
-      {/* Rainbow border on hover */}
+      {/* Patriotic red, white, blue border on hover */}
       <motion.div
         className="absolute -inset-0.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"
         style={{
-          background: "linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)",
+          background: "linear-gradient(45deg, #dc2626, #ffffff, #2563eb, #dc2626, #ffffff, #2563eb)",
           backgroundSize: "400% 400%",
         }}
         animate={{
           backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
         }}
         transition={{
-          duration: 2,
+          duration: 3,
           repeat: Number.POSITIVE_INFINITY,
           ease: "linear",
         }}

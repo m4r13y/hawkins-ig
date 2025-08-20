@@ -79,7 +79,7 @@ export default function CountingStats({ stats }: CountingStatsProps) {
               {stat.suffix}
             </motion.span>
             <motion.div
-              className="absolute -inset-4 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 rounded-lg blur-xl"
+              className="absolute -inset-4 bg-gradient-to-r from-red-500/30 via-white/20 to-blue-500/30 rounded-lg blur-xl"
               animate={
                 isInView
                   ? {

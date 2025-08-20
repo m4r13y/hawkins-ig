@@ -81,7 +81,7 @@ export default function InteractiveCTA() {
               <motion.div
                 animate={isHovered ? { rotate: 360 } : { rotate: 0 }}
                 transition={{ duration: 2, ease: "easeInOut" }}
-                className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-8"
+                className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-blue-600 rounded-full mb-8"
               >
                 <Sparkles className="w-8 h-8 text-white" />
               </motion.div>
@@ -89,7 +89,7 @@ export default function InteractiveCTA() {
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
                 Ready to Transform
                 <br />
-                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-red-400 via-white to-blue-400 bg-clip-text text-transparent">
                   Your Brand?
                 </span>
               </h2>
@@ -141,7 +141,7 @@ export default function InteractiveCTA() {
                   ease: "easeInOut",
                   delay: 1,
                 }}
-                className="absolute bottom-8 left-8 w-6 h-6 bg-purple-500/30 rounded-full"
+                className="absolute bottom-8 left-8 w-6 h-6 bg-red-500/30 rounded-full"
               />
             </motion.div>
           </motion.div>

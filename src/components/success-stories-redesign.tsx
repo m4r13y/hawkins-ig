@@ -1,64 +1,64 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Star, ArrowRight, TrendingUp } from "lucide-react"
+import { Star, ArrowRight, Shield, Heart, Users, TrendingDown } from "lucide-react"
 import { useState } from "react"
 
 const stories = [
   {
-    company: "TechFlow Solutions",
-    industry: "SaaS",
+    company: "The Johnson Family",
+    industry: "Medicare Supplement",
     results: {
-      revenue: "+340%",
-      leads: "+280%",
-      conversion: "+150%",
+      revenue: "-$2,400",
+      leads: "100%",
+      conversion: "0%",
     },
     quote:
-      "Motion transformed our entire marketing strategy. We went from struggling to get leads to having a consistent pipeline of qualified prospects.",
-    author: "Sarah Chen",
-    position: "CEO",
+      "Hawkins Insurance Group made Medicare so much easier to understand. We're saving thousands while getting better coverage than we ever had before.",
+    author: "Robert & Mary Johnson",
+    position: "Retirees",
     image: "/placeholder.svg?height=400&width=600",
     metrics: [
-      { label: "Monthly Revenue", before: "$45K", after: "$198K" },
-      { label: "Lead Generation", before: "120/month", after: "456/month" },
-      { label: "Conversion Rate", before: "2.1%", after: "5.3%" },
+      { label: "Annual Savings", before: "$6,800", after: "$4,400" },
+      { label: "Out-of-Pocket Max", before: "$8,500", after: "$3,200" },
+      { label: "Prescription Coverage", before: "Limited", after: "Comprehensive" },
     ],
   },
   {
-    company: "Urban Fitness Co.",
-    industry: "Fitness",
+    company: "Smith Construction LLC",
+    industry: "Group Health Benefits",
     results: {
-      revenue: "+220%",
-      leads: "+190%",
-      conversion: "+85%",
+      revenue: "-40%",
+      leads: "100%",
+      conversion: "95%",
     },
     quote:
-      "The ROI we've seen from Motion's campaigns is incredible. Our gym memberships have tripled in just 8 months.",
-    author: "Marcus Rodriguez",
-    position: "Founder",
+      "Our employees finally have great benefits they can afford. Retention is up and our team is happier than ever.",
+    author: "Mike Smith",
+    position: "Business Owner",
     image: "/placeholder.svg?height=400&width=600",
     metrics: [
-      { label: "Monthly Revenue", before: "$28K", after: "$89K" },
-      { label: "New Members", before: "45/month", after: "131/month" },
-      { label: "Retention Rate", before: "68%", after: "89%" },
+      { label: "Premium Costs", before: "$2,200/mo", after: "$1,320/mo" },
+      { label: "Employee Participation", before: "65%", after: "100%" },
+      { label: "Employee Retention", before: "78%", after: "95%" },
     ],
   },
   {
-    company: "Artisan Coffee Co.",
-    industry: "E-commerce",
+    company: "The Martinez Family",
+    industry: "Individual Health Plan",
     results: {
-      revenue: "+410%",
-      leads: "+320%",
-      conversion: "+180%",
+      revenue: "-$3,600",
+      leads: "0%",
+      conversion: "100%",
     },
-    quote: "Motion didn't just increase our sales - they helped us build a brand that customers love and trust.",
-    author: "Emma Thompson",
-    position: "Co-Founder",
+    quote: "David helped us find an ACA plan that saved us over $3,000 a year while providing better coverage for our family of four.",
+    author: "Carlos & Elena Martinez",
+    position: "Parents of Two",
     image: "/placeholder.svg?height=400&width=600",
     metrics: [
-      { label: "Monthly Revenue", before: "$12K", after: "$61K" },
-      { label: "Online Orders", before: "89/month", after: "374/month" },
-      { label: "Customer LTV", before: "$45", after: "$126" },
+      { label: "Annual Premium", before: "$8,400", after: "$4,800" },
+      { label: "Deductible", before: "$12,000", after: "$6,000" },
+      { label: "Subsidy Applied", before: "$0", after: "$3,600" },
     ],
   },
 ]
@@ -77,14 +77,14 @@ export default function SuccessStoriesRedesign() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-sm text-green-400 font-medium mb-6">
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Real Results from Real Clients
+            <Shield className="w-4 h-4 mr-2" />
+            Insurance Success Stories
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Success Stories That Speak Volumes
+            Protecting Families, Securing Futures
           </h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            See how we've helped businesses like yours achieve remarkable growth and success.
+            See how we've helped families and businesses secure the insurance coverage they need at prices they can afford.
           </p>
         </motion.div>
 
@@ -99,12 +99,12 @@ export default function SuccessStoriesRedesign() {
               onClick={() => setActiveStory(index)}
               className={`cursor-pointer p-6 rounded-2xl border transition-all duration-300 ${
                 activeStory === index
-                  ? "bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-blue-500/30"
+                  ? "bg-gradient-to-br from-red-500/10 to-blue-500/10 border-red-500/30"
                   : "bg-gray-900/30 border-gray-800 hover:border-gray-700"
               }`}
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
                   {story.company.charAt(0)}
                 </div>
                 <div className="ml-4">
@@ -116,15 +116,15 @@ export default function SuccessStoriesRedesign() {
               <div className="grid grid-cols-3 gap-4 mb-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-green-400">{story.results.revenue}</div>
-                  <div className="text-xs text-gray-400">Revenue</div>
+                  <div className="text-xs text-gray-400">Savings</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-400">{story.results.leads}</div>
-                  <div className="text-xs text-gray-400">Leads</div>
+                  <div className="text-xs text-gray-400">Coverage</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-400">{story.results.conversion}</div>
-                  <div className="text-xs text-gray-400">Conversion</div>
+                  <div className="text-2xl font-bold text-red-400">{story.results.conversion}</div>
+                  <div className="text-xs text-gray-400">Satisfaction</div>
                 </div>
               </div>
 
@@ -157,7 +157,7 @@ export default function SuccessStoriesRedesign() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-3xl font-bold text-white mb-4">{stories[activeStory].company} Case Study</h3>
+              <h3 className="text-3xl font-bold text-white mb-4">{stories[activeStory].company} Success Story</h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">"{stories[activeStory].quote}"</p>
 
               <div className="space-y-4">

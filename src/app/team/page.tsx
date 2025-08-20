@@ -1,14 +1,11 @@
 import BackgroundStripes from "@/components/background-stripes"
 import AnimatedBackground from "@/components/animated-background"
 import Navbar from "@/components/navbar"
-import Hero from "@/components/hero"
-import HowWeWork from "@/components/how-we-work"
-import InsuranceServices from "@/components/insurance-services"
-import InsuranceSavingsCalculator from "@/components/insurance-savings-calculator"
 import AnimatedFooter from "@/components/animated-footer"
+import TeamPage from "@/components/team-page"
 import BackgroundPaths from "@/components/background-paths"
 
-export default function Home() {
+export default function Team() {
   return (
     <div className="relative min-h-screen bg-black">
       <BackgroundPaths />
@@ -17,10 +14,7 @@ export default function Home() {
 
       <div className="relative z-10">
         <Navbar />
-        <Hero />
-        <HowWeWork />
-        <InsuranceServices />
-        <InsuranceSavingsCalculator />
+        <TeamPage />
         <AnimatedFooter />
       </div>
     </div>

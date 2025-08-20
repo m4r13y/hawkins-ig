@@ -124,7 +124,7 @@ export default function CustomerInquiry() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                    placeholder="you@example.com"
+                    placeholder="info@hawkinsig.com"
                   />
                 </div>
 
@@ -258,8 +258,7 @@ export default function CustomerInquiry() {
 
               <GlowButton
                 type="submit"
-                className="w-full bg-white text-black hover:bg-gray-100"
-                disabled={isSubmitting}
+                className={`w-full bg-white text-black hover:bg-gray-100${isSubmitting ? " opacity-60 cursor-not-allowed" : ""}`}
               >
                 {isSubmitting ? (
                   <>

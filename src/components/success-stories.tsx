@@ -100,7 +100,7 @@ export default function SuccessStories() {
               {/* Image Section */}
               <div className={`${index % 2 === 1 ? "lg:order-2" : ""}`}>
                 <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-purple-500/10 to-transparent z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 via-white/5 to-blue-500/10 z-10" />
                   <Image
                     src={story.image || "/placeholder.svg"}
                     alt={story.name}

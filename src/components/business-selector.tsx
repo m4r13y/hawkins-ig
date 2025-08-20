@@ -16,7 +16,7 @@ interface BusinessOption {
   name: string
   icon: React.ReactNode
   description: string
-  color: "blue" | "green" | "purple" | "pink" | "orange"
+  color: "blue" | "green" | "red" | "slate"
   platforms?: React.ReactNode[]
   strategy: {
     title: string
@@ -62,7 +62,7 @@ const businessOptions: BusinessOption[] = [
     name: "Artist",
     icon: <Music className="h-6 w-6" />,
     description: "Musicians, content creators, and digital artists",
-    color: "purple",
+    color: "red",
     platforms: [
       <div
         key="spotify"
@@ -78,7 +78,7 @@ const businessOptions: BusinessOption[] = [
       </div>,
       <div
         key="instagram"
-        className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-lg"
+        className="w-6 h-6 bg-gradient-to-br from-red-500 to-blue-500 rounded-lg flex items-center justify-center text-white text-xs font-bold shadow-lg"
       >
         IG
       </div>,
@@ -104,7 +104,7 @@ const businessOptions: BusinessOption[] = [
     name: "Startup",
     icon: <BarChart3 className="h-6 w-6" />,
     description: "New and emerging businesses looking to scale",
-    color: "pink",
+    color: "red",
     strategy: {
       title: "Startup Growth Strategy",
       steps: [
@@ -120,7 +120,7 @@ const businessOptions: BusinessOption[] = [
     name: "Enterprise",
     icon: <Globe className="h-6 w-6" />,
     description: "Large established businesses with multiple departments",
-    color: "orange",
+    color: "slate",
     strategy: {
       title: "Enterprise Marketing Strategy",
       steps: [

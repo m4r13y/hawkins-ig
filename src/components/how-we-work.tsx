@@ -1,32 +1,32 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Search, Lightbulb, Rocket } from "lucide-react"
+import { Users, Calculator, Shield } from "lucide-react"
 
 const steps = [
   {
     number: "01",
-    title: "Discovery & Analysis",
-    description: "We dive deep into your needs, exploring ideas and defining strategies for long-term success.",
-    icon: <Search className="w-8 h-8" />,
-    mockup: "discovery",
-    gradient: "from-blue-500/20 to-blue-600/10",
+    title: "Free Consultation",
+    description: "We listen to your needs and analyze your current coverage to understand your unique situation and goals.",
+    icon: <Users className="w-8 h-8" />,
+    mockup: "consultation",
+    gradient: "from-slate-500/20 to-slate-600/10",
   },
   {
     number: "02",
-    title: "Development & Test",
-    description: "We craft tailored solutions for your goals and rigorously test them for top-notch reliability.",
-    icon: <Lightbulb className="w-8 h-8" />,
-    mockup: "development",
-    gradient: "from-purple-500/20 to-purple-600/10",
+    title: "Custom Quote & Compare",
+    description: "We shop multiple carriers to find the best plans for your budget and provide transparent comparisons.",
+    icon: <Calculator className="w-8 h-8" />,
+    mockup: "comparison",
+    gradient: "from-slate-500/20 to-slate-600/10",
   },
   {
     number: "03",
-    title: "Launch & Maintain",
-    description: "We deploy your solution seamlessly and ensure its continued performance with ongoing care.",
-    icon: <Rocket className="w-8 h-8" />,
-    mockup: "launch",
-    gradient: "from-green-500/20 to-green-600/10",
+    title: "Enroll & Support",
+    description: "We handle the enrollment process and provide ongoing support for claims, questions, and policy changes.",
+    icon: <Shield className="w-8 h-8" />,
+    mockup: "support",
+    gradient: "from-slate-500/20 to-slate-600/10",
   },
 ]
 
@@ -41,9 +41,9 @@ export default function HowWeWork() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">How We Work</h2>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">How We Help You</h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            A simple, effective approach to building your brand with excellence.
+            A simple, personal approach to finding the right insurance coverage for your family or business.
           </p>
         </motion.div>
 
@@ -61,8 +61,8 @@ export default function HowWeWork() {
               {/* Mockup Area */}
               <div className="aspect-video bg-gray-900 rounded-2xl mb-6 overflow-hidden relative border border-gray-800">
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 p-4">
-                  {/* Discovery Mockup */}
-                  {step.mockup === "discovery" && (
+                  {/* Consultation Mockup */}
+                  {step.mockup === "consultation" && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
@@ -70,26 +70,30 @@ export default function HowWeWork() {
                       className="w-full h-full flex items-center justify-center"
                     >
                       <div className="w-full max-w-[200px] space-y-3">
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-start space-x-2">
                           <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                            <div className="w-3 h-3 bg-blue-500 rounded"></div>
+                            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                           </div>
                           <div className="flex-1 space-y-1">
-                            <div className="bg-gray-700 h-2 w-full rounded"></div>
-                            <div className="bg-gray-700 h-2 w-3/4 rounded"></div>
+                            <div className="bg-gray-700 h-4 w-full rounded flex items-center px-2">
+                              <span className="text-xs text-gray-300">Family Size</span>
+                            </div>
+                            <div className="bg-gray-700 h-4 w-4/5 rounded flex items-center px-2">
+                              <span className="text-xs text-gray-300">Coverage</span>
+                            </div>
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="bg-gray-700 h-12 rounded-lg"></div>
-                          <div className="bg-gray-700 h-12 rounded-lg"></div>
+                          <div className="bg-gray-700 h-12 rounded-lg flex items-center justify-center text-xs text-gray-400">Health</div>
+                          <div className="bg-gray-700 h-12 rounded-lg flex items-center justify-center text-xs text-gray-400">Budget</div>
                         </div>
-                        <div className="bg-gray-700 h-8 w-full rounded"></div>
+                        <div className="bg-gray-700 h-8 w-full rounded flex items-center justify-center text-xs text-gray-400">Notes</div>
                       </div>
                     </motion.div>
                   )}
 
-                  {/* Development Mockup */}
-                  {step.mockup === "development" && (
+                  {/* Comparison Mockup */}
+                  {step.mockup === "comparison" && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
@@ -99,26 +103,28 @@ export default function HowWeWork() {
                       <div className="w-full max-w-[200px] space-y-3">
                         <div className="bg-gray-800 rounded-lg p-3">
                           <div className="flex items-center space-x-2 mb-2">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <div className="text-xs text-gray-300">Plan A - $245/mo</div>
                           </div>
-                          <div className="space-y-2">
-                            <div className="bg-gray-700 h-2 w-full rounded"></div>
-                            <div className="bg-gray-700 h-2 w-2/3 rounded"></div>
-                            <div className="bg-purple-500 h-2 w-1/2 rounded"></div>
+                          <div className="flex items-center space-x-2 mb-2">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div className="text-xs text-gray-300">Plan B - $198/mo</div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <div className="text-xs text-gray-300">Plan C - $275/mo</div>
                           </div>
                         </div>
                         <div className="flex space-x-2">
-                          <div className="bg-gray-700 h-8 flex-1 rounded"></div>
-                          <div className="bg-purple-500 h-8 w-16 rounded"></div>
+                          <div className="bg-gray-700 h-8 flex-1 rounded flex items-center justify-center text-xs text-gray-400">Compare</div>
+                          <div className="bg-blue-500 h-8 w-16 rounded flex items-center justify-center text-xs text-white">Best</div>
                         </div>
                       </div>
                     </motion.div>
                   )}
 
-                  {/* Launch Mockup */}
-                  {step.mockup === "launch" && (
+                  {/* Support Mockup */}
+                  {step.mockup === "support" && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
@@ -127,29 +133,27 @@ export default function HowWeWork() {
                     >
                       <div className="w-full max-w-[200px] space-y-3">
                         <div className="flex items-center justify-between">
-                          <div className="text-xs text-gray-400">Status</div>
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                            className="w-6 h-6 border-2 border-green-500 border-t-transparent rounded-full"
-                          ></motion.div>
+                          <div className="text-xs text-gray-400">Policy Status</div>
+                          <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                            <div className="w-3 h-3 text-white text-xs">✓</div>
+                          </div>
                         </div>
                         <div className="space-y-2">
                           <div className="flex items-center space-x-2">
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                            <div className="text-xs text-gray-300">Security</div>
+                            <div className="text-xs text-gray-300">Enrolled</div>
                           </div>
                           <div className="flex items-center space-x-2">
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                            <div className="text-xs text-gray-300">Efficiency</div>
+                            <div className="text-xs text-gray-300">Claims Support</div>
                           </div>
                           <div className="flex items-center space-x-2">
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                            <div className="text-xs text-gray-300">Speed</div>
+                            <div className="text-xs text-gray-300">Annual Review</div>
                           </div>
                           <div className="flex items-center space-x-2">
                             <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                            <div className="text-xs text-gray-300">Updating...</div>
+                            <div className="text-xs text-gray-300">24/7 Available...</div>
                           </div>
                         </div>
                       </div>

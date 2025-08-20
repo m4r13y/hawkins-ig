@@ -31,9 +31,9 @@ export default function AnimatedFooter() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">Stay Ahead of the Curve</h3>
+            <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">Stay Informed About Your Coverage</h3>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Get exclusive insights, brand strategies, and growth tips delivered to your inbox weekly.
+              Get important updates about insurance changes, enrollment periods, and money-saving tips delivered to your inbox.
             </p>
           </motion.div>
 
@@ -59,7 +59,6 @@ export default function AnimatedFooter() {
               <AnimatedButton
                 type="submit"
                 className="bg-white text-black hover:bg-gray-100"
-                gradient="radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(37,99,235,0.1) 50%, rgba(29,78,216,0) 100%)"
               >
                 <ArrowRight className="h-5 w-5" />
               </AnimatedButton>
@@ -84,16 +83,16 @@ export default function AnimatedFooter() {
           >
             <div className="group flex justify-center lg:justify-start">
               <Image
-                src="/motion-records-logo.png"
+                src="/hig-logo-white.svg"
                 alt="Hawkins Insurance Group, LLC"
                 width={300}
                 height={100}
-                className="h-16 w-auto brightness-0 invert transition-transform duration-300 group-hover:scale-105"
+                className="h-16 w-auto transition-transform duration-300 group-hover:scale-105"
               />
             </div>
             <p className="text-gray-400 text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
-              Empowering creative professionals and entrepreneurs to build powerful brands that drive real traction and
-              sustainable growth in today's competitive market.
+              Hawkins Insurance Group is a family-owned insurance agency serving Texas families and businesses with 
+              personalized health insurance solutions. We make insurance simple and affordable.
             </p>
 
             {/* Social Links */}
@@ -130,15 +129,15 @@ export default function AnimatedFooter() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-lg font-semibold text-white mb-6">Services</h4>
+              <h4 className="text-lg font-semibold text-white mb-6">Insurance Solutions</h4>
               <ul className="space-y-4">
                 {[
-                  "Brand Identity Development",
-                  "Digital Marketing",
-                  "Content Creation",
-                  "SEO & Analytics",
-                  "Social Media Management",
-                  "Performance Marketing",
+                  "Medicare Plans",
+                  "Group Health Insurance",
+                  "Family Health Plans", 
+                  "Dental & Vision",
+                  "Life Insurance",
+                  "Supplemental Coverage",
                 ].map((link, index) => (
                   <motion.li
                     key={link}
@@ -170,25 +169,24 @@ export default function AnimatedFooter() {
               <div className="space-y-4">
                 <div className="flex items-center space-x-3 text-gray-400 justify-center sm:justify-start">
                   <Mail className="h-5 w-5 text-blue-500" />
-                  <span>hello@motionrecords.com</span>
+                  <span>info@hawkinsig.com</span>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-400 justify-center sm:justify-start">
                   <Phone className="h-5 w-5 text-blue-500" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>(817) 800-4253</span>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-400 justify-center sm:justify-start">
                   <MapPin className="h-5 w-5 text-blue-500" />
-                  <span>Los Angeles, CA</span>
+                  <span>Fort Worth, TX</span>
                 </div>
               </div>
 
               <div className="mt-8">
-                <Link href="/inquiry">
+                <Link href="/quotes">
                   <AnimatedButton
                     className="w-full bg-white text-black hover:bg-gray-100"
-                    gradient="radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(37,99,235,0.1) 50%, rgba(29,78,216,0) 100%)"
                   >
-                    Start Your Project
+                    Get Free Quote
                   </AnimatedButton>
                 </Link>
               </div>

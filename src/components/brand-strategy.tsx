@@ -16,15 +16,15 @@ export default function BrandStrategy() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Large Featured Card */}
-          <div className="col-span-1 lg:col-span-2 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-3xl p-8 relative overflow-hidden backdrop-blur-sm">
+          <div className="col-span-1 lg:col-span-2 bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 rounded-3xl p-8 relative overflow-hidden backdrop-blur-sm">
             <div className="absolute top-4 right-4">
-              <div className="flex items-center px-3 py-1 bg-purple-600 text-white text-xs font-medium rounded-full shadow-lg">
+              <div className="flex items-center px-3 py-1 bg-red-600 text-white text-xs font-medium rounded-full shadow-lg">
                 ✨ FEATURED
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="w-full md:w-1/2">
-                <GlossyIcon color="purple" size="lg" className="mb-6">
+                <GlossyIcon color="red" size="lg" className="mb-6">
                   <Palette className="w-8 h-8" />
                 </GlossyIcon>
                 <h3 className="text-2xl font-bold text-white mb-4">Brand Strategy & Identity</h3>
@@ -34,24 +34,24 @@ export default function BrandStrategy() {
                 </p>
                 <ul className="space-y-2">
                   <li className="text-sm text-gray-400 flex items-center">
-                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mr-3" />
+                    <div className="w-1.5 h-1.5 bg-red-400 rounded-full mr-3" />
                     Logo & Visual Identity
                   </li>
                   <li className="text-sm text-gray-400 flex items-center">
-                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mr-3" />
+                    <div className="w-1.5 h-1.5 bg-red-400 rounded-full mr-3" />
                     Brand Guidelines
                   </li>
                   <li className="text-sm text-gray-400 flex items-center">
-                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mr-3" />
+                    <div className="w-1.5 h-1.5 bg-red-400 rounded-full mr-3" />
                     Market Positioning
                   </li>
                   <li className="text-sm text-gray-400 flex items-center">
-                    <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mr-3" />
+                    <div className="w-1.5 h-1.5 bg-red-400 rounded-full mr-3" />
                     Brand Voice Development
                   </li>
                 </ul>
               </div>
-              <div className="w-full md:w-1/2 h-64 bg-gradient-to-br from-purple-500/20 to-purple-600/10 rounded-2xl border border-purple-500/20"></div>
+          <div className="w-full md:w-1/2 h-64 bg-gradient-to-br from-red-500/20 to-red-600/10 rounded-2xl border border-red-500/20"></div>
             </div>
           </div>
 
@@ -102,8 +102,8 @@ export default function BrandStrategy() {
           </div>
 
           {/* Analytics Card */}
-          <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/20 rounded-3xl p-6 flex flex-col justify-between backdrop-blur-sm">
-            <GlossyIcon color="orange" className="mb-4">
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-3xl p-6 flex flex-col justify-between backdrop-blur-sm">
+            <GlossyIcon color="blue" className="mb-4">
               <BarChart3 className="w-6 h-6" />
             </GlossyIcon>
             <div>
@@ -113,11 +113,11 @@ export default function BrandStrategy() {
               </p>
               <ul className="space-y-2">
                 <li className="text-sm text-gray-400 flex items-center">
-                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mr-3" />
+                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-3" />
                   Performance Tracking
                 </li>
                 <li className="text-sm text-gray-400 flex items-center">
-                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mr-3" />
+                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-3" />
                   ROI Analysis
                 </li>
               </ul>
@@ -125,8 +125,8 @@ export default function BrandStrategy() {
           </div>
 
           {/* Growth Strategy Card */}
-          <div className="bg-gradient-to-br from-pink-500/10 to-pink-600/5 border border-pink-500/20 rounded-3xl p-6 flex flex-col justify-between backdrop-blur-sm">
-            <GlossyIcon color="pink" className="mb-4">
+          <div className="bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 rounded-3xl p-6 flex flex-col justify-between backdrop-blur-sm">
+            <GlossyIcon color="red" className="mb-4">
               <Zap className="w-6 h-6" />
             </GlossyIcon>
             <div>
@@ -136,11 +136,11 @@ export default function BrandStrategy() {
               </p>
               <ul className="space-y-2">
                 <li className="text-sm text-gray-400 flex items-center">
-                  <div className="w-1.5 h-1.5 bg-pink-400 rounded-full mr-3" />
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mr-3" />
                   Market Expansion
                 </li>
                 <li className="text-sm text-gray-400 flex items-center">
-                  <div className="w-1.5 h-1.5 bg-pink-400 rounded-full mr-3" />
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mr-3" />
                   Customer Acquisition
                 </li>
               </ul>

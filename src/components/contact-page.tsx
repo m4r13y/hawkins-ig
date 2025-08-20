@@ -40,10 +40,9 @@ export default function ContactPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Get In Touch</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Get Your Free Quote</h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Ready to transform your brand? Let's start a conversation about your goals and how we can help you achieve
-            them.
+            Ready to secure your family's future? Let's discuss your insurance needs and find the perfect coverage at the right price.
           </p>
         </motion.div>
 
@@ -64,7 +63,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Email</p>
-                    <p className="text-white">hello@motionrecords.com</p>
+                    <p className="text-white">info@hawkinsig.com</p>
                   </div>
                 </div>
 
@@ -74,27 +73,27 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Phone</p>
-                    <p className="text-white">+1 (555) 123-4567</p>
+                    <p className="text-white">+1 (817) 800-4253</p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                    <MapPin className="h-6 w-6 text-purple-400" />
+                  <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center">
+                    <MapPin className="h-6 w-6 text-red-400" />
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Location</p>
-                    <p className="text-white">Los Angeles, CA</p>
+                    <p className="text-white">San Antonio, TX</p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
-                    <Clock className="h-6 w-6 text-orange-400" />
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                    <Clock className="h-6 w-6 text-blue-400" />
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Business Hours</p>
-                    <p className="text-white">Mon - Fri: 9AM - 6PM PST</p>
+                    <p className="text-white">Mon - Fri: 8AM - 6PM CST</p>
                   </div>
                 </div>
               </div>
@@ -105,7 +104,7 @@ export default function ContactPage() {
               <ul className="space-y-3">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span className="text-gray-300">Proven track record with 500+ successful campaigns</span>
+                  <span className="text-gray-300">Licensed agents in TX  and 48 other states</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
@@ -113,11 +112,11 @@ export default function ContactPage() {
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span className="text-gray-300">$15M+ in revenue generated for clients</span>
+                  <span className="text-gray-300">$2M+ in annual savings for our clients</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                  <span className="text-gray-300">24/7 support and dedicated account management</span>
+                  <span className="text-gray-300">Personal service and ongoing support</span>
                 </li>
               </ul>
             </div>
@@ -131,7 +130,7 @@ export default function ContactPage() {
           >
             {!isSubmitted ? (
               <div className="bg-gray-900/50 border border-gray-800 rounded-3xl p-8 backdrop-blur-sm">
-                <h2 className="text-2xl font-bold text-white mb-6">Send us a message</h2>
+                <h2 className="text-2xl font-bold text-white mb-6">Get Your Free Quote</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -162,14 +161,14 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        placeholder="you@example.com"
+                        placeholder="your.email@example.com"
                       />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                      Subject
+                      Insurance Type
                     </label>
                     <input
                       type="text"
@@ -179,13 +178,13 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                      placeholder="How can we help you?"
+                      placeholder="Medicare, Life Insurance, Group Health, etc."
                     />
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                      Message
+                      Tell Us About Your Needs
                     </label>
                     <textarea
                       id="message"
@@ -195,7 +194,7 @@ export default function ContactPage() {
                       rows={6}
                       required
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                      placeholder="Tell us about your project..."
+                      placeholder="Tell us about your current coverage, family size, budget, or any specific concerns..."
                     ></textarea>
                   </div>
 
@@ -203,7 +202,6 @@ export default function ContactPage() {
                     type="submit"
                     className="w-full bg-white text-black hover:bg-gray-100"
                     disabled={isSubmitting}
-                    gradient="radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(37,99,235,0.1) 50%, rgba(29,78,216,0) 100%)"
                   >
                     {isSubmitting ? (
                       <>
@@ -217,7 +215,7 @@ export default function ContactPage() {
                     ) : (
                       <>
                         <Send className="mr-2 h-4 w-4" />
-                        Send Message
+                        Get My Free Quote
                       </>
                     )}
                   </AnimatedButton>
@@ -235,18 +233,18 @@ export default function ContactPage() {
                     <Send className="h-10 w-10 text-green-500" />
                   </motion.div>
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-4">Message Sent!</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">Quote Request Received!</h2>
                 <p className="text-xl text-gray-300 mb-6">
-                  Thank you for reaching out. We'll get back to you within 24 hours.
+                  Thank you for your interest in our insurance services. We'll contact you within 24 hours with your personalized quote.
                 </p>
                 <p className="text-gray-400">
                   In the meantime, feel free to explore our{" "}
                   <a href="/services" className="text-blue-400 hover:text-blue-300">
-                    services
+                    insurance services
                   </a>{" "}
                   or check out our{" "}
                   <a href="/success-stories" className="text-blue-400 hover:text-blue-300">
-                    success stories
+                    client success stories
                   </a>
                   .
                 </p>

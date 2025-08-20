@@ -2,74 +2,117 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, ArrowLeft, Check, Briefcase, Home, Palette, Target, Globe, DollarSign } from "lucide-react"
+import { ArrowRight, ArrowLeft, Check, User, Users, Building, UserCheck, Heart, Shield, Phone, DollarSign, Calendar, MapPin } from "lucide-react"
 import AnimatedButton from "./animated-button"
 
-const businessTypes = [
+const clientTypes = [
   {
-    id: "retail",
-    name: "Retail & E-commerce",
-    icon: <Briefcase className="w-8 h-8" />,
-    description: "Online stores, physical retail, product sales",
+    id: "individual",
+    name: "Individual",
+    icon: <User className="w-8 h-8" />,
+    description: "Personal insurance coverage for myself",
   },
   {
-    id: "real-estate",
-    name: "Real Estate",
-    icon: <Home className="w-8 h-8" />,
-    description: "Agents, brokers, property management",
+    id: "family",
+    name: "Family",
+    icon: <Users className="w-8 h-8" />,
+    description: "Coverage for my family members",
   },
   {
-    id: "artist",
-    name: "Artists & Creators",
-    icon: <Palette className="w-8 h-8" />,
-    description: "Musicians, content creators, influencers",
+    id: "business",
+    name: "Business",
+    icon: <Building className="w-8 h-8" />,
+    description: "Group coverage for my employees",
   },
   {
-    id: "professional",
-    name: "Professional Services",
-    icon: <Target className="w-8 h-8" />,
-    description: "Consultants, lawyers, accountants",
+    id: "agent",
+    name: "Insurance Agent",
+    icon: <UserCheck className="w-8 h-8" />,
+    description: "I'm an agent looking to partner",
   },
-  { id: "tech", name: "Technology", icon: <Globe className="w-8 h-8" />, description: "SaaS, apps, tech startups" },
 ]
 
-const budgetRanges = [
-  { id: "1k-5k", name: "$1,000 - $5,000", value: 3000 },
-  { id: "5k-10k", name: "$5,000 - $10,000", value: 7500 },
-  { id: "10k-25k", name: "$10,000 - $25,000", value: 17500 },
-  { id: "25k-plus", name: "$25,000+", value: 35000 },
+const ageRanges = [
+  { id: "under-26", name: "Under 26", description: "Young adult rates" },
+  { id: "26-35", name: "26-35", description: "Lower premium tier" },
+  { id: "36-50", name: "36-50", description: "Standard rates" },
+  { id: "51-64", name: "51-64", description: "Pre-Medicare age" },
+  { id: "65-plus", name: "65+", description: "Medicare eligible" },
 ]
 
-const services = [
-  { id: "seo", name: "SEO & Content Marketing", description: "Improve search rankings and organic traffic" },
-  { id: "paid-ads", name: "Paid Advertising", description: "Google Ads, Facebook Ads, PPC campaigns" },
-  { id: "social", name: "Social Media Marketing", description: "Content creation and community management" },
-  { id: "web-dev", name: "Web Development", description: "Custom websites and e-commerce solutions" },
-  { id: "branding", name: "Brand Strategy", description: "Logo design, brand guidelines, positioning" },
-  { id: "email", name: "Email Marketing", description: "Automated campaigns and newsletters" },
+  const familySizes = [
+    { id: "1", name: "Just Me", description: "Individual coverage" },
+    { id: "2", name: "Me + Spouse", description: "Two adults" },
+    { id: "3-4", name: "Small Family", description: "3-4 family members" },
+    { id: "5+", name: "Large Family", description: "5+ family members" },
+  ]
+
+  const employeeCounts = [
+    { id: "1-9", name: "1-9 Employees", description: "Small business" },
+    { id: "10-49", name: "10-49 Employees", description: "Medium business" },
+    { id: "50-99", name: "50-99 Employees", description: "Large business" },
+    { id: "100+", name: "100+ Employees", description: "Enterprise" },
+  ]
+
+const insuranceTypes = [
+  { id: "health", name: "Health Insurance", description: "Medical, dental, vision coverage", icon: <Heart className="w-6 h-6" /> },
+  { id: "medicare", name: "Medicare Plans", description: "Supplement, Advantage, Part D", icon: <Shield className="w-6 h-6" /> },
+  { id: "life", name: "Life Insurance", description: "Term, whole, universal life", icon: <User className="w-6 h-6" /> },
+  { id: "disability", name: "Disability Insurance", description: "Short-term and long-term", icon: <Shield className="w-6 h-6" /> },
+  { id: "supplemental", name: "Supplemental Plans", description: "Cancer, accident, hospital indemnity", icon: <Phone className="w-6 h-6" /> },
+  { id: "group", name: "Group Benefits", description: "Employee health and benefits", icon: <Building className="w-6 h-6" /> },
 ]
 
-const goals = [
-  { id: "leads", name: "Generate More Leads", icon: <Target className="w-6 h-6" /> },
-  { id: "sales", name: "Increase Sales", icon: <DollarSign className="w-6 h-6" /> },
-  { id: "awareness", name: "Build Brand Awareness", icon: <Globe className="w-6 h-6" /> },
-  { id: "traffic", name: "Drive Website Traffic", icon: <ArrowRight className="w-6 h-6" /> },
-]
+  const urgencyLevels = [
+    { id: "immediate", name: "Immediate", description: "Need coverage within 30 days" },
+    { id: "soon", name: "Soon", description: "Within 60-90 days" },
+    { id: "planning", name: "Planning", description: "Researching for future needs" },
+    { id: "renewal", name: "Renewal", description: "Current policy expires soon" },
+  ]
+
+  const agentTypes = [
+    { id: "new-agent", name: "New Agent", description: "Just starting in insurance" },
+    { id: "experienced", name: "Experienced Agent", description: "Looking for new opportunities" },
+    { id: "broker", name: "Broker", description: "Independent broker seeking carriers" },
+    { id: "agency", name: "Agency", description: "Agency looking for partnerships" },
+  ]
 
 export default function GetStartedFlow() {
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState({
-    businessType: "",
-    budget: "",
-    services: [] as string[],
-    goals: [] as string[],
+    clientType: "",
+    age: "",
+    familySize: "",
+    employeeCount: "",
+    agentType: "",
+    insuranceTypes: [] as string[],
+    urgency: "",
     name: "",
     email: "",
-    company: "",
     phone: "",
+    company: "",
+    zipCode: "",
   })
 
-  const steps = ["Business Type", "Budget Range", "Services Needed", "Primary Goals", "Contact Information", "Complete"]
+  // Dynamic steps based on client type
+  const getSteps = () => {
+    const baseSteps = ["Client Type"]
+    
+    switch (formData.clientType) {
+      case "individual":
+        return [...baseSteps, "Age Range", "Insurance Needs", "Timeline", "Contact Information", "Complete"]
+      case "family":
+        return [...baseSteps, "Family Size", "Insurance Needs", "Timeline", "Contact Information", "Complete"]
+      case "business":
+        return [...baseSteps, "Company Size", "Group Benefits", "Timeline", "Contact Information", "Complete"]
+      case "agent":
+        return [...baseSteps, "Partnership Interest", "Experience Level", "Territory", "Contact Information", "Complete"]
+      default:
+        return [...baseSteps, "Details", "Needs", "Timeline", "Contact Information", "Complete"]
+    }
+  }
+
+  const steps = getSteps()
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -83,19 +126,12 @@ export default function GetStartedFlow() {
     }
   }
 
-  const toggleService = (serviceId: string) => {
+  const toggleInsuranceType = (typeId: string) => {
     setFormData((prev) => ({
       ...prev,
-      services: prev.services.includes(serviceId)
-        ? prev.services.filter((id) => id !== serviceId)
-        : [...prev.services, serviceId],
-    }))
-  }
-
-  const toggleGoal = (goalId: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      goals: prev.goals.includes(goalId) ? prev.goals.filter((id) => id !== goalId) : [...prev.goals, goalId],
+      insuranceTypes: prev.insuranceTypes.includes(typeId)
+        ? prev.insuranceTypes.filter((id) => id !== typeId)
+        : [...prev.insuranceTypes, typeId],
     }))
   }
 
@@ -114,7 +150,7 @@ export default function GetStartedFlow() {
           </div>
           <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+              className="h-full bg-gradient-to-r from-red-500 to-blue-500"
               initial={{ width: "0%" }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.5 }}
@@ -125,27 +161,27 @@ export default function GetStartedFlow() {
         {/* Step Content */}
         <div className="bg-gray-900/50 border border-gray-800/50 rounded-3xl p-8 backdrop-blur-sm min-h-[500px] flex flex-col">
           <AnimatePresence mode="wait">
-            {/* Step 0: Business Type */}
+            {/* Step 0: Client Type */}
             {currentStep === 0 && (
               <motion.div
-                key="business-type"
+                key="client-type"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">What type of business do you have?</h2>
-                <p className="text-gray-400 mb-8">This helps us customize our recommendations for your industry.</p>
+                <h2 className="text-3xl font-bold text-white mb-4">Who are you looking for coverage for?</h2>
+                <p className="text-gray-400 mb-8">This helps us customize our insurance recommendations for your specific needs.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  {businessTypes.map((business) => (
+                  {clientTypes.map((client) => (
                     <motion.button
-                      key={business.id}
+                      key={client.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => setFormData((prev) => ({ ...prev, businessType: business.id }))}
+                      onClick={() => setFormData((prev) => ({ ...prev, clientType: client.id }))}
                       className={`p-6 rounded-xl border transition-all duration-200 text-left ${
-                        formData.businessType === business.id
+                        formData.clientType === client.id
                           ? "bg-blue-500/20 border-blue-500/50 text-white"
                           : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
                       }`}
@@ -153,14 +189,14 @@ export default function GetStartedFlow() {
                       <div className="flex items-center space-x-4 mb-3">
                         <div
                           className={`p-3 rounded-lg ${
-                            formData.businessType === business.id ? "bg-blue-500/30" : "bg-gray-700/50"
+                            formData.clientType === client.id ? "bg-blue-500/30" : "bg-gray-700/50"
                           }`}
                         >
-                          {business.icon}
+                          {client.icon}
                         </div>
                         <div>
-                          <div className="font-semibold text-lg">{business.name}</div>
-                          <div className="text-sm opacity-70">{business.description}</div>
+                          <div className="font-semibold text-lg">{client.name}</div>
+                          <div className="text-sm opacity-70">{client.description}</div>
                         </div>
                       </div>
                     </motion.button>
@@ -169,100 +205,120 @@ export default function GetStartedFlow() {
               </motion.div>
             )}
 
-            {/* Step 1: Budget */}
+            {/* Step 1: Age/Demographic */}
             {currentStep === 1 && (
               <motion.div
-                key="budget"
+                key="age-demographic"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">What's your monthly marketing budget?</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">
+                  {formData.clientType === 'individual' && "What's your age range?"}
+                  {formData.clientType === 'family' && "How many family members need coverage?"}
+                  {formData.clientType === 'business' && "How many employees need coverage?"}
+                  {formData.clientType === 'agent' && "What type of agent relationship are you seeking?"}
+                </h2>
                 <p className="text-gray-400 mb-8">
-                  This helps us recommend the right services and strategies for your investment level.
+                  {formData.clientType === 'individual' && "Age helps us determine the best insurance options and pricing for you."}
+                  {formData.clientType === 'family' && "Family size helps us recommend the most cost-effective coverage options."}
+                  {formData.clientType === 'business' && "Employee count helps us structure the right group coverage plan."}
+                  {formData.clientType === 'agent' && "Let us know how we can support your insurance business needs."}
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  {budgetRanges.map((budget) => (
+                  {(formData.clientType === 'individual' ? ageRanges :
+                    formData.clientType === 'family' ? familySizes :
+                    formData.clientType === 'business' ? employeeCounts :
+                    agentTypes).map((option) => (
                     <motion.button
-                      key={budget.id}
+                      key={option.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => setFormData((prev) => ({ ...prev, budget: budget.id }))}
+                      onClick={() => setFormData((prev) => ({ 
+                        ...prev, 
+                        age: formData.clientType === 'individual' ? option.id : prev.age,
+                        familySize: formData.clientType === 'family' ? option.id : prev.familySize,
+                        employeeCount: formData.clientType === 'business' ? option.id : prev.employeeCount,
+                        agentType: formData.clientType === 'agent' ? option.id : prev.agentType
+                      }))}
                       className={`p-6 rounded-xl border transition-all duration-200 text-center ${
-                        formData.budget === budget.id
+                        (formData.clientType === 'individual' && formData.age === option.id) ||
+                        (formData.clientType === 'family' && formData.familySize === option.id) ||
+                        (formData.clientType === 'business' && formData.employeeCount === option.id) ||
+                        (formData.clientType === 'agent' && formData.agentType === option.id)
                           ? "bg-blue-500/20 border-blue-500/50 text-white"
                           : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
                       }`}
                     >
-                      <div className="text-2xl font-bold mb-2">{budget.name}</div>
-                      <div className="text-sm opacity-70">Monthly investment</div>
+                      <div className="text-xl font-bold mb-2">{option.name}</div>
+                      <div className="text-sm opacity-70">{option.description}</div>
                     </motion.button>
                   ))}
                 </div>
               </motion.div>
             )}
 
-            {/* Step 2: Services */}
+            {/* Step 2: Insurance Types */}
             {currentStep === 2 && (
               <motion.div
-                key="services"
+                key="insurance-types"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">Which services interest you most?</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">What type of insurance are you interested in?</h2>
                 <p className="text-gray-400 mb-8">
-                  Select all that apply. We'll create a custom strategy around your needs.
+                  Select all that apply. We'll create a custom quote around your insurance needs.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  {services.map((service) => (
+                  {insuranceTypes.map((insurance) => (
                     <motion.button
-                      key={service.id}
+                      key={insurance.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => toggleService(service.id)}
+                      onClick={() => toggleInsuranceType(insurance.id)}
                       className={`p-6 rounded-xl border transition-all duration-200 text-left ${
-                        formData.services.includes(service.id)
+                        formData.insuranceTypes.includes(insurance.id)
                           ? "bg-blue-500/20 border-blue-500/50 text-white"
                           : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <div className="font-semibold text-lg">{service.name}</div>
-                        {formData.services.includes(service.id) && <Check className="w-5 h-5 text-blue-400" />}
+                        <div className="font-semibold text-lg">{insurance.name}</div>
+                        {formData.insuranceTypes.includes(insurance.id) && <Check className="w-5 h-5 text-blue-400" />}
                       </div>
-                      <div className="text-sm opacity-70">{service.description}</div>
+                      <div className="text-sm opacity-70">{insurance.description}</div>
                     </motion.button>
                   ))}
                 </div>
               </motion.div>
             )}
 
-            {/* Step 3: Goals */}
+            {/* Step 3: Timeline/Urgency */}
             {currentStep === 3 && (
               <motion.div
-                key="goals"
+                key="timeline"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">What are your primary goals?</h2>
-                <p className="text-gray-400 mb-8">Help us understand what success looks like for your business.</p>
+                <h2 className="text-3xl font-bold text-white mb-4">When do you need coverage to start?</h2>
+                <p className="text-gray-400 mb-8">This helps us prioritize your application and ensure timely coverage.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  {goals.map((goal) => (
+                  {urgencyLevels.map((urgency) => (
                     <motion.button
-                      key={goal.id}
+                      key={urgency.id}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => toggleGoal(goal.id)}
+                      onClick={() => setFormData((prev) => ({ ...prev, urgency: urgency.id }))}
                       className={`p-6 rounded-xl border transition-all duration-200 text-left ${
-                        formData.goals.includes(goal.id)
+                        formData.urgency === urgency.id
                           ? "bg-blue-500/20 border-blue-500/50 text-white"
                           : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
                       }`}
@@ -270,15 +326,16 @@ export default function GetStartedFlow() {
                       <div className="flex items-center space-x-4">
                         <div
                           className={`p-3 rounded-lg ${
-                            formData.goals.includes(goal.id) ? "bg-blue-500/30" : "bg-gray-700/50"
+                            formData.urgency === urgency.id ? "bg-blue-500/30" : "bg-gray-700/50"
                           }`}
                         >
-                          {goal.icon}
+                          <Calendar className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
-                          <div className="font-semibold text-lg">{goal.name}</div>
+                          <div className="font-semibold text-lg">{urgency.name}</div>
+                          <div className="text-sm opacity-70">{urgency.description}</div>
                         </div>
-                        {formData.goals.includes(goal.id) && <Check className="w-5 h-5 text-blue-400" />}
+                        {formData.urgency === urgency.id && <Check className="w-5 h-5 text-blue-400" />}
                       </div>
                     </motion.button>
                   ))}
@@ -295,9 +352,9 @@ export default function GetStartedFlow() {
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">Let's get in touch</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">Let's get you a quote</h2>
                 <p className="text-gray-400 mb-8">
-                  We'll use this information to create your custom strategy and get back to you within 24 hours.
+                  We'll use this information to prepare your personalized insurance quote and get back to you within 24 hours.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -319,30 +376,46 @@ export default function GetStartedFlow() {
                       value={formData.email}
                       onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                      placeholder="your@email.com"
+                      placeholder="info@hawkinsig.com"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Company</label>
-                    <input
-                      type="text"
-                      value={formData.company}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, company: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                      placeholder="Your company name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Phone</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Phone *</label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
-                      placeholder="(555) 123-4567"
+                      placeholder="(817) 800-4253"
+                      required
                     />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">ZIP Code *</label>
+                    <input
+                      type="text"
+                      value={formData.zipCode}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, zipCode: e.target.value }))}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                      placeholder="76001"
+                      required
+                    />
+                  </div>
+                  {(formData.clientType === 'business' || formData.clientType === 'agent') && (
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        {formData.clientType === 'business' ? 'Company Name' : 'Agency Name'}
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.company}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, company: e.target.value }))}
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                        placeholder={formData.clientType === 'business' ? 'Your business name' : 'Your agency name'}
+                      />
+                    </div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -359,9 +432,9 @@ export default function GetStartedFlow() {
                 <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Check className="w-10 h-10 text-green-500" />
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-4">You're all set!</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">Your quote request is complete!</h2>
                 <p className="text-xl text-gray-300 mb-6">
-                  Thank you for choosing Hawkins Insurance Group. We'll create a custom strategy based on your responses and get
+                  Thank you for choosing Hawkins Insurance Group. We'll prepare your personalized insurance quote and get
                   back to you within 24 hours.
                 </p>
                 <div className="bg-gray-800/50 rounded-2xl p-6 mb-8">
@@ -371,14 +444,14 @@ export default function GetStartedFlow() {
                       <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
                         1
                       </div>
-                      <span className="text-gray-300">We'll analyze your responses and create a custom strategy</span>
+                      <span className="text-gray-300">We'll review your information and prepare personalized quotes</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
                         2
                       </div>
                       <span className="text-gray-300">
-                        Our team will reach out within 24 hours to schedule a consultation
+                        Our licensed agents will reach out within 24 hours with your options
                       </span>
                     </div>
                     <div className="flex items-center space-x-3">
@@ -386,7 +459,7 @@ export default function GetStartedFlow() {
                         3
                       </div>
                       <span className="text-gray-300">
-                        We'll present your personalized marketing plan and next steps
+                        We'll help you compare plans and complete your enrollment process
                       </span>
                     </div>
                   </div>
@@ -422,10 +495,15 @@ export default function GetStartedFlow() {
                   <AnimatedButton
                     onClick={nextStep}
                     disabled={
-                      (currentStep === 0 && !formData.businessType) ||
-                      (currentStep === 1 && !formData.budget) ||
-                      (currentStep === 2 && formData.services.length === 0) ||
-                      (currentStep === 3 && formData.goals.length === 0)
+                      (currentStep === 0 && !formData.clientType) ||
+                      (currentStep === 1 && 
+                        (formData.clientType === 'individual' && !formData.age) ||
+                        (formData.clientType === 'family' && !formData.familySize) ||
+                        (formData.clientType === 'business' && !formData.employeeCount) ||
+                        (formData.clientType === 'agent' && !formData.agentType)
+                      ) ||
+                      (currentStep === 2 && formData.insuranceTypes.length === 0) ||
+                      (currentStep === 3 && !formData.urgency)
                     }
                     className="bg-white text-black hover:bg-gray-100"
                   >
@@ -437,10 +515,10 @@ export default function GetStartedFlow() {
                 {currentStep === 4 && (
                   <AnimatedButton
                     onClick={nextStep}
-                    disabled={!formData.name || !formData.email}
+                    disabled={!formData.name || !formData.email || !formData.phone || !formData.zipCode}
                     className="bg-white text-black hover:bg-gray-100"
                   >
-                    Complete Setup
+                    Get My Quote
                     <Check className="ml-2 h-4 w-4" />
                   </AnimatedButton>
                 )}
