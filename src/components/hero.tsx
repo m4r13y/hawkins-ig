@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { Merriweather } from "next/font/google"
+import { useEffect, useRef } from "react"
 import AnimatedButton from "./animated-button"
 import CountingStats from "./counting-stats"
 import Link from "next/link"
@@ -15,11 +16,36 @@ const merriweather = Merriweather({
 })
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  
   const stats = [
     { value: 2000, suffix: "+", label: "Happy Clients Served" },
     { value: 10, suffix: "+", label: "Years in Business" },
     { value: 2, suffix: "", label: "Licensed Agents" },
   ]
+
+  useEffect(() => {
+    const refreshVideo = () => {
+      if (videoRef.current) {
+        const video = videoRef.current
+        const currentTime = video.currentTime
+        
+        // Force reload the video source
+        video.load()
+        
+        // Resume from where it left off after a brief delay
+        video.addEventListener('loadeddata', () => {
+          video.currentTime = currentTime
+          video.play().catch(console.error)
+        }, { once: true })
+      }
+    }
+
+    // Refresh video every 5 minutes (300 seconds)
+    const interval = setInterval(refreshVideo, 300000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
@@ -30,6 +56,7 @@ export default function Hero() {
         
         {/* Video Background */}
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
@@ -39,7 +66,10 @@ export default function Hero() {
             filter: "brightness(0.7) contrast(1.1)",
           }}
         >
-          <source src="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2F0615(2).mp4?alt=media&token=cfc161e0-6323-4a43-96db-ef9e8a4fa77d" type="video/mp4" />
+          <source 
+            src="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2F0615(2).mp4?alt=media&token=cfc161e0-6323-4a43-96db-ef9e8a4fa77d" 
+            type="video/mp4" 
+          />
           {/* Fallback for browsers that don't support video */}
           Your browser does not support the video tag.
         </video>
@@ -124,7 +154,7 @@ export default function Hero() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Licensed Agents</p>
-                    <p className="text-xs text-gray-400">State of Texas</p>
+                    <p className="text-xs text-gray-400">Nationwide</p>
                   </div>
                 </div>
 
