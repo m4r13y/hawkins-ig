@@ -6,7 +6,7 @@ import CustomerInquiry from "@/components/customer-inquiry"
 
 export default function InquiryPage() {
   return (
-    <div className="relative min-h-screen bg-black">
+    <div className="relative min-h-screen bg-background">
       <AnimatedBackground />
       <BackgroundStripes />
 

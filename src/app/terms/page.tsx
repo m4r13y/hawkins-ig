@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfService() {
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen bg-background">
       <div className="pt-32 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 lg:p-12">

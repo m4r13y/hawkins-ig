@@ -28,8 +28,7 @@ export default function RootLayout({
         {children}
         <ADAAccessibilityWidget />
         <DarkModeToggle />
-        {/* Temporarily disabled cookie consent for testing */}
-        {/* <CookieConsent /> */}
+        <CookieConsent />
       </body>
     </html>
   )

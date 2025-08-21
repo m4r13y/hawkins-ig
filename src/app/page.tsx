@@ -4,7 +4,6 @@ import HowWeWork from "@/components/how-we-work"
 import InsuranceServices from "@/components/insurance-services"
 import AboutUsTabs from "@/components/about-us-tabs"
 import AnimatedFooter from "@/components/animated-footer"
-import ComplianceFooter from "@/components/compliance-footer"
 import BackgroundPaths from "@/components/background-paths"
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
         <AboutUsTabs />
         <InsuranceServices />
         <AnimatedFooter />
-        <ComplianceFooter />
       </div>
     </div>
   )

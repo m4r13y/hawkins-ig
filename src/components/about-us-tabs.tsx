@@ -129,10 +129,10 @@ export default function AboutUsTabs() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Our Solutions
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Discover our comprehensive suite of insurance technology and services designed to serve you better.
           </p>
         </motion.div>
@@ -147,17 +147,26 @@ export default function AboutUsTabs() {
               whileTap={{ scale: 0.95 }}
               className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
                 activeTab === tab.id
-                  ? "bg-white/10 border-white/30 text-white"
-                  : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:text-white"
+                  ? "bg-primary/10 border-primary/30 text-primary"
+                  : "bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground"
               }`}
             >
               <div className="w-8 h-8 flex items-center justify-center">
+                {/* Light mode logo */}
+                <Image 
+                  src="/hig-logo-navy.svg" 
+                  alt="Logo" 
+                  width={24} 
+                  height={24}
+                  className="w-6 h-6 dark:hidden"
+                />
+                {/* Dark mode logo */}
                 <Image 
                   src="/hig-logo-white.svg" 
                   alt="Logo" 
                   width={24} 
                   height={24}
-                  className="w-6 h-6"
+                  className="w-6 h-6 hidden dark:block"
                 />
               </div>
               <span className="font-medium">{tab.title}</span>
@@ -179,17 +188,26 @@ export default function AboutUsTabs() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="aspect-[4/3] bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl border border-gray-700/50 overflow-hidden"
+              className="aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 rounded-3xl border border-border overflow-hidden"
             >
-              <div className="w-full h-full flex items-center justify-center text-gray-500">
+              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                 <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-gray-700 rounded-2xl mx-auto flex items-center justify-center">
+                  <div className="w-16 h-16 bg-muted rounded-2xl mx-auto flex items-center justify-center">
+                    {/* Light mode logo */}
+                    <Image 
+                      src="/hig-logo-navy.svg" 
+                      alt="Logo" 
+                      width={32} 
+                      height={32}
+                      className="w-8 h-8 dark:hidden"
+                    />
+                    {/* Dark mode logo */}
                     <Image 
                       src="/hig-logo-white.svg" 
                       alt="Logo" 
                       width={32} 
                       height={32}
-                      className="w-8 h-8"
+                      className="w-8 h-8 hidden dark:block"
                     />
                   </div>
                   <p className="text-sm">
@@ -203,10 +221,10 @@ export default function AboutUsTabs() {
           {/* Content Side */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+              <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
                 {activeContent.title}
               </h3>
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 {activeContent.description}
               </p>
             </div>
@@ -220,8 +238,8 @@ export default function AboutUsTabs() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="flex items-center space-x-3"
                 >
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span className="text-gray-300">{feature}</span>
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-foreground">{feature}</span>
                 </motion.div>
               ))}
             </div>
@@ -235,7 +253,7 @@ export default function AboutUsTabs() {
                   href="https://theinsurancehawk.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-block bg-white text-black px-8 py-4 rounded-xl font-medium hover:bg-gray-100 transition-colors duration-300"
+                  className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition-colors duration-300"
                 >
                   {activeContent.buttonText}
                 </Link>
