@@ -315,7 +315,7 @@ export default function AnimatedFooter() {
           </div>
         </div>
 </div>
-        {/* Medicare Disclaimer Section */}
+        {/* Combined Disclaimers & Legal Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -323,81 +323,70 @@ export default function AnimatedFooter() {
           viewport={{ once: true }}
           className="border-t border-border pt-8 mt-12"
         >
-          <MedicareDisclaimer variant="footer" />
-        </motion.div>
-
-        {/* Compliance & Legal Notices */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="border-t border-border pt-8 mt-8"
-        >
-          <div className="space-y-6 text-xs text-muted-foreground">
-            
-            {/* License Information */}
-            <div className="bg-muted/50 rounded-lg p-4">
-              <h4 className="font-medium text-foreground mb-2">License Information</h4>
-              <p>
-                Hawkins Insurance Group is a licensed insurance agency. All insurance agents are licensed 
-                in their respective states. License numbers available upon request and can be verified 
-                through your state's insurance department website.
-              </p>
+          <div className="space-y-3">
+            {/* Medicare Disclaimer */}
+            <div className=" border-b border-border/50 pb-3">
+              <MedicareDisclaimer variant="footer" />
             </div>
 
-            {/* Additional Disclaimers */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-muted/50 rounded-lg p-4">
-                <h4 className="font-medium text-foreground mb-2">Insurance Disclosure</h4>
+            {/* Legal & Compliance Disclaimers */}
+            <div className="space-y-4 text-xs text-muted-foreground">
+              {/* License Information Row */}
+              <div className="border-b border-border/50 pb-3">
+                <h4 className="font-medium text-foreground mb-1">License Information</h4>
+                <p>
+                  Hawkins Insurance Group is a licensed insurance agency. All insurance agents are licensed 
+                  in their respective states. License numbers available upon request and can be verified 
+                  through your state's insurance department website.
+                </p>
+              </div>
+
+              {/* Insurance Disclosure Row */}
+              <div className="border-b border-border/50 pb-3">
+                <h4 className="font-medium text-foreground mb-1">Insurance Disclosure</h4>
                 <p>
                   Insurance plans have limitations and exclusions. Please review plan documents carefully. 
                   Not all plans are available in all areas. Coverage and premiums may vary by location.
                 </p>
               </div>
               
-              <div className="bg-muted/50 rounded-lg p-4">
-                <h4 className="font-medium text-foreground mb-2">Website Compliance</h4>
+              {/* Website Compliance Row */}
+              <div className="pb-3">
+                <h4 className="font-medium text-foreground mb-1">Website Compliance</h4>
                 <p>
                   This website complies with ADA accessibility guidelines, HIPAA privacy requirements, 
                   and Medicare marketing regulations. We are committed to providing equal access to all users.
                 </p>
               </div>
-            </div>
-          </div>
-        </motion.div>
 
-        {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="border-t border-border pt-8 mt-8"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
-            <div>
-              <p className="text-muted-foreground text-sm">
-                © {new Date().getFullYear()} Hawkins Insurance Group, LLC. All rights reserved.
-              </p>
-              <p className="text-muted-foreground text-sm mt-1">
-                Licensed insurance agency. Not affiliated with or endorsed by Medicare or any government agency.
-              </p>
-            </div>
-            
-            <div className="flex space-x-6 text-sm">
-              <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/accessibility" className="text-muted-foreground hover:text-foreground transition-colors">
-                Accessibility
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Cookie Policy
-              </Link>
+              {/* Copyright and Legal Links */}
+              <div className="border-t border-border pt-6 mt-6">
+                <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
+                  <div>
+                    <p className="text-muted-foreground text-sm">
+                      © {new Date().getFullYear()} Hawkins Insurance Group, LLC. All rights reserved.
+                    </p>
+                    <p className="text-muted-foreground text-sm mt-1">
+                      Licensed insurance agency. Not affiliated with or endorsed by Medicare or any government agency.
+                    </p>
+                  </div>
+                  
+                  <div className="flex space-x-6 text-sm">
+                    <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
+                      Privacy Policy
+                    </Link>
+                    <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
+                      Terms of Service
+                    </Link>
+                    <Link href="/accessibility" className="text-muted-foreground hover:text-foreground transition-colors">
+                      Accessibility
+                    </Link>
+                    <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                      Cookie Policy
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
