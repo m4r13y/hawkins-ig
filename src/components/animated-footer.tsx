@@ -44,7 +44,7 @@ export default function AnimatedFooter() {
   }
 
   return (
-    <footer className="relative bg-black border-t border-gray-800/50">
+    <footer className="relative bg-background border-t border-gray-200 dark:border-gray-800/50">
       {/* Newsletter Section */}
       <div className="relative z-10 border-b border-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

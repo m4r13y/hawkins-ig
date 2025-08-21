@@ -32,7 +32,7 @@ const steps = [
 
 export default function HowWeWork() {
   return (
-    <section className="py-24 bg-black relative">
+    <section className="py-24 bg-background relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -41,8 +41,8 @@ export default function HowWeWork() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">How We Help You</h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">How We Help You</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             A simple, personal approach to finding the right insurance coverage for your family or business.
           </p>
         </motion.div>
@@ -56,11 +56,11 @@ export default function HowWeWork() {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
               whileHover={{ y: -10 }}
-              className={`bg-gradient-to-br ${step.gradient} border border-gray-800/50 rounded-3xl p-8 backdrop-blur-sm hover:border-gray-700/50 transition-all duration-300 group`}
+              className={`bg-card border border-border rounded-3xl p-8 backdrop-blur-sm hover:border-border/70 transition-all duration-300 group shadow-lg`}
             >
               {/* Mockup Area */}
-              <div className="aspect-video bg-gray-900 rounded-2xl mb-6 overflow-hidden relative border border-gray-800">
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 p-4">
+              <div className="aspect-video bg-muted rounded-2xl mb-6 overflow-hidden relative border border-border">
+                <div className="absolute inset-0 bg-muted/50 p-4">
                   {/* Consultation Mockup */}
                   {step.mockup === "consultation" && (
                     <motion.div
@@ -165,13 +165,13 @@ export default function HowWeWork() {
               {/* Content */}
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                  <div className="text-4xl font-bold text-gray-600">{step.number}</div>
+                  <div className="text-4xl font-bold text-muted-foreground">{step.number}</div>
                   <div className="text-blue-400">{step.icon}</div>
                 </div>
-                <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                <h3 className="text-2xl font-bold text-foreground group-hover:text-blue-400 transition-colors">
                   {step.title}
                 </h3>
-                <p className="text-gray-400 leading-relaxed">{step.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
             </motion.div>
           ))}

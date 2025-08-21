@@ -2,8 +2,9 @@ import "./globals.css"
 import { Inter } from "next/font/google"
 import type React from "react"
 import type { Metadata } from "next"
-import ADAAccessibilityWidget from '@/components/ada-accessibility-widget'
+import ADAAccessibilityWidget from '@/components/ada-accessibility-widget-safe'
 import CookieConsent from '@/components/cookie-consent'
+import DarkModeToggle from '@/components/dark-mode-toggle'
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,15 +19,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0f172a" />
+        <meta name="theme-color" content="#ffffff" />
       </head>
       <body className={`${inter.className} bg-background text-foreground antialiased`}>
         {children}
         <ADAAccessibilityWidget />
-        <CookieConsent />
+        <DarkModeToggle />
+        {/* Temporarily disabled cookie consent for testing */}
+        {/* <CookieConsent /> */}
       </body>
     </html>
   )

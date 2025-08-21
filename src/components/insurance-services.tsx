@@ -74,7 +74,7 @@ const services = [
 
 export default function InsuranceServices() {
   return (
-    <section className="py-24 bg-black relative">
+    <section className="py-24 bg-background relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -83,10 +83,10 @@ export default function InsuranceServices() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Insurance Solutions for Every Need
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Comprehensive coverage options tailored to protect what matters most to you and your family.
           </p>
         </motion.div>
@@ -100,24 +100,24 @@ export default function InsuranceServices() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -10 }}
-              className={`bg-gradient-to-br ${service.gradient} border border-gray-800/50 rounded-3xl p-8 backdrop-blur-sm hover:border-gray-700/50 transition-all duration-300 group`}
+              className={`bg-card border border-border rounded-3xl p-8 backdrop-blur-sm hover:border-border/70 transition-all duration-300 group shadow-lg`}
             >
               <div className="flex items-center space-x-4 mb-6">
-                <div className="text-white">{service.icon}</div>
-                <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                <div className="text-foreground">{service.icon}</div>
+                <h3 className="text-2xl font-bold text-foreground group-hover:text-blue-400 transition-colors">
                   {service.title}
                 </h3>
               </div>
               
-              <p className="text-gray-400 leading-relaxed mb-6">
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 {service.description}
               </p>
 
               <div className="space-y-3">
                 {service.features.map((feature, featureIndex) => (
                   <div key={featureIndex} className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">{feature}</span>
-                    <span className="text-green-400">✓</span>
+                    <span className="text-muted-foreground">{feature}</span>
+                    <span className="text-green-500">✓</span>
                   </div>
                 ))}
               </div>

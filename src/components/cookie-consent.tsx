@@ -29,11 +29,19 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
   })
 
   useEffect(() => {
-    // Check if user has already made a choice
-    const cookieConsent = localStorage.getItem('cookie-consent')
-    if (!cookieConsent) {
-      // Show banner after a short delay
-      setTimeout(() => setIsVisible(true), 1000)
+    // Check if user has already made a choice with error handling
+    try {
+      const cookieConsent = localStorage.getItem('cookie-consent')
+      if (!cookieConsent) {
+        // Show banner after a short delay
+        const timer = setTimeout(() => setIsVisible(true), 1000)
+        return () => clearTimeout(timer)
+      }
+    } catch (error) {
+      console.warn('Failed to access localStorage for cookie consent:', error)
+      // Show banner if localStorage fails
+      const timer = setTimeout(() => setIsVisible(true), 1000)
+      return () => clearTimeout(timer)
     }
   }, [])
 

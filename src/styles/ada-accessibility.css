@@ -1,0 +1,86 @@
+/* ADA Accessibility Widget CSS */
+
+/* Font Size Controls using data attributes */
+html[data-font-size="small"] {
+  font-size: 14px;
+}
+
+html[data-font-size="normal"] {
+  font-size: 16px;
+}
+
+html[data-font-size="large"] {
+  font-size: 18px;
+}
+
+html[data-font-size="extra-large"] {
+  font-size: 22px;
+}
+
+/* Contrast Controls using data attributes */
+body[data-contrast="high"] {
+  filter: contrast(150%) brightness(110%);
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+body[data-contrast="high"] * {
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: #ffffff !important;
+}
+
+body[data-contrast="high"] a,
+body[data-contrast="high"] button {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+}
+
+body[data-contrast="inverted"] {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+/* Motion Reduction using data attributes */
+html[data-reduce-motion="true"] *,
+html[data-reduce-motion="true"] *::before,
+html[data-reduce-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus indicators for better accessibility */
+.ada-widget button:focus {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .ada-widget {
+    border: 2px solid;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .ada-widget * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

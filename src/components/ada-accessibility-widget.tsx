@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Accessibility, Eye, EarOff, Type, MousePointer } from 'lucide-react'
+import { Accessibility, Eye, Type, MousePointer, Sun, Moon } from 'lucide-react'
 
 export default function ADAAccessibilityWidget() {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,39 +10,206 @@ export default function ADAAccessibilityWidget() {
     fontSize: 'normal',
     contrast: 'normal',
     reduceMotion: false,
-    screenReader: false
+    darkMode: false
   })
 
+  // Placeholder functions - we'll add functionality incrementally
   const adjustFontSize = (size: string) => {
     setSettings(prev => ({ ...prev, fontSize: size }))
-    
-    // Apply font size changes to document
-    const root = document.documentElement
-    switch (size) {
-      case 'small':
-        root.style.fontSize = '14px'
-        break
-      case 'large':
-        root.style.fontSize = '18px'
-        break
-      case 'extra-large':
-        root.style.fontSize = '22px'
-        break
-      default:
-        root.style.fontSize = '16px'
-    }
+    console.log('Font size changed to:', size)
+    // TODO: Add safe font size changes
   }
 
   const adjustContrast = (contrast: string) => {
     setSettings(prev => ({ ...prev, contrast }))
+    console.log('Contrast changed to:', contrast)
+    // TODO: Add safe contrast changes
+  }
+
+  const toggleReduceMotion = () => {
+    const newValue = !settings.reduceMotion
+    setSettings(prev => ({ ...prev, reduceMotion: newValue }))
+    console.log('Reduce motion:', newValue)
+    // TODO: Add safe motion reduction
+  }
+
+  const toggleDarkMode = () => {
+    const newValue = !settings.darkMode
+    setSettings(prev => ({ ...prev, darkMode: newValue }))
     
-    // Apply contrast changes
-    const body = document.body
+    // Toggle dark mode on the html element
+    const html = document.documentElement
+    if (newValue) {
+      html.classList.add('dark')
+    } else {
+      html.classList.remove('dark')
+    }
+    
+    // Store preference
+    try {
+      localStorage.setItem('ada-dark-mode', newValue.toString())
+    } catch (error) {
+      console.warn('Could not save dark mode preference:', error)
+    }
+    
+    console.log('Dark mode:', newValue)
+  }
+
+  return (
+    <>
+      {/* ADA Widget Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300"
+        aria-label="Open accessibility options"
+        title="Accessibility Options"
+      >
+        <Accessibility className="h-6 w-6" />
+      </button>
+
+      {/* ADA Widget Panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            className="fixed bottom-24 right-6 z-50 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl shadow-2xl w-80 max-h-96 overflow-y-auto"
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center">
+                  <Accessibility className="h-5 w-5 mr-2" />
+                  Accessibility Options
+                </h3>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                  aria-label="Close accessibility options"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Font Size Controls */}
+                <div>
+                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center">
+                    <Type className="h-4 w-4 mr-2" />
+                    Text Size
+                  </h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    {['small', 'normal', 'large', 'extra-large'].map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => adjustFontSize(size)}
+                        className={`p-2 text-xs rounded border transition-colors ${
+                          settings.fontSize === size
+                            ? 'bg-blue-100 border-blue-500 text-blue-700'
+                            : 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100'
+                        }`}
+                      >
+                        {size === 'extra-large' ? 'XL' : size.charAt(0).toUpperCase() + size.slice(1)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Contrast Controls */}
+                <div>
+                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center">
+                    <Eye className="h-4 w-4 mr-2" />
+                    Contrast
+                  </h4>
+                  <div className="space-y-2">
+                    {[
+                      { value: 'normal', label: 'Normal' },
+                      { value: 'high', label: 'High Contrast' },
+                      { value: 'inverted', label: 'Inverted' }
+                    ].map(({ value, label }) => (
+                      <button
+                        key={value}
+                        onClick={() => adjustContrast(value)}
+                        className={`w-full p-2 text-xs rounded border text-left transition-colors ${
+                          settings.contrast === value
+                            ? 'bg-blue-100 border-blue-500 text-blue-700'
+                            : 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Motion Controls */}
+                <div>
+                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center">
+                    <MousePointer className="h-4 w-4 mr-2" />
+                    Motion
+                  </h4>
+                  <button
+                    onClick={toggleReduceMotion}
+                    className={`w-full p-3 rounded border text-sm transition-colors ${
+                      settings.reduceMotion
+                        ? 'bg-green-100 border-green-500 text-green-700'
+                        : 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    {settings.reduceMotion ? 'Motion Reduced ✓' : 'Reduce Motion'}
+                  </button>
+                </div>
+
+                {/* Dark Mode Controls */}
+                <div>
+                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center">
+                    {settings.darkMode ? <Moon className="h-4 w-4 mr-2" /> : <Sun className="h-4 w-4 mr-2" />}
+                    Theme
+                  </h4>
+                  <button
+                    onClick={toggleDarkMode}
+                    className={`w-full p-3 rounded border text-sm transition-colors ${
+                      settings.darkMode
+                        ? 'bg-slate-800 border-slate-600 text-white'
+                        : 'bg-yellow-100 border-yellow-500 text-yellow-800'
+                    }`}
+                  >
+                    {settings.darkMode ? '🌙 Dark Mode' : '☀️ Light Mode'}
+                  </button>
+                </div>
+
+                {/* Reset Button */}
+                <button
+                  onClick={() => {
+                    setSettings({
+                      fontSize: 'normal',
+                      contrast: 'normal',
+                      reduceMotion: false,
+                      darkMode: false
+                    })
+                    // Reset dark mode
+                    document.documentElement.classList.remove('dark')
+                    console.log('Settings reset')
+                  }}
+                  className="w-full p-3 bg-slate-100 dark:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-500 transition-colors text-sm font-medium"
+                >
+                  Reset to Default
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+    
+    // Remove existing contrast classes
     body.classList.remove('high-contrast', 'inverted-contrast')
     
-    if (contrast === 'high') {
+    if (settings.contrast === 'high') {
       body.classList.add('high-contrast')
-    } else if (contrast === 'inverted') {
+    } else if (settings.contrast === 'inverted') {
       body.classList.add('inverted-contrast')
     }
   }
@@ -61,15 +228,24 @@ export default function ADAAccessibilityWidget() {
   }
 
   const announceForScreenReader = (message: string) => {
-    const announcement = document.createElement('div')
-    announcement.setAttribute('aria-live', 'polite')
-    announcement.setAttribute('aria-atomic', 'true')
-    announcement.className = 'sr-only'
-    announcement.textContent = message
-    document.body.appendChild(announcement)
+    // Reuse existing announcement element or create one
+    let announcement = document.getElementById('accessibility-announcement')
+    if (!announcement) {
+      announcement = document.createElement('div')
+      announcement.id = 'accessibility-announcement'
+      announcement.setAttribute('aria-live', 'polite')
+      announcement.setAttribute('aria-atomic', 'true')
+      announcement.className = 'sr-only'
+      document.body.appendChild(announcement)
+    }
     
+    announcement.textContent = message
+    
+    // Clear the message after screen reader has had time to announce it
     setTimeout(() => {
-      document.body.removeChild(announcement)
+      if (announcement) {
+        announcement.textContent = ''
+      }
     }, 1000)
   }
 
