@@ -9,95 +9,76 @@ const teamMembers = [
   {
     id: 1,
     name: "Jonathan Hawkins",
-    title: "Founder & Senior Insurance Advisor",
-    specialties: ["Medicare Supplements", "Life Insurance", "Business Insurance"],
-    licenseNumber: "TX-2345678",
+    title: "Owner | CFP",
+    specialties: ["Health Insurance", "Life Insurance", "Financial Planning"],
+    licenseNumber: "TX-9419848",
+    licensedStates: ["TX", "NM"],
     yearsExperience: 15,
-    education: "Bachelor's in Business Administration, Texas A&M University",
-    certifications: ["LUTCF", "MDRT", "Texas Licensed Agent"],
-    bio: "Michael founded Hawkins Insurance Group with a mission to provide personalized insurance solutions for Texas families and businesses. With over 15 years of experience, he specializes in Medicare planning and has helped thousands of clients navigate complex insurance decisions.",
+    education: "University of Texas",
+    certifications: ["CFP", "Insurance"],
+    bio: "Fort Worth native and UT Austin graduate who enjoys ranch life and Texas Longhorns football. With 13+ years in insurance, I specialize in Medicare, group plans, and individual coverage.",
     achievements: [
-      "Million Dollar Round Table (MDRT) Member",
-      "Top 1% of Medicare Advisors in Texas",
+      "2x National Producer of the Year",
+      "CFP Certified Financial Planner",
       "2,500+ Families Protected",
-      "Industry Excellence Award 2023"
+      "Texas Longhorns Alumni"
     ],
-    image: "/team/jonathan-hawkins.jpg",
+    image: "/jonathan-hawkins.jpg",
     phone: "(817) 800-4253",
     email: "jhawk@hawkinsig.com",
-    linkedin: "https://linkedin.com/in/jonathan-hawkins",
-    languages: ["English", "Spanish"],
-    servingAreas: ["Dallas-Fort Worth", "Houston", "Austin", "San Antonio"]
+    linkedin: "",
+    languages: ["English"],
+    servingAreas: ["Texas"]
   },
   {
     id: 2,
-    name: "Kasey",
-    title: "Senior Benefits Specialist",
+    name: "Kasey Weadon",
+    title: "Group Advisor",
     specialties: ["Group Health Insurance", "Employee Benefits", "COBRA Administration"],
     licenseNumber: "TX-3456789",
+    licensedStates: ["TX"],
     yearsExperience: 12,
     education: "Master's in Human Resources, University of Texas",
     certifications: ["CEBS", "GBA", "Texas Licensed Agent"],
-    bio: "Sarah brings over 12 years of expertise in employee benefits and group insurance. She works closely with businesses to design comprehensive benefit packages that attract and retain top talent while managing costs effectively.",
+    bio: "Kasey brings over 10 years of expertise in employee benefits and group insurance. He works closely with businesses to design comprehensive benefit packages that attract and retain top talent while managing costs effectively.",
     achievements: [
       "Certified Employee Benefit Specialist",
       "500+ Businesses Served",
       "Employee Benefits Excellence Award",
       "Client Retention Rate: 98%"
     ],
-    image: "/team/kasey.jpg",
-    phone: "(555) 234-5678",
+    image: "/Kasey-Weadon.jpg",
+    phone: "(972) 978-5037",
     email: "info@hawkinsig.com",
-    linkedin: "https://linkedin.com/in/sarah-martinez",
+    linkedin: "",
     languages: ["English", "Spanish"],
     servingAreas: ["Dallas-Fort Worth", "Houston", "East Texas"]
   },
   {
     id: 3,
-    name: "Calvin Marley",
-    title: "Family Insurance Advisor",
-    specialties: ["Individual Health Plans", "Family Coverage", "ACA Marketplace"],
-    licenseNumber: "TX-4567890",
-    yearsExperience: 8,
-    education: "Bachelor's in Finance, Rice University",
-    certifications: ["AHIP", "Texas Licensed Agent", "Marketplace Certified"],
-    bio: "David specializes in helping individuals and families find affordable health insurance coverage. His expertise in ACA Marketplace plans and subsidy optimization has saved clients thousands of dollars annually.",
+    name: "Cal Marley",
+    title: "Senior Benefits Specialist",
+    specialties: ["Medicare", "Supplemental Insurance"],
+    licenseNumber: "TX-9419848",
+    licensedStates: ["TX"],
+    yearsExperience: 2,
+    education: "Texas Christian University",
+    certifications: ["General Lines Insurance"],
+    bio: "",
     achievements: [
-      "ACA Marketplace Expert",
-      "1,200+ Individuals Covered",
-      "Average Savings: $3,600/year",
-      "Perfect Customer Satisfaction Score"
+      "Licensed Insurance Professional",
+      "Medicare Specialist",
+      "Client-Focused Approach",
+      "Rising Star in Benefits"
     ],
-    image: "/team/cal-marley.jpg",
-    phone: "(555) 345-6789",
+    image: "/cal-marley.png",
+    phone: "(325) 225-5742",
     email: "cal@hawkinsig.com",
-    linkedin: "https://linkedin.com/in/calvin-marley",
-    languages: ["English", "Mandarin"],
-    servingAreas: ["Fort Worth", "Austin", "Central Texas"]
-  },
-  {
-    id: 4,
-    name: "Lisa Thompson",
-    title: "Senior Life Insurance Specialist",
-    specialties: ["Term Life Insurance", "Whole Life Insurance", "Final Expense"],
-    licenseNumber: "TX-5678901",
-    yearsExperience: 10,
-    education: "Bachelor's in Marketing, Baylor University",
-    certifications: ["LUTCF", "FLMI", "Texas Licensed Agent"],
-    bio: "Lisa is passionate about helping families protect their financial future through comprehensive life insurance planning. She takes a consultative approach to understand each family's unique needs and goals.",
-    achievements: [
-      "Life Underwriter Training Council Fellow",
-      "800+ Families Protected",
-      "Life Insurance Expert of the Year",
-      "Community Service Award"
-    ],
-    image: "/team/lisa-thompson.jpg",
-    phone: "(555) 456-7890",
-    email: "info@hawkinsig.com",
-    linkedin: "https://linkedin.com/in/lisa-thompson",
+    linkedin: "",
     languages: ["English"],
-    servingAreas: ["Dallas-Fort Worth", "North Texas", "Oklahoma"]
-  }
+    servingAreas: ["Texas"]
+  },
+
 ]
 
 const teamStats = [
@@ -126,19 +107,6 @@ export default function TeamPage() {
           </p>
 
           {/* Team Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-6"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-500/20 to-slate-600/20 border border-slate-500/30 rounded-full text-sm text-white">
-              <Phone className="w-4 h-4 mr-2" />
-              Call us: (817) 800-4253
-              <Mail className="w-4 h-4 ml-4 mr-2" />
-              Licensed in Texas
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* Team Statistics */}
@@ -175,7 +143,7 @@ export default function TeamPage() {
             transition={{ duration: 0.8 }}
             className="text-3xl font-bold text-white text-center mb-12"
           >
-            Our Licensed Professionals
+          
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -188,35 +156,53 @@ export default function TeamPage() {
                 whileHover={{ y: -10 }}
                 onHoverStart={() => setSelectedMember(member.id)}
                 onHoverEnd={() => setSelectedMember(null)}
-                className="bg-slate-900/50 border border-slate-800/50 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-slate-700/50 transition-all duration-300 group"
+                className="bg-slate-900/50 border border-slate-800/50 overflow-visible backdrop-blur-sm hover:border-slate-700/50 transition-all duration-300 group"
                 style={{
                   boxShadow: selectedMember === member.id ? "0 20px 40px rgba(71, 85, 105, 0.1)" : "none",
+                  borderRadius: "12px 72px 12px 12px",
                 }}
               >
-                {/* Profile Header */}
-                <div className="relative h-64 bg-gradient-to-br from-slate-700 to-slate-800">
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-500/20 to-slate-600/20" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Users className="w-20 h-20 text-white/30" />
-                  </div>
-                  {/* License Badge */}
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-green-500/20 border border-green-500/30 rounded-full px-3 py-1 text-xs text-green-400">
-                      Licensed TX
+                {/* Profile Header with Image in Corner */}
+                <div className="relative p-6 rounded-e-full rounded-s-xl bg-transparent">
+                  {/* Circular Profile Image - Top Right */}
+                  <div className="absolute -top-2 -right-2 z-20">
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="w-48 h-48 rounded-full object-cover border-4 border-slate-800 shadow-xl"
+                      style={{ 
+                        objectPosition: member.id === 1 ? 'center 30%' : 
+                                      member.id === 2 ? 'center 25%' : 
+                                      member.id === 3 ? 'center 35%' : 
+                                      'center 30%'
+                      }}
+                      onError={(e) => {
+                        console.log(`Failed to load image for ${member.name}: ${member.image}`);
+                        // Fallback to placeholder if image fails to load
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.parentElement?.querySelector('.fallback-icon')?.classList.remove('hidden');
+                      }}
+                    />
+                    {/* Fallback icon (hidden by default) */}
+                    <div className="fallback-icon hidden w-36 h-36 rounded-full bg-gradient-to-br from-slate-500/20 to-slate-600/20 border-4 border-slate-600 shadow-xl">
+                      <div className="flex items-center justify-center w-full h-full">
+                        <Users className="w-12 h-12 text-white/30" />
+                      </div>
                     </div>
+                  </div>
+
+                  {/* Basic Info - Left Aligned */}
+                  <div className="pr-40">
+                    <h3 className="text-xl font-bold text-white mb-1 group-hover:text-slate-400 transition-colors">
+                      {member.name}
+                    </h3>
+                    <p className="text-slate-300 text-sm mb-2">{member.title}</p>
+                    <p className="text-slate-400 text-xs mb-3">License: {member.licenseNumber}</p>
+                    <p className="text-slate-400 text-xs">{member.yearsExperience} Years Experience</p>
                   </div>
                 </div>
 
                 <div className="p-6">
-                  {/* Basic Info */}
-                  <div className="mb-6">
-                    <h3 className="text-xl font-bold text-white mb-1 group-hover:text-slate-400 transition-colors">
-                      {member.name}
-                    </h3>
-                    <p className="text-slate-400 text-sm mb-2">{member.title}</p>
-                    <p className="text-slate-500 text-xs">License: {member.licenseNumber} • {member.yearsExperience} Years Experience</p>
-                  </div>
-
                   {/* Specialties */}
                   <div className="mb-6">
                     <h4 className="text-sm font-semibold text-white mb-3">Specialties</h4>
@@ -236,44 +222,62 @@ export default function TeamPage() {
                     </p>
                   </div>
 
-                  {/* Key Achievements */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-white mb-3">Key Achievements</h4>
-                    <ul className="space-y-2">
-                      {member.achievements.slice(0, 2).map((achievement, i) => (
-                        <li key={i} className="text-slate-300 text-xs flex items-center">
-                          <CheckCircle className="w-3 h-3 text-green-400 mr-2 flex-shrink-0" />
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Contact & Languages */}
-                  <div className="border-t border-slate-700/50 pt-4">
-                    <div className="grid grid-cols-2 gap-4 text-xs">
-                      <div>
-                        <p className="text-slate-500 mb-1">Languages</p>
-                        <p className="text-slate-300">{member.languages.join(", ")}</p>
+                  {/* Key Achievements and Licensed States + Contact & Languages Grid */}
+                  <div className="grid grid-cols-2 gap-6 mb-6">
+                    {/* Left Column - Key Achievements and Licensed States */}
+                    <div>
+                      {/* Key Achievements */}
+                      <div className="mb-6">
+                        <h4 className="text-sm font-semibold text-white mb-3">Key Achievements</h4>
+                        <ul className="space-y-2">
+                          {member.achievements.slice(0, 2).map((achievement, i) => (
+                            <li key={i} className="text-slate-300 text-xs flex items-center">
+                              <CheckCircle className="w-3 h-3 text-green-400 mr-2 flex-shrink-0" />
+                              {achievement}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
+
+                      {/* Licensed States */}
                       <div>
-                        <p className="text-slate-500 mb-1">Serving Areas</p>
-                        <p className="text-slate-300">{member.servingAreas[0]}+</p>
+                        <h4 className="text-sm font-semibold text-white mb-3">Licensed States</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {member.licensedStates.map((state, i) => (
+                            <span key={i} className="bg-green-500/20 border border-green-500/30 rounded-full px-3 py-1 text-xs text-green-400">
+                              {state}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className="flex justify-between items-center mt-4">
-                      <div className="flex space-x-2">
-                        <Phone className="w-4 h-4 text-slate-400" />
-                        <Mail className="w-4 h-4 text-slate-400" />
-                        <Linkedin className="w-4 h-4 text-slate-400" />
+
+                    {/* Right Column - Contact & Languages */}
+                    <div className="border-l border-slate-700/50 pl-6">
+                      <div className="grid grid-cols-1 gap-4 text-xs mb-4">
+                        <div>
+                          <p className="text-slate-500 mb-1">Languages</p>
+                          <p className="text-slate-300">{member.languages.join(", ")}</p>
+                        </div>
+                        <div>
+                          <p className="text-slate-500 mb-1">Serving Areas</p>
+                          <p className="text-slate-300">{member.servingAreas[0]}+</p>
+                        </div>
                       </div>
-                      <AnimatedButton className="bg-white text-black hover:bg-slate-100 px-4 py-2 text-xs">
-                        <span className="flex items-center">
-                          Contact {member.name.split(' ')[0]}
-                          <ArrowRight className="ml-1 h-3 w-3" />
-                        </span>
-                      </AnimatedButton>
+                      
+                      <div className="flex justify-between items-center">
+                        <div className="flex space-x-2">
+                          <Phone className="w-4 h-4 text-slate-400" />
+                          <Mail className="w-4 h-4 text-slate-400" />
+                          <Linkedin className="w-4 h-4 text-slate-400" />
+                        </div>
+                        <AnimatedButton className="bg-white text-black hover:bg-slate-100 px-4 py-2 text-xs">
+                          <span className="flex items-center">
+                            Contact {member.name.split(' ')[0]}
+                            <ArrowRight className="ml-1 h-3 w-3" />
+                          </span>
+                        </AnimatedButton>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -281,34 +285,6 @@ export default function TeamPage() {
             ))}
           </div>
         </div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-center bg-slate-900/50 border border-slate-800/50 rounded-3xl p-12 backdrop-blur-sm"
-        >
-          <h2 className="text-3xl font-bold text-white mb-6">Ready to Work with Our Team?</h2>
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-8">
-            Our licensed professionals are ready to help you find the perfect insurance solution. 
-            Schedule a consultation with the team member who best matches your needs.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <AnimatedButton className="bg-white text-black hover:bg-slate-100 px-8 py-4 text-lg">
-              <span className="flex items-center">
-                Schedule Consultation
-                <Calendar className="ml-2 h-5 w-5" />
-              </span>
-            </AnimatedButton>
-            <AnimatedButton
-              variant="outline"
-              className="border-slate-600 text-slate-300 hover:bg-slate-800 px-8 py-4 text-lg"
-            >
-              View All Credentials
-            </AnimatedButton>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

@@ -2,7 +2,7 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
 import { getFirestore, type Firestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getFunctions, type Functions } from "firebase/functions";
+import { getFunctions, type Functions, httpsCallable } from "firebase/functions";
 import { getAnalytics } from "firebase/analytics";
 import type { FirebaseStorage } from 'firebase/storage';
 
@@ -108,6 +108,36 @@ export const ensureFirebaseInitialized = () => {
     return initializeFirebase();
   }
   return isFirebaseConfigured;
+};
+
+// Firebase Functions utilities
+export const submitWaitlistEntry = async (data: {
+  name: string;
+  email: string;
+  feature: string;
+  product: string;
+}) => {
+  ensureFirebaseInitialized();
+  if (!functions) {
+    throw new Error('Firebase functions not initialized');
+  }
+  
+  const submitWaitlist = httpsCallable(functions, 'submitWaitlistEntry');
+  return await submitWaitlist(data);
+};
+
+export const submitNewsletterSubscription = async (data: {
+  email: string;
+  name?: string;
+  source?: string;
+}) => {
+  ensureFirebaseInitialized();
+  if (!functions) {
+    throw new Error('Firebase functions not initialized');
+  }
+  
+  const submitNewsletter = httpsCallable(functions, 'submitNewsletterSubscription');
+  return await submitNewsletter(data);
 };
 
 export { app, db, storage, functions, analytics, isFirebaseConfigured };

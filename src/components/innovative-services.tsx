@@ -68,7 +68,7 @@ export default function InnovativeServices() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Insurance Solutions for Every Need
+            Insurance for Every Need
           </h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
             Comprehensive coverage options tailored to protect what matters most to you and your family.

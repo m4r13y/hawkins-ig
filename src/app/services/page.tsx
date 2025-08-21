@@ -6,6 +6,8 @@ import AnimatedBackground from "@/components/animated-background"
 import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
 import ServicesPage from "@/components/services-page"
+import InsuranceSavingsCalculator from "@/components/insurance-savings-calculator"
+import InsuranceConsultationTool from "@/components/insurance-consultation-tool"
 import BackgroundPaths from "@/components/background-paths"
 
 export default function Services() {
@@ -22,6 +24,8 @@ export default function Services() {
       <div className="relative z-10">
         <Navbar />
         <ServicesPage />
+      {/*  <InsuranceConsultationTool /> 
+        <InsuranceSavingsCalculator /> */}
         <AnimatedFooter />
       </div>
     </div>

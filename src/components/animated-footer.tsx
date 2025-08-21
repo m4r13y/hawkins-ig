@@ -7,16 +7,40 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Instagram, Twitter, Linkedin, Youtube, Mail, Phone, MapPin, ArrowRight } from "lucide-react"
 import AnimatedButton from "./animated-button"
+import { submitNewsletterSubscription } from "@/lib/firebase"
 
 export default function AnimatedFooter() {
   const [email, setEmail] = useState("")
   const [isSubscribed, setIsSubscribed] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubscribed(true)
-    setTimeout(() => setIsSubscribed(false), 3000)
-    setEmail("")
+    if (!email.trim()) return
+    
+    setIsSubmitting(true)
+    
+    try {
+      const result = await submitNewsletterSubscription({
+        email: email.trim(),
+        source: 'footer_newsletter'
+      })
+      
+      const responseData = result.data as any
+      
+      if (responseData?.success) {
+        setIsSubscribed(true)
+        setEmail("")
+        setTimeout(() => setIsSubscribed(false), 5000)
+      } else {
+        throw new Error('Subscription failed')
+      }
+    } catch (error: any) {
+      console.error("Newsletter subscription error:", error)
+      alert(error.message || "There was an error subscribing. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -58,9 +82,20 @@ export default function AnimatedFooter() {
               </div>
               <AnimatedButton
                 type="submit"
-                className="bg-white text-black hover:bg-gray-100"
+                disabled={isSubmitting}
+                className="bg-white text-black hover:bg-gray-100 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                <ArrowRight className="h-5 w-5" />
+                {isSubmitting ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="h-5 w-5"
+                  >
+                    ⟳
+                  </motion.div>
+                ) : (
+                  <ArrowRight className="h-5 w-5" />
+                )}
               </AnimatedButton>
             </div>
             {isSubscribed && (

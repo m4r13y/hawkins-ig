@@ -1,375 +1,777 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
-import { ArrowRight, Heart, Users, Building, Shield, Phone, Plus } from "lucide-react"
+import { 
+  Stethoscope, 
+  Users, 
+  Building, 
+  Smile, 
+  HeartHandshake, 
+  Plus, 
+  CheckCircle, 
+  ArrowRight,
+  TrendingUp,
+  DollarSign,
+  Shield,
+  Award,
+  Briefcase,
+  UserPlus,
+  Calculator,
+  ChevronDown,
+  Filter,
+  Search,
+  X
+} from "lucide-react"
 import AnimatedButton from "./animated-button"
 import Link from "next/link"
+import { submitWaitlistEntry } from "@/lib/firebase"
+
+const clientServices = [
+  {
+    id: 'medicare',
+    title: "Medicare Plans",
+    shortDesc: "Complete Medicare coverage solutions",
+    description: "Comprehensive Medicare coverage including supplements, advantage plans, and prescription drug coverage.",
+    icon: <Stethoscope className="w-8 h-8" />,
+    gradient: "from-blue-500/20 to-blue-600/10",
+    category: "health",
+    features: [
+      "Medicare Supplement Plans",
+      "Medicare Advantage Options", 
+      "Part D Prescription Coverage",
+      "Medigap Insurance"
+    ],
+    pricing: "Free Consultation",
+    benefits: [
+      "Guaranteed renewable coverage",
+      "Access to top-rated carriers",
+      "Personalized plan comparison",
+      "Annual review included"
+    ]
+  },
+  {
+    id: 'family-health',
+    title: "Family Health Plans",
+    shortDesc: "Affordable family health coverage",
+    description: "Guaranteed renewable health plans that give families more control over healthcare costs.",
+    icon: <Users className="w-8 h-8" />,
+    gradient: "from-green-500/20 to-green-600/10",
+    category: "health",
+    features: [
+      "Individual Coverage",
+      "Family Plan Options",
+      "Short-term Insurance",
+      "COBRA Alternatives"
+    ],
+    pricing: "Plans from $200/mo",
+    benefits: [
+      "Flexible coverage options",
+      "National provider networks",
+      "Telehealth benefits included",
+      "No waiting periods"
+    ]
+  },
+  {
+    id: 'group-health',
+    title: "Group Health Insurance", 
+    shortDesc: "Employee benefit solutions",
+    description: "Competitive group benefits for your employees with access to major national carriers.",
+    icon: <Building className="w-8 h-8" />,
+    gradient: "from-purple-500/20 to-purple-600/10",
+    category: "business",
+    features: [
+      "Employee Health Plans",
+      "Dental & Vision Coverage",
+      "Life Insurance Options",
+      "Disability Coverage"
+    ],
+    pricing: "Custom Quotes",
+    benefits: [
+      "Attract top talent",
+      "Tax advantages for employers",
+      "Simple administration",
+      "Multiple carrier options"
+    ]
+  },
+  {
+    id: 'dental-vision',
+    title: "Dental & Vision",
+    shortDesc: "Complete oral and vision care",
+    description: "Affordable dental and vision coverage to complement your health insurance.",
+    icon: <Smile className="w-8 h-8" />,
+    gradient: "from-yellow-500/20 to-yellow-600/10",
+    category: "supplemental",
+    features: [
+      "Routine Cleanings Covered",
+      "Vision Exams & Frames",
+      "No Waiting Periods",
+      "Preventive Care Included"
+    ],
+    pricing: "Plans from $15/mo",
+    benefits: [
+      "Immediate coverage available",
+      "Large provider networks",
+      "Family discounts",
+      "Orthodontics included"
+    ]
+  },
+  {
+    id: 'life-insurance',
+    title: "Life Insurance",
+    shortDesc: "Protect your family's future",
+    description: "Term and permanent life insurance options to protect your family's financial future.",
+    icon: <HeartHandshake className="w-8 h-8" />,
+    gradient: "from-red-500/20 to-red-600/10",
+    category: "protection",
+    features: [
+      "Term Life Insurance",
+      "Whole Life Insurance",
+      "Universal Life Options",
+      "Final Expense Coverage"
+    ],
+    pricing: "Plans from $25/mo",
+    benefits: [
+      "No medical exam options",
+      "Flexible payment terms",
+      "Cash value accumulation",
+      "Living benefits available"
+    ]
+  },
+  {
+    id: 'supplemental',
+    title: "Supplemental Coverage",
+    shortDesc: "Extra protection for unexpected costs",
+    description: "Additional protection including hospital indemnity, cancer insurance, and accident coverage.",
+    icon: <Plus className="w-8 h-8" />,
+    gradient: "from-orange-500/20 to-orange-600/10",
+    category: "supplemental",
+    features: [
+      "Hospital Indemnity Plans",
+      "Cancer Insurance",
+      "Accident Coverage",
+      "Critical Illness Protection"
+    ],
+    pricing: "Plans from $10/mo",
+    benefits: [
+      "Cash benefits paid directly",
+      "No network restrictions",
+      "Portable coverage",
+      "Quick claim processing"
+    ]
+  },
+]
+
+const agentServices = [
+  {
+    id: 'lead-generation',
+    title: "Lead Generation System",
+    shortDesc: "Warm leads delivered daily",
+    description: "Proprietary technology platform that generates high-quality, qualified leads for insurance agents.",
+    icon: <TrendingUp className="w-8 h-8" />,
+    gradient: "from-yellow-500/20 to-yellow-600/10",
+    category: "sales",
+    features: [
+      "Warm Lead Generation",
+      "AI-Powered Qualification",
+      "Real-Time Lead Delivery",
+      "Lead Quality Guarantee"
+    ],
+    pricing: "Performance Based",
+    benefits: [
+      "No cold calling required",
+      "Pre-qualified prospects",
+      "Exclusive territory rights",
+      "24/7 lead flow"
+    ]
+  },
+  {
+    id: 'commission',
+    title: "Commission Structure",
+    shortDesc: "Industry-leading compensation",
+    description: "Competitive commission rates with performance bonuses and residual income opportunities.",
+    icon: <DollarSign className="w-8 h-8" />,
+    gradient: "from-green-500/20 to-green-600/10",
+    category: "compensation",
+    features: [
+      "High Commission Rates",
+      "Performance Bonuses",
+      "Residual Income",
+      "Fast Payment Processing"
+    ],
+    pricing: "Up to 120% Commission",
+    benefits: [
+      "Weekly commission payments",
+      "No charge backs for 2 years",
+      "Bonus opportunities",
+      "Lifetime renewals"
+    ]
+  },
+  {
+    id: 'training',
+    title: "Training & Certification",
+    shortDesc: "Complete success system",
+    description: "Comprehensive training programs to help agents succeed in the insurance industry.",
+    icon: <Award className="w-8 h-8" />,
+    gradient: "from-blue-500/20 to-blue-600/10",
+    category: "support",
+    features: [
+      "Product Training",
+      "Sales Techniques",
+      "Compliance Education",
+      "Continuing Education"
+    ],
+    pricing: "Included at No Cost",
+    benefits: [
+      "Live and recorded training",
+      "One-on-one mentoring",
+      "Certification assistance",
+      "Ongoing education credits"
+    ]
+  },
+  {
+    id: 'technology',
+    title: "Technology Platform",
+    shortDesc: "All-in-one business tools",
+    description: "State-of-the-art CRM and quoting tools to streamline your sales process.",
+    icon: <Calculator className="w-8 h-8" />,
+    gradient: "from-purple-500/20 to-purple-600/10",
+    category: "tools",
+    features: [
+      "Integrated CRM System",
+      "Real-Time Quoting",
+      "Application Processing",
+      "Commission Tracking"
+    ],
+    pricing: "Free Platform Access",
+    benefits: [
+      "Mobile-optimized platform",
+      "Automated follow-up",
+      "Real-time reporting",
+      "API integrations"
+    ]
+  },
+  {
+    id: 'marketing',
+    title: "Marketing Support",
+    shortDesc: "Professional brand building",
+    description: "Professional marketing materials and campaign support to build your brand.",
+    icon: <Briefcase className="w-8 h-8" />,
+    gradient: "from-pink-500/20 to-pink-600/10",
+    category: "support",
+    features: [
+      "Branded Marketing Materials",
+      "Digital Marketing Support",
+      "Social Media Templates",
+      "Local Advertising Support"
+    ],
+    pricing: "Marketing Budget Provided",
+    benefits: [
+      "Custom branded materials",
+      "Social media management",
+      "Website development",
+      "Local SEO optimization"
+    ]
+  },
+  {
+    id: 'recruitment',
+    title: "Agent Recruitment",
+    shortDesc: "Build your own agency",
+    description: "Opportunity to build your own agency and recruit sub-agents for additional income.",
+    icon: <UserPlus className="w-8 h-8" />,
+    gradient: "from-cyan-500/20 to-cyan-600/10",
+    category: "growth",
+    features: [
+      "Agency Building Support",
+      "Recruitment Training",
+      "Override Commissions",
+      "Team Management Tools"
+    ],
+    pricing: "Additional Revenue Stream",
+    benefits: [
+      "Passive income potential",
+      "Leadership development",
+      "Team building rewards",
+      "Management bonuses"
+    ]
+  },
+]
+
+const tabs = [
+  { id: 'clients', label: 'For Clients', description: 'Find the right insurance coverage for your needs' },
+  { id: 'agents', label: 'For Agents', description: 'Join our team and grow your insurance business' }
+]
+
+const clientCategories = [
+  { id: 'all', label: 'All Services', icon: <Shield className="w-4 h-4" /> },
+  { id: 'health', label: 'Health Insurance', icon: <Stethoscope className="w-4 h-4" /> },
+  { id: 'business', label: 'Business Plans', icon: <Building className="w-4 h-4" /> },
+  { id: 'supplemental', label: 'Supplemental', icon: <Plus className="w-4 h-4" /> },
+  { id: 'protection', label: 'Life & Protection', icon: <HeartHandshake className="w-4 h-4" /> }
+]
+
+const agentCategories = [
+  { id: 'all', label: 'All Resources', icon: <Shield className="w-4 h-4" /> },
+  { id: 'sales', label: 'Sales Tools', icon: <TrendingUp className="w-4 h-4" /> },
+  { id: 'compensation', label: 'Compensation', icon: <DollarSign className="w-4 h-4" /> },
+  { id: 'support', label: 'Support & Training', icon: <Award className="w-4 h-4" /> },
+  { id: 'tools', label: 'Technology', icon: <Calculator className="w-4 h-4" /> },
+  { id: 'growth', label: 'Agency Building', icon: <UserPlus className="w-4 h-4" /> }
+]
 
 export default function ServicesPage() {
-  const [familySize, setFamilySize] = useState(2)
-  const [hoveredService, setHoveredService] = useState<number | null>(null)
+  const [activeTab, setActiveTab] = useState('clients')
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [expandedCard, setExpandedCard] = useState<string | null>(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [waitlistForm, setWaitlistForm] = useState({
+    name: "",
+    email: "",
+    feature: ""
+  })
+  
+  const currentServices = activeTab === 'clients' ? clientServices : agentServices
+  const currentCategories = activeTab === 'clients' ? clientCategories : agentCategories
+  
+  // Filter services based on category and search term
+  const filteredServices = currentServices.filter(service => {
+    const matchesCategory = selectedCategory === 'all' || service.category === selectedCategory
+    const matchesSearch = service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         service.shortDesc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         service.description.toLowerCase().includes(searchTerm.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
 
-  const services = [
-    {
-      title: "Medicare Plans",
-      description:
-        "Comprehensive Medicare coverage including supplements, advantage plans, and prescription drug coverage.",
-      features: ["Medicare Supplement", "Medicare Advantage", "Part D Prescription", "Medigap Plans"],
-      icon: <Heart className="w-8 h-8" />,
-      gradient: "from-red-500/20 to-red-600/10",
-      price: "Free Consultation",
-      color: "red",
-    },
-    {
-      title: "Group Health Insurance",
-      description: "Competitive group benefits for your employees with access to major national carriers.",
-      features: ["Employee Health Plans", "Dental & Vision", "Life Insurance", "Disability Coverage"],
-      icon: <Building className="w-8 h-8" />,
-      gradient: "from-blue-500/20 to-blue-600/10",
-      price: "Custom Quotes",
-      color: "blue",
-    },
-    {
-      title: "Family Health Plans",
-      description: "Zero-deductible, guaranteed renewable health plans that give families control over healthcare costs.",
-      features: ["Individual Coverage", "Family Plans", "Short-term Options", "COBRA Alternatives"],
-      icon: <Users className="w-8 h-8" />,
-      gradient: "from-slate-500/20 to-slate-600/10",
-      price: "Plans from $200/mo",
-      color: "slate",
-    },
-    {
-      title: "Life Insurance",
-      description: "Term and permanent life insurance options to protect your family's financial future.",
-      features: ["Term Life Insurance", "Whole Life Insurance", "Universal Life", "Final Expense"],
-      icon: <Shield className="w-8 h-8" />,
-      gradient: "from-red-600/20 to-red-700/10",
-      price: "Plans from $25/mo",
-      color: "red",
-    },
-    {
-      title: "Dental & Vision",
-      description: "Affordable dental and vision coverage to complement your health insurance.",
-      features: ["Preventive Care", "Major Dental Work", "Vision Exams", "Frame Allowances"],
-      icon: <Phone className="w-8 h-8" />,
-      gradient: "from-blue-600/20 to-blue-700/10",
-      price: "Plans from $15/mo",
-      color: "blue",
-    },
-    {
-      title: "Supplemental Coverage",
-      description: "Additional protection including hospital indemnity, cancer insurance, and accident coverage.",
-      features: ["Hospital Indemnity", "Cancer Insurance", "Accident Coverage", "Critical Illness"],
-      icon: <Plus className="w-8 h-8" />,
-      gradient: "from-slate-600/20 to-slate-700/10",
-      price: "Plans from $10/mo",
-      color: "slate",
-    },
-  ]
+  const handleTabChange = (newTab: string) => {
+    setActiveTab(newTab)
+    setSelectedCategory('all')
+    setExpandedCard(null)
+    setSearchTerm('')
+  }
 
-  const getColorClasses = (color: string) => {
-    const colors = {
-      red: {
-        icon: "text-red-400",
-        border: "border-red-500/30",
-        bg: "bg-red-500/10",
-        hover: "hover:border-red-400/50",
-        glow: "shadow-red-500/20",
-      },
-      blue: {
-        icon: "text-blue-400",
-        border: "border-blue-500/30",
-        bg: "bg-blue-500/10",
-        hover: "hover:border-blue-400/50",
-        glow: "shadow-blue-500/20",
-      },
-      slate: {
-        icon: "text-slate-300",
-        border: "border-slate-500/30",
-        bg: "bg-slate-500/10",
-        hover: "hover:border-slate-400/50",
-        glow: "shadow-slate-500/20",
-      },
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    try {
+      const result = await submitWaitlistEntry({
+        name: waitlistForm.name,
+        email: waitlistForm.email,
+        feature: waitlistForm.feature,
+        product: "hawknest-admin"
+      })
+      
+      // Firebase functions return data in result.data
+      const responseData = result.data as any
+      
+      if (responseData?.success) {
+        alert(responseData.message || "Thank you for joining the waitlist! We'll notify you when it's ready.")
+        setShowWaitlistPopup(false)
+        setWaitlistForm({ name: "", email: "", feature: "" })
+      } else {
+        throw new Error('Submission failed')
+      }
+    } catch (error: any) {
+      console.error("Waitlist submission error:", error)
+      alert(error.message || "There was an error submitting your information. Please try again.")
+    } finally {
+      setIsSubmitting(false)
     }
-    return colors[color as keyof typeof colors] || colors.blue
+  }
+
+  const getFeatureOptions = () => {
+    return [
+      "Lead Generation System",
+      "Commission Structure", 
+      "Training & Certification",
+      "Technology Platform",
+      "Marketing Support",
+      "Agent Recruitment"
+    ]
   }
 
   return (
-    <section className="py-32 bg-black relative">
+    <section className="relative min-h-screen pt-32 pb-16 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Insurance Solutions</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Solutions for Everyone
+          </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Comprehensive insurance coverage designed to protect what matters most to you and your family
+            Whether you're looking for insurance coverage or wanting to build a successful insurance career, we have the solutions you need.
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-          {services.map((service, index) => {
-            const colorClasses = getColorClasses(service.color)
-            return (
+        {/* Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="flex justify-center mb-12"
+        >
+          <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 rounded-2xl p-2 inline-flex">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => handleTabChange(tab.id)}
+                className={`px-8 py-4 rounded-xl transition-all duration-300 font-semibold ${
+                  activeTab === tab.id
+                    ? 'bg-white text-black shadow-lg'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                }`}
+              >
+                <div className="text-center">
+                  <div className="text-lg">{tab.label}</div>
+                  <div className="text-sm opacity-70">{tab.description}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Search and Filter Controls */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <div className="flex flex-col sm:flex-row gap-6 items-center justify-between">
+            {/* Search Bar */}
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder={`Search ${activeTab === 'clients' ? 'insurance plans' : 'agent resources'}...`}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-gray-900/50 border border-gray-800/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-gray-600/50 transition-colors"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+
+            {/* Category Filter */}
+            <div className="flex flex-wrap gap-2">
+              {currentCategories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium ${
+                    selectedCategory === category.id
+                      ? 'bg-white text-black shadow-lg'
+                      : 'bg-gray-900/50 text-gray-400 hover:text-white hover:bg-gray-800/50 border border-gray-800/50'
+                  }`}
+                >
+                  {category.icon}
+                  {category.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Results Counter */}
+          <div className="text-center mt-6">
+            <p className="text-gray-400">
+              Showing {filteredServices.length} of {currentServices.length} {activeTab === 'clients' ? 'insurance plans' : 'resources'}
+              {searchTerm && ` for "${searchTerm}"`}
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Services Grid with Interactive Cards */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${activeTab}-${selectedCategory}-${searchTerm}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
+          >
+            {filteredServices.map((service, index) => (
               <motion.div
-                key={service.title}
+                key={service.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                onHoverStart={() => setHoveredService(index)}
-                onHoverEnd={() => setHoveredService(null)}
-                className={`relative bg-gray-900/50 border ${colorClasses.border} ${colorClasses.hover} rounded-3xl p-8 backdrop-blur-sm transition-all duration-300 group overflow-hidden`}
-                style={{
-                  boxShadow: hoveredService === index ? `0 25px 50px -12px ${colorClasses.glow}` : "none",
-                }}
+                layout
+                className={`bg-gradient-to-br ${service.gradient} border border-gray-800/50 rounded-2xl backdrop-blur-sm hover:border-gray-700/50 transition-all duration-300 group cursor-pointer overflow-hidden ${
+                  expandedCard === service.id ? 'lg:col-span-2' : ''
+                }`}
+                onClick={() => setExpandedCard(expandedCard === service.id ? null : service.id)}
               >
-                {/* Animated background glow */}
-                <motion.div
-                  className={`absolute inset-0 ${colorClasses.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                  animate={
-                    hoveredService === index
-                      ? {
-                          background: [
-                            `radial-gradient(circle at 20% 50%, ${colorClasses.bg.replace("bg-", "rgba(").replace("/10", ", 0.1)")} 0%, transparent 50%)`,
-                            `radial-gradient(circle at 80% 50%, ${colorClasses.bg.replace("bg-", "rgba(").replace("/10", ", 0.1)")} 0%, transparent 50%)`,
-                            `radial-gradient(circle at 20% 50%, ${colorClasses.bg.replace("bg-", "rgba(").replace("/10", ", 0.1)")} 0%, transparent 50%)`,
-                          ],
-                        }
-                      : {}
-                  }
-                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                />
-
-                <div className="relative z-10">
-                  <div className={`${colorClasses.icon} mb-6`}>{service.icon}</div>
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">
+                {/* Card Header - Always Visible */}
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="text-slate-300 group-hover:text-blue-400 transition-colors">
+                      {service.icon}
+                    </div>
+                    <motion.div
+                      animate={{ rotate: expandedCard === service.id ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ChevronDown className="w-5 h-5 text-gray-400" />
+                    </motion.div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-gray-400 mb-6 leading-relaxed">{service.description}</p>
+                  
+                  <p className="text-gray-400 text-sm mb-4">
+                    {service.shortDesc}
+                  </p>
 
-                  <ul className="space-y-3 mb-8">
-                    {service.features.map((feature, featureIndex) => (
-                      <motion.li
-                        key={featureIndex}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 + featureIndex * 0.1 }}
-                        className="flex items-center text-gray-300"
-                      >
-                        <div className={`w-2 h-2 ${colorClasses.bg.replace("/10", "")} rounded-full mr-3`} />
-                        {feature}
-                      </motion.li>
-                    ))}
-                  </ul>
-
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold text-white">{service.price}</span>
-                    <Link href="/get-started">
-                      <AnimatedButton className="bg-white text-black hover:bg-gray-100">
-                        <span className="flex items-center">
-                          Get Started
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </span>
-                      </AnimatedButton>
-                    </Link>
+                  <div className="flex items-center justify-between">
+                    <div className="text-lg font-semibold text-white">
+                      {service.pricing}
+                    </div>
+                    <div className="text-sm text-gray-400">
+                      Click to {expandedCard === service.id ? 'collapse' : 'expand'}
+                    </div>
                   </div>
                 </div>
+
+                {/* Expanded Content */}
+                <AnimatePresence>
+                  {expandedCard === service.id && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="border-t border-gray-800/50"
+                    >
+                      <div className="p-6 space-y-6">
+                        {/* Full Description */}
+                        <p className="text-gray-300 leading-relaxed">
+                          {service.description}
+                        </p>
+
+                        {/* Features and Benefits in Two Columns */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {/* Features */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3 flex items-center">
+                              <CheckCircle className="w-4 h-4 text-green-400 mr-2" />
+                              What's Included
+                            </h4>
+                            <ul className="space-y-2">
+                              {service.features.map((feature, featureIndex) => (
+                                <motion.li
+                                  key={featureIndex}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.3, delay: featureIndex * 0.1 }}
+                                  className="flex items-center text-gray-300 text-sm"
+                                >
+                                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-3 flex-shrink-0" />
+                                  {feature}
+                                </motion.li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Benefits */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3 flex items-center">
+                              <Shield className="w-4 h-4 text-blue-400 mr-2" />
+                              Key Benefits
+                            </h4>
+                            <ul className="space-y-2">
+                              {service.benefits.map((benefit, benefitIndex) => (
+                                <motion.li
+                                  key={benefitIndex}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.3, delay: benefitIndex * 0.1 }}
+                                  className="flex items-center text-gray-300 text-sm"
+                                >
+                                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full mr-3 flex-shrink-0" />
+                                  {benefit}
+                                </motion.li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                          {activeTab === 'clients' ? (
+                            <>
+                              <Link href="/contact" className="flex-1">
+                                <AnimatedButton className="w-full bg-white text-black hover:bg-gray-100">
+                                  <span className="flex items-center justify-center">
+                                    Speak to Agent
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                  </span>
+                                </AnimatedButton>
+                              </Link>
+                              <Link href="/quotes" className="flex-1">
+                                <AnimatedButton className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10">
+                                  Get Quotes
+                                </AnimatedButton>
+                              </Link>
+                            </>
+                          ) : (
+                            <AnimatedButton 
+                              onClick={() => setShowWaitlistPopup(true)}
+                              className="w-full bg-white text-black hover:bg-gray-100"
+                            >
+                              <span className="flex items-center justify-center">
+                                Join Waitlist
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </span>
+                            </AnimatedButton>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
-            )
-          })}
-        </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Trust Badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center mb-16"
-        >
-          <h3 className="text-2xl font-bold text-white mb-8">Licensed & Trusted</h3>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            <div className="bg-blue-600 rounded-lg p-4 text-white font-semibold">Texas Licensed Agents</div>
-            <div className="bg-green-600 rounded-lg p-4 text-white font-semibold">Family Owned Business</div>
-            <div className="bg-gray-800 rounded-lg p-4 text-white font-semibold">10+ Years Experience</div>
-            <div className="bg-red-600 rounded-lg p-4 text-white font-semibold">2000+ Clients Served</div>
-          </div>
-        </motion.div>
-
-        {/* Insurance Consultation Tool */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700/50 rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden"
-          id="consultation-tool"
-        >
-          {/* Animated background */}
+        {/* No Results Message */}
+        {filteredServices.length === 0 && (
           <motion.div
-            className="absolute inset-0 opacity-30"
-            animate={{
-              background: [
-                "radial-gradient(circle at 20% 20%, rgba(71,85,105,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 80%, rgba(30,41,59,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 80%, rgba(71,85,105,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 20%, rgba(30,41,59,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 20%, rgba(71,85,105,0.1) 0%, transparent 50%)",
-              ],
-            }}
-            transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY }}
-          />
-
-          <div className="relative z-10">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Insurance Needs Assessment</h2>
-              <p className="text-xl text-slate-400">Calculate your estimated coverage needs and potential savings</p>
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-12"
+          >
+            <div className="text-gray-400 mb-4">
+              <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
+              <h3 className="text-xl font-semibold mb-2">No results found</h3>
+              <p>Try adjusting your search terms or selecting a different category.</p>
             </div>
+            <button
+              onClick={() => {
+                setSearchTerm('')
+                setSelectedCategory('all')
+              }}
+              className="text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Clear all filters
+            </button>
+          </motion.div>
+        )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Family Size Selector */}
-              <div className="space-y-8">
-                <div>
-                  <label className="block text-lg font-medium text-white mb-4">Family Size</label>
-                  <div className="relative">
-                    <input
-                      type="range"
-                      min="1"
-                      max="8"
-                      step="1"
-                      value={familySize}
-                      onChange={(e) => setFamilySize(Number(e.target.value))}
-                      className="w-full h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
-                      style={{
-                        background: `linear-gradient(to right, #475569 0%, #475569 ${((familySize - 1) / (8 - 1)) * 100}%, #334155 ${((familySize - 1) / (8 - 1)) * 100}%, #334155 100%)`,
-                      }}
-                    />
-                    <div className="flex justify-between text-sm text-slate-400 mt-2">
-                      <span>1</span>
-                      <span>8+</span>
-                    </div>
-                  </div>
-                  <div className="text-center mt-4">
-                    <span className="text-3xl font-bold text-white">{familySize}</span>
-                    <span className="text-slate-400 ml-2">{familySize === 1 ? 'person' : 'people'}</span>
-                  </div>
-                </div>
-
-                {/* Insurance Process */}
-                <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
-                  <h3 className="text-lg font-semibold text-white mb-4">Our Process</h3>
-                  <div className="space-y-4">
-                    {[
-                      { step: "1", title: "Needs Assessment", desc: "Analyze your current situation" },
-                      { step: "2", title: "Plan Comparison", desc: "Review available options" },
-                      { step: "3", title: "Enrollment Support", desc: "Guide you through signup" },
-                      { step: "4", title: "Ongoing Service", desc: "Year-round support & advocacy" },
-                    ].map((item, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="flex items-center space-x-4"
-                      >
-                        <div className="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                          {item.step}
-                        </div>
-                        <div>
-                          <div className="text-white font-medium">{item.title}</div>
-                          <div className="text-slate-400 text-sm">{item.desc}</div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Results */}
-              <div className="space-y-8">
-                {/* Coverage Indicator */}
-                <div className="relative w-64 h-64 mx-auto">
-                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="40"
-                      stroke="currentColor"
-                      strokeWidth="8"
-                      fill="none"
-                      className="text-slate-700"
-                    />
-                    <motion.circle
-                      cx="50"
-                      cy="50"
-                      r="40"
-                      stroke="url(#gradientInsurance)"
-                      strokeWidth="8"
-                      fill="none"
-                      strokeLinecap="round"
-                      initial={{ strokeDasharray: "0 251.2" }}
-                      animate={{
-                        strokeDasharray: `${(familySize / 8) * 251.2} 251.2`,
-                      }}
-                      transition={{ duration: 1, ease: "easeOut" }}
-                    />
-                    <defs>
-                      <linearGradient id="gradientInsurance" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#475569" />
-                        <stop offset="50%" stopColor="#64748b" />
-                        <stop offset="100%" stopColor="#94a3b8" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <motion.div
-                        key={familySize}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="text-2xl font-bold text-white"
-                      >
-                        ${(familySize * 450).toLocaleString()}
-                      </motion.div>
-                      <div className="text-slate-400 text-sm">Est. Monthly</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Coverage Estimates */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
-                    <div className="text-2xl font-bold text-white mb-1">
-                      ${(familySize * 5400).toLocaleString()}
-                    </div>
-                    <div className="text-slate-400 text-sm">Annual Premium</div>
-                  </div>
-
-                  <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
-                    <div className="text-2xl font-bold text-white mb-1">
-                      ${(familySize * 15000).toLocaleString()}
-                    </div>
-                    <div className="text-slate-400 text-sm">Coverage Value</div>
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <AnimatedButton className="bg-white text-black hover:bg-slate-100 px-8 py-4 text-lg">
-                    <span className="flex items-center">
-                      Schedule Consultation
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </span>
-                  </AnimatedButton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
+
+      {/* Waitlist Popup */}
+      <AnimatePresence>
+        {showWaitlistPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowWaitlistPopup(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-md w-full"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-white">Join the Waitlist</h3>
+                <button
+                  onClick={() => setShowWaitlistPopup(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <p className="text-gray-300 mb-6">
+                Be the first to know when HawkNest-Admin is ready! We'll notify you as soon as it's available.
+              </p>
+
+              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    value={waitlistForm.name}
+                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, name: e.target.value }))}
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={waitlistForm.email}
+                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                    placeholder="Enter your email address"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="feature" className="block text-sm font-medium text-gray-300 mb-2">
+                    Most Interested Feature
+                  </label>
+                  <select
+                    id="feature"
+                    required
+                    value={waitlistForm.feature}
+                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, feature: e.target.value }))}
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none"
+                  >
+                    <option value="">Select a feature</option>
+                    {getFeatureOptions().map((feature, index) => (
+                      <option key={index} value={feature}>{feature}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 py-3 rounded-xl font-medium transition-colors duration-300"
+                >
+                  {isSubmitting ? "Joining Waitlist..." : "Join Waitlist"}
+                </motion.button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

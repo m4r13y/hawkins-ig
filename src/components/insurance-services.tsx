@@ -1,44 +1,74 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Heart, Users, Building, Shield, Phone, Plus } from "lucide-react"
+import { Stethoscope, Users, Building, Smile, HeartHandshake, Plus } from "lucide-react"
 
 const services = [
   {
     title: "Medicare Plans",
     description: "Comprehensive Medicare coverage including supplements, advantage plans, and prescription drug coverage.",
-    icon: <Heart className="w-8 h-8" />,
+    icon: <Stethoscope className="w-8 h-8" />,
     gradient: "from-slate-500/20 to-slate-600/10",
+    features: [
+      "Parts A, B, C & D Coverage",
+      "Supplement Plans Available", 
+      "Annual Enrollment Help"
+    ]
   },
   {
     title: "Group Insurance", 
     description: "Competitive group benefits for your employees with access to major national carriers.",
     icon: <Building className="w-8 h-8" />,
     gradient: "from-slate-500/20 to-slate-600/10",
+    features: [
+      "Employee Benefits Package",
+      "Competitive Group Rates",
+      "Full Coverage Options"
+    ]
   },
   {
     title: "Family Health",
-    description: "Zero-deductible, guaranteed renewable health plans that give families more control over healthcare costs.",
+    description: "Guaranteed renewable health plans that give families more control over healthcare costs.",
     icon: <Users className="w-8 h-8" />,
     gradient: "from-slate-500/20 to-slate-600/10",
+    features: [
+      "Low Deductible Options",
+      "Family-Friendly Plans",
+      "Preventive Care Included"
+    ]
   },
   {
     title: "Dental & Vision",
     description: "Affordable dental and vision coverage to complement your health insurance.",
-    icon: <Shield className="w-8 h-8" />,
+    icon: <Smile className="w-8 h-8" />,
     gradient: "from-slate-500/20 to-slate-600/10",
+    features: [
+      "Routine Cleanings Covered",
+      "Vision Exams & Frames",
+      "No Waiting Periods"
+    ]
   },
   {
     title: "Life Insurance",
     description: "Term and permanent life insurance options to protect your family's financial future.",
-    icon: <Phone className="w-8 h-8" />,
+    icon: <HeartHandshake className="w-8 h-8" />,
     gradient: "from-slate-500/20 to-slate-600/10",
+    features: [
+      "Term & Whole Life Options",
+      "No Medical Exam Available",
+      "Accelerated Death Benefits"
+    ]
   },
   {
     title: "Additional Coverage",
     description: "Supplement plans including hospital indemnity, cancer insurance, and accident coverage.",
     icon: <Plus className="w-8 h-8" />,
     gradient: "from-slate-500/20 to-slate-600/10",
+    features: [
+      "Hospital Indemnity Plans",
+      "Cancer & Critical Illness",
+      "Accident Coverage"
+    ]
   },
 ]
 
@@ -84,27 +114,21 @@ export default function InsuranceServices() {
               </p>
 
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Free Consultation</span>
-                  <span className="text-green-400">✓</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Multiple Carriers</span>
-                  <span className="text-green-400">✓</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Ongoing Support</span>
-                  <span className="text-green-400">✓</span>
-                </div>
+                {service.features.map((feature, featureIndex) => (
+                  <div key={featureIndex} className="flex items-center justify-between text-sm">
+                    <span className="text-gray-400">{feature}</span>
+                    <span className="text-green-400">✓</span>
+                  </div>
+                ))}
               </div>
 
-              <motion.button
+           { /*  <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full mt-6 bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 rounded-lg py-3 px-6 transition-all duration-300"
               >
                 Learn More
-              </motion.button>
+              </motion.button> */}
             </motion.div>
           ))}
         </div>

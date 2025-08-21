@@ -4,7 +4,7 @@ import Navbar from "@/components/navbar"
 import Hero from "@/components/hero"
 import HowWeWork from "@/components/how-we-work"
 import InsuranceServices from "@/components/insurance-services"
-import InsuranceSavingsCalculator from "@/components/insurance-savings-calculator"
+import AboutUsTabs from "@/components/about-us-tabs"
 import AnimatedFooter from "@/components/animated-footer"
 import BackgroundPaths from "@/components/background-paths"
 
@@ -20,7 +20,7 @@ export default function Home() {
         <Hero />
         <HowWeWork />
         <InsuranceServices />
-        <InsuranceSavingsCalculator />
+        <AboutUsTabs />
         <AnimatedFooter />
       </div>
     </div>

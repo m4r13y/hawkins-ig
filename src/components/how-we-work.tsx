@@ -1,30 +1,30 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Users, Calculator, Shield } from "lucide-react"
+import { ClipboardList, BarChart3, Monitor } from "lucide-react"
 
 const steps = [
   {
     number: "01",
-    title: "Free Consultation",
-    description: "We listen to your needs and analyze your current coverage to understand your unique situation and goals.",
-    icon: <Users className="w-8 h-8" />,
+    title: "Online Assessments",
+    description: "Our tools quickly capture your family size, coverage needs, and budget to create a personalized insurance profile.",
+    icon: <ClipboardList className="w-8 h-8" />,
     mockup: "consultation",
     gradient: "from-slate-500/20 to-slate-600/10",
   },
   {
     number: "02",
-    title: "Custom Quote & Compare",
-    description: "We shop multiple carriers to find the best plans for your budget and provide transparent comparisons.",
-    icon: <Calculator className="w-8 h-8" />,
+    title: "Instant Plan Comparison",
+    description: "Compare multiple plans instantly with clear pricing. Our smart recommendations highlight the best value options for your specific needs.",
+    icon: <BarChart3 className="w-8 h-8" />,
     mockup: "comparison",
     gradient: "from-slate-500/20 to-slate-600/10",
   },
   {
     number: "03",
-    title: "Enroll & Support",
-    description: "We handle the enrollment process and provide ongoing support for claims, questions, and policy changes.",
-    icon: <Shield className="w-8 h-8" />,
+    title: "Real-Time Support Dashboard",
+    description: "Track your enrollment status, access claims support, and receive ongoing policy management with complete transparency and 24/7 availability.",
+    icon: <Monitor className="w-8 h-8" />,
     mockup: "support",
     gradient: "from-slate-500/20 to-slate-600/10",
   },
@@ -75,11 +75,11 @@ export default function HowWeWork() {
                             <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                           </div>
                           <div className="flex-1 space-y-1">
-                            <div className="bg-gray-700 h-4 w-full rounded flex items-center px-2">
-                              <span className="text-xs text-gray-300">Family Size</span>
+                            <div className="bg-gray-700 h-5 w-full rounded flex items-center px-2">
+                              <span className="text-xs text-gray-300">Coverage Needs</span>
                             </div>
-                            <div className="bg-gray-700 h-4 w-4/5 rounded flex items-center px-2">
-                              <span className="text-xs text-gray-300">Coverage</span>
+                            <div className="bg-gray-700 h-5 w-4/5 rounded flex items-center px-2">
+                              <span className="text-xs text-gray-300">Plan Options</span>
                             </div>
                           </div>
                         </div>
@@ -87,7 +87,7 @@ export default function HowWeWork() {
                           <div className="bg-gray-700 h-12 rounded-lg flex items-center justify-center text-xs text-gray-400">Health</div>
                           <div className="bg-gray-700 h-12 rounded-lg flex items-center justify-center text-xs text-gray-400">Budget</div>
                         </div>
-                        <div className="bg-gray-700 h-8 w-full rounded flex items-center justify-center text-xs text-gray-400">Notes</div>
+                        <div className="bg-gray-700 h-8 w-full rounded flex items-center justify-center text-xs text-gray-400">Cost $</div>
                       </div>
                     </motion.div>
                   )}

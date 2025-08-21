@@ -351,7 +351,6 @@ export default function InsuranceSavingsCalculator() {
                 </div>
                 <div className="space-y-2">
                   {[
-                    "Free consultation & needs analysis",
                     "Shopping multiple carriers for best rates",
                     "Ongoing policy support & claims assistance",
                     "Annual policy reviews",

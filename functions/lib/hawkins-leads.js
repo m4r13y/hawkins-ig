@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLeadAnalytics = exports.onNewLeadCreated = exports.updateLeadStatus = exports.submitContactLead = exports.submitInsuranceLead = void 0;
+exports.submitWaitlistEntry = exports.submitNewsletterSubscription = exports.getLeadAnalytics = exports.onNewLeadCreated = exports.updateLeadStatus = exports.submitContactLead = exports.submitInsuranceLead = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const firestore_1 = require("firebase-admin/firestore");
@@ -334,6 +334,149 @@ exports.getLeadAnalytics = functions.https.onCall(async (data, context) => {
     catch (error) {
         console.error('Error getting lead analytics:', error);
         throw new functions.https.HttpsError('internal', 'Failed to get analytics');
+    }
+});
+// Submit newsletter subscription
+exports.submitNewsletterSubscription = functions.https.onCall(async (data, context) => {
+    try {
+        // Rate limiting check
+        const clientIP = context.rawRequest.ip;
+        if (!(0, security_1.rateLimit)(context.rawRequest)) {
+            (0, security_1.logSecurityEvent)('RATE_LIMIT_EXCEEDED', { ip: clientIP, action: 'newsletter_subscription' });
+            throw new functions.https.HttpsError('resource-exhausted', 'Too many requests. Please try again later.');
+        }
+        // Validate and sanitize input
+        const sanitizedData = (0, security_1.sanitizeObject)(data);
+        // Basic validation
+        if (!sanitizedData.email) {
+            throw new functions.https.HttpsError('invalid-argument', 'Email is required');
+        }
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(sanitizedData.email)) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid email format');
+        }
+        // Check for suspicious activity
+        if ((0, security_1.detectSuspiciousActivity)(sanitizedData, context)) {
+            (0, security_1.logSecurityEvent)('SUSPICIOUS_ACTIVITY', { ip: clientIP, data: sanitizedData, action: 'newsletter_subscription' });
+            throw new functions.https.HttpsError('invalid-argument', 'Submission blocked for security reasons');
+        }
+        // Create newsletter subscription entry
+        const newsletterEntry = {
+            email: sanitizedData.email,
+            name: sanitizedData.name || '',
+            source: sanitizedData.source || 'website',
+            subscribedAt: admin.firestore.FieldValue.serverTimestamp(),
+            status: 'active',
+            clientIP: clientIP
+        };
+        // Check for duplicate email
+        const existingEntry = await db.collection('newsletter')
+            .where('email', '==', sanitizedData.email)
+            .limit(1)
+            .get();
+        if (!existingEntry.empty) {
+            // Update existing entry instead of creating duplicate
+            const docRef = existingEntry.docs[0].ref;
+            await docRef.update({
+                name: sanitizedData.name || '',
+                source: sanitizedData.source || 'website',
+                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+                status: 'active' // Reactivate if previously unsubscribed
+            });
+            return {
+                success: true,
+                message: 'Your subscription has been updated successfully!',
+                id: docRef.id
+            };
+        }
+        else {
+            // Create new entry
+            const docRef = await db.collection('newsletter').add(newsletterEntry);
+            return {
+                success: true,
+                message: 'Thank you for subscribing! You\'ll receive updates about your coverage.',
+                id: docRef.id
+            };
+        }
+    }
+    catch (error) {
+        console.error('Error submitting newsletter subscription:', error);
+        if (error instanceof functions.https.HttpsError) {
+            throw error;
+        }
+        throw new functions.https.HttpsError('internal', 'Failed to submit newsletter subscription');
+    }
+});
+// Submit waitlist entry
+exports.submitWaitlistEntry = functions.https.onCall(async (data, context) => {
+    try {
+        // Rate limiting check
+        const clientIP = context.rawRequest.ip;
+        if (!(0, security_1.rateLimit)(context.rawRequest)) {
+            (0, security_1.logSecurityEvent)('RATE_LIMIT_EXCEEDED', { ip: clientIP, action: 'waitlist_submission' });
+            throw new functions.https.HttpsError('resource-exhausted', 'Too many requests. Please try again later.');
+        }
+        // Validate and sanitize input
+        const sanitizedData = (0, security_1.sanitizeObject)(data);
+        // Basic validation
+        if (!sanitizedData.name || !sanitizedData.email || !sanitizedData.feature || !sanitizedData.product) {
+            throw new functions.https.HttpsError('invalid-argument', 'Missing required fields');
+        }
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(sanitizedData.email)) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid email format');
+        }
+        // Check for suspicious activity
+        if ((0, security_1.detectSuspiciousActivity)(sanitizedData, context)) {
+            (0, security_1.logSecurityEvent)('SUSPICIOUS_ACTIVITY', { ip: clientIP, data: sanitizedData, action: 'waitlist_submission' });
+            throw new functions.https.HttpsError('invalid-argument', 'Submission blocked for security reasons');
+        }
+        // Create waitlist entry
+        const waitlistEntry = {
+            ...sanitizedData,
+            submittedAt: admin.firestore.FieldValue.serverTimestamp(),
+            status: 'active',
+            source: 'website',
+            clientIP: clientIP
+        };
+        // Check for duplicate email for same product
+        const existingEntry = await db.collection('waitlist')
+            .where('email', '==', sanitizedData.email)
+            .where('product', '==', sanitizedData.product)
+            .limit(1)
+            .get();
+        if (!existingEntry.empty) {
+            // Update existing entry instead of creating duplicate
+            const docRef = existingEntry.docs[0].ref;
+            await docRef.update({
+                name: sanitizedData.name,
+                feature: sanitizedData.feature,
+                updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+            return {
+                success: true,
+                message: 'Your waitlist entry has been updated successfully!',
+                id: docRef.id
+            };
+        }
+        else {
+            // Create new entry
+            const docRef = await db.collection('waitlist').add(waitlistEntry);
+            return {
+                success: true,
+                message: 'Thank you for joining the waitlist! We\'ll notify you when it\'s ready.',
+                id: docRef.id
+            };
+        }
+    }
+    catch (error) {
+        console.error('Error submitting waitlist entry:', error);
+        if (error instanceof functions.https.HttpsError) {
+            throw error;
+        }
+        throw new functions.https.HttpsError('internal', 'Failed to submit waitlist entry');
     }
 });
 //# sourceMappingURL=hawkins-leads.js.map

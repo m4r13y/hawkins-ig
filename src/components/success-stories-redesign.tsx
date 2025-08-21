@@ -76,14 +76,10 @@ export default function SuccessStoriesRedesign() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-sm text-green-400 font-medium mb-6">
-            <Shield className="w-4 h-4 mr-2" />
-            Insurance Success Stories
-          </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
             Protecting Families, Securing Futures
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
             See how we've helped families and businesses secure the insurance coverage they need at prices they can afford.
           </p>
         </motion.div>
@@ -99,32 +95,32 @@ export default function SuccessStoriesRedesign() {
               onClick={() => setActiveStory(index)}
               className={`cursor-pointer p-6 rounded-2xl border transition-all duration-300 ${
                 activeStory === index
-                  ? "bg-gradient-to-br from-red-500/10 to-blue-500/10 border-red-500/30"
-                  : "bg-gray-900/30 border-gray-800 hover:border-gray-700"
+                  ? "bg-gradient-to-br from-slate-700/20 to-slate-800/20 border-slate-600/30"
+                  : "bg-slate-900/30 border-slate-800 hover:border-slate-700"
               }`}
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center text-white font-bold text-lg">
                   {story.company.charAt(0)}
                 </div>
                 <div className="ml-4">
                   <h3 className="text-lg font-bold text-white">{story.company}</h3>
-                  <p className="text-sm text-gray-400">{story.industry}</p>
+                  <p className="text-sm text-slate-400">{story.industry}</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-4 mb-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-green-400">{story.results.revenue}</div>
-                  <div className="text-xs text-gray-400">Savings</div>
+                  <div className="text-xs text-slate-400">Savings</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-400">{story.results.leads}</div>
-                  <div className="text-xs text-gray-400">Coverage</div>
+                  <div className="text-2xl font-bold text-slate-300">{story.results.leads}</div>
+                  <div className="text-xs text-slate-400">Coverage</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-red-400">{story.results.conversion}</div>
-                  <div className="text-xs text-gray-400">Satisfaction</div>
+                  <div className="text-2xl font-bold text-slate-300">{story.results.conversion}</div>
+                  <div className="text-xs text-slate-400">Satisfaction</div>
                 </div>
               </div>
 
@@ -134,14 +130,14 @@ export default function SuccessStoriesRedesign() {
                 ))}
               </div>
 
-              <p className="text-gray-300 text-sm leading-relaxed mb-4">"{story.quote}"</p>
+              <p className="text-slate-300 text-sm leading-relaxed mb-4">"{story.quote}"</p>
 
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-white font-medium text-sm">{story.author}</p>
-                  <p className="text-gray-400 text-xs">{story.position}</p>
+                  <p className="text-slate-400 text-xs">{story.position}</p>
                 </div>
-                <ArrowRight className="w-5 h-5 text-gray-400" />
+                <ArrowRight className="w-5 h-5 text-slate-400" />
               </div>
             </motion.div>
           ))}
@@ -153,20 +149,20 @@ export default function SuccessStoriesRedesign() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 rounded-3xl p-8 border border-gray-700"
+          className="bg-gradient-to-br from-slate-900/50 to-slate-800/50 rounded-3xl p-8 border border-slate-700"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-3xl font-bold text-white mb-4">{stories[activeStory].company} Success Story</h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">"{stories[activeStory].quote}"</p>
+              <p className="text-slate-300 text-lg leading-relaxed mb-6">"{stories[activeStory].quote}"</p>
 
               <div className="space-y-4">
                 {stories[activeStory].metrics.map((metric, index) => (
                   <div key={index} className="flex justify-between items-center p-4 bg-black/30 rounded-lg">
-                    <span className="text-gray-400">{metric.label}</span>
+                    <span className="text-slate-400">{metric.label}</span>
                     <div className="flex items-center space-x-4">
-                      <span className="text-red-400">{metric.before}</span>
-                      <ArrowRight className="w-4 h-4 text-gray-500" />
+                      <span className="text-slate-500">{metric.before}</span>
+                      <ArrowRight className="w-4 h-4 text-slate-500" />
                       <span className="text-green-400 font-bold">{metric.after}</span>
                     </div>
                   </div>
@@ -175,7 +171,7 @@ export default function SuccessStoriesRedesign() {
             </div>
 
             <div className="relative">
-              <div className="aspect-video bg-gray-800 rounded-2xl overflow-hidden">
+              <div className="aspect-video bg-slate-800 rounded-2xl overflow-hidden">
                 <img
                   src={stories[activeStory].image || "/placeholder.svg"}
                   alt={`${stories[activeStory].company} results`}
