@@ -9,56 +9,56 @@ const stories = [
     company: "The Johnson Family",
     industry: "Medicare Supplement",
     results: {
-      revenue: "-$2,400",
+      revenue: "$2,400",
       leads: "100%",
       conversion: "0%",
     },
     quote:
-      "Hawkins Insurance Group made Medicare so much easier to understand. We're saving thousands while getting better coverage than we ever had before.",
+      "We were both new to Medicare and had delayed enrollment due to our employer coverage. Hawkins Insurance Group helped us fully transition all our insurance for a smooth Medicare transition. We're saving thousands while getting better coverage than we ever had before.",
     author: "Robert & Mary Johnson",
     position: "Retirees",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/success-stories/HIG-Clients-2.jpg",
     metrics: [
-      { label: "Annual Savings", before: "$6,800", after: "$4,400" },
+      { label: "Annual Savings", before: "$0", after: "$4,400" },
       { label: "Out-of-Pocket Max", before: "$8,500", after: "$3,200" },
-      { label: "Prescription Coverage", before: "Limited", after: "Comprehensive" },
+      { label: "Prescription Coverage", before: "Limited", after: "Full" },
     ],
   },
   {
-    company: "Smith Construction LLC",
-    industry: "Group Health Benefits",
+    company: "Linda Thompson",
+    industry: "Short Term Care Insurance",
     results: {
-      revenue: "-40%",
+      revenue: "25%",
       leads: "100%",
-      conversion: "95%",
-    },
-    quote:
-      "Our employees finally have great benefits they can afford. Retention is up and our team is happier than ever.",
-    author: "Mike Smith",
-    position: "Business Owner",
-    image: "/placeholder.svg?height=400&width=600",
-    metrics: [
-      { label: "Premium Costs", before: "$2,200/mo", after: "$1,320/mo" },
-      { label: "Employee Participation", before: "65%", after: "100%" },
-      { label: "Employee Retention", before: "78%", after: "95%" },
-    ],
-  },
-  {
-    company: "The Martinez Family",
-    industry: "Individual Health Plan",
-    results: {
-      revenue: "-$3,600",
-      leads: "0%",
       conversion: "100%",
     },
-    quote: "David helped us find an ACA plan that saved us over $3,000 a year while providing better coverage for our family of four.",
-    author: "Carlos & Elena Martinez",
-    position: "Parents of Two",
-    image: "/placeholder.svg?height=400&width=600",
+    quote:
+      "Hawkins Insurance Group helped me review my coverage and add a short term care plan to fill my long-term care gap. Now I have peace of mind knowing I'm protected.",
+    author: "Linda Thompson",
+    position: "Retiree",
+    image: "/success-stories/HIG-Clients-3.jpg",
     metrics: [
-      { label: "Annual Premium", before: "$8,400", after: "$4,800" },
-      { label: "Deductible", before: "$12,000", after: "$6,000" },
-      { label: "Subsidy Applied", before: "$0", after: "$3,600" },
+      { label: "LTC Gap Coverage", before: "None", after: "Complete Coverage" },
+      { label: "Care Benefit Amount", before: "$0/day", after: "$1000/day" },
+      { label: "Peace of Mind", before: "Worried", after: "Protected" },
+    ],
+  },
+  {
+    company: "Ladies in Midland",
+    industry: "Medicare & Cancer Insurance",
+    results: {
+      revenue: "15%",
+      leads: "100%",
+      conversion: "100%",
+    },
+    quote: "Hawkins Insurance Group answered all our questions, reviewed our coverages, talked about the importance of cancer insurance, and helped one of us plan for Medicare. We feel so much more prepared now.",
+    author: "Sarah & Patricia",
+    position: "Midland Residents",
+    image: "/success-stories/HIG-Clients-4.jpg",
+    metrics: [
+      { label: "Coverage Review", before: "Incomplete", after: "Complete" },
+      { label: "Cancer Protection", before: "None", after: "Covered" },
+      { label: "Medicare Planning", before: "Confused", after: "Prepared" },
     ],
   },
 ]
@@ -67,7 +67,7 @@ export default function SuccessStoriesRedesign() {
   const [activeStory, setActiveStory] = useState(0)
 
   return (
-    <section className="py-24 bg-black relative">
+    <section className="pt-32 pb-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -100,8 +100,12 @@ export default function SuccessStoriesRedesign() {
               }`}
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center text-white font-bold text-lg">
-                  {story.company.charAt(0)}
+                <div className="w-12 h-12 rounded-xl overflow-hidden">
+                  <img 
+                    src={story.image} 
+                    alt={story.company}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="ml-4">
                   <h3 className="text-lg font-bold text-white">{story.company}</h3>

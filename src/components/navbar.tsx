@@ -7,9 +7,11 @@ import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import AnimatedButton from "./animated-button"
+import SignInModal from "./sign-in-modal"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
 
   return (
     <header className="fixed top-4 left-4 right-4 z-50 mx-auto max-w-7xl">
@@ -51,11 +53,11 @@ export default function Navbar() {
                   Get Started
                 </AnimatedButton>
               </Link>
-              <Link href="/sign-in">
+              <button onClick={() => setIsSignInModalOpen(true)}>
                 <AnimatedButton size="sm" className="bg-transparent border border-white/30 text-white hover:bg-white/10 text-sm">
                   Sign In
                 </AnimatedButton>
-              </Link>
+              </button>
             </div>
 
             <div className="md:hidden">
@@ -82,15 +84,32 @@ export default function Navbar() {
               <Link href="/contact" className="block text-gray-300 hover:text-red-400">
                 Contact
               </Link>
-              <div className="pt-3 border-t border-gray-700">
+              <div className="pt-3 border-t border-gray-700 space-y-3">
                 <Link href="/get-started" className="block">
                   <AnimatedButton className="w-full bg-white text-black hover:bg-gray-100">Get Started</AnimatedButton>
                 </Link>
+                <button 
+                  onClick={() => {
+                    setIsSignInModalOpen(true)
+                    setIsMenuOpen(false)
+                  }}
+                  className="block w-full"
+                >
+                  <AnimatedButton className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10">
+                    Sign In
+                  </AnimatedButton>
+                </button>
               </div>
             </div>
           </div>
         )}
       </nav>
+      
+      {/* Sign In Modal */}
+      <SignInModal 
+        isOpen={isSignInModalOpen} 
+        onClose={() => setIsSignInModalOpen(false)} 
+      />
     </header>
   )
 }

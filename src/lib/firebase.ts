@@ -126,6 +126,22 @@ export const submitWaitlistEntry = async (data: {
   return await submitWaitlist(data);
 };
 
+export const submitContactLead = async (data: {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  source: string;
+}) => {
+  ensureFirebaseInitialized();
+  if (!functions) {
+    throw new Error('Firebase functions not initialized');
+  }
+  
+  const submitContact = httpsCallable(functions, 'submitContactLead');
+  return await submitContact(data);
+};
+
 export const submitNewsletterSubscription = async (data: {
   email: string;
   name?: string;
