@@ -9,13 +9,25 @@ export const metadata: Metadata = {
 export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-background">
-      <div className="pt-32 pb-16">
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Privacy <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Policy</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+              How we protect your personal and health information
+            </p>
+            <p className="text-sm text-muted-foreground">Last Updated: September 10, 2024</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content Section */}
+      <div className="py-16 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none dark:prose-invert">
-            <h1 className="text-4xl font-bold text-foreground mb-8">Privacy Policy</h1>
-            
-            <p className="text-sm text-muted-foreground mb-8">Last Updated: September 10, 2024</p>
-
             <div className="space-y-8">
               {/* Table of Contents */}
               <div className="bg-muted/50 rounded-lg p-6">

@@ -139,7 +139,7 @@ export default function ADAAccessibilityWidget() {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
-            className="fixed bottom-24 right-6 z-50 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl shadow-2xl w-80 max-h-96 overflow-y-auto"
+            className="fixed bottom-24 right-6 z-50 bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-xl shadow-2xl w-80 max-h-96 overflow-y-auto"
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
@@ -171,7 +171,7 @@ export default function ADAAccessibilityWidget() {
                         className={`p-2 text-xs rounded border transition-colors ${
                           settings.fontSize === size
                             ? 'bg-blue-100 border-blue-500 text-blue-700'
-                            : 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100'
+                            : 'bg-gradient-to-br from-secondary via-background to-secondary border-border text-foreground hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary'
                         }`}
                       >
                         {size === 'extra-large' ? 'XL' : size.charAt(0).toUpperCase() + size.slice(1)}
@@ -198,7 +198,7 @@ export default function ADAAccessibilityWidget() {
                         className={`w-full p-2 text-xs rounded border text-left transition-colors ${
                           settings.contrast === value
                             ? 'bg-blue-100 border-blue-500 text-blue-700'
-                            : 'bg-slate-50 border-slate-300 text-slate-700 hover:bg-slate-100'
+                            : 'bg-gradient-to-br from-secondary via-background to-secondary border-border text-foreground hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary'
                         }`}
                       >
                         {label}
@@ -210,7 +210,7 @@ export default function ADAAccessibilityWidget() {
                 {/* Reset Button */}
                 <button
                   onClick={resetSettings}
-                  className="w-full p-3 bg-slate-100 dark:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-500 transition-colors text-sm font-medium"
+                  className="w-full p-3 bg-gradient-to-br from-secondary via-background to-secondary text-foreground rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary transition-colors text-sm font-medium"
                 >
                   Reset to Default
                 </button>

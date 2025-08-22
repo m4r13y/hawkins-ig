@@ -71,19 +71,29 @@ export default function CustomerInquiry() {
   }
 
   return (
-    <section className="py-32 bg-background relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Get Started</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Tell us about your project and we'll get back to you within 24 hours.
-          </p>
-        </motion.div>
+    <>
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Started</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+              Tell us about your project and we'll get back to you within 24 hours.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Content Section */}
+      <section className="py-20 bg-background relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {!isSubmitted ? (
           <motion.div
@@ -296,7 +306,8 @@ export default function CustomerInquiry() {
             </GlowButton>
           </motion.div>
         )}
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }

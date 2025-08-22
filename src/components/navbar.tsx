@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-4 left-4 right-4 z-50 mx-auto max-w-7xl">
-      <nav className="relative bg-background/60 backdrop-blur-md border border-border/50 rounded-2xl shadow-lg overflow-hidden">
+      <nav className="relative bg-background/60 dark:bg-white/10 backdrop-blur-md border border-border/50 rounded-2xl shadow-lg overflow-hidden">
         <div className="relative z-10 px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-8">
@@ -43,9 +43,9 @@ export default function Navbar() {
                   <Link href="/services" className="text-sm text-foreground/80 hover:text-red-400 transition-colors">
                     Services
                   </Link>
-                  <Link href="/quotes" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
+                 {/* <Link href="/quotes" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
                     Quotes
-                  </Link>
+                  </Link> */}
                   <Link href="/tools" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
                     Tools
                   </Link>
@@ -70,7 +70,7 @@ export default function Navbar() {
               </Link>
               <AnimatedButton 
                 size="sm" 
-                className="bg-transparent border border-border text-foreground hover:bg-muted/50 text-sm"
+                className="bg-secondary/50 border border-border text-foreground hover:bg-muted/50 text-sm"
                 onClick={() => setIsSignInModalOpen(true)}
               >
                 Sign In

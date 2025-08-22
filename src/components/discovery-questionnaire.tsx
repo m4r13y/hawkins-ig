@@ -517,7 +517,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                 value={field.value || ""}
                                 className="grid grid-cols-1 gap-4"
                               >
-                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary">
                                   <RadioGroupItem value="already-on-medicare" id="already-on-medicare" />
                                   <Label htmlFor="already-on-medicare" className="flex-1 cursor-pointer">
                                     <div className="font-medium">I'm already on Medicare</div>
@@ -527,7 +527,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                   </Label>
                                 </div>
                                 
-                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary">
                                   <RadioGroupItem value="turning-65-soon" id="turning-65-soon" />
                                   <Label htmlFor="turning-65-soon" className="flex-1 cursor-pointer">
                                     <div className="font-medium">I'm turning 65 soon</div>
@@ -922,7 +922,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                           </h4>
                           
                           {backgroundQuotes.map((quote: QuoteResult, index: number) => (
-                            <div key={index} className="p-6 border rounded-lg hover:border-blue-300 transition-colors bg-white dark:bg-gray-800">
+                            <div key={index} className="p-6 border rounded-lg hover:border-blue-300 transition-colors bg-gradient-to-br from-secondary via-background to-secondary">
                               <div className="flex items-start justify-between mb-4">
                                 <div>
                                   <h5 className="font-bold text-lg text-gray-900 dark:text-white capitalize">

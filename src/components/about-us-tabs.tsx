@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { X } from "lucide-react"
@@ -14,6 +14,7 @@ interface TabContent {
   features: string[]
   buttonText: string
   placeholderImage: string
+  images?: string[]
 }
 
 const tabsData: TabContent[] = [
@@ -24,11 +25,16 @@ const tabsData: TabContent[] = [
     features: [
       "Licensed Insurance Agents",
       "Family-Owned Business", 
-      "10+ Years Experience",
+      "38+ Years Combined Experience",
       "Professional Service"
     ],
     buttonText: "Learn More About Us",
-    placeholderImage: "/api/placeholder/400/300"
+    placeholderImage: "/success-stories/HIG-Clients-2.jpg",
+    images: [
+      "/success-stories/HIG-Clients-2.jpg",
+      "/success-stories/HIG-Clients-3.jpg", 
+      "/success-stories/HIG-Clients-4.jpg"
+    ]
   },
   {
     id: "insurance-hawk",
@@ -41,7 +47,7 @@ const tabsData: TabContent[] = [
       "Guaranteed Laughs Included"
     ],
     buttonText: "Join The Fun",
-    placeholderImage: "/api/placeholder/400/300"
+    placeholderImage: "/insurance-hawk-photo.jpg"
   },
   {
     id: "hawknest",
@@ -55,7 +61,7 @@ const tabsData: TabContent[] = [
       "Explore All Options"
     ],
     buttonText: "Access Portal",
-    placeholderImage: "/api/placeholder/400/300"
+    placeholderImage: "/hawknest-logo.png"
   },
   {
     id: "hawknest-admin",
@@ -68,12 +74,13 @@ const tabsData: TabContent[] = [
       "Automated Workflow Engine"
     ],
     buttonText: "View Demo",
-    placeholderImage: "/api/placeholder/400/300"
+    placeholderImage: "/hawknest-admin-logo.png"
   }
 ]
 
 export default function AboutUsTabs() {
   const [activeTab, setActiveTab] = useState("hawkins-ig")
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [waitlistForm, setWaitlistForm] = useState({
@@ -83,6 +90,40 @@ export default function AboutUsTabs() {
   })
 
   const activeContent = tabsData.find(tab => tab.id === activeTab) || tabsData[0]
+
+  // Auto-cycle through images for Hawkins IG tab
+  useEffect(() => {
+    if (activeTab === "hawkins-ig" && activeContent.images) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => 
+          (prev + 1) % activeContent.images!.length
+        )
+      }, 4000) // Change image every 4 seconds
+
+      return () => clearInterval(interval)
+    }
+  }, [activeTab, activeContent.images])
+
+  // Reset image index when switching tabs
+  useEffect(() => {
+    setCurrentImageIndex(0)
+  }, [activeTab])
+
+  // Function to get the appropriate logo for each tab
+  const getTabLogo = (tabId: string, isDark = false) => {
+    switch (tabId) {
+      case "hawkins-ig":
+        return isDark ? "/hig-logo-white.svg" : "/hig-logo-navy.svg"
+      case "insurance-hawk":
+        return "/insurance-hawk-logo.svg"
+      case "hawknest":
+        return "/hawknest-logo.png"
+      case "hawknest-admin":
+        return "/hawknest-admin-logo.png"
+      default:
+        return isDark ? "/hig-logo-white.svg" : "/hig-logo-navy.svg"
+    }
+  }
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -152,22 +193,34 @@ export default function AboutUsTabs() {
               }`}
             >
               <div className="w-8 h-8 flex items-center justify-center">
-                {/* Light mode logo */}
-                <Image 
-                  src="/hig-logo-navy.svg" 
-                  alt="Logo" 
-                  width={24} 
-                  height={24}
-                  className="w-6 h-6 dark:hidden"
-                />
-                {/* Dark mode logo */}
-                <Image 
-                  src="/hig-logo-white.svg" 
-                  alt="Logo" 
-                  width={24} 
-                  height={24}
-                  className="w-6 h-6 hidden dark:block"
-                />
+                {tab.id === "insurance-hawk" || tab.id === "hawknest" || tab.id === "hawknest-admin" ? (
+                  // Single logo for these tabs (they don't have dark mode variants)
+                  <Image 
+                    src={getTabLogo(tab.id)} 
+                    alt={`${tab.title} Logo`} 
+                    width={24} 
+                    height={24}
+                    className="w-6 h-6"
+                  />
+                ) : (
+                  // HIG logo with dark mode support
+                  <>
+                    <Image 
+                      src={getTabLogo(tab.id, false)} 
+                      alt={`${tab.title} Logo`} 
+                      width={24} 
+                      height={24}
+                      className="w-6 h-6 dark:hidden"
+                    />
+                    <Image 
+                      src={getTabLogo(tab.id, true)} 
+                      alt={`${tab.title} Logo`} 
+                      width={24} 
+                      height={24}
+                      className="w-6 h-6 hidden dark:block"
+                    />
+                  </>
+                )}
               </div>
               <span className="font-medium">{tab.title}</span>
             </motion.button>
@@ -190,31 +243,76 @@ export default function AboutUsTabs() {
               transition={{ duration: 0.5 }}
               className="aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 rounded-3xl border border-border overflow-hidden"
             >
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-muted rounded-2xl mx-auto flex items-center justify-center">
-                    {/* Light mode logo */}
-                    <Image 
-                      src="/hig-logo-navy.svg" 
-                      alt="Logo" 
-                      width={32} 
-                      height={32}
-                      className="w-8 h-8 dark:hidden"
-                    />
-                    {/* Dark mode logo */}
-                    <Image 
-                      src="/hig-logo-white.svg" 
-                      alt="Logo" 
-                      width={32} 
-                      height={32}
-                      className="w-8 h-8 hidden dark:block"
-                    />
+              {activeContent.id === "hawkins-ig" && activeContent.images ? (
+                <div className="w-full h-full relative">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentImageIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-full h-full relative"
+                    >
+                      <Image 
+                        src={activeContent.images[currentImageIndex]} 
+                        alt={`Hawkins Insurance Group Success Story ${currentImageIndex + 1}`} 
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-white text-sm font-medium bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg">
+                        Real clients, real results
+                      </p>
+                      <div className="flex space-x-1">
+                        {activeContent.images.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentImageIndex(index)}
+                            className={`w-2 h-2 rounded-full transition-colors ${
+                              index === currentImageIndex 
+                                ? 'bg-white' 
+                                : 'bg-white/50 hover:bg-white/75'
+                            }`}
+                            aria-label={`View image ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm">
-                    {activeContent.title} Preview
-                  </p>
                 </div>
-              </div>
+              ) : activeContent.id === "insurance-hawk" ? (
+                <div className="w-full h-full relative">
+                  <Image 
+                    src={activeContent.placeholderImage} 
+                    alt="Jonathan 'The Hawk' Hawkins with his hawk in a patriotic setting" 
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white text-sm font-medium bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg">
+                      The Hawk in action!
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full h-full relative flex items-center justify-center">
+                  <Image 
+                    src={activeContent.placeholderImage} 
+                    alt={`${activeContent.title} Logo`} 
+                    fill
+                    className="object-contain p-8"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
+              )}
             </motion.div>
           </div>
 

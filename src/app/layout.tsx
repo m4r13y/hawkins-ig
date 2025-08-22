@@ -3,6 +3,9 @@ import { Inter } from "next/font/google"
 import type React from "react"
 import type { Metadata } from "next"
 import { PerformanceMonitor, ResourceHints, CriticalCSS } from '@/components/performance-monitor'
+import CookieConsentOptimized from '@/components/cookie-consent-optimized'
+import AdaAccessibilityWidgetSafe from '@/components/ada-accessibility-widget-safe'
+import DarkModeToggle from '@/components/dark-mode-toggle'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -38,6 +41,11 @@ export default function RootLayout({
       <body className={`${inter.className} bg-background text-foreground antialiased`}>
         {children}
         <PerformanceMonitor />
+        
+        {/* Global UI Components */}
+        <DarkModeToggle />
+        <AdaAccessibilityWidgetSafe />
+        <CookieConsentOptimized />
       </body>
     </html>
   )

@@ -45,19 +45,29 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="py-32 bg-background relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Get in Touch</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to secure your family's future? Let's discuss your insurance needs and find the perfect coverage at the right price.
-          </p>
-        </motion.div>
+    <>
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Touch</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+              Ready to secure your family's future? Let's discuss your insurance needs and find the perfect coverage at the right price.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Content Section */}
+      <section className="py-20 bg-background relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
@@ -265,7 +275,8 @@ export default function ContactPage() {
             )}
           </motion.div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }

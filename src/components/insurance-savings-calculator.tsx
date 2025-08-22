@@ -145,7 +145,7 @@ export default function InsuranceSavingsCalculator() {
   }
 
   return (
-    <section className="py-24 bg-black relative backdrop-blur-sm">
+    <section className="py-24 bg-background relative backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -154,28 +154,13 @@ export default function InsuranceSavingsCalculator() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Calculate Your Savings</h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Calculate Your Savings</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             See how much you could save on health insurance with our expert guidance and carrier relationships
           </p>
         </motion.div>
 
-        <div className="bg-gray-900/40 border border-gray-700/30 rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden">
-          {/* Subtle animated background */}
-          <motion.div
-            className="absolute inset-0 opacity-20"
-            animate={{
-              background: [
-                "radial-gradient(circle at 20% 20%, rgba(59,130,246,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 80%, rgba(147,51,234,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 80%, rgba(34,197,94,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 20%, rgba(249,115,22,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 20%, rgba(59,130,246,0.1) 0%, transparent 50%)",
-              ],
-            }}
-            transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY }}
-          />
-
+        <div className="bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Step Form */}
             <div className="space-y-8">
@@ -188,8 +173,8 @@ export default function InsuranceSavingsCalculator() {
                         step < currentStep
                           ? "bg-green-500 text-white"
                           : step === currentStep
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-700 text-gray-400"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground"
                       }`}
                     >
                       {step < currentStep ? "✓" : step}
@@ -197,7 +182,7 @@ export default function InsuranceSavingsCalculator() {
                     {step < 4 && (
                       <div
                         className={`w-8 h-1 mx-2 transition-all duration-200 ${
-                          step < currentStep ? "bg-green-500" : "bg-gray-700"
+                          step < currentStep ? "bg-green-500" : "bg-muted"
                         }`}
                       />
                     )}
@@ -215,8 +200,8 @@ export default function InsuranceSavingsCalculator() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">Step 1: Choose Product Category</h3>
-                      <p className="text-gray-400">What type of insurance or financial product are you interested in?</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Step 1: Choose Product Category</h3>
+                      <p className="text-muted-foreground">What type of insurance or financial product are you interested in?</p>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
                       {productCategories.map((category) => (
@@ -225,15 +210,15 @@ export default function InsuranceSavingsCalculator() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleCategorySelect(category.id)}
-                          className="p-6 rounded-xl border border-gray-700/50 bg-gray-800/50 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 text-left group"
+                          className="p-6 rounded-xl border border-border bg-card/50 hover:border-primary/50 hover:bg-primary/10 transition-all duration-200 text-left group"
                         >
                           <div className="flex items-center space-x-4">
-                            <div className="p-3 rounded-lg bg-gray-700/50 group-hover:bg-blue-500/20 transition-colors">
+                            <div className="p-3 rounded-lg bg-muted group-hover:bg-primary/20 transition-colors">
                               {category.icon}
                             </div>
                             <div>
-                              <div className="font-semibold text-white text-lg">{category.name}</div>
-                              <div className="text-gray-400 text-sm">{category.description}</div>
+                              <div className="font-semibold text-foreground text-lg">{category.name}</div>
+                              <div className="text-muted-foreground text-sm">{category.description}</div>
                             </div>
                           </div>
                         </motion.button>
@@ -250,8 +235,8 @@ export default function InsuranceSavingsCalculator() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">Step 2: Choose Product Type</h3>
-                      <p className="text-gray-400">Which specific {selectedCategoryData?.name.toLowerCase()} product interests you?</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Step 2: Choose Product Type</h3>
+                      <p className="text-muted-foreground">Which specific {selectedCategoryData?.name.toLowerCase()} product interests you?</p>
                     </div>
                     <div className="grid grid-cols-1 gap-3">
                       {availableProducts.map((product) => (
@@ -260,15 +245,15 @@ export default function InsuranceSavingsCalculator() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleProductSelect(product.id)}
-                          className="p-4 rounded-xl border border-gray-700/50 bg-gray-800/50 hover:border-red-500/50 hover:bg-red-500/10 transition-all duration-200 text-left"
+                          className="p-4 rounded-xl border border-border bg-card/50 hover:border-red-500/50 hover:bg-red-500/10 transition-all duration-200 text-left"
                         >
-                          <div className="font-medium text-white">{product.name}</div>
+                          <div className="font-medium text-foreground">{product.name}</div>
                         </motion.button>
                       ))}
                     </div>
                     <button
                       onClick={goBack}
-                      className="text-gray-400 hover:text-white transition-colors text-sm flex items-center space-x-2"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center space-x-2"
                     >
                       <span>← Back to categories</span>
                     </button>
@@ -283,8 +268,8 @@ export default function InsuranceSavingsCalculator() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">Step 3: Select Age Range</h3>
-                      <p className="text-gray-400">What's your age range? This helps us calculate accurate pricing.</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Step 3: Select Age Range</h3>
+                      <p className="text-muted-foreground">What's your age range? This helps us calculate accurate pricing.</p>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       {ageRanges.map((age) => (
@@ -293,15 +278,15 @@ export default function InsuranceSavingsCalculator() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleAgeSelect(age.value)}
-                          className="p-4 rounded-xl border border-gray-700/50 bg-gray-800/50 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-200 text-center"
+                          className="p-4 rounded-xl border border-border bg-card/50 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-200 text-center"
                         >
-                          <div className="font-medium text-white text-lg">{age.value}</div>
+                          <div className="font-medium text-foreground text-lg">{age.value}</div>
                         </motion.button>
                       ))}
                     </div>
                     <button
                       onClick={goBack}
-                      className="text-gray-400 hover:text-white transition-colors text-sm flex items-center space-x-2"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center space-x-2"
                     >
                       <span>← Back to products</span>
                     </button>
@@ -316,26 +301,26 @@ export default function InsuranceSavingsCalculator() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">Your Selection</h3>
-                      <p className="text-gray-400">Here's your estimated savings calculation</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Your Selection</h3>
+                      <p className="text-muted-foreground">Here's your estimated savings calculation</p>
                     </div>
-                    <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-6 space-y-4">
+                    <div className="bg-card/30 border border-border rounded-xl p-6 space-y-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Category:</span>
-                        <span className="text-white font-medium">{selectedCategoryData?.name}</span>
+                        <span className="text-muted-foreground">Category:</span>
+                        <span className="text-foreground font-medium">{selectedCategoryData?.name}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Product:</span>
-                        <span className="text-white font-medium">{selectedProductData?.name}</span>
+                        <span className="text-muted-foreground">Product:</span>
+                        <span className="text-foreground font-medium">{selectedProductData?.name}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Age Range:</span>
-                        <span className="text-white font-medium">{selectedAge}</span>
+                        <span className="text-muted-foreground">Age Range:</span>
+                        <span className="text-foreground font-medium">{selectedAge}</span>
                       </div>
                     </div>
                     <button
                       onClick={goBack}
-                      className="text-gray-400 hover:text-white transition-colors text-sm flex items-center space-x-2"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center space-x-2"
                     >
                       <span>← Back to age selection</span>
                     </button>
@@ -344,10 +329,10 @@ export default function InsuranceSavingsCalculator() {
               </div>
 
               {/* Benefits List - Always Visible */}
-              <div className="bg-gray-800/30 border border-gray-700/50 rounded-xl p-4">
+              <div className="bg-card/30 border border-border rounded-xl p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <Calculator className="w-5 h-5 text-green-400" />
-                  <span className="text-sm font-medium text-white">What's Included</span>
+                  <span className="text-sm font-medium text-foreground">What's Included</span>
                 </div>
                 <div className="space-y-2">
                   {[
@@ -358,7 +343,7 @@ export default function InsuranceSavingsCalculator() {
                   ].map((benefit, index) => (
                     <div key={index} className="flex items-center space-x-2">
                       <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
-                      <span className="text-xs text-gray-300">{benefit}</span>
+                      <span className="text-xs text-muted-foreground">{benefit}</span>
                     </div>
                   ))}
                 </div>
@@ -378,7 +363,7 @@ export default function InsuranceSavingsCalculator() {
                       stroke="currentColor"
                       strokeWidth="6"
                       fill="none"
-                      className="text-gray-700"
+                      className="text-muted"
                     />
                     <motion.circle
                       cx="50"
@@ -408,11 +393,11 @@ export default function InsuranceSavingsCalculator() {
                         key={`${selectedCategory}-${selectedProduct}-${selectedAge}`}
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="text-2xl font-bold text-white"
+                        className="text-2xl font-bold text-foreground"
                       >
                         {savingsPercentage()}%
                       </motion.div>
-                      <div className="text-gray-400 text-sm">Savings</div>
+                      <div className="text-muted-foreground text-sm">Savings</div>
                     </div>
                   </div>
                 </div>
@@ -425,11 +410,11 @@ export default function InsuranceSavingsCalculator() {
                       key={`without-${selectedCategory}-${selectedProduct}-${selectedAge}`}
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="text-2xl font-bold text-white mb-1"
+                      className="text-2xl font-bold text-foreground mb-1"
                     >
                       ${calculateWithoutUs(baseRate)}
                     </motion.div>
-                    <div className="text-gray-400 text-sm">per month</div>
+                    <div className="text-muted-foreground text-sm">per month</div>
                   </div>
 
                   <div className="bg-green-900/20 border border-green-500/30 rounded-2xl p-6 text-center">
@@ -438,16 +423,16 @@ export default function InsuranceSavingsCalculator() {
                       key={`with-${selectedCategory}-${selectedProduct}-${selectedAge}`}
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="text-2xl font-bold text-white mb-1"
+                      className="text-2xl font-bold text-foreground mb-1"
                     >
                       ${calculateWithUs(baseRate)}
                     </motion.div>
-                    <div className="text-gray-400 text-sm">per month</div>
+                    <div className="text-muted-foreground text-sm">per month</div>
                   </div>
                 </div>
 
                 {/* Annual Savings */}
-                <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-700/50 text-center">
+                <div className="bg-card/50 rounded-2xl p-6 border border-border text-center">
                   <DollarSign className="w-8 h-8 text-green-400 mx-auto mb-2" />
                   <motion.div
                     key={`annual-${selectedCategory}-${selectedProduct}-${selectedAge}`}
@@ -457,7 +442,7 @@ export default function InsuranceSavingsCalculator() {
                   >
                     ${calculateAnnualSavings().toLocaleString()}
                   </motion.div>
-                  <div className="text-gray-400 text-sm">Annual Savings</div>
+                  <div className="text-muted-foreground text-sm">Annual Savings</div>
                 </div>
 
                 {/* CTA Buttons */}
@@ -490,16 +475,16 @@ export default function InsuranceSavingsCalculator() {
             ) : (
               <div className="flex items-center justify-center h-full">
                 <div className="text-center space-y-4">
-                  <div className="w-24 h-24 bg-gray-800/50 rounded-full flex items-center justify-center mx-auto">
-                    <Calculator className="w-12 h-12 text-gray-600" />
+                  <div className="w-24 h-24 bg-card/50 rounded-full flex items-center justify-center mx-auto">
+                    <Calculator className="w-12 h-12 text-muted-foreground" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Calculate Your Savings</h3>
-                    <p className="text-gray-400 max-w-sm">
+                    <h3 className="text-xl font-bold text-foreground mb-2">Calculate Your Savings</h3>
+                    <p className="text-muted-foreground max-w-sm">
                       Complete the steps on the left to see your personalized savings estimate
                     </p>
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-muted-foreground">
                     Step {currentStep} of 3
                   </div>
                 </div>

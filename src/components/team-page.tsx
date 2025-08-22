@@ -9,19 +9,22 @@ const teamMembers = [
   {
     id: 1,
     name: "Jonathan Hawkins",
-    title: "Owner | CFP",
-    specialties: ["Health Insurance", "Life Insurance", "Financial Planning"],
+    title: "Owner | CFP®, RICP®, CLTC®, CLU®",
+    specialties: ["Financial Planning", "Estate Planning", "Life Insurance", "Long-Term Care", "Retirement Income"],
     licenseNumber: "TX-9419848",
     licensedStates: ["TX", "NM"],
-    yearsExperience: 15,
+    yearsExperience: 14,
     education: "University of Texas",
-    certifications: ["CFP", "Insurance"],
-    bio: "Fort Worth native and UT Austin graduate who enjoys ranch life and Texas Longhorns football. With 13+ years in insurance, I specialize in Medicare, group plans, and individual coverage.",
+    certifications: ["CFP®", "RICP®", "CLTC®", "CLU®"],
+    bio: "Jonathan is a Texas-based life and health insurance broker with 14 years of experience. In that time, he has helped thousands of Americans save money and improve their insurance benefits and coverage. His dedication and client-focused results have earned him national recognition as a top producer with multiple leading insurance carriers. He holds advanced designations including Certified Financial Planner (CFP®), Retirement Income Certified Professional (RICP®), Certified in Long-Term Care (CLTC®), and Chartered Life Underwriter (CLU®). These credentials reflect his specialized expertise in financial planning, retirement income strategies, long-term care solutions, and life insurance and estate planning. With this broad knowledge base, he is well-equipped to address even the most complex insurance and financial needs. He specializes in working with individuals and families who have substantial assets, helping protect their wealth and plan for the future. Drawing on his estate planning knowledge, he offers basic estate planning services—such as drafting wills and trusts—in coordination with his clients' attorneys and financial advisors. This collaborative approach ensures each client's insurance strategy is aligned with their broader legal and financial plans, providing a comprehensive path toward security. Known for his warm, professional, and trustworthy approach, he prides himself on building long-term client relationships and working hand-in-hand with other professionals to achieve the best outcomes for those he serves.",
     achievements: [
-      "2x National Producer of the Year",
-      "CFP Certified Financial Planner",
-      "2,500+ Families Protected",
-      "Texas Longhorns Alumni"
+      "National Recognition as Top Producer",
+      "CFP® Certified Financial Planner",
+      "RICP® Retirement Income Professional", 
+      "CLTC® Long-Term Care Specialist",
+      "CLU® Chartered Life Underwriter",
+      "Thousands of Americans Served",
+      "Estate Planning Services Provider"
     ],
     image: "/jonathan-hawkins.jpg",
     phone: "(817) 800-4253",
@@ -82,7 +85,7 @@ const teamMembers = [
 ]
 
 const teamStats = [
-  { value: "45+", label: "Years Combined Experience", description: "Serving Texas communities" },
+  { value: "38+", label: "Years Combined Experience", description: "Serving Texas communities" },
   { value: "5,000+", label: "Clients Protected", description: "Individuals and families" },
   { value: "99%", label: "Client Satisfaction", description: "Based on reviews" },
   { value: "24/7", label: "Support Available", description: "When you need us most" },
@@ -90,24 +93,42 @@ const teamStats = [
 
 export default function TeamPage() {
   const [selectedMember, setSelectedMember] = useState<number | null>(null)
+  const [expandedBios, setExpandedBios] = useState<Set<number>>(new Set())
+
+  const toggleBio = (memberId: number) => {
+    const newExpandedBios = new Set(expandedBios)
+    if (newExpandedBios.has(memberId)) {
+      newExpandedBios.delete(memberId)
+    } else {
+      newExpandedBios.add(memberId)
+    }
+    setExpandedBios(newExpandedBios)
+  }
 
   return (
-    <section className="py-32 bg-background relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Meet Our Team</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Licensed insurance professionals dedicated to protecting what matters most to you and your family
-          </p>
+    <>
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Meet Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Team</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+              Licensed insurance professionals dedicated to protecting what matters most to you and your family
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-          {/* Team Contact Info */}
-        </motion.div>
+      {/* Main Content Section */}
+      <section className="py-20 bg-background relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Team Statistics */}
         <motion.div
@@ -217,9 +238,53 @@ export default function TeamPage() {
 
                   {/* Bio */}
                   <div className="mb-6">
-                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-                      {member.bio}
-                    </p>
+                    <div className="relative">
+                      <p className={`text-muted-foreground text-sm leading-relaxed transition-all duration-300 ${
+                        expandedBios.has(member.id) ? '' : 'line-clamp-3'
+                      }`}>
+                        {member.bio}
+                      </p>
+                      
+                      {/* Check if bio is long enough to need expansion */}
+                      {member.bio && member.bio.length > 200 && (
+                        <button
+                          onClick={() => toggleBio(member.id)}
+                          className="mt-2 text-primary hover:text-primary/80 text-xs font-medium transition-colors duration-200 flex items-center gap-1"
+                        >
+                          {expandedBios.has(member.id) ? (
+                            <>
+                              Read Less
+                              <motion.svg
+                                initial={false}
+                                animate={{ rotate: expandedBios.has(member.id) ? 180 : 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="w-3 h-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </motion.svg>
+                            </>
+                          ) : (
+                            <>
+                              Read More
+                              <motion.svg
+                                initial={false}
+                                animate={{ rotate: expandedBios.has(member.id) ? 180 : 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="w-3 h-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </motion.svg>
+                            </>
+                          )}
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   {/* Key Achievements and Licensed States + Contact & Languages Grid */}
@@ -285,7 +350,8 @@ export default function TeamPage() {
             ))}
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }

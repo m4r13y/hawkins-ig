@@ -19,9 +19,9 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   
   const stats = [
-    { value: 2000, suffix: "+", label: "Happy Clients Served" },
-    { value: 10, suffix: "+", label: "Years in Business" },
-    { value: 2, suffix: "", label: "Licensed Agents" },
+    { value: 5000, suffix: "+", label: "Happy Clients Served" },
+    { value: 38, suffix: "+", label: "Years Combined Experience" },
+    { value: 3, suffix: "", label: "Licensed Agents" },
   ]
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function Hero() {
       {/* Background Video with Fallback */}
       <div className="absolute inset-0 z-0">
         {/* Fallback Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
         
         {/* Video Background with optimized loading */}
         <video
@@ -79,20 +79,31 @@ export default function Hero() {
           Your browser does not support the video tag.
         </video>
         
-        {/* Theme-aware overlay - lighter in light mode */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/40 dark:from-black/20 dark:via-black/30 dark:to-black/50" />
+        {/* Theme-aware overlay - lighter in light mode, darker in dark mode */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/5 to-white/10 dark:from-black/20 dark:via-black/30 dark:to-black/50" />
         <div className="absolute inset-0 bg-black/0" />
       </div>
 
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center lg:text-left">
-          {/* Reduce animation intensity to prevent CLS */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="space-y-8"
-          >
+          {/* Cloudy background for text visibility */}
+          <div className="relative bg-black/10 dark:bg-black/20 backdrop-blur-xsm rounded-3xl p-8 lg:p-12 border border-white/5">
+            {/* Subtle cloud-like pattern overlay */}
+            <div className="absolute inset-0 opacity-30 rounded-3xl" 
+                 style={{
+                   backgroundImage: `radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 40%),
+                                   radial-gradient(circle at 80% 60%, rgba(255,255,255,0.08) 0%, transparent 40%),
+                                   radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06) 0%, transparent 40%)`,
+                 }}>
+            </div>
+            
+            {/* Reduce animation intensity to prevent CLS */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="relative z-10 space-y-8"
+            >
             <div className="space-y-6">
               <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -143,7 +154,10 @@ export default function Hero() {
               className="flex flex-col gap-6 items-center justify-center lg:justify-start lg:items-start"
             >
               <Link href="/get-started">
-                <AnimatedButton variant="slim">
+                <AnimatedButton 
+                  variant="slim"
+                  className="bg-white hover:bg-white/90 text-black font-semibold shadow-lg"
+                >
                   <span className="flex items-center">
                     Get Started
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -192,7 +206,8 @@ export default function Hero() {
               {/* Stats moved below badges */}
               <CountingStats stats={stats} />
             </motion.div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

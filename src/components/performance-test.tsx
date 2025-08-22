@@ -97,7 +97,7 @@ export default function PerformanceTest() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="w-full max-w-2xl mx-auto p-6 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg shadow-lg">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">Performance Test Results</h2>
         <button 
@@ -114,21 +114,21 @@ export default function PerformanceTest() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-3">
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
             <span className="font-medium">First Contentful Paint (FCP)</span>
             <span className={`font-mono ${getScoreColor('fcp', metrics.fcp || 0)}`}>
               {formatValue('fcp', metrics.fcp)}
             </span>
           </div>
           
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
             <span className="font-medium">Largest Contentful Paint (LCP)</span>
             <span className={`font-mono ${getScoreColor('lcp', metrics.lcp || 0)}`}>
               {formatValue('lcp', metrics.lcp)}
             </span>
           </div>
           
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
             <span className="font-medium">Cumulative Layout Shift (CLS)</span>
             <span className={`font-mono ${getScoreColor('cls', metrics.cls || 0)}`}>
               {formatValue('cls', metrics.cls)}
@@ -137,21 +137,21 @@ export default function PerformanceTest() {
         </div>
         
         <div className="space-y-3">
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
             <span className="font-medium">Time to First Byte (TTFB)</span>
             <span className={`font-mono ${getScoreColor('ttfb', metrics.ttfb || 0)}`}>
               {formatValue('ttfb', metrics.ttfb)}
             </span>
           </div>
           
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
             <span className="font-medium">DOM Content Loaded</span>
             <span className="font-mono text-gray-600">
               {formatValue('dom', metrics.domContentLoaded)}
             </span>
           </div>
           
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <div className="flex justify-between items-center p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
             <span className="font-medium">Load Complete</span>
             <span className="font-mono text-gray-600">
               {formatValue('load', metrics.loadComplete)}

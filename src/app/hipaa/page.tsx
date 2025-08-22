@@ -8,16 +8,27 @@ export const metadata: Metadata = {
 export default function HIPAANotice() {
   return (
     <main className="min-h-screen bg-background">
-      <div className="pt-32 pb-16">
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              HIPAA Notice of <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Privacy Practices</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+              How we protect your health information and your privacy rights
+            </p>
+            <p className="text-sm text-muted-foreground">Effective Date: {new Date().toLocaleDateString()}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content Section */}
+      <div className="py-16 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 lg:p-12">
-            <h1 className="text-4xl font-bold text-white mb-8">HIPAA Notice of Privacy Practices</h1>
-            
             <div className="prose prose-slate prose-invert max-w-none space-y-8">
               <div className="text-slate-300 space-y-6">
-                <p className="text-lg">
-                  <strong>Effective Date:</strong> {new Date().toLocaleDateString()}
-                </p>
 
                 <div className="bg-blue-900/20 border border-blue-700/30 rounded-lg p-6">
                   <h2 className="text-xl font-semibold text-white mb-3">Your Rights Regarding Your Health Information</h2>

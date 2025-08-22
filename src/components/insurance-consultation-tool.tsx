@@ -9,42 +9,27 @@ export default function InsuranceConsultationTool() {
   const [familySize, setFamilySize] = useState(2)
 
   return (
-    <section className="py-16 bg-black relative">
+    <section className="py-16 bg-background relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Insurance Consultation Tool */}         
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700/50 rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden"
+          className="bg-gradient-to-br from-card/80 to-secondary/80 border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden"
           id="consultation-tool"
         >
-          {/* Animated background */}
-          <motion.div
-            className="absolute inset-0 opacity-30"
-            animate={{
-              background: [
-                "radial-gradient(circle at 20% 20%, rgba(71,85,105,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 80%, rgba(30,41,59,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 80%, rgba(71,85,105,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 20%, rgba(30,41,59,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 20%, rgba(71,85,105,0.1) 0%, transparent 50%)",
-              ],
-            }}
-            transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY }}
-          />
-
           <div className="relative z-10">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Insurance Needs Assessment</h2>
-              <p className="text-xl text-slate-400">Calculate your estimated coverage needs and potential savings</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Insurance Needs Assessment</h2>
+              <p className="text-xl text-muted-foreground">Calculate your estimated coverage needs and potential savings</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Family Size Selector */}
               <div className="space-y-8">
                 <div>
-                  <label className="block text-lg font-medium text-white mb-4">Family Size</label>
+                  <label className="block text-lg font-medium text-foreground mb-4">Family Size</label>
                   <div className="relative">
                     <input
                       type="range"
@@ -53,25 +38,25 @@ export default function InsuranceConsultationTool() {
                       step="1"
                       value={familySize}
                       onChange={(e) => setFamilySize(Number(e.target.value))}
-                      className="w-full h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
+                      className="w-full h-3 bg-muted rounded-lg appearance-none cursor-pointer slider"
                       style={{
-                        background: `linear-gradient(to right, #475569 0%, #475569 ${((familySize - 1) / (8 - 1)) * 100}%, #334155 ${((familySize - 1) / (8 - 1)) * 100}%, #334155 100%)`,
+                        background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${((familySize - 1) / (8 - 1)) * 100}%, hsl(var(--muted)) ${((familySize - 1) / (8 - 1)) * 100}%, hsl(var(--muted)) 100%)`,
                       }}
                     />
-                    <div className="flex justify-between text-sm text-slate-400 mt-2">
+                    <div className="flex justify-between text-sm text-muted-foreground mt-2">
                       <span>1</span>
                       <span>8+</span>
                     </div>
                   </div>
                   <div className="text-center mt-4">
-                    <span className="text-3xl font-bold text-white">{familySize}</span>
-                    <span className="text-slate-400 ml-2">{familySize === 1 ? 'person' : 'people'}</span>
+                    <span className="text-3xl font-bold text-foreground">{familySize}</span>
+                    <span className="text-muted-foreground ml-2">{familySize === 1 ? 'person' : 'people'}</span>
                   </div>
                 </div>
 
                 {/* Insurance Process */}
-                <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
-                  <h3 className="text-lg font-semibold text-white mb-4">Our Process</h3>
+                <div className="bg-card/50 rounded-2xl p-6 border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Our Process</h3>
                   <div className="space-y-4">
                     {[
                       { step: "1", title: "Needs Assessment", desc: "Analyze your current situation" },
@@ -86,12 +71,12 @@ export default function InsuranceConsultationTool() {
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         className="flex items-center space-x-4"
                       >
-                        <div className="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-sm">
                           {item.step}
                         </div>
                         <div>
-                          <div className="text-white font-medium">{item.title}</div>
-                          <div className="text-slate-400 text-sm">{item.desc}</div>
+                          <div className="text-foreground font-medium">{item.title}</div>
+                          <div className="text-muted-foreground text-sm">{item.desc}</div>
                         </div>
                       </motion.div>
                     ))}
@@ -111,7 +96,7 @@ export default function InsuranceConsultationTool() {
                       stroke="currentColor"
                       strokeWidth="8"
                       fill="none"
-                      className="text-slate-700"
+                      className="text-muted"
                     />
                     <motion.circle
                       cx="50"
@@ -129,9 +114,9 @@ export default function InsuranceConsultationTool() {
                     />
                     <defs>
                       <linearGradient id="gradientInsurance" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#475569" />
-                        <stop offset="50%" stopColor="#64748b" />
-                        <stop offset="100%" stopColor="#94a3b8" />
+                        <stop offset="0%" stopColor="hsl(var(--primary))" />
+                        <stop offset="50%" stopColor="hsl(var(--primary) / 0.8)" />
+                        <stop offset="100%" stopColor="hsl(var(--primary) / 0.6)" />
                       </linearGradient>
                     </defs>
                   </svg>
@@ -141,29 +126,29 @@ export default function InsuranceConsultationTool() {
                         key={familySize}
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="text-2xl font-bold text-white"
+                        className="text-2xl font-bold text-foreground"
                       >
                         ${(familySize * 450).toLocaleString()}
                       </motion.div>
-                      <div className="text-slate-400 text-sm">Est. Monthly</div>
+                      <div className="text-muted-foreground text-sm">Est. Monthly</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Coverage Estimates */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
-                    <div className="text-2xl font-bold text-white mb-1">
+                  <div className="bg-card/50 rounded-2xl p-6 border border-border text-center">
+                    <div className="text-2xl font-bold text-foreground mb-1">
                       ${(familySize * 5400).toLocaleString()}
                     </div>
-                    <div className="text-slate-400 text-sm">Annual Premium</div>
+                    <div className="text-muted-foreground text-sm">Annual Premium</div>
                   </div>
 
-                  <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
-                    <div className="text-2xl font-bold text-white mb-1">
+                  <div className="bg-card/50 rounded-2xl p-6 border border-border text-center">
+                    <div className="text-2xl font-bold text-foreground mb-1">
                       ${(familySize * 15000).toLocaleString()}
                     </div>
-                    <div className="text-slate-400 text-sm">Coverage Value</div>
+                    <div className="text-muted-foreground text-sm">Coverage Value</div>
                   </div>
                 </div>
 

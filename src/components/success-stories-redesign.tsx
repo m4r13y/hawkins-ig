@@ -67,22 +67,29 @@ export default function SuccessStoriesRedesign() {
   const [activeStory, setActiveStory] = useState(0)
 
   return (
-    <section className="pt-32 pb-16 bg-background relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Protecting Families, Securing Futures
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            See how we've helped families and businesses secure the insurance coverage they need at prices they can afford.
-          </p>
-        </motion.div>
+    <>
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Protecting Families, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Securing Futures</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+              See how we've helped families and businesses secure the insurance coverage they need at prices they can afford.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Content Section */}
+      <section className="py-20 bg-background relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {stories.map((story, index) => (
@@ -185,7 +192,8 @@ export default function SuccessStoriesRedesign() {
             </div>
           </div>
         </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }

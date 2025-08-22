@@ -204,7 +204,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
             animate="visible"
             exit="exit"
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-2xl"
+            className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-br from-secondary via-background to-secondary border-t shadow-2xl"
             role="banner"
             aria-labelledby="cookie-consent-title"
           >
@@ -238,7 +238,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                 <div className="flex flex-col sm:flex-row gap-3 lg:ml-6">
                   <button
                     onClick={() => setShowSettings(true)}
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                     aria-label="Customize cookie preferences"
                   >
                     <Settings className="w-4 h-4" />
@@ -247,7 +247,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                   
                   <button
                     onClick={declineAll}
-                    className="px-6 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    className="px-6 py-2 text-gray-600 hover:text-gray-800 hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
                   >
                     Decline All
                   </button>
@@ -286,7 +286,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
               animate="visible"
               exit="exit"
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="fixed inset-4 md:inset-8 lg:inset-16 z-50 bg-white rounded-lg shadow-2xl overflow-hidden"
+              className="fixed inset-4 md:inset-8 lg:inset-16 z-50 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg shadow-2xl overflow-hidden"
               role="dialog"
               aria-labelledby="cookie-settings-title"
               aria-modal="true"
@@ -350,7 +350,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                 </div>
 
                 {/* Footer */}
-                <div className="flex flex-col sm:flex-row gap-3 p-6 border-t bg-gray-50">
+                <div className="flex flex-col sm:flex-row gap-3 p-6 border-t bg-gradient-to-br from-secondary via-background to-secondary">
                   <button
                     onClick={declineAll}
                     className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"

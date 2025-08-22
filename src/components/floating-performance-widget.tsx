@@ -125,7 +125,7 @@ export default function FloatingPerformanceWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 left-6 z-50 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl shadow-2xl w-96 max-h-96 overflow-y-auto"
+            className="fixed bottom-24 left-6 z-50 bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-xl shadow-2xl w-96 max-h-96 overflow-y-auto"
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
@@ -143,35 +143,35 @@ export default function FloatingPerformanceWidget() {
               </div>
 
               <div className="space-y-3">
-                <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-slate-700 rounded">
+                <div className="flex justify-between items-center p-2 bg-gradient-to-br from-secondary via-background to-secondary rounded">
                   <span className="text-sm font-medium">FCP</span>
                   <span className={`text-sm font-mono ${getScoreColor('fcp', metrics.fcp || 0)}`}>
                     {formatValue('fcp', metrics.fcp)}
                   </span>
                 </div>
                 
-                <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-slate-700 rounded">
+                <div className="flex justify-between items-center p-2 bg-gradient-to-br from-secondary via-background to-secondary rounded">
                   <span className="text-sm font-medium">LCP</span>
                   <span className={`text-sm font-mono ${getScoreColor('lcp', metrics.lcp || 0)}`}>
                     {formatValue('lcp', metrics.lcp)}
                   </span>
                 </div>
                 
-                <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-slate-700 rounded">
+                <div className="flex justify-between items-center p-2 bg-gradient-to-br from-secondary via-background to-secondary rounded">
                   <span className="text-sm font-medium">CLS</span>
                   <span className={`text-sm font-mono ${getScoreColor('cls', metrics.cls || 0)}`}>
                     {formatValue('cls', metrics.cls)}
                   </span>
                 </div>
                 
-                <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-slate-700 rounded">
+                <div className="flex justify-between items-center p-2 bg-gradient-to-br from-secondary via-background to-secondary rounded">
                   <span className="text-sm font-medium">TTFB</span>
                   <span className={`text-sm font-mono ${getScoreColor('ttfb', metrics.ttfb || 0)}`}>
                     {formatValue('ttfb', metrics.ttfb)}
                   </span>
                 </div>
                 
-                <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-slate-700 rounded">
+                <div className="flex justify-between items-center p-2 bg-gradient-to-br from-secondary via-background to-secondary rounded">
                   <span className="text-sm font-medium">DOM Loaded</span>
                   <span className="text-sm font-mono text-gray-600">
                     {formatValue('dom', metrics.domContentLoaded)}

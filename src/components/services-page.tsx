@@ -360,19 +360,30 @@ export default function ServicesPage() {
   }
 
   return (
-    <section className="min-h-screen bg-background text-foreground py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Our Services
-          </h1>
-          
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-            Comprehensive insurance solutions for individuals, families, and businesses. 
-            Plus exclusive opportunities for insurance professionals.
-          </p>
+    <>
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Services</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+              Comprehensive insurance solutions for individuals, families, and businesses. 
+              Plus exclusive opportunities for insurance professionals.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
+      {/* Main Content Section */}
+      <section className="min-h-screen bg-background text-foreground py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           {/* Tabs */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
             {tabs.map((tab) => (
@@ -384,7 +395,7 @@ export default function ServicesPage() {
                 }}
                 className={`px-8 py-4 rounded-2xl font-medium transition-all duration-200 ${
                   activeTab === tab.id
-                    ? 'bg-primary text-primary-foreground shadow-lg'
+                    ? 'bg-primary/90 text-primary-foreground shadow-lg'
                     : 'bg-muted/50 text-muted-foreground hover:bg-muted border border-border/50'
                 }`}
               >
@@ -394,10 +405,7 @@ export default function ServicesPage() {
                 </div>
               </button>
             ))}
-          </div>
-        </div>
-
-        {/* Services Grid */}
+          </div>        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {currentServices.map((service, index) => (
             <div
@@ -458,44 +466,50 @@ export default function ServicesPage() {
                         <p className="text-muted-foreground">{service.details}</p>
                       </div>
 
-                      {/* Key Features */}
-                      <div>
-                        <h4 className="text-lg font-semibold text-foreground mb-3">Key Features</h4>
-                        <div className="grid grid-cols-2 gap-2">
-                          {service.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                              <span className="text-sm text-muted-foreground">{feature}</span>
+                      {/* Features and Process Layout */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* Left Column - Key Features and Benefits */}
+                        <div className="space-y-6">
+                          {/* Key Features */}
+                          <div>
+                            <h4 className="text-lg font-semibold text-foreground mb-3">Key Features</h4>
+                            <div className="space-y-2">
+                              {service.features.map((feature, idx) => (
+                                <div key={idx} className="flex items-center gap-2">
+                                  <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                                  <span className="text-sm text-muted-foreground">{feature}</span>
+                                </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
-                      </div>
+                          </div>
 
-                      {/* Benefits */}
-                      <div>
-                        <h4 className="text-lg font-semibold text-foreground mb-3">Benefits</h4>
-                        <div className="space-y-2">
-                          {service.benefits.map((benefit, idx) => (
-                            <div key={idx} className="flex items-start gap-2">
-                              <ArrowRight className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                              <span className="text-sm text-muted-foreground">{benefit}</span>
+                          {/* Benefits */}
+                          <div>
+                            <h4 className="text-lg font-semibold text-foreground mb-3">Benefits</h4>
+                            <div className="space-y-2">
+                              {service.benefits.map((benefit, idx) => (
+                                <div key={idx} className="flex items-start gap-2">
+                                  <ArrowRight className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                                  <span className="text-sm text-muted-foreground">{benefit}</span>
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Process */}
-                      <div>
-                        <h4 className="text-lg font-semibold text-foreground mb-3">Our Process</h4>
-                        <div className="space-y-3">
-                          {service.process.map((step, idx) => (
-                            <div key={idx} className="flex items-start gap-3">
-                              <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
-                                {idx + 1}
+                        {/* Right Column - Process */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-foreground mb-3">Our Process</h4>
+                          <div className="space-y-3">
+                            {service.process.map((step, idx) => (
+                              <div key={idx} className="flex items-start gap-3">
+                                <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                                  {idx + 1}
+                                </div>
+                                <span className="text-sm text-muted-foreground">{step}</span>
                               </div>
-                              <span className="text-sm text-muted-foreground">{step}</span>
-                            </div>
-                          ))}
+                            ))}
+                          </div>
                         </div>
                       </div>
 
@@ -619,6 +633,7 @@ export default function ServicesPage() {
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+      </section>
+    </>
   )
 }

@@ -19,7 +19,7 @@ export default function Tools() {
         <Navbar />
         
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -27,15 +27,15 @@ export default function Tools() {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Insurance <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">Tools</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+                Insurance <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Tools</span>
               </h1>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
                 Use our interactive tools to assess your insurance needs, calculate potential savings, 
                 and make informed decisions about your coverage.
               </p>
               
-              {/* Tool Features Grid */}
+              {/* Tool Features Grid 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
                 {[
                   {
@@ -64,23 +64,23 @@ export default function Tools() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-6 backdrop-blur-sm hover:bg-gray-800/70 transition-all duration-300"
+                    className="bg-card/50 border border-border rounded-2xl p-6 backdrop-blur-sm hover:bg-card/70 transition-all duration-300"
                   >
-                    <div className="text-blue-400 mb-4 flex justify-center">
+                    <div className="text-primary mb-4 flex justify-center">
                       {feature.icon}
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       {feature.description}
                     </p>
                   </motion.div>
                 ))}
-              </div>
+              </div> */}
             </motion.div>
           </div>
-        </section>
+        </section> 
 
         {/* Insurance Consultation Tool */}
         <InsuranceConsultationTool />
@@ -88,8 +88,8 @@ export default function Tools() {
         {/* Insurance Savings Calculator */}
         <InsuranceSavingsCalculator />
 
-        {/* Additional Information Section */}
-        <section className="py-16 bg-gray-900">
+        {/* Additional Information Section 
+        <section className="py-16 bg-secondary">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -97,10 +97,10 @@ export default function Tools() {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
                 Need More Personalized Help?
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
                 Our tools provide estimates, but every situation is unique. Schedule a free consultation 
                 with one of our licensed insurance professionals for personalized recommendations.
               </p>
@@ -128,15 +128,15 @@ export default function Tools() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-8 backdrop-blur-sm"
+                    className="bg-card/50 border border-border rounded-2xl p-8 backdrop-blur-sm"
                   >
-                    <div className="text-blue-400 text-sm font-medium mb-2">
+                    <div className="text-primary text-sm font-medium mb-2">
                       {item.highlight}
                     </div>
-                    <h3 className="text-xl font-semibold text-white mb-4">
+                    <h3 className="text-xl font-semibold text-foreground mb-4">
                       {item.title}
                     </h3>
-                    <p className="text-gray-400">
+                    <p className="text-muted-foreground">
                       {item.description}
                     </p>
                   </motion.div>
@@ -144,7 +144,7 @@ export default function Tools() {
               </div>
             </motion.div>
           </div>
-        </section>
+        </section> */}
 
         <AnimatedFooter />
       </div>

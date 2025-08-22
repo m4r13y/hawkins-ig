@@ -145,37 +145,31 @@ export default function MegaQuoter() {
   }
 
   return (
-    <section className="py-24 bg-slate-50 dark:bg-black relative backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6">Calculate Your Savings</h2>
-          <p className="text-xl text-slate-600 dark:text-gray-400 max-w-3xl mx-auto">
-            See how much you could save on health insurance with our expert guidance and carrier relationships
-          </p>
-        </motion.div>
-
-        <div className="bg-slate-100/70 dark:bg-gray-900/40 border border-slate-200/60 dark:border-gray-700/30 rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden shadow-sm dark:shadow-none">
-          {/* Subtle animated background */}
+    <>
+      {/* Hero Header Section */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="absolute inset-0 opacity-10 dark:opacity-20"
-            animate={{
-              background: [
-                "radial-gradient(circle at 20% 20%, rgba(59,130,246,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 80%, rgba(147,51,234,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 80%, rgba(34,197,94,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 20%, rgba(249,115,22,0.1) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 20%, rgba(59,130,246,0.1) 0%, transparent 50%)",
-              ],
-            }}
-            transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY }}
-          />
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+              Calculate Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Savings</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+              See how much you could save on health insurance with our expert guidance and carrier relationships
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
+      {/* Main Content Section */}
+      <section className="py-20 bg-background relative backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div className="bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden shadow-sm">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Step Form */}
             <div className="space-y-8">
@@ -507,7 +501,8 @@ export default function MegaQuoter() {
             )}
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }

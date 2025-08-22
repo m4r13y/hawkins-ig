@@ -461,7 +461,7 @@ export default function MegaQuoterResults({
           <CardContent>
             <div className="grid gap-4">
               {recommendations.map((rec, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
                   <div className="flex items-center gap-3">
                     <AlertCircle className="h-5 w-5 text-purple-600" />
                     <div>
