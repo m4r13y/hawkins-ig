@@ -92,7 +92,7 @@ export default function TeamPage() {
   const [selectedMember, setSelectedMember] = useState<number | null>(null)
 
   return (
-    <section className="py-32 bg-black relative">
+    <section className="py-32 bg-background relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -101,8 +101,8 @@ export default function TeamPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Meet Our Team</h1>
-          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Meet Our Team</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Licensed insurance professionals dedicated to protecting what matters most to you and your family
           </p>
 
@@ -122,15 +122,15 @@ export default function TeamPage() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-3xl font-bold text-white mb-2"
+                className="text-3xl font-bold text-foreground mb-2"
                 style={{
-                  textShadow: "0 0 20px rgba(71, 85, 105, 0.5)",
+                  textShadow: "0 0 20px rgba(71, 85, 105, 0.3)",
                 }}
               >
                 {stat.value}
               </motion.div>
-              <div className="text-sm font-medium text-slate-300 mb-1">{stat.label}</div>
-              <div className="text-xs text-slate-500">{stat.description}</div>
+              <div className="text-sm font-medium text-foreground mb-1">{stat.label}</div>
+              <div className="text-xs text-muted-foreground">{stat.description}</div>
             </div>
           ))}
         </motion.div>
@@ -141,7 +141,7 @@ export default function TeamPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-3xl font-bold text-white text-center mb-12"
+            className="text-3xl font-bold text-foreground text-center mb-12"
           >
           
           </motion.h2>
@@ -156,9 +156,9 @@ export default function TeamPage() {
                 whileHover={{ y: -10 }}
                 onHoverStart={() => setSelectedMember(member.id)}
                 onHoverEnd={() => setSelectedMember(null)}
-                className="bg-slate-900/50 border border-slate-800/50 overflow-visible backdrop-blur-sm hover:border-slate-700/50 transition-all duration-300 group"
+                className="bg-card/50 border border-border/50 overflow-visible backdrop-blur-sm hover:border-border transition-all duration-300 group"
                 style={{
-                  boxShadow: selectedMember === member.id ? "0 20px 40px rgba(71, 85, 105, 0.1)" : "none",
+                  boxShadow: selectedMember === member.id ? "0 20px 40px rgba(0, 0, 0, 0.1) dark:rgba(71, 85, 105, 0.1)" : "none",
                   borderRadius: "12px 72px 12px 12px",
                 }}
               >
@@ -169,7 +169,7 @@ export default function TeamPage() {
                     <img 
                       src={member.image} 
                       alt={member.name}
-                      className="w-48 h-48 rounded-full object-cover border-4 border-slate-800 shadow-xl"
+                      className="w-48 h-48 rounded-full object-cover border-4 border-border shadow-xl"
                       style={{ 
                         objectPosition: member.id === 1 ? 'center 30%' : 
                                       member.id === 2 ? 'center 25%' : 
@@ -184,31 +184,31 @@ export default function TeamPage() {
                       }}
                     />
                     {/* Fallback icon (hidden by default) */}
-                    <div className="fallback-icon hidden w-36 h-36 rounded-full bg-gradient-to-br from-slate-500/20 to-slate-600/20 border-4 border-slate-600 shadow-xl">
+                    <div className="fallback-icon hidden w-36 h-36 rounded-full bg-gradient-to-br from-muted/20 to-muted/40 border-4 border-border shadow-xl">
                       <div className="flex items-center justify-center w-full h-full">
-                        <Users className="w-12 h-12 text-white/30" />
+                        <Users className="w-12 h-12 text-muted-foreground/30" />
                       </div>
                     </div>
                   </div>
 
                   {/* Basic Info - Left Aligned */}
                   <div className="pr-40">
-                    <h3 className="text-xl font-bold text-white mb-1 group-hover:text-slate-400 transition-colors">
+                    <h3 className="text-xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
                       {member.name}
                     </h3>
-                    <p className="text-slate-300 text-sm mb-2">{member.title}</p>
-                    <p className="text-slate-400 text-xs mb-3">License: {member.licenseNumber}</p>
-                    <p className="text-slate-400 text-xs">{member.yearsExperience} Years Experience</p>
+                    <p className="text-foreground text-sm mb-2">{member.title}</p>
+                    <p className="text-muted-foreground text-xs mb-3">License: {member.licenseNumber}</p>
+                    <p className="text-muted-foreground text-xs">{member.yearsExperience} Years Experience</p>
                   </div>
                 </div>
 
                 <div className="p-6">
                   {/* Specialties */}
                   <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-white mb-3">Specialties</h4>
+                    <h4 className="text-sm font-semibold text-foreground mb-3">Specialties</h4>
                     <div className="flex flex-wrap gap-2">
                       {member.specialties.map((specialty, i) => (
-                        <span key={i} className="bg-slate-800/50 border border-slate-700/50 rounded-full px-3 py-1 text-xs text-slate-300">
+                        <span key={i} className="bg-muted/50 border border-border/50 rounded-full px-3 py-1 text-xs text-foreground">
                           {specialty}
                         </span>
                       ))}
@@ -217,7 +217,7 @@ export default function TeamPage() {
 
                   {/* Bio */}
                   <div className="mb-6">
-                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
+                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
                       {member.bio}
                     </p>
                   </div>
@@ -228,11 +228,11 @@ export default function TeamPage() {
                     <div>
                       {/* Key Achievements */}
                       <div className="mb-6">
-                        <h4 className="text-sm font-semibold text-white mb-3">Key Achievements</h4>
+                        <h4 className="text-sm font-semibold text-foreground mb-3">Key Achievements</h4>
                         <ul className="space-y-2">
                           {member.achievements.slice(0, 2).map((achievement, i) => (
-                            <li key={i} className="text-slate-300 text-xs flex items-center">
-                              <CheckCircle className="w-3 h-3 text-green-400 mr-2 flex-shrink-0" />
+                            <li key={i} className="text-foreground text-xs flex items-center">
+                              <CheckCircle className="w-3 h-3 text-primary mr-2 flex-shrink-0" />
                               {achievement}
                             </li>
                           ))}
@@ -241,10 +241,10 @@ export default function TeamPage() {
 
                       {/* Licensed States */}
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-3">Licensed States</h4>
+                        <h4 className="text-sm font-semibold text-foreground mb-3">Licensed States</h4>
                         <div className="flex flex-wrap gap-2">
                           {member.licensedStates.map((state, i) => (
-                            <span key={i} className="bg-green-500/20 border border-green-500/30 rounded-full px-3 py-1 text-xs text-green-400">
+                            <span key={i} className="bg-primary/20 border border-primary/30 rounded-full px-3 py-1 text-xs text-primary">
                               {state}
                             </span>
                           ))}
@@ -253,25 +253,25 @@ export default function TeamPage() {
                     </div>
 
                     {/* Right Column - Contact & Languages */}
-                    <div className="border-l border-slate-700/50 pl-6">
+                    <div className="border-l border-border/50 pl-6">
                       <div className="grid grid-cols-1 gap-4 text-xs mb-4">
                         <div>
-                          <p className="text-slate-500 mb-1">Languages</p>
-                          <p className="text-slate-300">{member.languages.join(", ")}</p>
+                          <p className="text-muted-foreground mb-1">Languages</p>
+                          <p className="text-foreground">{member.languages.join(", ")}</p>
                         </div>
                         <div>
-                          <p className="text-slate-500 mb-1">Serving Areas</p>
-                          <p className="text-slate-300">{member.servingAreas[0]}+</p>
+                          <p className="text-muted-foreground mb-1">Serving Areas</p>
+                          <p className="text-foreground">{member.servingAreas[0]}+</p>
                         </div>
                       </div>
                       
                       <div className="flex justify-between items-center">
                         <div className="flex space-x-2">
-                          <Phone className="w-4 h-4 text-slate-400" />
-                          <Mail className="w-4 h-4 text-slate-400" />
-                          <Linkedin className="w-4 h-4 text-slate-400" />
+                          <Phone className="w-4 h-4 text-muted-foreground" />
+                          <Mail className="w-4 h-4 text-muted-foreground" />
+                          <Linkedin className="w-4 h-4 text-muted-foreground" />
                         </div>
-                        <AnimatedButton className="bg-white text-black hover:bg-slate-100 px-4 py-2 text-xs">
+                        <AnimatedButton className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 text-xs">
                           <span className="flex items-center">
                             Contact {member.name.split(' ')[0]}
                             <ArrowRight className="ml-1 h-3 w-3" />

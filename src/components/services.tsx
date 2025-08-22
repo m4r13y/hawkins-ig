@@ -55,13 +55,13 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 bg-gray-50">
+    <section id="services" className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
             Complete Marketing Solutions
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Everything your business needs to succeed in today's competitive market
           </p>
         </div>
@@ -70,16 +70,16 @@ export default function Services() {
           {services.map((service, index) => (
             <div
               key={index}
-              className={`bg-gradient-to-br ${service.gradient} rounded-3xl p-8 hover:shadow-lg transition-all duration-300`}
+              className="bg-card border border-border rounded-3xl p-8 hover:shadow-lg transition-all duration-300"
             >
               <div className={`${service.iconBg} text-white mb-6 p-3 rounded-2xl w-fit`}>{service.icon}</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{service.title}</h3>
-              <p className="text-gray-700 mb-6 leading-relaxed">{service.description}</p>
+              <h3 className="text-xl font-bold text-foreground mb-3">{service.title}</h3>
+              <p className="text-foreground/80 mb-6 leading-relaxed">{service.description}</p>
 
               <ul className="space-y-2">
                 {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="text-sm text-gray-600 flex items-center">
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-3" />
+                  <li key={featureIndex} className="text-sm text-muted-foreground flex items-center">
+                    <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full mr-3" />
                     {feature}
                   </li>
                 ))}

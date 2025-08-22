@@ -168,7 +168,7 @@ export default function InsuranceConsultationTool() {
                 </div>
 
                 <div className="text-center">
-                  <AnimatedButton className="bg-white text-black hover:bg-slate-100 px-8 py-4 text-lg">
+                  <AnimatedButton className="px-8 py-4 text-lg">
                     <span className="flex items-center">
                       Schedule Consultation
                       <ArrowRight className="ml-2 h-5 w-5" />

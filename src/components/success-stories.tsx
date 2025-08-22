@@ -72,7 +72,7 @@ const successStories = [
 
 export default function SuccessStories() {
   return (
-    <section className="py-32 bg-black relative">
+    <section className="py-32 bg-background relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -81,8 +81,8 @@ export default function SuccessStories() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">Success Stories</h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Success Stories</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Real results for real businesses. See how we've helped our clients achieve remarkable growth.
           </p>
         </motion.div>
@@ -99,8 +99,8 @@ export default function SuccessStories() {
             >
               {/* Image Section */}
               <div className={`${index % 2 === 1 ? "lg:order-2" : ""}`}>
-                <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-2xl">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 via-white/5 to-blue-500/10 z-10" />
+                <div className="relative rounded-2xl overflow-hidden border border-border shadow-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-background/5 to-primary/10 z-10" />
                   <Image
                     src={story.image || "/placeholder.svg"}
                     alt={story.name}
@@ -114,7 +114,7 @@ export default function SuccessStories() {
               {/* Content Section */}
               <div className={`${index % 2 === 1 ? "lg:order-1" : ""}`}>
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-gray-900 rounded-xl flex items-center justify-center mr-4 border border-gray-800">
+                  <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mr-4 border border-border">
                     <Image
                       src={story.logo || "/placeholder.svg"}
                       alt={story.name}
@@ -124,48 +124,48 @@ export default function SuccessStories() {
                     />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-white">{story.name}</h2>
-                    <p className="text-gray-400">{story.industry}</p>
+                    <h2 className="text-2xl font-bold text-foreground">{story.name}</h2>
+                    <p className="text-muted-foreground">{story.industry}</p>
                   </div>
                 </div>
 
                 <div className="space-y-6 mb-8">
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">The Challenge</h3>
-                    <p className="text-gray-400">{story.challenge}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">The Challenge</h3>
+                    <p className="text-muted-foreground">{story.challenge}</p>
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Our Solution</h3>
-                    <p className="text-gray-400">{story.solution}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Our Solution</h3>
+                    <p className="text-muted-foreground">{story.solution}</p>
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">The Results</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">The Results</h3>
                     <ul className="space-y-2">
                       {story.results.map((result, i) => (
                         <li key={i} className="flex items-start">
-                          <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
-                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                            <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
-                          <span className="text-gray-300">{result}</span>
+                          <span className="text-foreground">{result}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </div>
 
-                <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 mb-8">
+                <div className="bg-muted/50 border border-border rounded-2xl p-6 mb-8">
                   <div className="flex items-center mb-4">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                      <Star key={i} className="h-4 w-4 text-primary fill-current" />
                     ))}
                   </div>
                   <div className="flex mb-4">
-                    <Quote className="h-8 w-8 text-blue-500 mr-2 flex-shrink-0" />
-                    <p className="text-gray-300 italic">{story.testimonial}</p>
+                    <Quote className="h-8 w-8 text-primary mr-2 flex-shrink-0" />
+                    <p className="text-foreground italic">{story.testimonial}</p>
                   </div>
                   <div className="flex items-center">
                     <Image
@@ -176,13 +176,13 @@ export default function SuccessStories() {
                       className="rounded-full mr-4"
                     />
                     <div>
-                      <p className="font-semibold text-white">{story.person.name}</p>
-                      <p className="text-sm text-gray-400">{story.person.role}</p>
+                      <p className="font-semibold text-foreground">{story.person.name}</p>
+                      <p className="text-sm text-muted-foreground">{story.person.role}</p>
                     </div>
                   </div>
                 </div>
 
-                <GlowButton className="bg-white text-black hover:bg-gray-100">
+                <GlowButton className="bg-primary text-primary-foreground hover:bg-primary/90">
                   View Full Case Study
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </GlowButton>
@@ -198,11 +198,11 @@ export default function SuccessStories() {
           viewport={{ once: true }}
           className="text-center mt-24"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">Ready to Write Your Success Story?</h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+          <h2 className="text-3xl font-bold text-foreground mb-6">Ready to Write Your Success Story?</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Let's create a marketing strategy that delivers real results for your business.
           </p>
-          <GlowButton size="lg" className="px-10 py-6 text-lg bg-white text-black hover:bg-gray-100">
+          <GlowButton size="lg" className="px-10 py-6 text-lg bg-primary text-primary-foreground hover:bg-primary/90">
             Start Your Journey
             <ArrowRight className="ml-2 h-5 w-5" />
           </GlowButton>

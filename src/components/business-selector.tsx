@@ -162,7 +162,7 @@ export default function BusinessSelector() {
   }
 
   return (
-    <section className="py-24 bg-black relative">
+    <section className="py-24 bg-background relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -171,17 +171,17 @@ export default function BusinessSelector() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">Find Your Perfect Strategy</h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">Find Your Perfect Strategy</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Select your business type to receive a customized marketing approach
           </p>
         </motion.div>
 
-        <div className="bg-gray-900/50 border border-gray-800 rounded-3xl overflow-hidden backdrop-blur-sm">
+        <div className="bg-card/50 border border-border rounded-3xl overflow-hidden backdrop-blur-sm">
           {/* Progress Bar */}
-          <div className="w-full h-1 bg-gray-800">
+          <div className="w-full h-1 bg-muted">
             <motion.div
-              className="h-full bg-blue-500"
+              className="h-full bg-primary"
               initial={{ width: "0%" }}
               animate={{
                 width:
@@ -197,25 +197,25 @@ export default function BusinessSelector() {
             />
           </div>
 
-          <div className="p-6 border-b border-gray-800 flex items-center">
+          <div className="p-6 border-b border-border flex items-center">
             {currentStep !== "select" && (
               <button
                 onClick={goBack}
-                className="mr-4 p-2 rounded-full hover:bg-gray-800 transition-colors"
+                className="mr-4 p-2 rounded-full hover:bg-accent transition-colors"
                 aria-label="Go back"
               >
-                <ArrowLeft className="h-5 w-5 text-gray-400" />
+                <ArrowLeft className="h-5 w-5 text-muted-foreground" />
               </button>
             )}
             <div>
-              <h3 className="text-lg font-semibold text-white">
+              <h3 className="text-lg font-semibold text-foreground">
                 {currentStep === "select"
                   ? "What type of business are you?"
                   : currentStep === "strategy"
                     ? selectedOption?.strategy.title
                     : "Get Your Strategy"}
               </h3>
-              <p className="text-sm text-gray-400 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 {currentStep === "select"
                   ? "Select the option that best describes your business"
                   : currentStep === "strategy"
@@ -325,7 +325,7 @@ export default function BusinessSelector() {
 
                       <GlowButton
                         onClick={() => setCurrentStep("email")}
-                        className="w-full bg-white text-black hover:bg-gray-100"
+                        className="w-full"
                       >
                         Get This Strategy
                         <ChevronRight className="ml-2 h-5 w-5" />
@@ -352,7 +352,7 @@ export default function BusinessSelector() {
                           {selectedOption.icon}
                         </GlossyIcon>
                         <h3 className="text-2xl font-bold text-white mb-2">{selectedOption.strategy.title}</h3>
-                        <p className="text-gray-400">
+                        <p className="text-muted-foreground">
                           Enter your email to receive your personalized {selectedOption.name.toLowerCase()} marketing
                           strategy.
                         </p>
@@ -360,7 +360,7 @@ export default function BusinessSelector() {
 
                       <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                          <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-2">
                             Email Address
                           </label>
                           <input
@@ -369,16 +369,16 @@ export default function BusinessSelector() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@example.com"
-                            className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                            className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                             required
                           />
                         </div>
 
-                        <GlowButton type="submit" className="w-full bg-white text-black hover:bg-gray-100">
+                        <GlowButton type="submit" className="w-full">
                           Send Me The Strategy
                         </GlowButton>
 
-                        <p className="text-xs text-gray-500 text-center">
+                        <p className="text-xs text-muted-foreground text-center">
                           By submitting, you agree to receive marketing communications from us. You can unsubscribe at
                           any time.
                         </p>

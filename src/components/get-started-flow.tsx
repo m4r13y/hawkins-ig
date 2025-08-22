@@ -232,12 +232,12 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-white">Get Started</h1>
-            <span className="text-sm text-gray-400">
+            <h1 className="text-2xl font-bold text-foreground">Get Started</h1>
+            <span className="text-sm text-muted-foreground">
               Step {currentStep + 1} of {steps.length}
             </span>
           </div>
-          <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-red-500 to-blue-500"
               initial={{ width: "0%" }}
@@ -248,7 +248,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
         </div>
 
         {/* Step Content */}
-        <div className="bg-gray-900/50 border border-gray-800/50 rounded-3xl p-8 backdrop-blur-sm min-h-[500px] flex flex-col">
+        <div className="bg-card border border-border rounded-3xl p-8 backdrop-blur-sm min-h-[500px] flex flex-col">
           <AnimatePresence mode="wait">
             {/* Step 0: Client Type (only for non-initialClientType flows) */}
             {currentStep === 0 && !initialClientType && (
@@ -259,8 +259,8 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">Who are you looking for coverage for?</h2>
-                <p className="text-gray-400 mb-8">This helps us customize our insurance recommendations for your specific needs.</p>
+                <h2 className="text-3xl font-bold text-foreground mb-4">Who are you looking for coverage for?</h2>
+                <p className="text-muted-foreground mb-8">This helps us customize our insurance recommendations for your specific needs.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                   {clientTypes.map((client) => (
@@ -271,14 +271,14 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       onClick={() => setFormData((prev) => ({ ...prev, clientType: client.id }))}
                       className={`p-6 rounded-xl border transition-all duration-200 text-left cursor-pointer ${
                         formData.clientType === client.id
-                          ? "bg-blue-500/20 border-blue-500/50 text-white"
-                          : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
+                          ? "bg-primary/20 border-primary/50 text-foreground"
+                          : "bg-background/50 border-border text-foreground/80 hover:border-border/80"
                       }`}
                     >
                       <div className="flex items-center space-x-4 mb-3">
                         <div
                           className={`p-3 rounded-lg ${
-                            formData.clientType === client.id ? "bg-blue-500/30" : "bg-gray-700/50"
+                            formData.clientType === client.id ? "bg-primary/30" : "bg-muted"
                           }`}
                         >
                           {client.icon}
@@ -303,13 +303,13 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">
+                <h2 className="text-3xl font-bold text-foreground mb-4">
                   {(formData.clientType || initialClientType) === 'individual' && "What's your age range?"}
                   {(formData.clientType || initialClientType) === 'family' && "How many family members need coverage?"}
                   {(formData.clientType || initialClientType) === 'business' && "How many employees need coverage?"}
                   {(formData.clientType || initialClientType) === 'agent' && "What type of agent relationship are you seeking?"}
                 </h2>
-                <p className="text-gray-400 mb-8">
+                <p className="text-muted-foreground mb-8">
                   {(formData.clientType || initialClientType) === 'individual' && "Age helps us determine the best insurance options and pricing for you."}
                   {(formData.clientType || initialClientType) === 'family' && "Family size helps us recommend the most cost-effective coverage options."}
                   {(formData.clientType || initialClientType) === 'business' && "Employee count helps us structure the right group coverage plan."}
@@ -337,8 +337,8 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                         ((formData.clientType || initialClientType) === 'family' && formData.familySize === option.id) ||
                         ((formData.clientType || initialClientType) === 'business' && formData.employeeCount === option.id) ||
                         ((formData.clientType || initialClientType) === 'agent' && formData.agentType === option.id)
-                          ? "bg-blue-500/20 border-blue-500/50 text-white"
-                          : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
+                          ? "bg-primary/20 border-primary/50 text-foreground"
+                          : "bg-background/50 border-border text-foreground/80 hover:border-border/80"
                       }`}
                     >
                       <div className="text-xl font-bold mb-2">{option.name}</div>
@@ -358,13 +358,13 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">
+                <h2 className="text-3xl font-bold text-foreground mb-4">
                   {(formData.clientType || initialClientType) === 'agent' 
                     ? "What types of insurance are you licensed to sell?"
                     : "What type of insurance are you interested in?"
                   }
                 </h2>
-                <p className="text-gray-400 mb-8">
+                <p className="text-muted-foreground mb-8">
                   {(formData.clientType || initialClientType) === 'agent'
                     ? "Select all license types you currently hold. This helps us match you with the right opportunities."
                     : "Select all that apply. We'll create a custom quote around your insurance needs."
@@ -380,13 +380,13 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       onClick={() => toggleInsuranceType(insurance.id)}
                       className={`p-6 rounded-xl border transition-all duration-200 text-left ${
                         formData.insuranceTypes.includes(insurance.id)
-                          ? "bg-blue-500/20 border-blue-500/50 text-white"
-                          : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
+                          ? "bg-primary/20 border-primary/50 text-foreground"
+                          : "bg-background/50 border-border text-foreground/80 hover:border-border/80"
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
                         <div className="font-semibold text-lg">{insurance.name}</div>
-                        {formData.insuranceTypes.includes(insurance.id) && <Check className="w-5 h-5 text-blue-400" />}
+                        {formData.insuranceTypes.includes(insurance.id) && <Check className="w-5 h-5 text-primary" />}
                       </div>
                       <div className="text-sm opacity-70">{insurance.description}</div>
                     </motion.button>
@@ -404,13 +404,13 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">
+                <h2 className="text-3xl font-bold text-foreground mb-4">
                   {(formData.clientType || initialClientType) === 'agent'
                     ? "What are you interested in?"
                     : "When do you need coverage to start?"
                   }
                 </h2>
-                <p className="text-gray-400 mb-8">
+                <p className="text-muted-foreground mb-8">
                   {(formData.clientType || initialClientType) === 'agent'
                     ? "Let us know how you'd like to partner with us and what tools you need."
                     : "This helps us prioritize your application and ensure timely coverage."
@@ -426,14 +426,14 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       onClick={() => setFormData((prev) => ({ ...prev, urgency: option.id }))}
                       className={`p-6 rounded-xl border transition-all duration-200 text-left ${
                         formData.urgency === option.id
-                          ? "bg-blue-500/20 border-blue-500/50 text-white"
-                          : "bg-gray-800/50 border-gray-700/50 text-gray-300 hover:border-gray-600/50"
+                          ? "bg-primary/20 border-primary/50 text-foreground"
+                          : "bg-background/50 border-border text-foreground/80 hover:border-border/80"
                       }`}
                     >
                       <div className="flex items-center space-x-4">
                         <div
                           className={`p-3 rounded-lg ${
-                            formData.urgency === option.id ? "bg-blue-500/30" : "bg-gray-700/50"
+                            formData.urgency === option.id ? "bg-primary/30" : "bg-muted"
                           }`}
                         >
                           <Calendar className="w-6 h-6" />
@@ -442,7 +442,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                           <div className="font-semibold text-lg">{option.name}</div>
                           <div className="text-sm opacity-70">{option.description}</div>
                         </div>
-                        {formData.urgency === option.id && <Check className="w-5 h-5 text-blue-400" />}
+                        {formData.urgency === option.id && <Check className="w-5 h-5 text-primary" />}
                       </div>
                     </motion.button>
                   ))}
@@ -459,67 +459,67 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 exit={{ opacity: 0, x: -20 }}
                 className="flex-1"
               >
-                <h2 className="text-3xl font-bold text-white mb-4">Let's get you a quote</h2>
-                <p className="text-gray-400 mb-8">
+                <h2 className="text-3xl font-bold text-foreground mb-4">Let's get you a quote</h2>
+                <p className="text-muted-foreground mb-8">
                   We'll use this information to prepare your personalized insurance quote and get back to you within 24 hours.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Name *</label>
+                    <label className="block text-sm font-medium text-foreground/90 mb-2">Name *</label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="Your full name"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Email *</label>
+                    <label className="block text-sm font-medium text-foreground/90 mb-2">Email *</label>
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="your@email.com"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Phone *</label>
+                    <label className="block text-sm font-medium text-foreground/90 mb-2">Phone *</label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={handlePhoneChange}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="(123) 456-7890"
                       maxLength={14}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">ZIP Code *</label>
+                    <label className="block text-sm font-medium text-foreground/90 mb-2">ZIP Code *</label>
                     <input
                       type="text"
                       value={formData.zipCode}
                       onChange={(e) => setFormData((prev) => ({ ...prev, zipCode: e.target.value }))}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="12345"
                       required
                     />
                   </div>
                   {(formData.clientType === 'business' || formData.clientType === 'agent') && (
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                      <label className="block text-sm font-medium text-foreground/90 mb-2">
                         {formData.clientType === 'business' ? 'Company Name' : 'Agency Name'}
                       </label>
                       <input
                         type="text"
                         value={formData.company}
                         onChange={(e) => setFormData((prev) => ({ ...prev, company: e.target.value }))}
-                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                         placeholder={formData.clientType === 'business' ? 'Your business name' : 'Your agency name'}
                       />
                     </div>
@@ -544,24 +544,24 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 {/* Dynamic content based on client type */}
                 {(formData.clientType || initialClientType) === 'individual' && (
                   <>
-                    <h2 className="text-3xl font-bold text-white mb-4">Your personal insurance quote request is complete!</h2>
-                    <p className="text-xl text-gray-300 mb-6">
+                    <h2 className="text-3xl font-bold text-foreground mb-4">Your personal insurance quote request is complete!</h2>
+                    <p className="text-xl text-foreground/90 mb-6">
                       Thank you for choosing Hawkins Insurance Group. We'll prepare personalized insurance options tailored to your age and needs.
                     </p>
-                    <div className="bg-gray-800/50 rounded-2xl p-6 mb-8">
-                      <h3 className="text-lg font-semibold text-white mb-4">What happens next?</h3>
+                    <div className="bg-card rounded-2xl p-6 mb-8">
+                      <h3 className="text-lg font-semibold text-foreground mb-4">What happens next?</h3>
                       <div className="space-y-3 text-left">
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
-                          <span className="text-gray-300">We'll review your age range and insurance preferences</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">1</div>
+                          <span className="text-foreground/90">We'll review your age range and insurance preferences</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
-                          <span className="text-gray-300">Our licensed agents will call you within 24 hours with personalized quotes</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">2</div>
+                          <span className="text-foreground/90">Our licensed agents will call you within 24 hours with personalized quotes</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
-                          <span className="text-gray-300">We'll help you compare options and enroll in the best plan for you</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">3</div>
+                          <span className="text-foreground/90">We'll help you compare options and enroll in the best plan for you</span>
                         </div>
                       </div>
                     </div>
@@ -570,24 +570,24 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
 
                 {(formData.clientType || initialClientType) === 'family' && (
                   <>
-                    <h2 className="text-3xl font-bold text-white mb-4">Your family insurance quote request is complete!</h2>
-                    <p className="text-xl text-gray-300 mb-6">
+                    <h2 className="text-3xl font-bold text-foreground mb-4">Your family insurance quote request is complete!</h2>
+                    <p className="text-xl text-foreground/90 mb-6">
                       Thank you for choosing Hawkins Insurance Group. We'll prepare comprehensive family coverage options that protect everyone you love.
                     </p>
-                    <div className="bg-gray-800/50 rounded-2xl p-6 mb-8">
-                      <h3 className="text-lg font-semibold text-white mb-4">What happens next?</h3>
+                    <div className="bg-card rounded-2xl p-6 mb-8">
+                      <h3 className="text-lg font-semibold text-foreground mb-4">What happens next?</h3>
                       <div className="space-y-3 text-left">
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
-                          <span className="text-gray-300">We'll review your family size and coverage needs</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">1</div>
+                          <span className="text-foreground/90">We'll review your family size and coverage needs</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
-                          <span className="text-gray-300">Our family insurance specialists will contact you within 24 hours</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">2</div>
+                          <span className="text-foreground/90">Our family insurance specialists will contact you within 24 hours</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
-                          <span className="text-gray-300">We'll help you find affordable family coverage that fits your budget</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">3</div>
+                          <span className="text-foreground/90">We'll help you find affordable family coverage that fits your budget</span>
                         </div>
                       </div>
                     </div>
@@ -596,24 +596,24 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
 
                 {(formData.clientType || initialClientType) === 'business' && (
                   <>
-                    <h2 className="text-3xl font-bold text-white mb-4">Your group benefits quote request is complete!</h2>
-                    <p className="text-xl text-gray-300 mb-6">
+                    <h2 className="text-3xl font-bold text-foreground mb-4">Your group benefits quote request is complete!</h2>
+                    <p className="text-xl text-foreground/90 mb-6">
                       Thank you for choosing Hawkins Insurance Group. We'll prepare comprehensive employee benefit packages tailored to your business needs.
                     </p>
-                    <div className="bg-gray-800/50 rounded-2xl p-6 mb-8">
-                      <h3 className="text-lg font-semibold text-white mb-4">What happens next?</h3>
+                    <div className="bg-card rounded-2xl p-6 mb-8">
+                      <h3 className="text-lg font-semibold text-foreground mb-4">What happens next?</h3>
                       <div className="space-y-3 text-left">
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
-                          <span className="text-gray-300">We'll analyze your employee count and benefit requirements</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">1</div>
+                          <span className="text-foreground/90">We'll analyze your employee count and benefit requirements</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
-                          <span className="text-gray-300">Our group benefits specialists will schedule a consultation within 24 hours</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">2</div>
+                          <span className="text-foreground/90">Our group benefits specialists will schedule a consultation within 24 hours</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
-                          <span className="text-gray-300">We'll present competitive group plans and assist with enrollment</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">3</div>
+                          <span className="text-foreground/90">We'll present competitive group plans and assist with enrollment</span>
                         </div>
                       </div>
                     </div>
@@ -622,24 +622,24 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
 
                 {(formData.clientType || initialClientType) === 'agent' && (
                   <>
-                    <h2 className="text-3xl font-bold text-white mb-4">Your agent partnership request is complete!</h2>
-                    <p className="text-xl text-gray-300 mb-6">
+                    <h2 className="text-3xl font-bold text-foreground mb-4">Your agent partnership request is complete!</h2>
+                    <p className="text-xl text-foreground/90 mb-6">
                       Thank you for your interest in partnering with Hawkins Insurance Group. We're excited to explore how we can work together.
                     </p>
-                    <div className="bg-gray-800/50 rounded-2xl p-6 mb-8">
-                      <h3 className="text-lg font-semibold text-white mb-4">What happens next?</h3>
+                    <div className="bg-card rounded-2xl p-6 mb-8">
+                      <h3 className="text-lg font-semibold text-foreground mb-4">What happens next?</h3>
                       <div className="space-y-3 text-left">
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
-                          <span className="text-gray-300">We'll review your licensing and partnership interests</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">1</div>
+                          <span className="text-foreground/90">We'll review your licensing and partnership interests</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
-                          <span className="text-gray-300">Our agent development team will reach out within 24 hours</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">2</div>
+                          <span className="text-foreground/90">Our agent development team will reach out within 24 hours</span>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
-                          <span className="text-gray-300">We'll discuss partnership opportunities and provide access to resources</span>
+                          <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">3</div>
+                          <span className="text-foreground/90">We'll discuss partnership opportunities and provide access to resources</span>
                         </div>
                       </div>
                     </div>
@@ -648,7 +648,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
 
                 <AnimatedButton
                   onClick={() => (window.location.href = "/")}
-                  className="bg-white text-black hover:bg-gray-100"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   Return to Home
                 </AnimatedButton>
@@ -664,7 +664,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                   <AnimatedButton
                     onClick={prevStep}
                     variant="outline"
-                    className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800"
+                    className="bg-transparent border-border text-muted-foreground hover:bg-background/80"
                   >
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back
@@ -701,7 +701,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       // Contact step validation
                       (currentStep === (initialClientType ? 3 : 4) && (!formData.name || !formData.email || !formData.phone || !formData.zipCode))
                     }
-                    className="bg-white text-black hover:bg-gray-100"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
                   >
                     {currentStep === (initialClientType ? 3 : 4) ? (
                       <>

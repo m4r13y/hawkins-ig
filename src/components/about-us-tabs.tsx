@@ -263,7 +263,7 @@ export default function AboutUsTabs() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowWaitlistPopup(true)}
-                className="bg-white text-black px-8 py-4 rounded-xl font-medium hover:bg-gray-100 transition-colors duration-300"
+                className="bg-primary text-primary-foreground px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition-colors duration-300"
               >
                 Join Waitlist
               </motion.button>
@@ -279,7 +279,7 @@ export default function AboutUsTabs() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setShowWaitlistPopup(false)}
           >
             <motion.div
@@ -287,25 +287,25 @@ export default function AboutUsTabs() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-md w-full"
+              className="bg-card border border-border rounded-3xl p-8 max-w-md w-full"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-white">Join the Waitlist</h3>
+                <h3 className="text-2xl font-bold text-foreground">Join the Waitlist</h3>
                 <button
                   onClick={() => setShowWaitlistPopup(false)}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
 
-              <p className="text-gray-300 mb-6">
+              <p className="text-foreground/90 mb-6">
                 Be the first to know when {activeContent.title} is ready! We'll notify you as soon as it's available.
               </p>
 
               <form onSubmit={handleWaitlistSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-foreground/90 mb-2">
                     Full Name
                   </label>
                   <input
@@ -314,13 +314,13 @@ export default function AboutUsTabs() {
                     required
                     value={waitlistForm.name}
                     onChange={(e) => setWaitlistForm(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
                     placeholder="Enter your full name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground/90 mb-2">
                     Email Address
                   </label>
                   <input
@@ -329,13 +329,13 @@ export default function AboutUsTabs() {
                     required
                     value={waitlistForm.email}
                     onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
                     placeholder="Enter your email address"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="feature" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="feature" className="block text-sm font-medium text-foreground/90 mb-2">
                     Most Interested Feature
                   </label>
                   <select
@@ -343,7 +343,7 @@ export default function AboutUsTabs() {
                     required
                     value={waitlistForm.feature}
                     onChange={(e) => setWaitlistForm(prev => ({ ...prev, feature: e.target.value }))}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground focus:border-primary focus:outline-none"
                   >
                     <option value="">Select a feature</option>
                     {getFeatureOptions().map((feature, index) => (
@@ -357,7 +357,7 @@ export default function AboutUsTabs() {
                   disabled={isSubmitting}
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 py-3 rounded-xl font-medium transition-colors duration-300"
+                  className="w-full bg-primary hover:bg-primary/90 disabled:bg-muted disabled:cursor-not-allowed text-primary-foreground px-8 py-3 rounded-xl font-medium transition-colors duration-300"
                 >
                   {isSubmitting ? "Joining Waitlist..." : "Join Waitlist"}
                 </motion.button>

@@ -7,9 +7,12 @@
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "perf:test": "lighthouse http://localhost:3000 --output=html --output-path=lighthouse-report.html",
+    "perf:analyze": "npm run build:analyze && echo 'Check .next/analyze/ for bundle analysis'"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.13.0",
@@ -76,9 +79,11 @@
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.1",
     "vanilla-calendar-pro": "^3.0.5",
+    "web-vitals": "^5.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.5.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.15",

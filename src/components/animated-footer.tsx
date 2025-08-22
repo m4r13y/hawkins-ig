@@ -100,7 +100,7 @@ export default function AnimatedFooter() {
               </AnimatedButton>
             </div>
             {isSubscribed && (
-              <p className="text-primary text-center mt-4 animate-fade-in">Thanks for subscribing! 🎉</p>
+              <p className="text-primary text-center mt-4 animate-fade-in">Thanks for subscribing!</p>
             )}
           </motion.form>
         </div>
@@ -246,7 +246,7 @@ export default function AnimatedFooter() {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-lg font-semibold text-foreground mb-8">Legal & Compliance</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-8">Legal</h4>
               <ul className="space-y-6">
                 {[
                   { name: "Privacy Policy", href: "/privacy" },

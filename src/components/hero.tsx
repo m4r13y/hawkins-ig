@@ -52,7 +52,7 @@ export default function Hero() {
       {/* Background Video with Fallback */}
       <div className="absolute inset-0 z-0">
         {/* Fallback Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
         
         {/* Video Background */}
         <video
@@ -61,11 +61,19 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="metadata"
+          poster="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2Fbg-video-poster.jpg?alt=media&token=POSTER_TOKEN"
           className="w-full h-full object-cover"
           style={{
             filter: "brightness(0.7) contrast(1.1)",
           }}
         >
+          {/* Optimized WebM video for better performance */}
+          <source 
+            src="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2Fbg-video-webop.mp4?alt=media&token=a1899d2a-a33a-42be-a10a-7eb602600648" 
+            type="video/mp4" 
+          />
+          {/* Fallback to original video if optimized version fails */}
           <source 
             src="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2F0615(2).mp4?alt=media&token=cfc161e0-6323-4a43-96db-ef9e8a4fa77d" 
             type="video/mp4" 
@@ -74,8 +82,8 @@ export default function Hero() {
           Your browser does not support the video tag.
         </video>
         
-        {/* Enhanced overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/50" />
+        {/* Theme-aware overlay - lighter in light mode */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/40 dark:from-black/20 dark:via-black/30 dark:to-black/50" />
         <div className="absolute inset-0 bg-black/0" />
       </div>
 
@@ -137,7 +145,7 @@ export default function Hero() {
               className="flex flex-col gap-6 items-center justify-center lg:justify-start lg:items-start"
             >
               <Link href="/get-started">
-                <AnimatedButton variant="slim" className="bg-white text-black hover:bg-gray-100">
+                <AnimatedButton variant="slim">
                   <span className="flex items-center">
                     Get Started
                     <ArrowRight className="ml-2 h-4 w-4" />

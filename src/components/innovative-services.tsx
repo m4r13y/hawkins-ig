@@ -267,7 +267,7 @@ export default function InnovativeServices() {
               Our licensed insurance professionals will help you compare options and find the perfect coverage for your needs and budget.
             </p>
             <Link href="/contact">
-              <AnimatedButton className="bg-white text-black hover:bg-gray-100 px-8 py-4 text-lg">
+              <AnimatedButton className="px-8 py-4 text-lg">
                 Schedule Free Consultation
               </AnimatedButton>
             </Link>
