@@ -54,28 +54,25 @@ export default function Hero() {
         {/* Fallback Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
         
-        {/* Video Background */}
+        {/* Video Background with optimized loading */}
         <video
           ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
-          poster="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2Fbg-video-poster.jpg?alt=media&token=POSTER_TOKEN"
+          preload="none"
+          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Crect width='100%25' height='100%25' fill='%23334155'/%3E%3C/svg%3E"
           className="w-full h-full object-cover"
           style={{
             filter: "brightness(0.7) contrast(1.1)",
           }}
+          onLoadStart={() => console.log('Video loading started')}
+          onCanPlay={() => console.log('Video can play')}
         >
-          {/* Optimized WebM video for better performance */}
+          {/* Use only the optimized video to reduce loading time */}
           <source 
             src="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2Fbg-video-webop.mp4?alt=media&token=a1899d2a-a33a-42be-a10a-7eb602600648" 
-            type="video/mp4" 
-          />
-          {/* Fallback to original video if optimized version fails */}
-          <source 
-            src="https://firebasestorage.googleapis.com/v0/b/medicareally.firebasestorage.app/o/public-videos%2F0615(2).mp4?alt=media&token=cfc161e0-6323-4a43-96db-ef9e8a4fa77d" 
             type="video/mp4" 
           />
           {/* Fallback for browsers that don't support video */}
@@ -89,17 +86,18 @@ export default function Hero() {
 
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center lg:text-left">
+          {/* Reduce animation intensity to prevent CLS */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="space-y-8"
           >
             <div className="space-y-6">
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500/20 via-white/10 to-blue-500/20 border border-white/30 rounded-full text-sm text-white font-medium backdrop-blur-sm"
               >
                 <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse"></div>
@@ -107,9 +105,9 @@ export default function Hero() {
               </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
             >
 

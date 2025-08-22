@@ -43,6 +43,12 @@ export default function Navbar() {
                   <Link href="/services" className="text-sm text-foreground/80 hover:text-red-400 transition-colors">
                     Services
                   </Link>
+                  <Link href="/quotes" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
+                    Quotes
+                  </Link>
+                  <Link href="/tools" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
+                    Tools
+                  </Link>
                   <Link href="/team" className="text-sm text-foreground/80 hover:text-red-400 transition-colors">
                     Team
                   </Link>
@@ -85,6 +91,12 @@ export default function Navbar() {
             <div className="px-6 py-4 space-y-3">
               <Link href="/services" className="block text-foreground/80 hover:text-red-400">
                 Services
+              </Link>
+              <Link href="/quotes" className="block text-foreground/80 hover:text-blue-400">
+                Quotes
+              </Link>
+              <Link href="/tools" className="block text-foreground/80 hover:text-blue-400">
+                Tools
               </Link>
               <Link href="/team" className="block text-foreground/80 hover:text-red-400">
                 Team

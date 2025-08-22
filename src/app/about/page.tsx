@@ -4,7 +4,7 @@ import CustomerInquiry from "@/components/customer-inquiry"
 
 export default function InquiryPage() {
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background bg-noise">
       <div className="relative z-10">
         <Navbar />
         <CustomerInquiry />

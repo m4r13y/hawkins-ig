@@ -29,6 +29,13 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
+        
+        {/* DNS prefetch and preconnect for faster loading */}
+        <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
+        <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        
         <CriticalCSS />
         <ResourceHints />
       </head>

@@ -4,7 +4,7 @@ import MegaQuoter from "@/components/mega-quoter"
 
 export default function () {
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background bg-noise">
       <div className="relative z-10">
         <Navbar />
         <MegaQuoter />

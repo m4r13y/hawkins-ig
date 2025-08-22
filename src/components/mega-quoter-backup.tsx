@@ -3,72 +3,72 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { DollarSign, Shield, Users, Heart, Calculator, CheckCircle, Building, Stethoscope, FileText, TrendingUp } from "lucide-react"
-import AnimatedButton from "./animated-button"
 import Link from "next/link"
+import AnimatedButton from "./animated-button"
 
 const productCategories = [
   {
     id: "primary-health",
     name: "Primary Health Insurance",
-    icon: <Stethoscope className="w-6 h-6" />,
-    baseRate: 450,
-    description: "Core health coverage plans",
+    description: "Major medical coverage for individuals and families",
+    icon: <Heart className="w-6 h-6" />,
+    baseRate: 350,
   },
   {
     id: "supplemental",
-    name: "Supplemental Health Insurance",
+    name: "Supplemental Coverage",
+    description: "Additional protection and gap coverage",
     icon: <Shield className="w-6 h-6" />,
-    baseRate: 180,
-    description: "Additional coverage options",
+    baseRate: 85,
   },
   {
     id: "life-insurance",
     name: "Life Insurance",
-    icon: <Heart className="w-6 h-6" />,
-    baseRate: 85,
-    description: "Life protection policies",
+    description: "Financial protection for your loved ones",
+    icon: <Users className="w-6 h-6" />,
+    baseRate: 45,
   },
   {
     id: "financial",
-    name: "Financial Products",
+    name: "Financial Services",
+    description: "Retirement and investment planning",
     icon: <TrendingUp className="w-6 h-6" />,
-    baseRate: 350,
-    description: "Investment & planning",
+    baseRate: 125,
   },
 ]
 
-const productDetails = {
+const productsByCategory = {
   "primary-health": [
     { id: "individual", name: "Individual Health Plans", multiplier: 0.8 },
     { id: "family", name: "Family Health Plans", multiplier: 1.2 },
     { id: "medicare", name: "Medicare", multiplier: 0.6 },
-    { id: "group", name: "Group Insurance", multiplier: 1.1 },
+    { id: "group", name: "Group Health Plans", multiplier: 0.9 },
   ],
   "supplemental": [
-    { id: "dental", name: "Dental", multiplier: 0.4 },
-    { id: "cancer", name: "Cancer", multiplier: 0.7 },
-    { id: "drug-plans", name: "Drug Plans", multiplier: 0.5 },
-    { id: "hospital", name: "Hospital Indemnity", multiplier: 0.6 },
+    { id: "dental", name: "Dental Insurance", multiplier: 0.3 },
+    { id: "vision", name: "Vision Insurance", multiplier: 0.2 },
+    { id: "cancer", name: "Cancer Insurance", multiplier: 0.4 },
+    { id: "accident", name: "Accident Insurance", multiplier: 0.3 },
   ],
   "life-insurance": [
-    { id: "whole", name: "Whole Life", multiplier: 2.0 },
-    { id: "universal", name: "Universal Life", multiplier: 1.5 },
-    { id: "term", name: "Term Life", multiplier: 0.8 },
-    { id: "final-expense", name: "Final Expense", multiplier: 1.0 },
+    { id: "term", name: "Term Life Insurance", multiplier: 0.8 },
+    { id: "whole", name: "Whole Life Insurance", multiplier: 1.5 },
+    { id: "universal", name: "Universal Life Insurance", multiplier: 1.3 },
   ],
   "financial": [
-    { id: "annuities", name: "Annuities", multiplier: 1.5 },
-    { id: "investments", name: "Investments", multiplier: 1.2 },
-    { id: "estate", name: "Estate Planning", multiplier: 2.0 },
+    { id: "annuities", name: "Annuities", multiplier: 2.0 },
+    { id: "ira", name: "IRA Accounts", multiplier: 1.0 },
+    { id: "mutual-funds", name: "Mutual Funds", multiplier: 1.2 },
   ],
 }
 
 const ageRanges = [
-  { value: "25-35", multiplier: 0.8 },
-  { value: "36-45", multiplier: 1.0 },
-  { value: "46-55", multiplier: 1.3 },
-  { value: "56-65", multiplier: 1.6 },
-  { value: "65+", multiplier: 0.7 },
+  { value: "18-24", multiplier: 0.7 },
+  { value: "25-34", multiplier: 0.8 },
+  { value: "35-44", multiplier: 1.0 },
+  { value: "45-54", multiplier: 1.3 },
+  { value: "55-64", multiplier: 1.6 },
+  { value: "65+", multiplier: 1.2 },
 ]
 
 export default function MegaQuoter() {
@@ -77,23 +77,22 @@ export default function MegaQuoter() {
   const [selectedProduct, setSelectedProduct] = useState("")
   const [selectedAge, setSelectedAge] = useState("")
 
-  const selectedCategoryData = productCategories.find((c) => c.id === selectedCategory)
-  const availableProducts = selectedCategory ? productDetails[selectedCategory as keyof typeof productDetails] || [] : []
-  const selectedProductData = availableProducts.find((p) => p.id === selectedProduct)
-  const selectedAgeRange = ageRanges.find((a) => a.value === selectedAge)
-  
-  const baseRate = selectedCategoryData?.baseRate || 350
-  const productMultiplier = selectedProductData?.multiplier || 1.0
-  const ageMultiplier = selectedAgeRange?.multiplier || 1.0
+  const selectedCategoryData = productCategories.find(cat => cat.id === selectedCategory)
+  const availableProducts = selectedCategory ? productsByCategory[selectedCategory] || [] : []
+  const selectedProductData = availableProducts.find(prod => prod.id === selectedProduct)
+  const selectedAgeData = ageRanges.find(age => age.value === selectedAge)
 
-  const calculateWithoutUs = (base: number) => {
-    // Typical marketplace or direct-buy rates (20-30% higher)
-    return Math.round(base * productMultiplier * ageMultiplier * 1.25)
+  const baseRate = selectedCategoryData?.baseRate || 200
+
+  const calculateWithoutUs = (baseRate: number) => {
+    const productMultiplier = selectedProductData?.multiplier || 1
+    const ageMultiplier = selectedAgeData?.multiplier || 1
+    return Math.round(baseRate * productMultiplier * ageMultiplier)
   }
 
-  const calculateWithUs = (base: number) => {
-    // Our competitive rates
-    return Math.round(base * productMultiplier * ageMultiplier)
+  const calculateWithUs = (baseRate: number) => {
+    const withoutUs = calculateWithoutUs(baseRate)
+    return Math.round(withoutUs * 0.75) // 25% savings
   }
 
   const handleCategorySelect = (categoryId: string) => {
@@ -145,7 +144,7 @@ export default function MegaQuoter() {
   }
 
   return (
-    <section className="py-24 bg-slate-50 dark:bg-black relative backdrop-blur-sm">
+    <section className="py-24 bg-background relative backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -154,13 +153,13 @@ export default function MegaQuoter() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6">Calculate Your Savings</h2>
-          <p className="text-xl text-slate-600 dark:text-gray-400 max-w-3xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Calculate Your Savings</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             See how much you could save on health insurance with our expert guidance and carrier relationships
           </p>
         </motion.div>
 
-        <div className="bg-slate-100/70 dark:bg-gray-900/40 border border-slate-200/60 dark:border-gray-700/30 rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden shadow-sm dark:shadow-none">
+        <div className="bg-card/70 border border-border/60 rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden shadow-sm dark:shadow-none">
           {/* Subtle animated background */}
           <motion.div
             className="absolute inset-0 opacity-10 dark:opacity-20"
@@ -189,7 +188,7 @@ export default function MegaQuoter() {
                           ? "bg-green-500 text-white"
                           : step === currentStep
                           ? "bg-blue-500 text-white"
-                          : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                          : "bg-muted text-muted-foreground"
                       }`}
                     >
                       {step < currentStep ? "✓" : step}
@@ -197,7 +196,7 @@ export default function MegaQuoter() {
                     {step < 4 && (
                       <div
                         className={`w-8 h-1 mx-2 transition-all duration-200 ${
-                          step < currentStep ? "bg-green-500" : "bg-gray-200 dark:bg-gray-700"
+                          step < currentStep ? "bg-green-500" : "bg-muted"
                         }`}
                       />
                     )}
@@ -215,8 +214,8 @@ export default function MegaQuoter() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Step 1: Choose Product Category</h3>
-                      <p className="text-slate-600 dark:text-gray-400">What type of insurance or financial product are you interested in?</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Step 1: Choose Product Category</h3>
+                      <p className="text-muted-foreground">What type of insurance or financial product are you interested in?</p>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
                       {productCategories.map((category) => (
@@ -225,15 +224,15 @@ export default function MegaQuoter() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleCategorySelect(category.id)}
-                          className="p-6 rounded-xl border border-slate-200/60 dark:border-gray-700/50 bg-slate-100/50 dark:bg-gray-800/50 hover:border-blue-500/50 hover:bg-blue-50/80 dark:hover:bg-blue-500/10 transition-all duration-200 text-left group"
+                          className="p-6 rounded-xl border border-border bg-card hover:border-blue-500/50 hover:bg-blue-50/80 dark:hover:bg-blue-500/10 transition-all duration-200 text-left group"
                         >
                           <div className="flex items-center space-x-4">
-                            <div className="p-3 rounded-lg bg-slate-100/80 dark:bg-gray-700/50 group-hover:bg-blue-100/80 dark:group-hover:bg-blue-500/20 transition-colors text-gray-700 dark:text-gray-300">
+                            <div className="p-3 rounded-lg bg-muted group-hover:bg-blue-100/80 dark:group-hover:bg-blue-500/20 transition-colors text-foreground">
                               {category.icon}
                             </div>
                             <div>
-                              <div className="font-semibold text-slate-900 dark:text-white text-lg">{category.name}</div>
-                              <div className="text-slate-600 dark:text-gray-400 text-sm">{category.description}</div>
+                              <div className="font-semibold text-foreground text-lg">{category.name}</div>
+                              <div className="text-muted-foreground text-sm">{category.description}</div>
                             </div>
                           </div>
                         </motion.button>
@@ -250,8 +249,8 @@ export default function MegaQuoter() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Step 2: Choose Product Type</h3>
-                      <p className="text-slate-600 dark:text-gray-400">Which specific {selectedCategoryData?.name.toLowerCase()} product interests you?</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Step 2: Choose Product Type</h3>
+                      <p className="text-muted-foreground">Which specific {selectedCategoryData?.name.toLowerCase()} product interests you?</p>
                     </div>
                     <div className="grid grid-cols-1 gap-3">
                       {availableProducts.map((product) => (
@@ -260,15 +259,15 @@ export default function MegaQuoter() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleProductSelect(product.id)}
-                          className="p-4 rounded-xl border border-slate-200/60 dark:border-gray-700/50 bg-slate-100/50 dark:bg-gray-800/50 hover:border-red-500/50 hover:bg-red-50/80 dark:hover:bg-red-500/10 transition-all duration-200 text-left"
+                          className="p-4 rounded-xl border border-border bg-card hover:border-red-500/50 hover:bg-red-50/80 dark:hover:bg-red-500/10 transition-all duration-200 text-left"
                         >
-                          <div className="font-medium text-slate-900 dark:text-white">{product.name}</div>
+                          <div className="font-medium text-foreground">{product.name}</div>
                         </motion.button>
                       ))}
                     </div>
                     <button
                       onClick={goBack}
-                      className="text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm flex items-center space-x-2"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center space-x-2"
                     >
                       <span>← Back to categories</span>
                     </button>
@@ -283,8 +282,8 @@ export default function MegaQuoter() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Step 3: Select Age Range</h3>
-                      <p className="text-slate-600 dark:text-gray-400">What's your age range? This helps us calculate accurate pricing.</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Step 3: Select Age Range</h3>
+                      <p className="text-muted-foreground">What's your age range? This helps us calculate accurate pricing.</p>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       {ageRanges.map((age) => (
@@ -293,15 +292,15 @@ export default function MegaQuoter() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleAgeSelect(age.value)}
-                          className="p-4 rounded-xl border border-slate-200/60 dark:border-gray-700/50 bg-slate-100/50 dark:bg-gray-800/50 hover:border-green-500/50 hover:bg-green-50/80 dark:hover:bg-green-500/10 transition-all duration-200 text-center"
+                          className="p-4 rounded-xl border border-border bg-card hover:border-green-500/50 hover:bg-green-50/80 dark:hover:bg-green-500/10 transition-all duration-200 text-center"
                         >
-                          <div className="font-medium text-slate-900 dark:text-white text-lg">{age.value}</div>
+                          <div className="font-medium text-foreground text-lg">{age.value}</div>
                         </motion.button>
                       ))}
                     </div>
                     <button
                       onClick={goBack}
-                      className="text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm flex items-center space-x-2"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center space-x-2"
                     >
                       <span>← Back to products</span>
                     </button>
@@ -316,26 +315,26 @@ export default function MegaQuoter() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Your Selection</h3>
-                      <p className="text-slate-600 dark:text-gray-400">Here's your estimated savings calculation</p>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">Your Selection</h3>
+                      <p className="text-muted-foreground">Here's your estimated savings calculation</p>
                     </div>
-                    <div className="bg-slate-100/60 dark:bg-gray-800/30 border border-slate-200/60 dark:border-gray-700/50 rounded-xl p-6 space-y-4">
+                    <div className="bg-muted/60 border border-border rounded-xl p-6 space-y-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-600 dark:text-gray-400">Category:</span>
-                        <span className="text-slate-900 dark:text-white font-medium">{selectedCategoryData?.name}</span>
+                        <span className="text-muted-foreground">Category:</span>
+                        <span className="text-foreground font-medium">{selectedCategoryData?.name}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-600 dark:text-gray-400">Product:</span>
-                        <span className="text-slate-900 dark:text-white font-medium">{selectedProductData?.name}</span>
+                        <span className="text-muted-foreground">Product:</span>
+                        <span className="text-foreground font-medium">{selectedProductData?.name}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-600 dark:text-gray-400">Age Range:</span>
-                        <span className="text-slate-900 dark:text-white font-medium">{selectedAge}</span>
+                        <span className="text-muted-foreground">Age Range:</span>
+                        <span className="text-foreground font-medium">{selectedAge}</span>
                       </div>
                     </div>
                     <button
                       onClick={goBack}
-                      className="text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm flex items-center space-x-2"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center space-x-2"
                     >
                       <span>← Back to age selection</span>
                     </button>
@@ -344,10 +343,10 @@ export default function MegaQuoter() {
               </div>
 
               {/* Benefits List - Always Visible */}
-              <div className="bg-slate-100/80 dark:bg-gray-800/30 border border-slate-200/60 dark:border-gray-700/50 rounded-xl p-4">
+              <div className="bg-muted/80 border border-border rounded-xl p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <Calculator className="w-5 h-5 text-green-500 dark:text-green-400" />
-                  <span className="text-sm font-medium text-slate-900 dark:text-white">What's Included</span>
+                  <span className="text-sm font-medium text-foreground">What's Included</span>
                 </div>
                 <div className="space-y-2">
                   {[
@@ -358,7 +357,7 @@ export default function MegaQuoter() {
                   ].map((benefit, index) => (
                     <div key={index} className="flex items-center space-x-2">
                       <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 flex-shrink-0" />
-                      <span className="text-xs text-slate-600 dark:text-gray-300">{benefit}</span>
+                      <span className="text-xs text-muted-foreground">{benefit}</span>
                     </div>
                   ))}
                 </div>
@@ -378,7 +377,7 @@ export default function MegaQuoter() {
                       stroke="currentColor"
                       strokeWidth="6"
                       fill="none"
-                      className="text-gray-300 dark:text-gray-700"
+                      className="text-muted"
                     />
                     <motion.circle
                       cx="50"
@@ -408,11 +407,11 @@ export default function MegaQuoter() {
                         key={`${selectedCategory}-${selectedProduct}-${selectedAge}`}
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="text-2xl font-bold text-gray-900 dark:text-white"
+                        className="text-2xl font-bold text-foreground"
                       >
                         {savingsPercentage()}%
                       </motion.div>
-                      <div className="text-gray-600 dark:text-gray-400 text-sm">Savings</div>
+                      <div className="text-muted-foreground text-sm">Savings</div>
                     </div>
                   </div>
                 </div>
@@ -425,11 +424,11 @@ export default function MegaQuoter() {
                       key={`without-${selectedCategory}-${selectedProduct}-${selectedAge}`}
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="text-2xl font-bold text-gray-900 dark:text-white mb-1"
+                      className="text-2xl font-bold text-foreground mb-1"
                     >
                       ${calculateWithoutUs(baseRate)}
                     </motion.div>
-                    <div className="text-gray-600 dark:text-gray-400 text-sm">per month</div>
+                    <div className="text-muted-foreground text-sm">per month</div>
                   </div>
 
                   <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-2xl p-6 text-center">
@@ -438,16 +437,16 @@ export default function MegaQuoter() {
                       key={`with-${selectedCategory}-${selectedProduct}-${selectedAge}`}
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="text-2xl font-bold text-gray-900 dark:text-white mb-1"
+                      className="text-2xl font-bold text-foreground mb-1"
                     >
                       ${calculateWithUs(baseRate)}
                     </motion.div>
-                    <div className="text-gray-600 dark:text-gray-400 text-sm">per month</div>
+                    <div className="text-muted-foreground text-sm">per month</div>
                   </div>
                 </div>
 
                 {/* Annual Savings */}
-                <div className="bg-gray-100 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/50 text-center">
+                <div className="bg-muted rounded-2xl p-6 border border-border text-center">
                   <DollarSign className="w-8 h-8 text-green-500 dark:text-green-400 mx-auto mb-2" />
                   <motion.div
                     key={`annual-${selectedCategory}-${selectedProduct}-${selectedAge}`}
@@ -457,7 +456,7 @@ export default function MegaQuoter() {
                   >
                     ${calculateAnnualSavings().toLocaleString()}
                   </motion.div>
-                  <div className="text-gray-600 dark:text-gray-400 text-sm">Annual Savings</div>
+                  <div className="text-muted-foreground text-sm">Annual Savings</div>
                 </div>
 
                 {/* CTA Buttons */}
@@ -490,16 +489,16 @@ export default function MegaQuoter() {
             ) : (
               <div className="flex items-center justify-center h-full">
                 <div className="text-center space-y-4">
-                  <div className="w-24 h-24 bg-gray-100 dark:bg-gray-800/50 rounded-full flex items-center justify-center mx-auto">
-                    <Calculator className="w-12 h-12 text-gray-500 dark:text-gray-600" />
+                  <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto">
+                    <Calculator className="w-12 h-12 text-muted-foreground" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Calculate Your Savings</h3>
-                    <p className="text-gray-600 dark:text-gray-400 max-w-sm">
+                    <h3 className="text-xl font-bold text-foreground mb-2">Calculate Your Savings</h3>
+                    <p className="text-muted-foreground max-w-sm">
                       Complete the steps on the left to see your personalized savings estimate
                     </p>
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-500">
+                  <div className="text-sm text-muted-foreground">
                     Step {currentStep} of 3
                   </div>
                 </div>
