@@ -58,11 +58,11 @@ const nextConfig: NextConfig = {
   webpack: (config, { isServer }) => {
     config.module.exprContextCritical = false; // Ignore require.extensions warnings from handlebars
     
-    // Tree shake framer-motion
+    // Fix framer-motion imports for production builds
     if (!isServer) {
       config.resolve.alias = {
         ...config.resolve.alias,
-        'framer-motion': 'framer-motion/dist/framer-motion',
+        // Remove problematic framer-motion alias
       };
     }
     
