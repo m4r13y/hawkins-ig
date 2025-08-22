@@ -2,11 +2,8 @@ import "./globals.css"
 import { Inter } from "next/font/google"
 import type React from "react"
 import type { Metadata } from "next"
-import ADAAccessibilityWidget from '@/components/ada-accessibility-widget-safe'
-import FloatingPerformanceWidget from '@/components/floating-performance-widget'
-import CookieConsent from '@/components/cookie-consent'
-import DarkModeToggle from '@/components/dark-mode-toggle'
 import { PerformanceMonitor, ResourceHints, CriticalCSS } from '@/components/performance-monitor'
+import ConstructionPage from '@/components/construction-page'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -15,8 +12,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Hawkins Insurance Group",
-  description: "Insurance brokerage specializing in quality coverage and personalized service.",
+  title: "Hawkins Insurance Group - Coming Soon",
+  description: "Big things coming soon at hawkinsig.com - Enhanced insurance experience with precision, protection, and personalized service.",
 }
 
 export default function RootLayout({
@@ -24,6 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Always show construction page for now
   return (
     <html lang="en">
       <head>
@@ -40,11 +38,7 @@ export default function RootLayout({
         <ResourceHints />
       </head>
       <body className={`${inter.className} bg-background text-foreground antialiased`}>
-        {children}
-        <ADAAccessibilityWidget />
-        <FloatingPerformanceWidget />
-        <DarkModeToggle />
-        <CookieConsent />
+        <ConstructionPage />
         <PerformanceMonitor />
       </body>
     </html>

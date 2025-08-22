@@ -26,6 +26,21 @@ import { getDentalQuotes, type DentalQuoteParams } from "@/lib/actions/dental-qu
 import { getCancerQuotes, type CancerQuoteParams } from "@/lib/actions/cancer-quotes"
 import { getHospitalIndemnityQuotes, type HospitalIndemnityQuoteParams } from "@/lib/actions/hospital-indemnity-quotes"
 import { getFinalExpenseLifeQuotes, type FinalExpenseLifeQuoteParams } from "@/lib/actions/final-expense-life-quotes"
+import { getMedicareAdvantageQuotes, type MedicareAdvantageQuoteParams } from "@/lib/actions/medicare-advantage-quotes"
+
+interface QuoteResult {
+  type: string
+  data: {
+    plans: {
+      planName: string
+      monthlyPremium: number
+      planType: string
+      carrier: string
+      deductible: number
+    }[]
+  } | null
+  error: string | undefined
+}
 
 interface DiscoveryQuestionnaireProps {
   onComplete: (data: DiscoveryFormData, scenario: MedicareScenario, recommendations: any[], leadScore: number) => void
@@ -83,7 +98,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
   const [currentRecommendations, setCurrentRecommendations] = useState<any[]>([])
   const [currentLeadScore, setCurrentLeadScore] = useState(0)
   const [quotesLoading, setQuotesLoading] = useState(false)
-  const [backgroundQuotes, setBackgroundQuotes] = useState<any>(null)
+  const [backgroundQuotes, setBackgroundQuotes] = useState<QuoteResult[]>([])
   
   const form = useForm<DiscoveryFormData>({
     resolver: zodResolver(discoveryFormSchema),
@@ -135,6 +150,15 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
       const tobacco = formData.tobaccoUse ? "1" : "0"
       const age = formData.age
 
+      // Simple ZIP to state mapping for cancer quotes (TX and GA only)
+      const getStateForCancer = (zipCode: string): "TX" | "GA" => {
+        // Texas ZIP codes generally start with 7 or 8
+        // Georgia ZIP codes generally start with 3
+        const firstDigit = zipCode.charAt(0)
+        if (firstDigit === '3') return 'GA'
+        return 'TX' // Default to TX
+      }
+
       // Start multiple quote requests in parallel using server actions
       const quotePromises = [
         // Medigap quotes
@@ -177,7 +201,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
 
         // Cancer quotes (only for TX and GA)
         getCancerQuotes({
-          state: "TX", // Default to TX, could be enhanced with ZIP to state mapping
+          state: getStateForCancer(formData.zipCode),
           age: age,
           familyType: "Applicant Only",
           tobaccoStatus: formData.tobaccoUse ? "Tobacco" : "Non-Tobacco",
@@ -232,6 +256,24 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
             deductible: 0
           }))} : null,
           error: result.error
+        })),
+
+        // Medicare Advantage quotes
+        getMedicareAdvantageQuotes({
+          zipCode: formData.zipCode,
+          plan: "original",
+          sort: "price",
+          order: "asc"
+        }).then(result => ({
+          type: 'medicare-advantage',
+          data: result.quotes ? { plans: result.quotes.map(q => ({
+            planName: q.plan_name,
+            monthlyPremium: q.monthly_premium,
+            planType: "Medicare Advantage",
+            carrier: q.carrier.name,
+            deductible: q.deductible || 0
+          }))} : null,
+          error: result.error
         }))
       ]
 
@@ -240,12 +282,14 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
         if (result.status === 'fulfilled' && result.value.data && !result.value.error) {
           return result.value
         }
-        console.error(`Quote error for ${['medigap', 'dental', 'cancer', 'hospital-indemnity', 'life-insurance'][index]}:`, 
+        console.error(`Quote error for ${['medigap', 'dental', 'cancer', 'hospital-indemnity', 'life-insurance', 'medicare-advantage'][index]}:`, 
           result.status === 'fulfilled' ? result.value.error : result.reason)
         return null
       }).filter(Boolean)
 
-      setBackgroundQuotes(quotes)
+      setBackgroundQuotes(
+        quotes.filter((q): q is QuoteResult => !!q && typeof q === "object" && "type" in q) as QuoteResult[]
+      )
     } catch (error) {
       console.error('Error generating background quotes:', error)
     } finally {
@@ -542,8 +586,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                 ].map((option) => (
                                   <div key={option.value} className="flex items-start space-x-3 p-3 border rounded-lg">
                                     <Checkbox
-                                      id={option.value}
-                                      checked={field.value?.includes(option.value)}
+                                      checked={field.value?.includes(option.value as "medigap" | "advantage" | "dental" | "vision" | "life" | "cancer" | "hospital" | "long-term-care")}
                                       onCheckedChange={(checked) => {
                                         const updatedValue = checked
                                           ? [...(field.value || []), option.value]
@@ -848,7 +891,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="text-center">
                               <div className="text-2xl font-bold text-blue-600">
-                                {backgroundQuotes?.length || 0}
+                                {backgroundQuotes.length || 0}
                               </div>
                               <p className="text-sm text-gray-600 dark:text-gray-400">Quote Types Available</p>
                             </div>
@@ -860,8 +903,8 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                             </div>
                             <div className="text-center">
                               <div className="text-2xl font-bold text-purple-600">
-                                {backgroundQuotes?.find(q => q.type === 'medigap')?.data?.plans?.[0]?.monthlyPremium ? 
-                                  `$${backgroundQuotes.find(q => q.type === 'medigap').data.plans[0].monthlyPremium}` : 
+                                {backgroundQuotes.find((q: QuoteResult) => q.type === 'medigap')?.data?.plans?.[0]?.monthlyPremium ? 
+                                  `$${backgroundQuotes.find((q: QuoteResult) => q.type === 'medigap')?.data?.plans?.[0]?.monthlyPremium}` : 
                                   "Custom"
                                 }
                               </div>
@@ -878,7 +921,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                             Available Plans & Pricing:
                           </h4>
                           
-                          {backgroundQuotes.map((quote, index) => (
+                          {backgroundQuotes.map((quote: QuoteResult, index: number) => (
                             <div key={index} className="p-6 border rounded-lg hover:border-blue-300 transition-colors bg-white dark:bg-gray-800">
                               <div className="flex items-start justify-between mb-4">
                                 <div>
@@ -891,6 +934,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                     {quote.type === 'dental' && "Comprehensive dental coverage"}
                                     {quote.type === 'hospital-indemnity' && "Cash benefits for hospital stays"}
                                     {quote.type === 'life-insurance' && "Life insurance protection"}
+                                    {quote.type === 'medicare-advantage' && "Alternative to Original Medicare with extra benefits"}
                                   </p>
                                 </div>
                                 <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
@@ -899,7 +943,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                               </div>
                               
                               {/* Show top 3 plans for each type */}
-                              {quote.data?.plans?.slice(0, 3).map((plan: any, planIndex: number) => (
+                              {quote.data?.plans?.slice(0, 3).map((plan, planIndex: number) => (
                                 <div key={planIndex} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-2">
                                   <div>
                                     <span className="font-medium text-gray-900 dark:text-white">
@@ -913,10 +957,10 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                   </div>
                                   <div className="text-right">
                                     <div className="font-bold text-lg text-green-600">
-                                      ${plan.monthlyPremium || plan.premium || 'Custom'}
-                                      {(plan.monthlyPremium || plan.premium) && <span className="text-sm font-normal">/month</span>}
+                                      ${plan.monthlyPremium || 'Custom'}
+                                      {plan.monthlyPremium && <span className="text-sm font-normal">/month</span>}
                                     </div>
-                                    {plan.deductible && (
+                                    {plan.deductible > 0 && (
                                       <div className="text-xs text-gray-500">
                                         ${plan.deductible} deductible
                                       </div>
@@ -926,7 +970,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                               ))}
                               
                               {/* Show plan count if more available */}
-                              {quote.data?.plans?.length > 3 && (
+                              {quote.data?.plans && quote.data.plans.length > 3 && (
                                 <p className="text-sm text-blue-600 mt-2">
                                   +{quote.data.plans.length - 3} more plans available
                                 </p>
