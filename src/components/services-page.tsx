@@ -1,7 +1,9 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import InsuranceConsultationTool from "@/components/insurance-consultation-tool"
+import InsuranceSavingsCalculator from "@/components/insurance-savings-calculator"
 import { 
   Stethoscope, 
   Users, 
@@ -24,291 +26,165 @@ import {
 import AnimatedButton from "./animated-button"
 import Link from "next/link"
 
+// Carrier logos for the flowing carousel
+const carrierLogos = [
+  "/Carrier Logos (1)/1.png",
+  "/Carrier Logos (1)/2.png", 
+  "/Carrier Logos (1)/3.png",
+  "/Carrier Logos (1)/4.png",
+  "/Carrier Logos (1)/5.png",
+  "/Carrier Logos (1)/6.png",
+  "/Carrier Logos (1)/7.png",
+  "/Carrier Logos (1)/8.png",
+  "/Carrier Logos (1)/9.png",
+  "/Carrier Logos (1)/10.png"
+]
+
 const clientServices = [
   {
     id: 'medicare',
     title: "Medicare Plans",
-    shortDesc: "Comprehensive Medicare Advantage and Supplement plans",
+    shortDesc: "Instant quotes from 200+ Medicare carriers - compare and enroll online",
     category: 'health',
-    pricing: "Free Consultation",
+    pricing: "Instant Quotes",
     icon: <Stethoscope className="w-8 h-8" />,
     gradient: "from-blue-600/20 via-blue-500/10 to-cyan-400/20",
-    features: ["Medicare Advantage", "Medicare Supplement", "Part D Prescription", "Medicare Savings Programs"],
-    details: "Navigate Medicare with confidence. Our experts help you understand and choose the right Medicare plan for your health needs and budget.",
+    quoteUrl: "/quotes/medicare",
+    features: ["Instant Medicare Quotes", "200+ Carrier Options", "Transparent Pricing", "Zero Pressure Process"],
+    details: "Skip the sales calls and get instant Medicare quotes from 200+ top carriers. See transparent pricing, compare plans side-by-side, and enroll immediately - all online.",
     benefits: [
-      "Personalized plan recommendations",
-      "Annual enrollment assistance", 
-      "Claims support and advocacy",
-      "Provider network guidance"
+      "Instant quotes from 200+ carriers",
+      "Transparent pricing with no hidden fees", 
+      "Compare plans without sales pressure",
+      "Enroll online in minutes, not weeks"
     ],
     process: [
-      "Free consultation to assess your needs",
-      "Compare plans from top carriers",
-      "Enrollment assistance and support",
-      "Ongoing account management"
+      "Get instant quotes in under 60 seconds",
+      "Compare 200+ carriers transparently",
+      "Choose your plan with full information",
+      "Enroll immediately with zero pressure"
     ]
   },
   {
     id: 'family-health',
     title: "Family Health Insurance",
-    shortDesc: "Individual and family health insurance plans",
+    shortDesc: "Instant family health quotes from 200+ top-rated carriers",
     category: 'health',
-    pricing: "Plans from $200/month",
+    pricing: "Instant Quotes",
     icon: <Users className="w-8 h-8" />,
     gradient: "from-green-600/20 via-green-500/10 to-emerald-400/20",
-    features: ["Individual Plans", "Family Coverage", "HSA Compatible", "Telehealth Services"],
-    details: "Protect your family's health with comprehensive coverage options designed for individuals and families.",
+    quoteUrl: "/quotes/healthcare-marketplace",
+    features: ["Instant Quote Technology", "200+ Carrier Network", "Transparent Pricing", "No Sales Pressure"],
+    details: "Get instant family health insurance quotes from 200+ carriers. See transparent pricing, compare coverage options, and enroll online - no waiting, no sales calls.",
     benefits: [
-      "Nationwide provider networks",
-      "Preventive care covered 100%",
-      "Prescription drug coverage",
-      "Mental health and wellness"
+      "Instant quotes from 200+ carriers",
+      "Full price transparency upfront",
+      "Compare plans without pressure", 
+      "Enroll online in minutes"
     ],
     process: [
-      "Health needs assessment",
-      "Plan comparison and selection",
-      "Application submission",
-      "Ongoing support and service"
+      "Enter family details once",
+      "View instant quotes from 200+ carriers",
+      "Compare transparent pricing & benefits",
+      "Enroll immediately with confidence"
     ]
   },
   {
     id: 'group-health',
     title: "Group Health Plans",
-    shortDesc: "Employee health benefits for businesses",
+    shortDesc: "Instant business health quotes from 200+ enterprise carriers",
     category: 'business',
-    pricing: "Custom Quotes",
+    pricing: "Instant Quotes",
     icon: <Building className="w-8 h-8" />,
     gradient: "from-purple-600/20 via-purple-500/10 to-violet-400/20",
-    features: ["Employee Benefits", "Flexible Plans", "Wellness Programs", "Compliance Support"],
-    details: "Attract and retain top talent with competitive group health insurance benefits tailored to your business needs.",
+    quoteUrl: "/quotes/healthcare-marketplace",
+    features: ["Instant Business Quotes", "200+ Carrier Network", "Transparent Pricing", "Self-Service Platform"],
+    details: "Get instant group health quotes from 200+ enterprise carriers. Compare transparent pricing, see exact costs per employee, and enroll your team online.",
     benefits: [
-      "Multiple plan options",
-      "Employer contribution flexibility",
-      "Employee wellness programs",
-      "HR and compliance support"
+      "Instant quotes from 200+ carriers",
+      "Transparent per-employee pricing",
+      "Compare benefits without sales calls",
+      "Enroll your entire team online"
     ],
     process: [
-      "Business needs analysis",
-      "Custom plan design",
-      "Employee enrollment",
-      "Ongoing administration"
+      "Enter company details instantly",
+      "View quotes from 200+ carriers",
+      "Compare transparent pricing & benefits",
+      "Enroll employees with zero pressure"
     ]
   },
   {
     id: 'dental-vision',
     title: "Dental & Vision",
-    shortDesc: "Comprehensive dental and vision coverage",
+    shortDesc: "Instant dental & vision quotes from 200+ specialized carriers",
     category: 'supplemental',
-    pricing: "Plans from $15/month",
+    pricing: "Instant Quotes",
     icon: <Smile className="w-8 h-8" />,
     gradient: "from-orange-600/20 via-orange-500/10 to-amber-400/20",
-    features: ["Preventive Care", "Major Services", "Vision Exams", "Frame Allowances"],
-    details: "Complete your health coverage with dental and vision plans that keep you smiling and seeing clearly.",
+    quoteUrl: "/quotes/dental-vision",
+    features: ["Instant Quote Technology", "200+ Dental Carriers", "Transparent Pricing", "Immediate Enrollment"],
+    details: "Get instant dental and vision quotes from 200+ specialized carriers. See transparent pricing, compare coverage levels, and enroll immediately online.",
     benefits: [
-      "Preventive care covered 100%",
-      "Large provider networks",
-      "Orthodontic coverage available",
-      "Contact lens and frame benefits"
+      "Instant quotes from 200+ carriers",
+      "Transparent pricing with no surprises",
+      "Compare plans without sales pressure",
+      "Enroll online in minutes"
     ],
     process: [
-      "Coverage needs assessment",
-      "Plan selection assistance",
-      "Quick enrollment process",
-      "Provider network guidance"
+      "Get instant quotes in seconds",
+      "Compare 200+ carriers transparently",
+      "Choose your coverage level",
+      "Enroll immediately online"
     ]
   },
   {
     id: 'life-insurance',
     title: "Life Insurance",
-    shortDesc: "Term and permanent life insurance protection",
+    shortDesc: "Instant life insurance quotes from 200+ top-rated carriers",
     category: 'protection',
-    pricing: "Plans from $20/month",
+    pricing: "Instant Quotes",
     icon: <HeartHandshake className="w-8 h-8" />,
     gradient: "from-red-600/20 via-red-500/10 to-pink-400/20",
-    features: ["Term Life", "Whole Life", "Universal Life", "Final Expense"],
-    details: "Secure your family's financial future with life insurance protection that fits your budget and needs.",
+    quoteUrl: "/quotes/final-expense",
+    features: ["Instant Quote Technology", "200+ Life Carriers", "Transparent Pricing", "No Sales Pressure"],
+    details: "Get instant life insurance quotes from 200+ carriers. See transparent pricing for term, whole, and final expense coverage - compare and apply online.",
     benefits: [
-      "Affordable term options",
-      "Cash value accumulation",
-      "Living benefits available",
-      "No medical exam options"
+      "Instant quotes from 200+ carriers",
+      "Transparent pricing for all coverage types",
+      "Compare options without sales calls",
+      "Apply online with zero pressure"
     ],
     process: [
-      "Needs analysis and quote",
-      "Application and underwriting",
-      "Policy delivery and setup",
-      "Annual policy reviews"
+      "Get instant quotes in under 60 seconds",
+      "Compare 200+ carriers side-by-side",
+      "Choose your protection level",
+      "Apply immediately with confidence"
     ]
   },
   {
     id: 'supplemental',
     title: "Supplemental Plans",
-    shortDesc: "Cancer, accident, and critical illness coverage",
+    shortDesc: "Instant supplemental insurance quotes from 200+ carriers",
     category: 'supplemental',
-    pricing: "Plans from $25/month",
+    pricing: "Instant Quotes",
     icon: <Plus className="w-8 h-8" />,
     gradient: "from-teal-600/20 via-teal-500/10 to-cyan-400/20",
-    features: ["Cancer Insurance", "Accident Coverage", "Critical Illness", "Hospital Indemnity"],
-    details: "Bridge the gap in your health coverage with supplemental insurance that pays cash benefits directly to you.",
+    quoteUrl: "/quotes/cancer-insurance",
+    features: ["Instant Quote Technology", "200+ Carrier Network", "Transparent Pricing", "Immediate Coverage"],
+    details: "Get instant quotes for cancer, accident, and critical illness coverage from 200+ carriers. See transparent pricing and enroll online - no waiting, no sales calls.",
     benefits: [
-      "Cash payments for covered events",
-      "Use benefits however you choose",
-      "Guaranteed renewable coverage",
-      "Affordable premium options"
+      "Instant quotes from 200+ carriers",
+      "Transparent pricing with no surprises",
+      "Compare benefits without pressure",
+      "Enroll online in minutes"
     ],
     process: [
-      "Coverage gap analysis",
-      "Plan selection and quotes",
-      "Simple application process",
-      "Direct claim payments"
+      "Get instant quotes in seconds",
+      "Compare 200+ carriers transparently",
+      "Choose your protection level",
+      "Enroll immediately with confidence"
     ]
   }
-]
-
-const agentServices = [
-  {
-    id: 'lead-generation',
-    title: "Lead Generation System",
-    shortDesc: "Exclusive, high-quality leads delivered daily",
-    category: 'sales',
-    pricing: "Performance Based",
-    icon: <TrendingUp className="w-8 h-8" />,
-    gradient: "from-blue-600/20 via-indigo-500/10 to-purple-400/20",
-    features: ["Exclusive Leads", "Real-Time Delivery", "CRM Integration", "Lead Scoring"],
-    details: "Stop chasing leads and start closing deals. Our proprietary lead generation system delivers exclusive, qualified prospects ready to buy.",
-    benefits: [
-      "Exclusive territory rights",
-      "Pre-qualified prospects",
-      "Real-time lead delivery",
-      "Advanced lead scoring"
-    ],
-    process: [
-      "Territory selection and setup",
-      "Lead system integration",
-      "Training on lead conversion",
-      "Ongoing optimization support"
-    ]
-  },
-  {
-    id: 'commission',
-    title: "High Commission Structure",
-    shortDesc: "Industry-leading commission rates and bonuses",
-    category: 'compensation',
-    pricing: "Up to 150% FYC",
-    icon: <DollarSign className="w-8 h-8" />,
-    gradient: "from-green-600/20 via-emerald-500/10 to-teal-400/20",
-    features: ["High First Year", "Renewal Commissions", "Performance Bonuses", "Fast Pay Options"],
-    details: "Earn what you're worth with our industry-leading commission structure designed to reward high-performing agents.",
-    benefits: [
-      "Highest commission rates",
-      "Fast payment processing",
-      "Performance bonus opportunities",
-      "Vesting schedule benefits"
-    ],
-    process: [
-      "Commission structure review",
-      "Contract terms discussion",
-      "Payment setup and preferences",
-      "Performance tracking dashboard"
-    ]
-  },
-  {
-    id: 'training',
-    title: "Comprehensive Training",
-    shortDesc: "Product training, sales coaching, and certification",
-    category: 'support',
-    pricing: "Included",
-    icon: <Award className="w-8 h-8" />,
-    gradient: "from-purple-600/20 via-violet-500/10 to-indigo-400/20",
-    features: ["Product Certification", "Sales Training", "Ongoing Coaching", "Industry Updates"],
-    details: "Master your craft with comprehensive training programs that keep you ahead of the competition and compliant with regulations.",
-    benefits: [
-      "Expert-led training sessions",
-      "Certification programs",
-      "One-on-one coaching",
-      "Continuing education credits"
-    ],
-    process: [
-      "Initial training assessment",
-      "Customized learning path",
-      "Hands-on practice sessions",
-      "Ongoing skill development"
-    ]
-  },
-  {
-    id: 'technology',
-    title: "Technology Platform",
-    shortDesc: "CRM, quoting tools, and mobile applications",
-    category: 'tools',
-    pricing: "Included",
-    icon: <Calculator className="w-8 h-8" />,
-    gradient: "from-cyan-600/20 via-blue-500/10 to-indigo-400/20",
-    features: ["Integrated CRM", "Quoting Engine", "Mobile Apps", "E-Signature"],
-    details: "Streamline your workflow with our comprehensive technology platform designed specifically for insurance professionals.",
-    benefits: [
-      "All-in-one platform",
-      "Mobile accessibility",
-      "Automated workflows",
-      "Real-time reporting"
-    ],
-    process: [
-      "Platform setup and configuration",
-      "Training on all features",
-      "Data migration assistance",
-      "Ongoing technical support"
-    ]
-  },
-  {
-    id: 'marketing',
-    title: "Marketing Support",
-    shortDesc: "Branded materials, digital assets, and campaigns",
-    category: 'support',
-    pricing: "Included",
-    icon: <Briefcase className="w-8 h-8" />,
-    gradient: "from-orange-600/20 via-amber-500/10 to-yellow-400/20",
-    features: ["Branded Materials", "Digital Assets", "Social Media", "Email Campaigns"],
-    details: "Professional marketing materials and campaigns that help you build your brand and attract more clients.",
-    benefits: [
-      "Professional branding",
-      "Compliance-approved materials",
-      "Multi-channel campaigns",
-      "Performance tracking"
-    ],
-    process: [
-      "Brand customization setup",
-      "Material selection and ordering",
-      "Campaign planning and launch",
-      "Performance monitoring"
-    ]
-  },
-  {
-    id: 'recruitment',
-    title: "Recruitment Opportunities",
-    shortDesc: "Build your team with recruiting incentives",
-    category: 'compensation',
-    pricing: "Bonus Structure",
-    icon: <UserPlus className="w-8 h-8" />,
-    gradient: "from-red-600/20 via-pink-500/10 to-rose-400/20",
-    features: ["Recruiting Bonuses", "Team Building", "Leadership Development", "Override Commissions"],
-    details: "Grow your income by building a team. Our recruiting program offers substantial bonuses and ongoing override commissions.",
-    benefits: [
-      "Substantial recruiting bonuses",
-      "Override commission structure",
-      "Leadership development program",
-      "Team management tools"
-    ],
-    process: [
-      "Recruiting strategy development",
-      "Prospect identification and outreach",
-      "Interview and onboarding support",
-      "Team performance management"
-    ]
-  }
-]
-
-const tabs = [
-  { id: 'clients', label: 'For Clients', description: 'Find the right insurance coverage for your needs' },
-  { id: 'agents', label: 'For Agents', description: 'Join our team and grow your insurance business' }
 ]
 
 interface WaitlistFormData {
@@ -318,7 +194,6 @@ interface WaitlistFormData {
 }
 
 export default function ServicesPage() {
-  const [activeTab, setActiveTab] = useState('clients')
   const [expandedCard, setExpandedCard] = useState<string | null>(null)
   const [showWaitlist, setShowWaitlist] = useState(false)
   const [waitlistForm, setWaitlistForm] = useState<WaitlistFormData>({
@@ -328,10 +203,45 @@ export default function ServicesPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const currentServices = activeTab === 'clients' ? clientServices : agentServices
+  // Carrier carousel component - COMMENTED OUT
+  /*
+  const CarrierCarousel = () => {
+    return (
+      <div className="relative overflow-hidden py-4">
+        <div 
+          className="flex animate-scroll gap-8 py-4"
+          style={{
+            animation: 'scroll 30s linear infinite, mask-shift 30s linear infinite'
+          }}
+        >
+          {carrierLogos.map((logo, index) => (
+            <div key={`first-${index}`} className="flex-shrink-0 min-w-fit flex items-center justify-center w-48">
+              <img 
+                className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 filter" 
+                alt={`Carrier ${index + 1}`}
+                src={logo}
+                title={`Carrier ${index + 1}`}
+              />
+            </div>
+          ))}
+          {carrierLogos.map((logo, index) => (
+            <div key={`second-${index}`} className="flex-shrink-0 min-w-fit flex items-center justify-center w-48">
+              <img 
+                className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 filter" 
+                alt={`Carrier ${index + 1}`}
+                src={logo}
+                title={`Carrier ${index + 1}`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+  */
 
   const getFeatureOptions = () => {
-    return currentServices.map(service => service.title)
+    return clientServices.map(service => service.title)
   }
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
@@ -339,10 +249,10 @@ export default function ServicesPage() {
     setIsSubmitting(true)
     
     try {
-      // Add the active tab context to the form data
+      // Add the service context to the form data
       const submissionData = {
         ...waitlistForm,
-        serviceType: activeTab,
+        serviceType: 'insurance',
         timestamp: new Date().toISOString()
       }
       
@@ -371,43 +281,31 @@ export default function ServicesPage() {
             className="text-center"
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Services</span>
+              Instant <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Insurance Quotes</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-              Comprehensive insurance solutions for individuals, families, and businesses. 
-              Plus exclusive opportunities for insurance professionals.
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+              Get instant quotes from 200+ top carriers. Transparent pricing, zero pressure, modern technology - insurance the way it should be.
             </p>
+            
+            {/* Carrier Carousel in Header - COMMENTED OUT */}
+            {/*
+            <div className="mb-8">
+              <p className="text-lg text-muted-foreground mb-4">
+                Trusted by <span className="font-bold text-foreground">200+ Top Carriers</span>
+              </p>
+              <CarrierCarousel />
+            </div>
+            */}
           </motion.div>
         </div>
       </section>
 
       {/* Main Content Section */}
-      <section className="min-h-screen bg-background text-foreground py-20 px-4 sm:px-6 lg:px-8">
+      <section className="bg-background text-foreground pt-20 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Tabs */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id)
-                  setExpandedCard(null)
-                }}
-                className={`px-8 py-4 rounded-2xl font-medium transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? 'bg-primary/90 text-primary-foreground shadow-lg'
-                    : 'bg-muted/50 text-muted-foreground hover:bg-muted border border-border/50'
-                }`}
-              >
-                <div className="text-center">
-                  <div className="font-semibold">{tab.label}</div>
-                  <div className="text-sm opacity-75">{tab.description}</div>
-                </div>
-              </button>
-            ))}
-          </div>        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {currentServices.map((service, index) => (
+          {/* Services Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {clientServices.map((service, index) => (
             <div
               key={service.id}
               className={`relative bg-card border border-border/50 rounded-2xl backdrop-blur-sm hover:border-border transition-all duration-200 group cursor-pointer overflow-hidden shadow-lg hover:shadow-xl ${
@@ -515,12 +413,12 @@ export default function ServicesPage() {
 
                       {/* Action Buttons */}
                       <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                        <Link href="/quotes" className="flex-1">
+                        <Link href={service.quoteUrl || '/quotes'} className="flex-1">
                           <AnimatedButton 
                             variant="default" 
                             className="w-full"
                           >
-                            {activeTab === 'clients' ? 'Get Quote' : 'Get Started'}
+                            Get Quote
                           </AnimatedButton>
                         </Link>
                         <AnimatedButton 
@@ -634,6 +532,10 @@ export default function ServicesPage() {
         )}
       </AnimatePresence>
       </section>
+
+      {/* Insurance Tools Section */}
+      <InsuranceConsultationTool />
+      <InsuranceSavingsCalculator />
     </>
   )
 }

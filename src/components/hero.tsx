@@ -87,7 +87,7 @@ export default function Hero() {
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center lg:text-left">
           {/* Cloudy background for text visibility */}
-          <div className="relative bg-black/10 dark:bg-black/20 backdrop-blur-xsm rounded-3xl p-8 lg:p-12 border border-white/5">
+          <div className="relative bg-black/10 dark:bg-black/20 backdrop-blur-xsm rounded-3xl p-8 lg:p-12 border border-white/10">
             {/* Subtle cloud-like pattern overlay */}
             <div className="absolute inset-0 opacity-30 rounded-3xl" 
                  style={{
@@ -165,7 +165,7 @@ export default function Hero() {
                 </AnimatedButton>
               </Link>
 
-              <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
+              <div className="hidden sm:flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                     <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
@@ -204,7 +204,9 @@ export default function Hero() {
               </div>
 
               {/* Stats moved below badges */}
-              <CountingStats stats={stats} />
+              <div className="hidden sm:block">
+                <CountingStats stats={stats} />
+              </div>
             </motion.div>
             </motion.div>
           </div>

@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Instagram, Twitter, Linkedin, Youtube, Mail, Phone, MapPin, ArrowRight, ExternalLink } from "lucide-react"
+import { Instagram, Facebook, Youtube, Mail, Phone, MapPin, ArrowRight, ExternalLink } from "lucide-react"
 import AnimatedButton from "./animated-button"
 import { submitNewsletterSubscription } from "@/lib/firebase"
 import MedicareDisclaimer from "./medicare-disclaimer"
@@ -106,47 +106,47 @@ export default function AnimatedFooter() {
         </div>
       </div>
 
-      {/* Main Footer Content */}
+      {/* Main Footer Content - Redesigned */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
-          {/* Logo and Description */}
+        
+        {/* Top Section: Logo, Description & CTA */}
+        <div className="text-center mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-8 text-center lg:text-left"
+            className="space-y-6"
           >
-            <div className="group flex justify-center lg:justify-start">
-              {/* Light mode logo */}
+            {/* Logo */}
+            <div className="flex justify-center">
               <Image
                 src="/hig-logo-navy.svg"
                 alt="Hawkins Insurance Group, LLC"
                 width={300}
                 height={100}
-                className="h-16 w-auto transition-transform duration-300 group-hover:scale-105 dark:hidden"
+                className="h-20 w-auto dark:hidden"
               />
-              {/* Dark mode logo */}
               <Image
                 src="/hig-logo-white.svg"
                 alt="Hawkins Insurance Group, LLC"
                 width={300}
                 height={100}
-                className="h-16 w-auto transition-transform duration-300 group-hover:scale-105 hidden dark:block"
+                className="h-20 w-auto hidden dark:block"
               />
             </div>
-            <p className="text-gray-400 text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
-              Hawkins Insurance Group is a family-owned insurance agency serving Texas families and businesses with 
-              personalized health insurance solutions. We make insurance simple and affordable.
+
+            {/* Mission Statement */}
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Family-owned insurance agency serving Texas families and businesses with personalized health insurance solutions.
             </p>
 
-            {/* Social Links */}
-            <div className="flex space-x-6 justify-center lg:justify-start">
+            {/* Social Media Links */}
+            <div className="flex justify-center space-x-6 pt-4">
               {[
-                { icon: Instagram, href: "#", label: "Instagram" },
-                { icon: Twitter, href: "#", label: "Twitter" },
-                { icon: Linkedin, href: "#", label: "LinkedIn" },
-                { icon: Youtube, href: "#", label: "YouTube" },
+                { icon: Instagram, href: "http://instagram.com/theinsurancehawk", label: "Instagram" },
+                { icon: Facebook, href: "https://www.facebook.com/people/The-Insurance-Hawk/61563388870467/", label: "Facebook" },
+                { icon: Youtube, href: "https://www.youtube.com/@theinsurancehawk9030", label: "YouTube" },
               ].map(({ icon: Icon, href, label }, index) => (
                 <motion.div
                   key={label}
@@ -155,167 +155,162 @@ export default function AnimatedFooter() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <Link href={href} className="group relative" aria-label={label}>
-                    <div className="w-12 h-12 bg-muted border border-border rounded-lg flex items-center justify-center group-hover:bg-muted/80 group-hover:border-border/80 transition-colors">
-                      <Icon className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <Link href={href} className="group" aria-label={label} target="_blank" rel="noopener noreferrer">
+                    <div className="w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                      <Icon className="h-6 w-6 text-primary group-hover:text-white transition-colors" />
                     </div>
                   </Link>
                 </motion.div>
               ))}
             </div>
           </motion.div>
+        </div>
 
-          {/* Links and Contact */}
-          <div className="col-span-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center sm:text-left">
-            {/* Services */}
+        {/* Middle Section: Navigation Grid */}
+        <div className="border-t border-border pt-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+            
+            {/* Services Column */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-lg font-semibold text-foreground mb-8">Our Services</h4>
-              <ul className="space-y-6">
+              <h4 className="text-lg font-semibold text-foreground mb-6">Services</h4>
+              <ul className="space-y-3">
                 {[
-                  { name: "Medicare Supplement", href: "/services" },
-                  { name: "Medicare Advantage", href: "/services" },
-                  { name: "Medicare Part D", href: "/services" },
-                  { name: "Life Insurance", href: "/services" },
-                  { name: "Dental Insurance", href: "/services" },
-                  { name: "Cancer Insurance", href: "/services" },
-                ].map((link, index) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <Link
-                      href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center justify-center sm:justify-start group"
+                  "Medicare Supplement",
+                  "Medicare Advantage", 
+                  "Medicare Part D",
+                  "Life Insurance",
+                  "Dental Insurance"
+                ].map((service, index) => (
+                  <li key={service}>
+                    <Link 
+                      href="/services" 
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
                     >
-                      <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-200 mr-0 group-hover:mr-2" />
-                      {link.name}
+                      {service}
                     </Link>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             </motion.div>
 
-            {/* Company */}
+            {/* Company Column */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-lg font-semibold text-foreground mb-8">Company</h4>
-              <ul className="space-y-6">
+              <h4 className="text-lg font-semibold text-foreground mb-6">Company</h4>
+              <ul className="space-y-3">
                 {[
                   { name: "About Us", href: "/about" },
                   { name: "Our Team", href: "/team" },
                   { name: "Success Stories", href: "/success-stories" },
-                  { name: "Contact Us", href: "/contact" },
-                  { name: "Get Started", href: "/get-started" },
-                ].map((link, index) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <Link
-                      href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center justify-center sm:justify-start group"
+                  { name: "Contact", href: "/contact" },
+                  { name: "Get Started", href: "/get-started" }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <Link 
+                      href={link.href} 
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
                     >
-                      <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-200 mr-0 group-hover:mr-2" />
                       {link.name}
                     </Link>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             </motion.div>
 
-            {/* Legal & Compliance */}
+            {/* Legal Column */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-lg font-semibold text-foreground mb-8">Legal</h4>
-              <ul className="space-y-6">
+              <h4 className="text-lg font-semibold text-foreground mb-6">Legal</h4>
+              <ul className="space-y-3">
                 {[
                   { name: "Privacy Policy", href: "/privacy" },
                   { name: "Terms of Service", href: "/terms" },
                   { name: "Accessibility", href: "/accessibility" },
-                  { name: "HIPAA Notice", href: "/hipaa" },
-                ].map((link, index) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <Link
-                      href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center justify-center sm:justify-start group"
+                  { name: "HIPAA Notice", href: "/hipaa" }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <Link 
+                      href={link.href} 
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
                     >
-                      <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-200 mr-0 group-hover:mr-2" />
                       {link.name}
                     </Link>
-                  </motion.li>
+                  </li>
                 ))}
-                <motion.li
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true }}
-                >
+                <li>
                   <a 
                     href="https://www.medicare.gov" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center justify-center sm:justify-start group"
+                    className="text-muted-foreground hover:text-primary transition-colors text-sm inline-flex items-center"
                   >
-                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-200 mr-0 group-hover:mr-2" />
                     Medicare.gov <ExternalLink className="h-3 w-3 ml-1" />
                   </a>
-                </motion.li>
+                </li>
               </ul>
             </motion.div>
 
-            {/* Contact Info */}
+            {/* Contact Column */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-lg font-semibold text-foreground mb-6">Get In Touch</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-6">Contact</h4>
               <div className="space-y-4">
-                <div className="flex items-center space-x-3 text-muted-foreground justify-center sm:justify-start">
-                  <Mail className="h-5 w-5 text-primary" />
-                  <span>info@hawkinsig.com</span>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Mail className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Email</p>
+                    <a href="mailto:info@hawkinsig.com" className="text-sm text-foreground hover:text-primary transition-colors">
+                      info@hawkinsig.com
+                    </a>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-3 text-muted-foreground justify-center sm:justify-start">
-                  <Phone className="h-5 w-5 text-primary" />
-                  <span>(817) 800-4253</span>
+                
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Phone className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <a href="tel:8178004253" className="text-sm text-foreground hover:text-primary transition-colors">
+                      (817) 800-4253
+                    </a>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-3 text-muted-foreground justify-center sm:justify-start">
-                  <MapPin className="h-5 w-5 text-primary" />
-                  <span>Fort Worth, TX</span>
+                
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <MapPin className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Location</p>
+                    <p className="text-sm text-foreground">Fort Worth, TX</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
-</div>
-        {/* Combined Disclaimers & Legal Section */}
+
+        {/* Disclaimers Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -323,70 +318,35 @@ export default function AnimatedFooter() {
           viewport={{ once: true }}
           className="border-t border-border pt-8 mt-12"
         >
-          <div className="space-y-3">
+          <div className="space-y-6">
             {/* Medicare Disclaimer */}
-            <div className=" border-b border-border/50 pb-3">
+            <div className="border-b border-border/50 pb-6">
               <MedicareDisclaimer variant="footer" />
             </div>
 
-            {/* Legal & Compliance Disclaimers */}
-            <div className="space-y-4 text-xs text-muted-foreground">
-              {/* License Information Row */}
-              <div className="border-b border-border/50 pb-3">
-                <h4 className="font-medium text-foreground mb-1">License Information</h4>
-                <p>
-                  Hawkins Insurance Group is a licensed insurance agency. All insurance agents are licensed 
-                  in their respective states. License numbers available upon request and can be verified 
-                  through your state's insurance department website.
-                </p>
-              </div>
-
-              {/* Insurance Disclosure Row */}
-              <div className="border-b border-border/50 pb-3">
-                <h4 className="font-medium text-foreground mb-1">Insurance Disclosure</h4>
-                <p>
-                  Insurance plans have limitations and exclusions. Please review plan documents carefully. 
-                  Not all plans are available in all areas. Coverage and premiums may vary by location.
-                </p>
+            {/* Compliance Information */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-muted-foreground">
+              <div>
+                <h4 className="font-medium text-foreground mb-2">License Information</h4>
+                <p>Licensed insurance agency. All agents licensed in their respective states. License numbers available upon request.</p>
               </div>
               
-              {/* Website Compliance Row */}
-              <div className="pb-3">
-                <h4 className="font-medium text-foreground mb-1">Website Compliance</h4>
-                <p>
-                  This website complies with ADA accessibility guidelines, HIPAA privacy requirements, 
-                  and Medicare marketing regulations. We are committed to providing equal access to all users.
-                </p>
+              <div>
+                <h4 className="font-medium text-foreground mb-2">Insurance Disclosure</h4>
+                <p>Plans have limitations and exclusions. Please review documents carefully. Coverage and premiums may vary by location.</p>
               </div>
+              
+              <div>
+                <h4 className="font-medium text-foreground mb-2">Website Compliance</h4>
+                <p>Complies with ADA guidelines, HIPAA requirements, and Medicare marketing regulations.</p>
+              </div>
+            </div>
 
-              {/* Copyright and Legal Links */}
-              <div className="border-t border-border pt-6 mt-6">
-                <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
-                  <div>
-                    <p className="text-muted-foreground text-sm">
-                      © {new Date().getFullYear()} Hawkins Insurance Group, LLC. All rights reserved.
-                    </p>
-                    <p className="text-muted-foreground text-sm mt-1">
-                      Licensed insurance agency. Not affiliated with or endorsed by Medicare or any government agency.
-                    </p>
-                  </div>
-                  
-                  <div className="flex space-x-6 text-sm">
-                    <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                      Privacy Policy
-                    </Link>
-                    <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                      Terms of Service
-                    </Link>
-                    <Link href="/accessibility" className="text-muted-foreground hover:text-foreground transition-colors">
-                      Accessibility
-                    </Link>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                      Cookie Policy
-                    </Link>
-                  </div>
-                </div>
-              </div>
+            {/* Copyright */}
+            <div className="border-t border-border pt-6 text-center">
+              <p className="text-sm text-muted-foreground">
+                © {new Date().getFullYear()} Hawkins Insurance Group, LLC. All rights reserved. Not affiliated with or endorsed by Medicare.
+              </p>
             </div>
           </div>
         </motion.div>

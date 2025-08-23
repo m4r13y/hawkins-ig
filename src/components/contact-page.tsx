@@ -153,7 +153,7 @@ export default function ContactPage() {
           >
             {!isSubmitted ? (
               <div className="bg-card border border-border rounded-3xl p-8 backdrop-blur-sm">
-                <h2 className="text-2xl font-bold text-foreground mb-6">Get Your Free Quote</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">We'd Love to Hear from You!</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -238,7 +238,7 @@ export default function ContactPage() {
                     ) : (
                       <>
                         <Send className="mr-2 h-4 w-4" />
-                        Get Started
+                        Submit
                       </>
                     )}
                   </AnimatedButton>

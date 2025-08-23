@@ -4,24 +4,31 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { ArrowRight } from "lucide-react"
 import AnimatedButton from "./animated-button"
+import Link from "next/link"
 
 export default function InsuranceConsultationTool() {
   const [familySize, setFamilySize] = useState(2)
 
   return (
-    <section className="py-16 bg-background relative">
+    <section className="py-16 bg-background relative backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Insurance Consultation Tool */}         
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="bg-gradient-to-br from-card/80 to-secondary/80 border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden"
-          id="consultation-tool"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Insurance Cost Estimator</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Get an instant estimate of your insurance costs based on your family size and coverage needs
+          </p>
+        </motion.div>
+
+        <div className="bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden">
           <div className="relative z-10">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Insurance Needs Assessment</h2>
+              <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Insurance Needs Assessment</h3>
               <p className="text-xl text-muted-foreground">Calculate your estimated coverage needs and potential savings</p>
             </div>
 
@@ -153,17 +160,19 @@ export default function InsuranceConsultationTool() {
                 </div>
 
                 <div className="text-center">
-                  <AnimatedButton className="px-8 py-4 text-lg">
-                    <span className="flex items-center">
-                      Schedule Consultation
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </span>
-                  </AnimatedButton>
+                  <Link href="/get-started">
+                    <AnimatedButton className="px-8 py-4 text-lg">
+                      <span className="flex items-center">
+                        Get Started
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </span>
+                    </AnimatedButton>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

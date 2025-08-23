@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Star, ArrowRight, Shield, Heart, Users, TrendingDown } from "lucide-react"
-import { useState } from "react"
+import { useState, useRef } from "react"
 
 const stories = [
   {
@@ -65,6 +65,16 @@ const stories = [
 
 export default function SuccessStoriesRedesign() {
   const [activeStory, setActiveStory] = useState(0)
+  const featureCardRef = useRef<HTMLDivElement>(null)
+
+  const handleStoryClick = (index: number) => {
+    setActiveStory(index)
+    // Scroll to the feature card with offset
+    if (featureCardRef.current) {
+      const y = featureCardRef.current.getBoundingClientRect().top + window.pageYOffset - 150
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    }
+  }
 
   return (
     <>
@@ -99,7 +109,7 @@ export default function SuccessStoriesRedesign() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              onClick={() => setActiveStory(index)}
+              onClick={() => handleStoryClick(index)}
               className={`cursor-pointer p-6 rounded-2xl border transition-all duration-300 ${
                 activeStory === index
                   ? "bg-card/80 border-border shadow-lg"
@@ -126,11 +136,11 @@ export default function SuccessStoriesRedesign() {
                   <div className="text-xs text-muted-foreground">Savings</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground/80">{story.results.leads}</div>
+                  <div className="text-2xl font-bold text-foreground dark:text-foreground/80">{story.results.leads}</div>
                   <div className="text-xs text-muted-foreground">Coverage</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground/80">{story.results.conversion}</div>
+                  <div className="text-2xl font-bold text-foreground dark:text-foreground/80">{story.results.conversion}</div>
                   <div className="text-xs text-muted-foreground">Satisfaction</div>
                 </div>
               </div>
@@ -141,7 +151,7 @@ export default function SuccessStoriesRedesign() {
                 ))}
               </div>
 
-              <p className="text-foreground/90 text-sm leading-relaxed mb-4">"{story.quote}"</p>
+              <p className="text-foreground dark:text-foreground/90 text-sm leading-relaxed mb-4">"{story.quote}"</p>
 
               <div className="flex items-center justify-between">
                 <div>
@@ -156,24 +166,25 @@ export default function SuccessStoriesRedesign() {
 
         {/* Detailed View */}
         <motion.div
+          ref={featureCardRef}
           key={activeStory}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="bg-card rounded-3xl p-8 border border-border"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start lg:items-center">
             <div>
               <h3 className="text-3xl font-bold text-foreground mb-4">{stories[activeStory].company} Success Story</h3>
-              <p className="text-foreground/90 text-lg leading-relaxed mb-6">"{stories[activeStory].quote}"</p>
+              <p className="text-foreground dark:text-foreground/90 text-lg leading-relaxed mb-6">"{stories[activeStory].quote}"</p>
 
               <div className="space-y-4">
                 {stories[activeStory].metrics.map((metric, index) => (
                   <div key={index} className="flex justify-between items-center p-4 bg-background/50 rounded-lg border border-border/50">
-                    <span className="text-muted-foreground">{metric.label}</span>
+                    <span className="text-muted-foreground font-medium">{metric.label}</span>
                     <div className="flex items-center space-x-4">
-                      <span className="text-muted-foreground/70">{metric.before}</span>
-                      <ArrowRight className="w-4 h-4 text-muted-foreground/70" />
+                      <span className="text-muted-foreground dark:text-muted-foreground/70">{metric.before}</span>
+                      <ArrowRight className="w-4 h-4 text-muted-foreground dark:text-muted-foreground/70" />
                       <span className="text-primary font-bold">{metric.after}</span>
                     </div>
                   </div>
@@ -181,12 +192,12 @@ export default function SuccessStoriesRedesign() {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative order-first lg:order-last">
               <div className="aspect-video bg-muted rounded-2xl overflow-hidden">
                 <img
                   src={stories[activeStory].image || "/placeholder.svg"}
                   alt={`${stories[activeStory].company} results`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center-top"
                 />
               </div>
             </div>

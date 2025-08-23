@@ -38,31 +38,31 @@ export default function Navbar() {
                 />
               </Link>
               
-              <div className="hidden md:block">
+              <div className="hidden lg:block">
                 <div className="flex items-center space-x-8">
-                  <Link href="/services" className="text-sm text-foreground/80 hover:text-red-400 transition-colors">
-                    Services
+                  <Link href="/services" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
+                    Insurance
                   </Link>
-                 {/* <Link href="/quotes" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
+                 {/* <Link href="/quotes" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
                     Quotes
                   </Link> */}
-                  <Link href="/tools" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
-                    Tools
+                  <Link href="/finances" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
+                    Finances
                   </Link>
-                  <Link href="/team" className="text-sm text-foreground/80 hover:text-red-400 transition-colors">
+                  <Link href="/team" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
                     Team
                   </Link>
-                  <Link href="/success-stories" className="text-sm text-foreground/80 hover:text-blue-400 transition-colors">
+                  <Link href="/success-stories" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
                     Success Stories
                   </Link>
-                  <Link href="/contact" className="text-sm text-foreground/80 hover:text-red-400 transition-colors">
+                  <Link href="/contact" className="text-sm text-foreground/80 hover:text-foreground transition-colors">
                     Contact
                   </Link>
                 </div>
               </div>
             </div>
 
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden lg:flex items-center space-x-4">
               <Link href="/get-started">
                 <AnimatedButton size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 text-sm">
                   Get Started
@@ -77,7 +77,7 @@ export default function Navbar() {
               </AnimatedButton>
             </div>
 
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X className="h-5 w-5 text-foreground" /> : <Menu className="h-5 w-5 text-foreground" />}
               </Button>
@@ -87,24 +87,24 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border bg-background/80 backdrop-blur-md rounded-b-2xl">
+          <div className="lg:hidden border-t border-border bg-background/80 backdrop-blur-md rounded-b-2xl">
             <div className="px-6 py-4 space-y-3">
-              <Link href="/services" className="block text-foreground/80 hover:text-red-400">
-                Services
+              <Link href="/services" className="block text-foreground/80 hover:text-foreground">
+                Insurance
               </Link>
-              <Link href="/quotes" className="block text-foreground/80 hover:text-blue-400">
+              <Link href="/quotes" className="block text-foreground/80 hover:text-foreground">
                 Quotes
               </Link>
-              <Link href="/tools" className="block text-foreground/80 hover:text-blue-400">
-                Tools
+              <Link href="/finances" className="block text-foreground/80 hover:text-foreground">
+                Finances
               </Link>
-              <Link href="/team" className="block text-foreground/80 hover:text-red-400">
+              <Link href="/team" className="block text-foreground/80 hover:text-foreground">
                 Team
               </Link>
-              <Link href="/success-stories" className="block text-foreground/80 hover:text-blue-400">
+              <Link href="/success-stories" className="block text-foreground/80 hover:text-foreground">
                 Success Stories
               </Link>
-              <Link href="/contact" className="block text-foreground/80 hover:text-red-400">
+              <Link href="/contact" className="block text-foreground/80 hover:text-foreground">
                 Contact
               </Link>
               <div className="pt-3 border-t border-border space-y-3">

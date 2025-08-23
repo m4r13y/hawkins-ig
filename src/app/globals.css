@@ -136,3 +136,42 @@
     background-position: 100% 50%;
   }
 }
+
+/* Prevent horizontal overflow globally */
+html, body {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Carriers Carousel Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+/* Dynamic Mask Animation */
+@keyframes mask-shift {
+  0% {
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  }
+  50% {
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 60%, transparent 75%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 60%, transparent 75%);
+  }
+  100% {
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  }
+}

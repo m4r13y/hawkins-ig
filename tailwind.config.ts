@@ -82,10 +82,34 @@ export default {
             height: '0',
           },
         },
+        'scroll': {
+          '0%': {
+            transform: 'translateX(0)',
+          },
+          '100%': {
+            transform: 'translateX(-50%)',
+          },
+        },
+        'mask-shift': {
+          '0%': {
+            maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+          },
+          '50%': {
+            maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 60%, transparent 75%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 60%, transparent 75%)',
+          },
+          '100%': {
+            maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'scroll': 'scroll 30s linear infinite',
+        'mask': 'mask-shift 30s linear infinite',
       },
       transitionDuration: {
         '100': '100ms', // Added for 0.1s

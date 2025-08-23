@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Accessibility, Eye, Type } from 'lucide-react'
+import { Settings, Eye, Type, ChevronLeft, Sun, Moon } from 'lucide-react'
 
 export default function ADAAccessibilityWidget() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
   const [settings, setSettings] = useState({
     fontSize: 'normal',
     contrast: 'normal'
@@ -103,11 +105,34 @@ export default function ADAAccessibilityWidget() {
     console.log('Settings reset')
   }
 
+  // Dark mode toggle function
+  const toggleDarkMode = () => {
+    const newValue = !darkMode
+    setDarkMode(newValue)
+    
+    const html = document.documentElement
+    
+    if (newValue) {
+      html.classList.add('dark')
+    } else {
+      html.classList.remove('dark')
+    }
+    
+    // Store preference
+    try {
+      localStorage.setItem('dark-mode', newValue.toString())
+    } catch (error) {
+      console.warn('Could not save dark mode preference:', error)
+    }
+  }
+
   // Load saved preferences on mount
   useEffect(() => {
     try {
       const savedFontSize = localStorage.getItem('ada-font-size')
       const savedContrast = localStorage.getItem('ada-contrast')
+      const savedCollapsed = localStorage.getItem('ada-collapsed')
+      const savedDarkMode = localStorage.getItem('dark-mode')
 
       if (savedFontSize) {
         adjustFontSize(savedFontSize)
@@ -115,38 +140,97 @@ export default function ADAAccessibilityWidget() {
       if (savedContrast) {
         adjustContrast(savedContrast)
       }
+      if (savedCollapsed !== null) {
+        setIsCollapsed(savedCollapsed === 'true')
+      }
+      if (savedDarkMode !== null) {
+        const isDark = savedDarkMode === 'true'
+        setDarkMode(isDark)
+        if (isDark) {
+          document.documentElement.classList.add('dark')
+        }
+      } else {
+        // Check system preference if no saved preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        setDarkMode(prefersDark)
+        if (prefersDark) {
+          document.documentElement.classList.add('dark')
+        }
+      }
     } catch (error) {
       console.warn('Could not load saved preferences:', error)
     }
   }, [])
 
+  // Save collapsed state when it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('ada-collapsed', isCollapsed.toString())
+    } catch (error) {
+      console.warn('Could not save collapsed state:', error)
+    }
+  }, [isCollapsed])
+
   return (
     <>
-      {/* ADA Widget Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300"
-        aria-label="Open accessibility options"
-        title="Accessibility Options"
-      >
-        <Accessibility className="h-6 w-6" />
-      </button>
+      {/* ADA Widget Tab */}
+      <div className="fixed bottom-4 right-0 z-50">
+        {isCollapsed ? (
+          // Collapsed state - just a small caret
+          <button
+            onClick={() => setIsCollapsed(false)}
+            className="bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 p-2 rounded-l-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Expand accessibility options"
+            title="Accessibility & Settings"
+          >
+            <ChevronLeft className="h-3 w-3" />
+          </button>
+        ) : (
+          // Expanded tab state
+          <div className="relative">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 p-3 rounded-l-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Open accessibility options"
+              title="Accessibility & Settings"
+            >
+              <Settings className="h-4 w-4" />
+            </button>
+            <button
+              onClick={(e) => {
+                  e.stopPropagation()
+                  setIsCollapsed(true)
+                  setIsOpen(false)
+                }}
+                className="absolute -top-1 -left-1 bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-600 dark:text-gray-300 rounded-full w-4 h-4 flex items-center justify-center text-xs leading-none"
+                aria-label="Collapse tab"
+              >
+                ×
+              </button>
+          </div>
+        )}
+      </div>
 
       {/* ADA Widget Panel */}
       <AnimatePresence>
-        {isOpen && (
+        {!isCollapsed && isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: 320 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            className="fixed bottom-24 right-6 z-50 bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-xl shadow-2xl w-80 max-h-96 overflow-y-auto"
+            exit={{ opacity: 0, x: 320 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed bottom-4 right-12 z-50 bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-l-xl rounded-tr-xl shadow-2xl w-80 max-w-[calc(100vw-4rem)] h-80 overflow-y-auto"
           >
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center">
-                  <Accessibility className="h-5 w-5 mr-2" />
-                  Accessibility Options
-                </h3>
+            <div className="p-4">
+              <div className="flex items-center justify-between mb-4">
+                <button
+                  onClick={toggleDarkMode}
+                  className="p-2 bg-gradient-to-br from-secondary via-background to-secondary border border-border text-foreground rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary transition-colors text-sm font-medium flex items-center gap-2"
+                  aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
+                >
+                  {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                  {darkMode ? 'Light' : 'Dark'}
+                </button>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
@@ -156,10 +240,10 @@ export default function ADAAccessibilityWidget() {
                 </button>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Font Size Controls */}
                 <div>
-                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center">
+                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center">
                     <Type className="h-4 w-4 mr-2" />
                     Text Size
                   </h4>
@@ -182,11 +266,11 @@ export default function ADAAccessibilityWidget() {
 
                 {/* Contrast Controls */}
                 <div>
-                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center">
+                  <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center">
                     <Eye className="h-4 w-4 mr-2" />
                     Contrast
                   </h4>
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     {[
                       { value: 'normal', label: 'Normal' },
                       { value: 'high', label: 'High Contrast' },
@@ -210,7 +294,7 @@ export default function ADAAccessibilityWidget() {
                 {/* Reset Button */}
                 <button
                   onClick={resetSettings}
-                  className="w-full p-3 bg-gradient-to-br from-secondary via-background to-secondary text-foreground rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary transition-colors text-sm font-medium"
+                  className="w-full p-2 bg-gradient-to-br from-secondary via-background to-secondary text-foreground rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary transition-colors text-sm font-medium"
                 >
                   Reset to Default
                 </button>

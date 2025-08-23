@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion"
 import { useState } from "react"
-import { ArrowRight, Users, Award, Phone, Mail, MapPin, Star, Shield, Heart, Linkedin, Calendar, CheckCircle } from "lucide-react"
+import { ArrowRight, Users, Award, Phone, Mail, MapPin, Star, Shield, Heart, Facebook, Calendar, CheckCircle } from "lucide-react"
 import AnimatedButton from "./animated-button"
+import ContactFormModal from "./contact-form-modal"
 
 const teamMembers = [
   {
@@ -29,7 +30,7 @@ const teamMembers = [
     image: "/jonathan-hawkins.jpg",
     phone: "(817) 800-4253",
     email: "jhawk@hawkinsig.com",
-    linkedin: "",
+    facebook: "",
     languages: ["English"],
     servingAreas: ["Texas"]
   },
@@ -53,7 +54,7 @@ const teamMembers = [
     image: "/Kasey-Weadon.jpg",
     phone: "(972) 978-5037",
     email: "info@hawkinsig.com",
-    linkedin: "",
+    facebook: "",
     languages: ["English", "Spanish"],
     servingAreas: ["Dallas-Fort Worth", "Houston", "East Texas"]
   },
@@ -77,7 +78,7 @@ const teamMembers = [
     image: "/cal-marley.png",
     phone: "(325) 225-5742",
     email: "cal@hawkinsig.com",
-    linkedin: "",
+    facebook: "",
     languages: ["English"],
     servingAreas: ["Texas"]
   },
@@ -94,6 +95,35 @@ const teamStats = [
 export default function TeamPage() {
   const [selectedMember, setSelectedMember] = useState<number | null>(null)
   const [expandedBios, setExpandedBios] = useState<Set<number>>(new Set())
+  const [contactModal, setContactModal] = useState<{
+    isOpen: boolean
+    memberName: string
+    memberPhone: string
+    memberEmail: string
+  }>({
+    isOpen: false,
+    memberName: "",
+    memberPhone: "",
+    memberEmail: ""
+  })
+
+  const openContactModal = (name: string, phone: string, email: string) => {
+    setContactModal({
+      isOpen: true,
+      memberName: name,
+      memberPhone: phone,
+      memberEmail: email
+    })
+  }
+
+  const closeContactModal = () => {
+    setContactModal({
+      isOpen: false,
+      memberName: "",
+      memberPhone: "",
+      memberEmail: ""
+    })
+  }
 
   const toggleBio = (memberId: number) => {
     const newExpandedBios = new Set(expandedBios)
@@ -330,14 +360,17 @@ export default function TeamPage() {
                         </div>
                       </div>
                       
-                      <div className="flex justify-between items-center">
+                      <div className="flex flex-col items-center gap-3">
                         <div className="flex space-x-2">
-                          <Phone className="w-4 h-4 text-muted-foreground" />
-                          <Mail className="w-4 h-4 text-muted-foreground" />
-                          <Linkedin className="w-4 h-4 text-muted-foreground" />
+                          <Phone className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
+                          <Mail className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
+                          <Facebook className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
                         </div>
-                        <AnimatedButton className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 text-xs">
-                          <span className="flex items-center">
+                        <AnimatedButton 
+                          onClick={() => openContactModal(member.name, member.phone, member.email)}
+                          className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 text-xs w-full"
+                        >
+                          <span className="flex items-center justify-center">
                             Contact {member.name.split(' ')[0]}
                             <ArrowRight className="ml-1 h-3 w-3" />
                           </span>
@@ -352,6 +385,15 @@ export default function TeamPage() {
         </div>
         </div>
       </section>
+
+      {/* Contact Form Modal */}
+      <ContactFormModal
+        isOpen={contactModal.isOpen}
+        onClose={closeContactModal}
+        memberName={contactModal.memberName}
+        memberPhone={contactModal.memberPhone}
+        memberEmail={contactModal.memberEmail}
+      />
     </>
   )
 }

@@ -331,7 +331,7 @@ export default function InsuranceSavingsCalculator() {
               {/* Benefits List - Always Visible */}
               <div className="bg-card/30 border border-border rounded-xl p-4">
                 <div className="flex items-center space-x-3 mb-3">
-                  <Calculator className="w-5 h-5 text-green-400" />
+                  <Calculator className="w-5 h-5 text-green-600 dark:text-green-400" />
                   <span className="text-sm font-medium text-foreground">What's Included</span>
                 </div>
                 <div className="space-y-2">
@@ -342,7 +342,7 @@ export default function InsuranceSavingsCalculator() {
                     "No fees - carriers pay our commission"
                   ].map((benefit, index) => (
                     <div key={index} className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0" />
                       <span className="text-xs text-muted-foreground">{benefit}</span>
                     </div>
                   ))}
@@ -404,8 +404,8 @@ export default function InsuranceSavingsCalculator() {
 
                 {/* Cost Comparison Cards */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-red-900/20 border border-red-500/30 rounded-2xl p-6 text-center">
-                    <div className="text-red-400 text-sm mb-2">Without Our Help</div>
+                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 rounded-2xl p-6 text-center">
+                    <div className="text-red-600 dark:text-red-400 text-sm mb-2">Without Our Help</div>
                     <motion.div
                       key={`without-${selectedCategory}-${selectedProduct}-${selectedAge}`}
                       initial={{ scale: 0.8, opacity: 0 }}
@@ -417,8 +417,8 @@ export default function InsuranceSavingsCalculator() {
                     <div className="text-muted-foreground text-sm">per month</div>
                   </div>
 
-                  <div className="bg-green-900/20 border border-green-500/30 rounded-2xl p-6 text-center">
-                    <div className="text-green-400 text-sm mb-2">With Our Help</div>
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-2xl p-6 text-center">
+                    <div className="text-green-600 dark:text-green-400 text-sm mb-2">With Our Help</div>
                     <motion.div
                       key={`with-${selectedCategory}-${selectedProduct}-${selectedAge}`}
                       initial={{ scale: 0.8, opacity: 0 }}
@@ -433,12 +433,12 @@ export default function InsuranceSavingsCalculator() {
 
                 {/* Annual Savings */}
                 <div className="bg-card/50 rounded-2xl p-6 border border-border text-center">
-                  <DollarSign className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                  <DollarSign className="w-8 h-8 text-green-600 dark:text-green-400 mx-auto mb-2" />
                   <motion.div
                     key={`annual-${selectedCategory}-${selectedProduct}-${selectedAge}`}
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="text-3xl font-bold text-green-400 mb-1"
+                    className="text-3xl font-bold text-green-600 dark:text-green-400 mb-1"
                   >
                     ${calculateAnnualSavings().toLocaleString()}
                   </motion.div>

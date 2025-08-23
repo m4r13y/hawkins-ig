@@ -180,51 +180,103 @@ export default function AboutUsTabs() {
 
         {/* Tab Navigation */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {tabsData.map((tab) => (
-            <motion.button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
-                activeTab === tab.id
-                  ? "bg-primary/10 border-primary/30 text-primary"
-                  : "bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground"
-              }`}
-            >
-              <div className="w-8 h-8 flex items-center justify-center">
-                {tab.id === "insurance-hawk" || tab.id === "hawknest" || tab.id === "hawknest-admin" ? (
-                  // Single logo for these tabs (they don't have dark mode variants)
-                  <Image 
-                    src={getTabLogo(tab.id)} 
-                    alt={`${tab.title} Logo`} 
-                    width={24} 
-                    height={24}
-                    className="w-6 h-6"
-                  />
-                ) : (
-                  // HIG logo with dark mode support
-                  <>
+          {/* Desktop version */}
+          <div className="hidden sm:flex flex-wrap justify-center gap-4 w-full">
+            {tabsData.map((tab) => (
+              <motion.button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
+                  activeTab === tab.id
+                    ? "bg-primary/10 border-primary/30 text-primary"
+                    : "bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground"
+                }`}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  {tab.id === "insurance-hawk" || tab.id === "hawknest" || tab.id === "hawknest-admin" ? (
+                    // Single logo for these tabs (they don't have dark mode variants)
                     <Image 
-                      src={getTabLogo(tab.id, false)} 
+                      src={getTabLogo(tab.id)} 
                       alt={`${tab.title} Logo`} 
                       width={24} 
                       height={24}
-                      className="w-6 h-6 dark:hidden"
+                      className="w-6 h-6"
                     />
+                  ) : (
+                    // HIG logo with dark mode support
+                    <>
+                      <Image 
+                        src={getTabLogo(tab.id, false)} 
+                        alt={`${tab.title} Logo`} 
+                        width={24} 
+                        height={24}
+                        className="w-6 h-6 dark:hidden"
+                      />
+                      <Image 
+                        src={getTabLogo(tab.id, true)} 
+                        alt={`${tab.title} Logo`} 
+                        width={24} 
+                        height={24}
+                        className="w-6 h-6 hidden dark:block"
+                      />
+                    </>
+                  )}
+                </div>
+                <span className="font-medium">{tab.title}</span>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Mobile version - just logos in a row */}
+          <div className="flex sm:hidden justify-center gap-3 w-full">
+            {tabsData.map((tab) => (
+              <motion.button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`flex items-center justify-center w-16 h-16 rounded-2xl border transition-all duration-300 ${
+                  activeTab === tab.id
+                    ? "bg-primary/10 border-primary/30 text-primary"
+                    : "bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground"
+                }`}
+                aria-label={tab.title}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  {tab.id === "insurance-hawk" || tab.id === "hawknest" || tab.id === "hawknest-admin" ? (
+                    // Single logo for these tabs (they don't have dark mode variants)
                     <Image 
-                      src={getTabLogo(tab.id, true)} 
+                      src={getTabLogo(tab.id)} 
                       alt={`${tab.title} Logo`} 
                       width={24} 
                       height={24}
-                      className="w-6 h-6 hidden dark:block"
+                      className="w-6 h-6"
                     />
-                  </>
-                )}
-              </div>
-              <span className="font-medium">{tab.title}</span>
-            </motion.button>
-          ))}
+                  ) : (
+                    // HIG logo with dark mode support
+                    <>
+                      <Image 
+                        src={getTabLogo(tab.id, false)} 
+                        alt={`${tab.title} Logo`} 
+                        width={24} 
+                        height={24}
+                        className="w-6 h-6 dark:hidden"
+                      />
+                      <Image 
+                        src={getTabLogo(tab.id, true)} 
+                        alt={`${tab.title} Logo`} 
+                        width={24} 
+                        height={24}
+                        className="w-6 h-6 hidden dark:block"
+                      />
+                    </>
+                  )}
+                </div>
+              </motion.button>
+            ))}
+          </div>
         </div>
 
         {/* Tab Content */}
