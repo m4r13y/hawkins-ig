@@ -47,8 +47,6 @@ export interface MedigapQuote {
 
 export async function getMedigapQuotes(params: MedigapQuoteParams): Promise<{ quotes?: MedigapQuote[]; error?: string }> {
   try {
-    console.log('Medigap quote request:', params)
-    
     const allQuotes: MedigapQuote[] = []
     const getMedigapQuotesFn = httpsCallable(functions, 'getMedigapQuotes')
     

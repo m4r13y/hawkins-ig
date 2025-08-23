@@ -61,8 +61,6 @@ export interface FinalExpenseLifeQuote {
 
 export async function getFinalExpenseLifeQuotes(params: FinalExpenseLifeQuoteParams): Promise<{ quotes?: FinalExpenseLifeQuote[]; error?: string }> {
   try {
-    console.log('Final Expense Life quote request:', params)
-    
     const getFinalExpenseLifeQuotesFn = httpsCallable(functions, 'getFinalExpenseLifeQuotes')
     
     const functionParams = {

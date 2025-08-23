@@ -175,7 +175,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
         });
         
         if (submissionId) {
-          console.log('Form submitted successfully with ID:', submissionId);
+          // Form submitted successfully
         } else {
           console.error('Failed to submit form');
         }

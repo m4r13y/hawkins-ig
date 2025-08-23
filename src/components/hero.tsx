@@ -67,8 +67,6 @@ export default function Hero() {
           style={{
             filter: "brightness(0.7) contrast(1.1)",
           }}
-          onLoadStart={() => console.log('Video loading started')}
-          onCanPlay={() => console.log('Video can play')}
         >
           {/* Use only the optimized video to reduce loading time */}
           <source 

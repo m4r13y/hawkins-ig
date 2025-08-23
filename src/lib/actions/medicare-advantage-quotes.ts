@@ -56,8 +56,6 @@ export interface MedicareAdvantageQuote {
 
 export async function getMedicareAdvantageQuotes(params: MedicareAdvantageQuoteParams): Promise<{ quotes?: MedicareAdvantageQuote[]; error?: string }> {
   try {
-    console.log('Medicare Advantage quote request:', params)
-    
     const getMedicareAdvantageQuotesFn = httpsCallable(functions, 'getMedicareAdvantageQuotes')
     
     const functionParams = {

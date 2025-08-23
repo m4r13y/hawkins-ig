@@ -48,7 +48,6 @@ export async function submitGetStartedForm(formData: FormSubmission): Promise<st
 
   try {
     const result = await submitInsuranceLeadFunction(formData);
-    console.log('Insurance lead submitted successfully:', result.data);
     return (result.data as any)?.leadId || null;
   } catch (error) {
     console.error('Error submitting insurance lead:', error);
@@ -66,7 +65,6 @@ export async function submitContactForm(contactData: ContactFormData): Promise<s
 
   try {
     const result = await submitContactLeadFunction(contactData);
-    console.log('Contact lead submitted successfully:', result.data);
     return (result.data as any)?.leadId || null;
   } catch (error) {
     console.error('Error submitting contact lead:', error);

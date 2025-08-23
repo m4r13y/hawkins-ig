@@ -34,8 +34,6 @@ export default function InformationRequestModal({ isOpen, onClose }: Information
       // Simulate API call - replace with actual implementation
       await new Promise(resolve => setTimeout(resolve, 1000))
       
-      console.log('Information request submission:', informationRequestData)
-      
       const message = informationRequestData.requestType === 'waitlist' 
         ? `Thank you for joining the waitlist for ${informationRequestData.service}! We'll notify you when it's available.`
         : `Thank you for your interest in ${informationRequestData.service}! We'll contact you within 24 hours with more information.`

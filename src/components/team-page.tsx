@@ -223,7 +223,6 @@ export default function TeamPage() {
                       quality={90}
                       priority={member.id === 1}
                       onError={(e) => {
-                        console.log(`Failed to load image for ${member.name}: ${member.image}`);
                         // Fallback to placeholder if image fails to load
                         e.currentTarget.style.display = 'none';
                         e.currentTarget.parentElement?.querySelector('.fallback-icon')?.classList.remove('hidden');

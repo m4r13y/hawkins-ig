@@ -53,8 +53,6 @@ export interface DentalQuote {
 
 export async function getDentalQuotes(params: DentalQuoteParams): Promise<{ quotes?: DentalQuote[]; error?: string }> {
   try {
-    console.log('Dental quote request:', params)
-    
     const getDentalQuotesFn = httpsCallable(functions, 'getDentalQuotes')
     
     const functionParams = {

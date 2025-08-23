@@ -39,7 +39,6 @@ export default function RevolutionaryMegaQuoter() {
 
   const handleRequestConsultation = () => {
     // Here you would integrate with your CRM/lead management system
-    console.log("Consultation requested for lead:", state.formData?.contactInfo)
     
     // Example: Send to Firebase, CRM, or trigger calendar booking
     // await scheduleConsultation(state.formData, state.leadScore)
@@ -49,7 +48,6 @@ export default function RevolutionaryMegaQuoter() {
 
   const handleGenerateReport = () => {
     // Here you would generate a PDF report or trigger email with detailed analysis
-    console.log("Generating report for:", state.formData?.contactInfo?.email)
     
     // Example: Generate PDF with all quotes and recommendations
     // await generatePDFReport(state.formData, state.recommendations)

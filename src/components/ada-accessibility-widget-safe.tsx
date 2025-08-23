@@ -44,8 +44,6 @@ export default function ADAAccessibilityWidget() {
     } catch (error) {
       console.warn('Could not save font size preference:', error)
     }
-    
-    console.log('Font size changed to:', size)
   }
 
   // Safe contrast adjustment - uses classes instead of global styles
@@ -76,8 +74,6 @@ export default function ADAAccessibilityWidget() {
     } catch (error) {
       console.warn('Could not save contrast preference:', error)
     }
-    
-    console.log('Contrast changed to:', contrast)
   }
 
   // Reset all settings
@@ -101,8 +97,6 @@ export default function ADAAccessibilityWidget() {
     } catch (error) {
       console.warn('Could not clear preferences:', error)
     }
-    
-    console.log('Settings reset')
   }
 
   // Dark mode toggle function

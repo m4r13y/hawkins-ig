@@ -22,7 +22,6 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       // Simulate API call - replace with actual implementation
       await new Promise(resolve => setTimeout(resolve, 1000))
       
-      console.log('Waitlist submission:', waitlistFormData)
       alert(`Thank you for joining the waitlist for ${waitlistFormData.feature}! We'll notify you when it's ready.`)
       
       // Reset form

@@ -38,8 +38,7 @@ export default function Navbar() {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       // You can implement search logic here
-      // For now, we'll just log it and redirect to a search page
-      console.log("Searching for:", searchQuery)
+      // For now, we'll redirect to a search page
       // Example: router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
       setSearchQuery("")
       setIsSearchOpen(false)

@@ -42,8 +42,6 @@ export interface CancerQuote {
 
 export async function getCancerQuotes(params: CancerQuoteParams): Promise<{ quotes?: CancerQuote[]; error?: string }> {
   try {
-    console.log('Cancer quote request:', params)
-    
     const getCancerQuotesFn = httpsCallable(functions, 'getCancerInsuranceQuote')
     
     const result = await getCancerQuotesFn(params)

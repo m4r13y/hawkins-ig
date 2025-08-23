@@ -52,8 +52,6 @@ export interface HospitalIndemnityQuote {
 
 export async function getHospitalIndemnityQuotes(params: HospitalIndemnityQuoteParams): Promise<{ quotes?: HospitalIndemnityQuote[]; error?: string }> {
   try {
-    console.log('Hospital Indemnity quote request:', params)
-    
     const getHospitalIndemnityQuotesFn = httpsCallable(functions, 'getHospitalIndemnityQuotes')
     
     const functionParams = {
