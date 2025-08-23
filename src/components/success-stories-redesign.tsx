@@ -79,7 +79,7 @@ export default function SuccessStoriesRedesign() {
   return (
     <>
       {/* Hero Header Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+      <section className="pt-32 pb-16 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -98,7 +98,7 @@ export default function SuccessStoriesRedesign() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-20 bg-background relative">
+      <section className="py-20 bg-transparent relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
@@ -180,7 +180,7 @@ export default function SuccessStoriesRedesign() {
 
               <div className="space-y-4">
                 {stories[activeStory].metrics.map((metric, index) => (
-                  <div key={index} className="flex justify-between items-center p-4 bg-background/50 rounded-lg border border-border/50">
+                  <div key={index} className="flex justify-between items-center p-4 bg-card rounded-lg border border-border/50">
                     <span className="text-muted-foreground font-medium">{metric.label}</span>
                     <div className="flex items-center space-x-4">
                       <span className="text-muted-foreground dark:text-muted-foreground/70">{metric.before}</span>
@@ -208,3 +208,4 @@ export default function SuccessStoriesRedesign() {
     </>
   )
 }
+

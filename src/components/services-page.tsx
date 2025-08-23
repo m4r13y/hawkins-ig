@@ -48,7 +48,7 @@ const clientServices = [
     category: 'health',
     pricing: "Instant Quotes",
     icon: <Stethoscope className="w-8 h-8" />,
-    gradient: "from-blue-600/20 via-blue-500/10 to-cyan-400/20",
+    
     quoteUrl: "/quotes/medicare",
     features: ["Instant Medicare Quotes", "200+ Carrier Options", "Transparent Pricing", "Zero Pressure Process"],
     details: "Skip the sales calls and get instant Medicare quotes from 200+ top carriers. See transparent pricing, compare plans side-by-side, and enroll immediately - all online.",
@@ -72,7 +72,7 @@ const clientServices = [
     category: 'health',
     pricing: "Instant Quotes",
     icon: <Users className="w-8 h-8" />,
-    gradient: "from-green-600/20 via-green-500/10 to-emerald-400/20",
+    
     quoteUrl: "/quotes/healthcare-marketplace",
     features: ["Instant Quote Technology", "200+ Carrier Network", "Transparent Pricing", "No Sales Pressure"],
     details: "Get instant family health insurance quotes from 200+ carriers. See transparent pricing, compare coverage options, and enroll online - no waiting, no sales calls.",
@@ -96,7 +96,7 @@ const clientServices = [
     category: 'business',
     pricing: "Instant Quotes",
     icon: <Building className="w-8 h-8" />,
-    gradient: "from-purple-600/20 via-purple-500/10 to-violet-400/20",
+    
     quoteUrl: "/quotes/healthcare-marketplace",
     features: ["Instant Business Quotes", "200+ Carrier Network", "Transparent Pricing", "Self-Service Platform"],
     details: "Get instant group health quotes from 200+ enterprise carriers. Compare transparent pricing, see exact costs per employee, and enroll your team online.",
@@ -120,7 +120,7 @@ const clientServices = [
     category: 'supplemental',
     pricing: "Instant Quotes",
     icon: <Smile className="w-8 h-8" />,
-    gradient: "from-orange-600/20 via-orange-500/10 to-amber-400/20",
+    
     quoteUrl: "/quotes/dental-vision",
     features: ["Instant Quote Technology", "200+ Dental Carriers", "Transparent Pricing", "Immediate Enrollment"],
     details: "Get instant dental and vision quotes from 200+ specialized carriers. See transparent pricing, compare coverage levels, and enroll immediately online.",
@@ -144,7 +144,7 @@ const clientServices = [
     category: 'protection',
     pricing: "Instant Quotes",
     icon: <HeartHandshake className="w-8 h-8" />,
-    gradient: "from-red-600/20 via-red-500/10 to-pink-400/20",
+    
     quoteUrl: "/quotes/final-expense",
     features: ["Instant Quote Technology", "200+ Life Carriers", "Transparent Pricing", "No Sales Pressure"],
     details: "Get instant life insurance quotes from 200+ carriers. See transparent pricing for term, whole, and final expense coverage - compare and apply online.",
@@ -168,7 +168,7 @@ const clientServices = [
     category: 'supplemental',
     pricing: "Instant Quotes",
     icon: <Plus className="w-8 h-8" />,
-    gradient: "from-teal-600/20 via-teal-500/10 to-cyan-400/20",
+    
     quoteUrl: "/quotes/cancer-insurance",
     features: ["Instant Quote Technology", "200+ Carrier Network", "Transparent Pricing", "Immediate Coverage"],
     details: "Get instant quotes for cancer, accident, and critical illness coverage from 200+ carriers. See transparent pricing and enroll online - no waiting, no sales calls.",
@@ -272,7 +272,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero Header Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+      <section className="pt-32 pb-16 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -301,7 +301,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Main Content Section */}
-      <section className="bg-background text-foreground pt-20 pb-8 px-4 sm:px-6 lg:px-8">
+      <section className="bg-transparent text-foreground pt-20 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
@@ -313,10 +313,6 @@ export default function ServicesPage() {
               }`}
               onClick={() => setExpandedCard(expandedCard === service.id ? null : service.id)}
             >
-              {/* Gradient Background Overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-60 dark:opacity-40`} />
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/5 dark:from-black/10 dark:via-transparent dark:to-white/5" />
-              
               {/* Card Content */}
               <div className="relative p-6">
                 {/* Card Header - Always Visible */}
@@ -449,7 +445,7 @@ export default function ServicesPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-transparent/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setShowWaitlist(false)}
           >
             <motion.div
@@ -539,3 +535,4 @@ export default function ServicesPage() {
     </>
   )
 }
+

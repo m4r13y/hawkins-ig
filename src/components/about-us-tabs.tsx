@@ -161,7 +161,7 @@ export default function AboutUsTabs() {
   }
 
   return (
-    <section className="py-24 bg-background relative">
+    <section className="py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -191,7 +191,7 @@ export default function AboutUsTabs() {
                 className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
                   activeTab === tab.id
                     ? "bg-primary/10 border-primary/30 text-primary"
-                    : "bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground"
+                    : "bg-card border-border text-muted-foreground hover:bg-card/80 hover:border-border hover:text-foreground"
                 }`}
               >
                 <div className="w-8 h-8 flex items-center justify-center">
@@ -240,7 +240,7 @@ export default function AboutUsTabs() {
                 className={`flex items-center justify-center w-16 h-16 rounded-2xl border transition-all duration-300 ${
                   activeTab === tab.id
                     ? "bg-primary/10 border-primary/30 text-primary"
-                    : "bg-muted/50 border-border text-muted-foreground hover:bg-muted hover:border-border hover:text-foreground"
+                    : "bg-card border-border text-muted-foreground hover:bg-card/80 hover:border-border hover:text-foreground"
                 }`}
                 aria-label={tab.title}
               >
@@ -429,7 +429,7 @@ export default function AboutUsTabs() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-transparent/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setShowWaitlistPopup(false)}
           >
             <motion.div
@@ -464,7 +464,7 @@ export default function AboutUsTabs() {
                     required
                     value={waitlistForm.name}
                     onChange={(e) => setWaitlistForm(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
+                    className="w-full px-4 py-3 bg-transparent border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -479,7 +479,7 @@ export default function AboutUsTabs() {
                     required
                     value={waitlistForm.email}
                     onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
+                    className="w-full px-4 py-3 bg-transparent border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
                     placeholder="Enter your email address"
                   />
                 </div>
@@ -493,7 +493,7 @@ export default function AboutUsTabs() {
                     required
                     value={waitlistForm.feature}
                     onChange={(e) => setWaitlistForm(prev => ({ ...prev, feature: e.target.value }))}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground focus:border-primary focus:outline-none"
+                    className="w-full px-4 py-3 bg-transparent border border-border rounded-xl text-foreground focus:border-primary focus:outline-none"
                   >
                     <option value="">Select a feature</option>
                     {getFeatureOptions().map((feature, index) => (
@@ -519,3 +519,4 @@ export default function AboutUsTabs() {
     </section>
   )
 }
+

@@ -537,7 +537,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                   </Label>
                                 </div>
                                 
-                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-white/10 dark:hover:bg-slate-800/50">
                                   <RadioGroupItem value="over-65-employer-coverage" id="over-65-employer-coverage" />
                                   <Label htmlFor="over-65-employer-coverage" className="flex-1 cursor-pointer">
                                     <div className="font-medium">I'm over 65 with employer coverage</div>
@@ -547,7 +547,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                   </Label>
                                 </div>
                                 
-                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-white/10 dark:hover:bg-slate-800/50">
                                   <RadioGroupItem value="not-eligible-yet" id="not-eligible-yet" />
                                   <Label htmlFor="not-eligible-yet" className="flex-1 cursor-pointer">
                                     <div className="font-medium">I'm not eligible yet</div>
@@ -784,7 +784,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                   { value: "300-500", label: "$300 - $500/month" },
                                   { value: "over-500", label: "Over $500/month" },
                                 ].map((item) => (
-                                  <div key={item.value} className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                                  <div key={item.value} className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-white/10 dark:hover:bg-slate-800/50">
                                     <RadioGroupItem value={item.value} id={item.value} />
                                     <Label htmlFor={item.value} className="flex-1 cursor-pointer font-medium">
                                       {item.label}
@@ -816,7 +816,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                   { value: "legacy-planning", label: "Yes, for legacy planning" },
                                   { value: "not-interested", label: "Not interested at this time" },
                                 ].map((item) => (
-                                  <div key={item.value} className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                                  <div key={item.value} className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-white/10 dark:hover:bg-slate-800/50">
                                     <RadioGroupItem value={item.value} id={item.value} />
                                     <Label htmlFor={item.value} className="flex-1 cursor-pointer font-medium">
                                       {item.label}
@@ -848,7 +848,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                                   { value: "within-3-months", label: "Within 3 months" },
                                   { value: "just-researching", label: "Just researching for now" },
                                 ].map((item) => (
-                                  <div key={item.value} className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                                  <div key={item.value} className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-white/10 dark:hover:bg-slate-800/50">
                                     <RadioGroupItem value={item.value} id={item.value} />
                                     <Label htmlFor={item.value} className="flex-1 cursor-pointer font-medium">
                                       {item.label}
@@ -944,7 +944,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                               
                               {/* Show top 3 plans for each type */}
                               {quote.data?.plans?.slice(0, 3).map((plan, planIndex: number) => (
-                                <div key={planIndex} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg mb-2">
+                                <div key={planIndex} className="flex items-center justify-between p-3 bg-white/10 dark:bg-white/5 rounded-lg mb-2">
                                   <div>
                                     <span className="font-medium text-gray-900 dark:text-white">
                                       {plan.planName || plan.carrier || `Plan ${planIndex + 1}`}
@@ -1139,7 +1139,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                         </div>
 
                         {/* Save for Later Path */}
-                        <div className="p-6 border-2 border-green-200 rounded-lg bg-green-50 dark:bg-green-900/20">
+                        <div className="p-6 border-2 border-green-200 rounded-lg bg-white/10 dark:bg-green-900/20">
                           <div className="text-center mb-4">
                             <User className="h-12 w-12 text-green-600 mx-auto mb-3" />
                             <h4 className="text-lg font-bold text-gray-900 dark:text-white">
@@ -1153,19 +1153,19 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
                           <div className="space-y-4">
                             <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
                               <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                 <span>Save your personalized recommendations</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                 <span>Access quotes anytime in your portal</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                 <span>Track enrollment deadlines</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                 <span>Get updates on plan changes</span>
                               </div>
                             </div>
@@ -1255,7 +1255,7 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
       
       {/* Scenario Preview (Development) */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <div className="mt-6 p-4 bg-gray-100 dark:bg-slate-800/50 rounded-lg">
           <div className="text-sm text-gray-600 dark:text-gray-400">
             <strong>Detected Scenario:</strong> {scenario} 
             {scenario === "A" && " (Medicare Advantage focused)"}
@@ -1268,3 +1268,6 @@ export default function DiscoveryQuestionnaire({ onComplete }: DiscoveryQuestion
     </div>
   )
 }
+
+
+

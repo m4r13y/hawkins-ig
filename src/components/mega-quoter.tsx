@@ -147,7 +147,7 @@ export default function MegaQuoter() {
   return (
     <>
       {/* Hero Header Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+      <section className="pt-32 pb-16 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -166,10 +166,10 @@ export default function MegaQuoter() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-20 bg-background relative backdrop-blur-sm">
+      <section className="py-20 bg-transparent relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden shadow-sm">
+        <div className="bg-card border border-border rounded-3xl p-8 relative overflow-hidden shadow-sm">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Step Form */}
             <div className="space-y-8">
@@ -180,7 +180,7 @@ export default function MegaQuoter() {
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-200 ${
                         step < currentStep
-                          ? "bg-green-500 text-white"
+                          ? "bg-white/100 text-white"
                           : step === currentStep
                           ? "bg-blue-500 text-white"
                           : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
@@ -191,7 +191,7 @@ export default function MegaQuoter() {
                     {step < 4 && (
                       <div
                         className={`w-8 h-1 mx-2 transition-all duration-200 ${
-                          step < currentStep ? "bg-green-500" : "bg-gray-200 dark:bg-gray-700"
+                          step < currentStep ? "bg-white/100" : "bg-gray-200 dark:bg-gray-700"
                         }`}
                       />
                     )}
@@ -219,10 +219,10 @@ export default function MegaQuoter() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleCategorySelect(category.id)}
-                          className="p-6 rounded-xl border border-slate-200/60 dark:border-gray-700/50 bg-slate-100/50 dark:bg-gray-800/50 hover:border-blue-500/50 hover:bg-blue-50/80 dark:hover:bg-blue-500/10 transition-all duration-200 text-left group"
+                          className="p-6 rounded-xl border border-white/20 dark:border-white/20 bg-white/10 dark:bg-white/10 hover:border-white/30 hover:bg-white/15 dark:hover:bg-white/15 transition-all duration-200 text-left group"
                         >
                           <div className="flex items-center space-x-4">
-                            <div className="p-3 rounded-lg bg-slate-100/80 dark:bg-gray-700/50 group-hover:bg-blue-100/80 dark:group-hover:bg-blue-500/20 transition-colors text-gray-700 dark:text-gray-300">
+                            <div className="p-3 rounded-lg bg-white/15 dark:bg-white/15 group-hover:bg-white/25 dark:group-hover:bg-white/25 transition-colors text-gray-700 dark:text-gray-300">
                               {category.icon}
                             </div>
                             <div>
@@ -254,7 +254,7 @@ export default function MegaQuoter() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleProductSelect(product.id)}
-                          className="p-4 rounded-xl border border-slate-200/60 dark:border-gray-700/50 bg-slate-100/50 dark:bg-gray-800/50 hover:border-red-500/50 hover:bg-red-50/80 dark:hover:bg-red-500/10 transition-all duration-200 text-left"
+                          className="p-4 rounded-xl border border-white/20 dark:border-white/20 bg-white/10 dark:bg-white/10 hover:border-white/30 hover:bg-white/15 dark:hover:bg-white/15 transition-all duration-200 text-left"
                         >
                           <div className="font-medium text-slate-900 dark:text-white">{product.name}</div>
                         </motion.button>
@@ -287,7 +287,7 @@ export default function MegaQuoter() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleAgeSelect(age.value)}
-                          className="p-4 rounded-xl border border-slate-200/60 dark:border-gray-700/50 bg-slate-100/50 dark:bg-gray-800/50 hover:border-green-500/50 hover:bg-green-50/80 dark:hover:bg-green-500/10 transition-all duration-200 text-center"
+                          className="p-4 rounded-xl border border-white/20 dark:border-white/20 bg-white/10 dark:bg-white/10 hover:border-white/30 hover:bg-white/15 dark:hover:bg-white/15 transition-all duration-200 text-center"
                         >
                           <div className="font-medium text-slate-900 dark:text-white text-lg">{age.value}</div>
                         </motion.button>
@@ -313,7 +313,7 @@ export default function MegaQuoter() {
                       <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Your Selection</h3>
                       <p className="text-slate-600 dark:text-gray-400">Here's your estimated savings calculation</p>
                     </div>
-                    <div className="bg-slate-100/60 dark:bg-gray-800/30 border border-slate-200/60 dark:border-gray-700/50 rounded-xl p-6 space-y-4">
+                    <div className="bg-slate-100/60 dark:bg-slate-800/30 border border-white/20 dark:border-white/20 rounded-xl p-6 space-y-4">
                       <div className="flex justify-between items-center">
                         <span className="text-slate-600 dark:text-gray-400">Category:</span>
                         <span className="text-slate-900 dark:text-white font-medium">{selectedCategoryData?.name}</span>
@@ -338,7 +338,7 @@ export default function MegaQuoter() {
               </div>
 
               {/* Benefits List - Always Visible */}
-              <div className="bg-slate-100/80 dark:bg-gray-800/30 border border-slate-200/60 dark:border-gray-700/50 rounded-xl p-4">
+              <div className="bg-slate-100/80 dark:bg-slate-800/30 border border-white/20 dark:border-white/20 rounded-xl p-4">
                 <div className="flex items-center space-x-3 mb-3">
                   <Calculator className="w-5 h-5 text-green-500 dark:text-green-400" />
                   <span className="text-sm font-medium text-slate-900 dark:text-white">What's Included</span>
@@ -426,7 +426,7 @@ export default function MegaQuoter() {
                     <div className="text-gray-600 dark:text-gray-400 text-sm">per month</div>
                   </div>
 
-                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-2xl p-6 text-center">
+                  <div className="bg-white/10 dark:bg-white/10 border border-white/20 dark:border-white/20 rounded-2xl p-6 text-center">
                     <div className="text-green-600 dark:text-green-400 text-sm mb-2">With Our Help</div>
                     <motion.div
                       key={`with-${selectedCategory}-${selectedProduct}-${selectedAge}`}
@@ -441,7 +441,7 @@ export default function MegaQuoter() {
                 </div>
 
                 {/* Annual Savings */}
-                <div className="bg-gray-100 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/50 text-center">
+                <div className="bg-card rounded-2xl p-6 border border-border text-center">
                   <DollarSign className="w-8 h-8 text-green-500 dark:text-green-400 mx-auto mb-2" />
                   <motion.div
                     key={`annual-${selectedCategory}-${selectedProduct}-${selectedAge}`}
@@ -484,12 +484,12 @@ export default function MegaQuoter() {
             ) : (
               <div className="flex items-center justify-center h-full">
                 <div className="text-center space-y-4">
-                  <div className="w-24 h-24 bg-gray-100 dark:bg-gray-800/50 rounded-full flex items-center justify-center mx-auto">
-                    <Calculator className="w-12 h-12 text-gray-500 dark:text-gray-600" />
+                  <div className="w-24 h-24 bg-card rounded-full flex items-center justify-center mx-auto">
+                    <Calculator className="w-12 h-12 text-muted-foreground" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Calculate Your Savings</h3>
-                    <p className="text-gray-600 dark:text-gray-400 max-w-sm">
+                    <h3 className="text-xl font-bold text-foreground mb-2">Calculate Your Savings</h3>
+                    <p className="text-muted-foreground max-w-sm">
                       Complete the steps on the left to see your personalized savings estimate
                     </p>
                   </div>
@@ -506,3 +506,11 @@ export default function MegaQuoter() {
     </>
   )
 }
+
+
+
+
+
+
+
+

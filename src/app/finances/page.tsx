@@ -35,8 +35,8 @@ export default function Finances() {
   }, [])
 
   const gradientClass = darkMode 
-    ? "bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"
-    : "bg-gradient-to-br from-blue-50 via-indigo-100 to-purple-100"
+    ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
+    : "bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200"
 
   return (
     <div className={`relative min-h-screen ${gradientClass}`}>
@@ -55,7 +55,7 @@ export default function Finances() {
               <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                 Financial <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Planning</span>
               </h1>
-              <p className={`text-xl max-w-3xl mx-auto mb-12 ${darkMode ? 'text-blue-100' : 'text-gray-700'}`}>
+              <p className={`text-xl max-w-3xl mx-auto mb-12 ${darkMode ? 'text-slate-400' : 'text-gray-700'}`}>
                 Plan your financial future with our comprehensive tools for retirement, estate planning, 
                 and overall financial wellness. Take control of your financial destiny today.
               </p>
@@ -90,13 +90,13 @@ export default function Finances() {
                         : 'bg-white/70 border-gray-200 hover:bg-white/90 shadow-lg'
                     }`}
                   >
-                    <div className={`mb-4 flex justify-center ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                    <div className={`mb-4 flex justify-center ${darkMode ? 'text-slate-600' : 'text-blue-600'}`}>
                       {feature.icon}
                     </div>
                     <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                       {feature.title}
                     </h3>
-                    <p className={`text-sm ${darkMode ? 'text-blue-100' : 'text-gray-600'}`}>
+                    <p className={`text-sm ${darkMode ? 'text-slate-500' : 'text-gray-600'}`}>
                       {feature.description}
                     </p>
                   </motion.div>

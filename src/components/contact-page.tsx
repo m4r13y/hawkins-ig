@@ -47,7 +47,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Header Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+      <section className="pt-32 pb-16 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -66,7 +66,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-20 bg-background relative">
+      <section className="py-20 bg-transparent relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -167,7 +167,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                         placeholder="Your name"
                       />
                     </div>
@@ -183,7 +183,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                        className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -200,7 +200,7 @@ export default function ContactPage() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                       placeholder="Medicare, Life Insurance, Group Health, etc."
                     />
                   </div>
@@ -216,7 +216,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       rows={6}
                       required
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                       placeholder="Tell us about your current coverage, family size, budget, or any specific concerns..."
                     ></textarea>
                   </div>
@@ -280,3 +280,4 @@ export default function ContactPage() {
     </>
   )
 }
+

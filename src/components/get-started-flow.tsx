@@ -471,7 +471,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="Your full name"
                       required
                     />
@@ -482,7 +482,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="your@email.com"
                       required
                     />
@@ -493,7 +493,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       type="tel"
                       value={formData.phone}
                       onChange={handlePhoneChange}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="(123) 456-7890"
                       maxLength={14}
                       required
@@ -505,7 +505,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       type="text"
                       value={formData.zipCode}
                       onChange={(e) => setFormData((prev) => ({ ...prev, zipCode: e.target.value }))}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="12345"
                       required
                     />
@@ -519,7 +519,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                         type="text"
                         value={formData.company}
                         onChange={(e) => setFormData((prev) => ({ ...prev, company: e.target.value }))}
-                        className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
+                        className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                         placeholder={formData.clientType === 'business' ? 'Your business name' : 'Your agency name'}
                       />
                     </div>
@@ -537,7 +537,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 exit={{ opacity: 0, scale: 0.9 }}
                 className="flex-1 text-center"
               >
-                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-20 h-20 bg-white/100/20 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Check className="w-10 h-10 text-green-500" />
                 </div>
                 
@@ -664,7 +664,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                   <AnimatedButton
                     onClick={prevStep}
                     variant="outline"
-                    className="bg-transparent border-border text-muted-foreground hover:bg-background/80"
+                    className="bg-transparent border-border text-muted-foreground hover:bg-transparent/80"
                   >
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back
@@ -722,3 +722,5 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
     </section>
   )
 }
+
+

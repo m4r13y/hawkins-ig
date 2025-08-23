@@ -73,7 +73,7 @@ export default function CustomerInquiry() {
   return (
     <>
       {/* Hero Header Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
+      <section className="pt-32 pb-16 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -92,7 +92,7 @@ export default function CustomerInquiry() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-20 bg-background relative">
+      <section className="py-20 bg-transparent relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {!isSubmitted ? (
@@ -311,3 +311,4 @@ export default function CustomerInquiry() {
     </>
   )
 }
+

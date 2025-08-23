@@ -111,7 +111,7 @@ export default function GenericInsuranceQuoter({
             <select
               value={formData.employeeCount}
               onChange={(e) => handleInputChange("employeeCount", parseInt(e.target.value))}
-              className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value={1}>1-5 employees</option>
               <option value={10}>6-10 employees</option>
@@ -129,7 +129,7 @@ export default function GenericInsuranceQuoter({
             <select
               value={formData.familySize}
               onChange={(e) => handleInputChange("familySize", parseInt(e.target.value))}
-              className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value={1}>1 (Individual)</option>
               <option value={2}>2 (Couple)</option>
@@ -162,7 +162,7 @@ export default function GenericInsuranceQuoter({
                   type="text"
                   value={formData.zipCode}
                   onChange={(e) => handleInputChange("zipCode", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your ZIP code"
                   maxLength={5}
                 />
@@ -175,7 +175,7 @@ export default function GenericInsuranceQuoter({
                   type="date"
                   value={formData.dateOfBirth}
                   onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>}
               </div>
@@ -199,7 +199,7 @@ export default function GenericInsuranceQuoter({
                 <select
                   value={formData.monthlyBudget}
                   onChange={(e) => handleInputChange("monthlyBudget", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select budget range</option>
                   <option value="0-100">$0 - $100</option>
@@ -218,7 +218,7 @@ export default function GenericInsuranceQuoter({
               <textarea
                 value={formData.currentCoverage}
                 onChange={(e) => handleInputChange("currentCoverage", e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 rows={3}
                 placeholder="Describe your current coverage situation"
               />
@@ -261,7 +261,7 @@ export default function GenericInsuranceQuoter({
               <textarea
                 value={formData.specificNeeds}
                 onChange={(e) => handleInputChange("specificNeeds", e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 rows={3}
                 placeholder="Tell us about any specific coverage needs or questions you have"
               />
@@ -276,7 +276,7 @@ export default function GenericInsuranceQuoter({
 
   if (isSubmitted) {
     return (
-      <section className="py-32 bg-gradient-to-br from-secondary via-background to-secondary min-h-screen">
+      <section className="py-32 bg-transparent min-h-screen">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -313,7 +313,7 @@ export default function GenericInsuranceQuoter({
             </div>
             
             {/* HawkNest Account Creation Guidance */}
-            <div className="bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/20 rounded-lg p-6 mb-8">
+            <div className="bg-card border border-border rounded-lg p-6 mb-8">
               <h3 className="text-lg font-bold text-foreground mb-3">Ready to Manage Your Insurance?</h3>
               <p className="text-muted-foreground mb-4">
                 Create your secure HawkNest account to track your quote requests, compare plans, 
@@ -339,7 +339,7 @@ export default function GenericInsuranceQuoter({
   }
 
   return (
-    <section className="py-32 bg-gradient-to-br from-secondary via-background to-secondary min-h-screen">
+    <section className="py-32 bg-transparent min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -421,3 +421,4 @@ export default function GenericInsuranceQuoter({
     </section>
   )
 }
+

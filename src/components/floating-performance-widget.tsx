@@ -179,7 +179,7 @@ export default function FloatingPerformanceWidget() {
                 </div>
               </div>
 
-              <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <div className="mt-4 p-3 bg-white/10 dark:bg-green-900/20 rounded-lg">
                 <h4 className="text-sm font-medium text-green-900 dark:text-green-100 mb-1">Legend</h4>
                 <div className="text-xs space-y-1">
                   <div><span className="text-green-600">●</span> Good</div>
@@ -194,3 +194,4 @@ export default function FloatingPerformanceWidget() {
     </>
   )
 }
+

@@ -34,7 +34,7 @@ export default function Features() {
       </div>
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
         {features.map((feature) => (
-          <div key={feature.name} className="relative overflow-hidden rounded-lg border bg-background p-8">
+          <div key={feature.name} className="relative overflow-hidden rounded-lg border bg-transparent p-8">
             <div className="flex items-center gap-4">
               <feature.icon className="h-8 w-8" />
               <h3 className="font-bold">{feature.name}</h3>
@@ -46,3 +46,4 @@ export default function Features() {
     </section>
   )
 }
+

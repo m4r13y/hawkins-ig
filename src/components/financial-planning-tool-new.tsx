@@ -133,7 +133,7 @@ export default function FinancialPlanningTool() {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative min-h-screen">
+    <section className="py-16 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -168,7 +168,7 @@ export default function FinancialPlanningTool() {
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                         step <= currentStep 
                           ? 'bg-blue-500 text-white' 
-                          : 'bg-white/20 text-white/60'
+                          : 'bg-green-400 text-white'
                       }`}>
                         {step < currentStep ? <Check className="w-4 h-4" /> : step}
                       </div>
@@ -366,7 +366,7 @@ export default function FinancialPlanningTool() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white border border-gray-200 rounded-2xl p-8 max-w-md mx-4 text-center"
+              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
             >
               <TrendingUp className="w-16 h-16 text-blue-500 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
@@ -387,3 +387,6 @@ export default function FinancialPlanningTool() {
     </section>
   )
 }
+
+
+

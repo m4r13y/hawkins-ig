@@ -62,9 +62,9 @@ export default function RevolutionaryMegaQuoter() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary">
+    <div className="min-h-screen bg-transparent">
       {/* Header */}
-      <div className="bg-gradient-to-br from-secondary via-background to-secondary shadow-sm border-b">
+      <div className="bg-transparent shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -94,7 +94,7 @@ export default function RevolutionaryMegaQuoter() {
       </div>
 
       {/* Progress Indicator */}
-      <div className="bg-gradient-to-br from-secondary via-background to-secondary border-b">
+      <div className="bg-transparent border-b">
         <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex items-center justify-center space-x-8">
             <div className={`flex items-center gap-2 ${state.step === "discovery" ? "text-blue-600" : "text-green-600"}`}>
@@ -154,7 +154,7 @@ export default function RevolutionaryMegaQuoter() {
       </div>
 
       {/* Footer */}
-      <div className="bg-gradient-to-br from-secondary via-background to-secondary border-t mt-12">
+      <div className="bg-transparent border-t mt-12">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -208,3 +208,4 @@ export default function RevolutionaryMegaQuoter() {
     </div>
   )
 }
+

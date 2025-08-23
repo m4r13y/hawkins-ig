@@ -15,6 +15,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Hawkins Insurance Group",
   description: "Enhanced insurance experience with precision, protection, and personalized service.",
+  icons: {
+    icon: '/hig-logo-navy.svg',
+    shortcut: '/hig-logo-navy.svg',
+    apple: '/hig-logo-navy.svg',
+  },
 }
 
 export default function RootLayout({
@@ -23,10 +28,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#03002D" />
+        
+        {/* Favicon */}
+        <link rel="icon" type="image/svg+xml" href="/hig-logo-navy.svg" />
+        <link rel="alternate icon" href="/hig-logo-navy.svg" />
+        <link rel="mask-icon" href="/hig-logo-navy.svg" color="#03002D" />
         
         {/* DNS prefetch and preconnect for faster loading */}
         <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />

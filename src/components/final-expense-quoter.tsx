@@ -105,36 +105,37 @@ export default function FinalExpenseQuoter() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <div className="flex items-center justify-center space-x-2">
-          <Heart className="h-8 w-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Final Expense Life Insurance</h1>
-        </div>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Get affordable final expense life insurance quotes to help your family cover burial costs and end-of-life expenses.
-        </p>
-      </div>
-
-      {/* Progress Indicator */}
-      <div className="flex justify-center space-x-4 mb-8">
-        {[1, 2, 3, 4].map((i) => (
-          <div
-            key={i}
-            className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
-              i <= step
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-600"
-            }`}
-          >
-            {i}
+    <section className="py-32 bg-transparent min-h-screen">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <div className="flex items-center justify-center space-x-2">
+            <Heart className="h-8 w-8 text-primary" />
+            <h1 className="text-3xl font-bold text-foreground">Final Expense Life Insurance</h1>
           </div>
-        ))}
-      </div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Get affordable final expense life insurance quotes to help your family cover burial costs and end-of-life expenses.
+          </p>
+        </div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* Progress Indicator */}
+        <div className="flex justify-center space-x-4 mb-8">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+                i <= step
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
+              {i}
+            </div>
+          ))}
+        </div>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Step 1: Basic Information */}
           {step === 1 && (
             <Card>
@@ -325,13 +326,13 @@ export default function FinalExpenseQuoter() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-card rounded-lg">
                   <div>
-                    <p className="text-sm text-gray-600">ZIP Code</p>
+                    <p className="text-sm text-muted-foreground">ZIP Code</p>
                     <p className="font-medium">{form.watch("zipCode")}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Age</p>
+                    <p className="text-sm text-muted-foreground">Age</p>
                     <p className="font-medium">{form.watch("age")}</p>
                   </div>
                   <div>
@@ -470,6 +471,7 @@ export default function FinalExpenseQuoter() {
           </Card>
         </div>
       )}
-    </div>
+      </div>
+    </section>
   )
 }

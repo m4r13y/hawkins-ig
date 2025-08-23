@@ -58,7 +58,7 @@ const services = [
 
 export default function InnovativeServices() {
   return (
-    <section className="py-24 bg-black relative">
+    <section className="py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,7 +115,7 @@ export default function InnovativeServices() {
                       repeat: Number.POSITIVE_INFINITY,
                       ease: "easeInOut"
                     }}
-                    className="w-16 h-16 bg-green-500/20 rounded-lg flex items-center justify-center"
+                    className="w-16 h-16 bg-white/100/20 rounded-lg flex items-center justify-center"
                   >
                     <Building className="w-8 h-8 text-green-400" />
                   </motion.div>
@@ -259,7 +259,7 @@ export default function InnovativeServices() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <div className="bg-gradient-to-r from-slate-900/80 to-slate-800/80 border border-slate-700/50 rounded-3xl p-12 backdrop-blur-sm">
+          <div className="bg-gradient-to-r from-slate-950/80 to-slate-900/80 border border-slate-700/50 rounded-3xl p-12 backdrop-blur-sm">
             <h3 className="text-3xl font-bold text-white mb-4">
               Not Sure Which Plan is Right for You?
             </h3>
@@ -277,3 +277,4 @@ export default function InnovativeServices() {
     </section>
   )
 }
+

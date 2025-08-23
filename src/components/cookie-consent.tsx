@@ -96,7 +96,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
-        className="fixed bottom-0 left-0 right-0 z-50 bg-slate-900 border-t border-slate-700 shadow-2xl"
+        className="fixed bottom-0 left-0 right-0 z-50 bg-slate-950 border-t border-slate-700 shadow-2xl"
       >
         {!showSettings ? (
           // Main Cookie Banner

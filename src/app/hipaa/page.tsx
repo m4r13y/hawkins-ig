@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function HIPAANotice() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Hero Header Section */}
       <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,9 +24,9 @@ export default function HIPAANotice() {
       </section>
 
       {/* Main Content Section */}
-      <div className="py-16 bg-background">
+      <div className="py-16 bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 lg:p-12">
+          <div className="bg-slate-950 border border-slate-700 rounded-2xl p-8 lg:p-12">
             <div className="prose prose-slate prose-invert max-w-none space-y-8">
               <div className="text-slate-300 space-y-6">
 
@@ -223,3 +223,5 @@ export default function HIPAANotice() {
     </main>
   )
 }
+
+

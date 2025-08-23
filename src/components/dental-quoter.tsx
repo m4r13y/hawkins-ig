@@ -139,7 +139,7 @@ export default function DentalQuoter() {
                   type="text"
                   value={formData.zipCode}
                   onChange={(e) => handleInputChange("zipCode", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your ZIP code"
                   maxLength={5}
                 />
@@ -152,7 +152,7 @@ export default function DentalQuoter() {
                   type="date"
                   value={formData.dateOfBirth}
                   onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>}
               </div>
@@ -162,7 +162,7 @@ export default function DentalQuoter() {
                 <select
                   value={formData.gender}
                   onChange={(e) => handleInputChange("gender", e.target.value as "M" | "F")}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="M">Male</option>
                   <option value="F">Female</option>
@@ -174,7 +174,7 @@ export default function DentalQuoter() {
                 <select
                   value={formData.tobacco}
                   onChange={(e) => handleInputChange("tobacco", e.target.value as "0" | "1")}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="0">No</option>
                   <option value="1">Yes</option>
@@ -243,7 +243,7 @@ export default function DentalQuoter() {
                 <select
                   value={formData.monthlyBudget}
                   onChange={(e) => handleInputChange("monthlyBudget", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select budget range</option>
                   <option value="0-25">$0 - $25</option>
@@ -259,7 +259,7 @@ export default function DentalQuoter() {
                 <select
                   value={formData.frequency}
                   onChange={(e) => handleInputChange("frequency", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select frequency</option>
                   <option value="twice-yearly">Twice yearly (recommended)</option>
@@ -298,7 +298,7 @@ export default function DentalQuoter() {
                 type="text"
                 value={formData.preferredDentist}
                 onChange={(e) => handleInputChange("preferredDentist", e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Name of your current dentist (optional)"
               />
             </div>
@@ -308,7 +308,7 @@ export default function DentalQuoter() {
               <textarea
                 value={formData.currentDentalCoverage}
                 onChange={(e) => handleInputChange("currentDentalCoverage", e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 rows={3}
                 placeholder="Describe your current dental coverage situation"
               />
@@ -403,7 +403,7 @@ export default function DentalQuoter() {
                 </div>
                 
                 {/* HawkNest Account Creation Guidance */}
-                <div className="bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/20 rounded-lg p-6 mt-8">
+                <div className="bg-card border border-border rounded-lg p-6 mt-8">
                   <div className="text-center">
                     <Sparkles className="w-12 h-12 text-primary mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-foreground mb-2">Ready to Secure Your Dental Health?</h3>
@@ -436,7 +436,7 @@ export default function DentalQuoter() {
   }
 
   return (
-    <section className="py-32 bg-gradient-to-br from-secondary via-background to-secondary min-h-screen">
+    <section className="py-32 bg-transparent min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -566,3 +566,4 @@ export default function DentalQuoter() {
     </section>
   )
 }
+

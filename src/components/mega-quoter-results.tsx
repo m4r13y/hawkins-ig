@@ -223,7 +223,7 @@ export default function MegaQuoterResults({
           </h1>
         </div>
         
-        <div className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 p-6 rounded-lg">
+        <div className="bg-card border border-border p-6 rounded-lg">
           <div className="flex items-center justify-center gap-4 mb-4">
             <Badge variant="outline" className="text-lg px-4 py-2">
               Scenario {scenario}: {scenarioDescriptions[scenario]}
@@ -361,7 +361,7 @@ export default function MegaQuoterResults({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 + quoteIndex * 0.05 }}
-                    className={`p-4 border rounded-lg ${quoteIndex === 0 ? 'border-blue-200 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 hover:border-gray-300'} transition-colors`}
+                    className={`p-4 border rounded-lg ${quoteIndex === 0 ? 'border-primary bg-card' : 'border-border bg-card hover:border-muted-foreground'} transition-colors`}
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
@@ -448,7 +448,7 @@ export default function MegaQuoterResults({
 
       {/* Cross-sell Opportunities */}
       {recommendations.length > 0 && (
-        <Card className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
+        <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-purple-600" />
@@ -461,7 +461,7 @@ export default function MegaQuoterResults({
           <CardContent>
             <div className="grid gap-4">
               {recommendations.map((rec, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-card border border-border rounded-lg">
                   <div className="flex items-center gap-3">
                     <AlertCircle className="h-5 w-5 text-purple-600" />
                     <div>

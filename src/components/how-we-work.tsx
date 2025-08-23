@@ -32,7 +32,7 @@ const steps = [
 
 export default function HowWeWork() {
   return (
-    <section className="py-24 bg-background relative">
+    <section className="py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -74,7 +74,7 @@ export default function HowWeWork() {
                         <div className="w-full max-w-[140px] space-y-1.5">
                           <div className="flex items-start space-x-1.5">
                             <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-                              <div className="w-2.5 h-2.5 bg-green-500 rounded-full"></div>
+                              <div className="w-2.5 h-2.5 bg-white/100 rounded-full"></div>
                             </div>
                             <div className="flex-1 space-y-1">
                               <div className="bg-card border border-border h-4 w-full rounded flex items-center px-1.5 shadow-sm">
@@ -105,7 +105,7 @@ export default function HowWeWork() {
                         <div className="w-full max-w-[140px] space-y-2">
                           <div className="bg-card border border-border rounded-lg p-2 shadow-sm">
                             <div className="flex items-center space-x-1.5 mb-1.5">
-                              <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              <div className="w-1.5 h-1.5 bg-white/100 rounded-full"></div>
                               <div className="text-[10px] text-foreground">Plan A - $245/mo</div>
                             </div>
                             <div className="flex items-center space-x-1.5 mb-1.5">
@@ -137,7 +137,7 @@ export default function HowWeWork() {
                           <div className="bg-card border border-border rounded px-2 py-1 shadow-sm">
                             <div className="flex items-center justify-between">
                               <div className="text-[10px] text-foreground">Policy Status</div>
-                              <div className="w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                              <div className="w-3 h-3 bg-white/100 rounded-full flex items-center justify-center">
                                 <div className="w-2 h-2 text-white text-[8px]">✓</div>
                               </div>
                             </div>
@@ -145,19 +145,19 @@ export default function HowWeWork() {
                           <div className="space-y-0.5">
                             <div className="bg-card border border-border rounded px-2 py-1 shadow-sm">
                               <div className="flex items-center space-x-1.5">
-                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                                <div className="w-1.5 h-1.5 bg-white/100 rounded-full"></div>
                                 <div className="text-[10px] text-foreground">Enrolled</div>
                               </div>
                             </div>
                             <div className="bg-card border border-border rounded px-2 py-1 shadow-sm">
                               <div className="flex items-center space-x-1.5">
-                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                                <div className="w-1.5 h-1.5 bg-white/100 rounded-full"></div>
                                 <div className="text-[10px] text-foreground">Claims Support</div>
                               </div>
                             </div>
                             <div className="bg-card border border-border rounded px-2 py-1 shadow-sm">
                               <div className="flex items-center space-x-1.5">
-                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                                <div className="w-1.5 h-1.5 bg-white/100 rounded-full"></div>
                                 <div className="text-[10px] text-foreground">Annual Review</div>
                               </div>
                             </div>
@@ -205,7 +205,7 @@ export default function HowWeWork() {
                             <div className="w-full max-w-[160px] space-y-2">
                               <div className="flex items-start space-x-2">
                                 <div className="w-9 h-9 bg-primary/20 rounded-lg flex items-center justify-center">
-                                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                  <div className="w-3 h-3 bg-white/100 rounded-full"></div>
                                 </div>
                                 <div className="flex-1 space-y-1">
                                   <div className="bg-card border border-border h-5 w-full rounded flex items-center px-2 shadow-sm">
@@ -236,7 +236,7 @@ export default function HowWeWork() {
                             <div className="w-full max-w-[160px] space-y-3">
                               <div className="bg-card border border-border rounded-lg p-3 shadow-sm">
                                 <div className="flex items-center space-x-2 mb-2">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                  <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                   <div className="text-xs text-foreground">Plan A - $245/mo</div>
                                 </div>
                                 <div className="flex items-center space-x-2 mb-2">
@@ -268,7 +268,7 @@ export default function HowWeWork() {
                               <div className="bg-card border border-border rounded px-3 py-1.5 shadow-sm">
                                 <div className="flex items-center justify-between">
                                   <div className="text-xs text-foreground">Policy Status</div>
-                                  <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                                  <div className="w-4 h-4 bg-white/100 rounded-full flex items-center justify-center">
                                     <div className="w-3 h-3 text-white text-xs">✓</div>
                                   </div>
                                 </div>
@@ -276,19 +276,19 @@ export default function HowWeWork() {
                               <div className="space-y-1">
                                 <div className="bg-card border border-border rounded px-3 py-1.5 shadow-sm">
                                   <div className="flex items-center space-x-2">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                     <div className="text-xs text-foreground">Enrolled</div>
                                   </div>
                                 </div>
                                 <div className="bg-card border border-border rounded px-3 py-1.5 shadow-sm">
                                   <div className="flex items-center space-x-2">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                     <div className="text-xs text-foreground">Claims Support</div>
                                   </div>
                                 </div>
                                 <div className="bg-card border border-border rounded px-3 py-1.5 shadow-sm">
                                   <div className="flex items-center space-x-2">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                     <div className="text-xs text-foreground">Annual Review</div>
                                   </div>
                                 </div>
@@ -336,7 +336,7 @@ export default function HowWeWork() {
                         <div className="w-full max-w-[200px] space-y-2">
                           <div className="flex items-start space-x-2">
                             <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                              <div className="w-3 h-3 bg-white/100 rounded-full"></div>
                             </div>
                             <div className="flex-1 space-y-1">
                               <div className="bg-card border border-border h-5 w-full rounded flex items-center px-2 shadow-sm">
@@ -367,7 +367,7 @@ export default function HowWeWork() {
                         <div className="w-full max-w-[200px] space-y-3">
                           <div className="bg-card border border-border rounded-lg p-3 shadow-sm">
                             <div className="flex items-center space-x-2 mb-2">
-                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                               <div className="text-xs text-foreground">Plan A - $245/mo</div>
                             </div>
                             <div className="flex items-center space-x-2 mb-2">
@@ -399,7 +399,7 @@ export default function HowWeWork() {
                           <div className="bg-card border border-border rounded px-3 py-1 shadow-sm">
                             <div className="flex items-center justify-between">
                               <div className="text-xs text-foreground">Policy Status</div>
-                              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                              <div className="w-4 h-4 bg-white/100 rounded-full flex items-center justify-center">
                                 <div className="w-2.5 h-4 text-white text-xs">✓</div>
                               </div>
                             </div>
@@ -407,19 +407,19 @@ export default function HowWeWork() {
                           <div className="space-y-1">
                             <div className="bg-card border border-border rounded px-3 py-1 shadow-sm">
                               <div className="flex items-center space-x-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                 <div className="text-xs text-foreground">Enrolled</div>
                               </div>
                             </div>
                             <div className="bg-card border border-border rounded px-3 py-1 shadow-sm">
                               <div className="flex items-center space-x-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                 <div className="text-xs text-foreground">Claims Support</div>
                               </div>
                             </div>
                             <div className="bg-card border border-border rounded px-3 py-1 shadow-sm">
                               <div className="flex items-center space-x-2">
-                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <div className="w-2 h-2 bg-white/100 rounded-full"></div>
                                 <div className="text-xs text-foreground">Annual Review</div>
                               </div>
                             </div>
@@ -455,3 +455,5 @@ export default function HowWeWork() {
     </section>
   )
 }
+
+

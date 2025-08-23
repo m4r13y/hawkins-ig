@@ -160,17 +160,17 @@ export default function HospitalIndemnityQuoter() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Gender</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <SelectTrigger>
                               <SelectValue placeholder="Select gender" />
                             </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="female">Female</SelectItem>
-                            <SelectItem value="male">Male</SelectItem>
-                          </SelectContent>
-                        </Select>
+                            <SelectContent>
+                              <SelectItem value="female">Female</SelectItem>
+                              <SelectItem value="male">Male</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -182,17 +182,17 @@ export default function HospitalIndemnityQuoter() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Tobacco Use</FormLabel>
-                        <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
+                        <FormControl>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <SelectTrigger>
                               <SelectValue placeholder="Select tobacco status" />
                             </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="false">Non-Smoker</SelectItem>
-                            <SelectItem value="true">Smoker</SelectItem>
-                          </SelectContent>
-                        </Select>
+                            <SelectContent>
+                              <SelectItem value="false">Non-Smoker</SelectItem>
+                              <SelectItem value="true">Smoker</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -270,9 +270,9 @@ export default function HospitalIndemnityQuoter() {
                   </div>
                 </div>
 
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-900 mb-2">Important Note</h4>
-                  <p className="text-purple-800 text-sm">
+                <div className="bg-card border border-border rounded-lg p-4">
+                  <h4 className="font-semibold text-foreground mb-2">Important Note</h4>
+                  <p className="text-muted-foreground text-sm">
                     Hospital indemnity insurance pays benefits directly to you, not to the hospital or doctor. 
                     Use the money for any purpose - medical bills, household expenses, or other needs during your recovery.
                   </p>
@@ -300,7 +300,7 @@ export default function HospitalIndemnityQuoter() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-white/10 dark:bg-white/5 rounded-lg">
                   <div>
                     <p className="text-sm text-gray-600">ZIP Code</p>
                     <p className="font-medium">{form.watch("zipCode")}</p>
@@ -320,7 +320,7 @@ export default function HospitalIndemnityQuoter() {
                 </div>
 
                 {error && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="p-4 bg-red-500/10 border border-red-200 rounded-lg">
                     <p className="text-red-800">{error}</p>
                   </div>
                 )}
@@ -439,12 +439,12 @@ export default function HospitalIndemnityQuoter() {
           </div>
 
           {/* Call to Action */}
-          <Card className="bg-purple-50 border-purple-200">
+          <Card className="bg-card border-border">
             <CardContent className="p-6 text-center">
-              <h3 className="text-xl font-semibold text-purple-900 mb-2">
+              <h3 className="text-xl font-semibold text-foreground mb-2">
                 Ready to Protect Yourself Against Hospital Costs?
               </h3>
-              <p className="text-purple-700 mb-4">
+              <p className="text-muted-foreground mb-4">
                 Create your HawkNest account to save quotes, compare plans, and apply for coverage.
               </p>
               <Link href="/get-started">
@@ -459,3 +459,7 @@ export default function HospitalIndemnityQuoter() {
     </div>
   )
 }
+
+
+
+

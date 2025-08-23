@@ -38,7 +38,7 @@ const AdminPanel = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-slate-900/80 p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
@@ -174,3 +174,5 @@ const AdminPanel = () => {
 }
 
 export default AdminPanel
+
+

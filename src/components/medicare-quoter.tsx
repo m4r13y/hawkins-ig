@@ -143,7 +143,7 @@ export default function MedicareQuoter() {
                   type="text"
                   value={formData.zipCode}
                   onChange={(e) => handleInputChange("zipCode", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your ZIP code"
                   maxLength={5}
                 />
@@ -156,7 +156,7 @@ export default function MedicareQuoter() {
                   type="date"
                   value={formData.dateOfBirth}
                   onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>}
               </div>
@@ -166,7 +166,7 @@ export default function MedicareQuoter() {
                 <select
                   value={formData.gender}
                   onChange={(e) => handleInputChange("gender", e.target.value as "male" | "female")}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -178,7 +178,7 @@ export default function MedicareQuoter() {
                 <select
                   value={formData.monthlyBudget}
                   onChange={(e) => handleInputChange("monthlyBudget", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select budget range</option>
                   <option value="0-50">$0 - $50</option>
@@ -227,7 +227,7 @@ export default function MedicareQuoter() {
                 type="text"
                 value={formData.currentCoverage}
                 onChange={(e) => handleInputChange("currentCoverage", e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Describe your current Medicare coverage"
               />
             </div>
@@ -269,7 +269,7 @@ export default function MedicareQuoter() {
               <textarea
                 value={formData.preferredDoctors}
                 onChange={(e) => handleInputChange("preferredDoctors", e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 rows={3}
                 placeholder="List any doctors or hospitals you want to keep seeing"
               />
@@ -333,7 +333,7 @@ export default function MedicareQuoter() {
                 </div>
                 
                 {/* HawkNest Account Creation Guidance */}
-                <div className="bg-gradient-to-r from-primary/10 to-blue-500/10 border border-primary/20 rounded-lg p-6 mt-8">
+                <div className="bg-card border border-border rounded-lg p-6 mt-8">
                   <div className="text-center">
                     <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-foreground mb-2">Ready to Move Forward?</h3>
@@ -366,7 +366,7 @@ export default function MedicareQuoter() {
   }
 
   return (
-    <section className="py-32 bg-gradient-to-br from-secondary via-background to-secondary min-h-screen">
+    <section className="py-32 bg-transparent min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -409,7 +409,7 @@ export default function MedicareQuoter() {
           {renderStep()}
           
           {errors.general && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="mt-4 p-4 bg-red-500/10 border border-red-200 rounded-lg">
               <p className="text-red-600">{errors.general}</p>
             </div>
           )}
@@ -464,3 +464,5 @@ export default function MedicareQuoter() {
     </section>
   )
 }
+
+

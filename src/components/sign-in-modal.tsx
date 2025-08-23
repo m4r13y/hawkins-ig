@@ -20,7 +20,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50"
             onClick={onClose}
           />
           
@@ -65,7 +65,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
                     rel="noopener noreferrer"
                     className="block"
                   >
-                    <div className="bg-background border border-border rounded-xl p-6 hover:border-primary transition-all duration-300 group-hover:bg-background/80">
+                    <div className="bg-transparent border border-border rounded-xl p-6 hover:border-primary transition-all duration-300 group-hover:bg-slate-900/80">
                       <div className="flex items-center space-x-4">
                         <div className="bg-primary/20 p-3 rounded-lg">
                           <Users className="h-6 w-6 text-primary" />
@@ -93,7 +93,7 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
                     rel="noopener noreferrer"
                     className="block"
                   >
-                    <div className="bg-background border border-border rounded-xl p-6 hover:border-emerald-500 transition-all duration-300 group-hover:bg-background/80">
+                    <div className="bg-transparent border border-border rounded-xl p-6 hover:border-emerald-500 transition-all duration-300 group-hover:bg-slate-900/80">
                       <div className="flex items-center space-x-4">
                         <div className="bg-emerald-500/20 p-3 rounded-lg">
                           <Shield className="h-6 w-6 text-emerald-400" />
@@ -126,3 +126,4 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
     </AnimatePresence>
   )
 }
+

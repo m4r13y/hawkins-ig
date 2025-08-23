@@ -45,7 +45,7 @@ export default function AnimatedFooter() {
   }
 
   return (
-    <footer className="relative bg-background border-t border-gray-200 dark:border-gray-800/50">
+    <footer className="relative bg-transparent border-t border-gray-200 dark:border-gray-800/50">
       {/* Newsletter Section */}
       <div className="relative z-10 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -77,7 +77,7 @@ export default function AnimatedFooter() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                   required
                 />
               </div>
@@ -354,3 +354,4 @@ export default function AnimatedFooter() {
     </footer>
   )
 }
+

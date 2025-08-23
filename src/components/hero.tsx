@@ -52,7 +52,7 @@ export default function Hero() {
       {/* Background Video with Fallback */}
       <div className="absolute inset-0 z-0">
         {/* Fallback Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950" />
         
         {/* Video Background with optimized loading */}
         <video
@@ -81,13 +81,13 @@ export default function Hero() {
         
         {/* Theme-aware overlay - lighter in light mode, darker in dark mode */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/5 to-white/10 dark:from-black/20 dark:via-black/30 dark:to-black/50" />
-        <div className="absolute inset-0 bg-black/0" />
+        <div className="absolute inset-0 bg-slate-950/0" />
       </div>
 
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center lg:text-left">
           {/* Cloudy background for text visibility */}
-          <div className="relative bg-black/10 dark:bg-black/20 backdrop-blur-xsm rounded-3xl p-8 lg:p-12 border border-white/10">
+          <div className="relative bg-slate-950/10 dark:bg-slate-950/20 backdrop-blur-xsm rounded-3xl p-8 lg:p-12 border border-white/10">
             {/* Subtle cloud-like pattern overlay */}
             <div className="absolute inset-0 opacity-30 rounded-3xl" 
                  style={{

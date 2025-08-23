@@ -24,7 +24,7 @@ export default function InteractiveCTA() {
   }
 
   return (
-    <section className="py-24 bg-black relative overflow-hidden">
+    <section className="py-24 bg-transparent relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         {Array.from({ length: 20 }).map((_, i) => (

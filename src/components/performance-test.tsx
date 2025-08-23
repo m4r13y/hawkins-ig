@@ -160,7 +160,7 @@ export default function PerformanceTest() {
         </div>
       </div>
       
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+      <div className="mt-6 p-4 bg-blue-500/10 rounded-lg">
         <h4 className="font-medium text-blue-900 mb-2">Performance Score Legend</h4>
         <div className="text-sm space-y-1">
           <div><span className="text-green-600">●</span> Good: Meets performance recommendations</div>
@@ -171,3 +171,4 @@ export default function PerformanceTest() {
     </div>
   )
 }
+

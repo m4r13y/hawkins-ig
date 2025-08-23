@@ -74,7 +74,7 @@ export default function ContactFormModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="bg-background border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden shadow-2xl"
+          className="bg-transparent border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden shadow-2xl"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-border">
@@ -108,7 +108,7 @@ export default function ContactFormModal({
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -125,7 +125,7 @@ export default function ContactFormModal({
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                       placeholder="Enter your email"
                     />
                   </div>
@@ -143,7 +143,7 @@ export default function ContactFormModal({
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                       placeholder="(123) 456-7890"
                     />
                   </div>
@@ -157,7 +157,7 @@ export default function ContactFormModal({
                       name="preferredContact"
                       value={formData.preferredContact}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                     >
                       <option value="email">Email</option>
                       <option value="phone">Phone</option>
@@ -176,7 +176,7 @@ export default function ContactFormModal({
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                     placeholder="What can we help you with?"
                   />
                 </div>
@@ -193,7 +193,7 @@ export default function ContactFormModal({
                     onChange={handleInputChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none"
                     placeholder="Tell us about your insurance needs..."
                   />
                 </div>
@@ -278,3 +278,5 @@ export default function ContactFormModal({
     </AnimatePresence>
   )
 }
+
+

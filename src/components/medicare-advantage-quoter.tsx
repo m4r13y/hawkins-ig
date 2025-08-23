@@ -140,7 +140,7 @@ export default function MedicareAdvantageQuoter() {
                   )}
                 />
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="bg-blue-500/10 border border-blue-200 rounded-lg p-4">
                   <h4 className="font-semibold text-blue-900 mb-2">Why Location Matters</h4>
                   <p className="text-blue-800 text-sm">
                     Medicare Advantage plans have specific service areas and provider networks. 
@@ -237,7 +237,7 @@ export default function MedicareAdvantageQuoter() {
                   />
                 </div>
 
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="bg-white/10 border border-green-200 rounded-lg p-4">
                   <h4 className="font-semibold text-green-900 mb-2">Medicare Advantage Benefits</h4>
                   <ul className="text-green-800 text-sm space-y-1">
                     <li>• All Original Medicare benefits (Parts A & B)</li>
@@ -270,7 +270,7 @@ export default function MedicareAdvantageQuoter() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-white/10 dark:bg-white/5 rounded-lg">
                   <div>
                     <p className="text-sm text-gray-600">ZIP Code</p>
                     <p className="font-medium">{form.watch("zipCode")}</p>
@@ -298,7 +298,7 @@ export default function MedicareAdvantageQuoter() {
                 </div>
 
                 {error && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="p-4 bg-red-500/10 border border-red-200 rounded-lg">
                     <p className="text-red-800">{error}</p>
                   </div>
                 )}
@@ -458,7 +458,7 @@ export default function MedicareAdvantageQuoter() {
           )}
 
           {/* Call to Action */}
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="bg-card border-border">
             <CardContent className="p-6 text-center">
               <h3 className="text-xl font-semibold text-blue-900 mb-2">
                 Ready to Enroll in Medicare Advantage?
@@ -478,3 +478,6 @@ export default function MedicareAdvantageQuoter() {
     </div>
   )
 }
+
+
+

@@ -10,7 +10,7 @@ export default function InsuranceConsultationTool() {
   const [familySize, setFamilySize] = useState(2)
 
   return (
-    <section className="py-16 bg-background relative backdrop-blur-sm">
+    <section className="py-16 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -25,7 +25,7 @@ export default function InsuranceConsultationTool() {
           </p>
         </motion.div>
 
-        <div className="bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden">
+        <div className="bg-card border border-border rounded-3xl p-8 relative">
           <div className="relative z-10">
             <div className="text-center mb-12">
               <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Insurance Needs Assessment</h3>
@@ -177,3 +177,4 @@ export default function InsuranceConsultationTool() {
     </section>
   )
 }
+

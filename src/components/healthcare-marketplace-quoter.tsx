@@ -185,37 +185,38 @@ export default function HealthcareMarketplaceQuoter() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <div className="flex items-center justify-center space-x-2">
-          <Shield className="h-8 w-8 text-green-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Healthcare.gov Marketplace Plans</h1>
-        </div>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Find affordable health insurance through the Health Insurance Marketplace. 
-          Compare plans and see if you qualify for premium subsidies to lower your costs.
-        </p>
-      </div>
-
-      {/* Progress Indicator */}
-      <div className="flex justify-center space-x-4 mb-8">
-        {[1, 2, 3, 4].map((i) => (
-          <div
-            key={i}
-            className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
-              i <= step
-                ? "bg-green-600 text-white"
-                : "bg-gray-200 text-gray-600"
-            }`}
-          >
-            {i}
+    <section className="py-32 bg-transparent min-h-screen">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <div className="flex items-center justify-center space-x-2">
+            <Shield className="h-8 w-8 text-primary" />
+            <h1 className="text-3xl font-bold text-foreground">Healthcare.gov Marketplace Plans</h1>
           </div>
-        ))}
-      </div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Find affordable health insurance through the Health Insurance Marketplace. 
+            Compare plans and see if you qualify for premium subsidies to lower your costs.
+          </p>
+        </div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {/* Progress Indicator */}
+        <div className="flex justify-center space-x-4 mb-8">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+                i <= step
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
+              {i}
+            </div>
+          ))}
+        </div>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Step 1: Location & Personal Info */}
           {step === 1 && (
             <Card>
@@ -407,9 +408,9 @@ export default function HealthcareMarketplaceQuoter() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-card rounded-lg">
                   <div>
-                    <p className="text-sm text-gray-600">ZIP Code</p>
+                    <p className="text-sm text-muted-foreground">ZIP Code</p>
                     <p className="font-medium">{form.watch("zipCode")}</p>
                   </div>
                   <div>
@@ -495,7 +496,7 @@ export default function HealthcareMarketplaceQuoter() {
                           <h3 className="text-lg font-semibold">{plan.name}</h3>
                           <Badge className={`${
                             plan.metalLevel === 'Bronze' ? 'bg-orange-100 text-orange-800' :
-                            plan.metalLevel === 'Silver' ? 'bg-gray-100 text-gray-800' :
+                            plan.metalLevel === 'Silver' ? 'bg-card text-foreground border' :
                             plan.metalLevel === 'Gold' ? 'bg-yellow-100 text-yellow-800' :
                             'bg-purple-100 text-purple-800'
                           }`}>
@@ -610,6 +611,7 @@ export default function HealthcareMarketplaceQuoter() {
           </Card>
         </div>
       )}
-    </div>
+      </div>
+    </section>
   )
 }

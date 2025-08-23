@@ -140,7 +140,7 @@ export default function FamilyHealthQuoter({
                   type="text"
                   value={formData.firstName}
                   onChange={(e) => handleInputChange("firstName", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your first name"
                 />
                 {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
@@ -152,7 +152,7 @@ export default function FamilyHealthQuoter({
                   type="text"
                   value={formData.lastName}
                   onChange={(e) => handleInputChange("lastName", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your last name"
                 />
                 {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
@@ -164,7 +164,7 @@ export default function FamilyHealthQuoter({
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your email"
                 />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -176,7 +176,7 @@ export default function FamilyHealthQuoter({
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="(123) 456-7890"
                 />
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -200,7 +200,7 @@ export default function FamilyHealthQuoter({
                   type="text"
                   value={formData.zipCode}
                   onChange={(e) => handleInputChange("zipCode", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your ZIP code"
                   maxLength={5}
                 />
@@ -213,7 +213,7 @@ export default function FamilyHealthQuoter({
                   type="date"
                   value={formData.dateOfBirth}
                   onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>}
               </div>
@@ -223,7 +223,7 @@ export default function FamilyHealthQuoter({
                 <select
                   value={formData.familySize}
                   onChange={(e) => handleInputChange("familySize", parseInt(e.target.value))}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value={1}>1 (Individual)</option>
                   <option value={2}>2 (Couple)</option>
@@ -239,7 +239,7 @@ export default function FamilyHealthQuoter({
                 <select
                   value={formData.employmentStatus}
                   onChange={(e) => handleInputChange("employmentStatus", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select status</option>
                   <option value="employed">Employed</option>
@@ -267,7 +267,7 @@ export default function FamilyHealthQuoter({
                 <select
                   value={formData.monthlyBudget}
                   onChange={(e) => handleInputChange("monthlyBudget", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Select budget range</option>
                   <option value="0-200">$0 - $200</option>
@@ -284,7 +284,7 @@ export default function FamilyHealthQuoter({
                   type="text"
                   value={formData.currentCoverage}
                   onChange={(e) => handleInputChange("currentCoverage", e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Describe your current coverage"
                 />
               </div>
@@ -321,7 +321,7 @@ export default function FamilyHealthQuoter({
 
   if (isSubmitted) {
     return (
-      <section className="py-32 bg-gradient-to-br from-secondary via-background to-secondary min-h-screen">
+      <section className="py-32 bg-transparent min-h-screen">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -366,7 +366,7 @@ export default function FamilyHealthQuoter({
   }
 
   return (
-    <section className="py-32 bg-gradient-to-br from-secondary via-background to-secondary min-h-screen">
+    <section className="py-32 bg-transparent min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -448,3 +448,4 @@ export default function FamilyHealthQuoter({
     </section>
   )
 }
+

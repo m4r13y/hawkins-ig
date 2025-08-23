@@ -190,9 +190,9 @@ export default function EstatePlanningTool() {
                     <div key={step} className="flex items-center">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                         step <= currentStep 
-                          ? 'bg-blue-500 text-white' 
+                          ? 'bg-green-500 text-white' 
                           : darkMode 
-                            ? 'bg-white/20 text-white/60'
+                            ? 'bg-green-400 text-white'
                             : 'bg-gray-200 text-gray-400'
                       }`}>
                         {step < currentStep ? <Check className="w-4 h-4" /> : step}
@@ -200,7 +200,7 @@ export default function EstatePlanningTool() {
                       {step < 3 && (
                         <div className={`w-8 h-0.5 ${
                           step < currentStep 
-                            ? 'bg-blue-500' 
+                            ? 'bg-white/100' 
                             : darkMode 
                               ? 'bg-white/20'
                               : 'bg-gray-200'
@@ -216,7 +216,7 @@ export default function EstatePlanningTool() {
               {currentStep > 1 && (
                 <button
                   onClick={goBack}
-                  className="flex items-center text-blue-300 hover:text-blue-200 mb-6 transition-colors"
+                  className="flex items-center text-slate-500 hover:text-slate-500 mb-6 transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back
@@ -229,7 +229,7 @@ export default function EstatePlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your family situation?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-blue-100' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
                     This helps us understand your estate planning needs
                   </p>
                   
@@ -247,14 +247,14 @@ export default function EstatePlanningTool() {
                         }`}
                       >
                         <div className="flex items-start space-x-4">
-                          <div className="text-blue-400 group-hover:text-blue-300">
+                          <div className="text-green-400 group-hover:text-green-300">
                             {situation.icon}
                           </div>
                           <div>
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {situation.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-blue-100' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
                               {situation.description}
                             </p>
                           </div>
@@ -270,7 +270,7 @@ export default function EstatePlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your total asset value?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-blue-100' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
                     This determines the complexity of planning you'll need
                   </p>
                   
@@ -295,7 +295,7 @@ export default function EstatePlanningTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {level.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-blue-100' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
                               {level.description}
                             </p>
                           </div>
@@ -311,7 +311,7 @@ export default function EstatePlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your primary planning goal?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-blue-100' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
                     This helps us focus on what matters most to you
                   </p>
                   
@@ -336,7 +336,7 @@ export default function EstatePlanningTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {priority.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-blue-100' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
                               {priority.description}
                             </p>
                           </div>
@@ -368,7 +368,7 @@ export default function EstatePlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-blue-200' : 'text-gray-500'}`}>Family Situation</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Family Situation</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedFamily ? getSelectedItem(familySituations, selectedFamily)?.name : 'Not selected'}
                   </div>
@@ -383,7 +383,7 @@ export default function EstatePlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-blue-200' : 'text-gray-500'}`}>Asset Level</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Asset Level</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedAssets ? getSelectedItem(assetLevels, selectedAssets)?.name : 'Not selected'}
                   </div>
@@ -398,7 +398,7 @@ export default function EstatePlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-blue-200' : 'text-gray-500'}`}>Planning Priority</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Planning Priority</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedPriority ? getSelectedItem(planningPriorities, selectedPriority)?.name : 'Not selected'}
                   </div>
@@ -429,13 +429,13 @@ export default function EstatePlanningTool() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-slate-950/50 flex items-center justify-center z-50"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white border border-gray-200 rounded-2xl p-8 max-w-md mx-4 text-center"
+              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
             >
               <FileText className="w-16 h-16 text-blue-500 mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
@@ -456,3 +456,7 @@ export default function EstatePlanningTool() {
     </section>
   )
 }
+
+
+
+

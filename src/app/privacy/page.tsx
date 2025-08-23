@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Hero Header Section */}
       <section className="pt-32 pb-16 bg-gradient-to-br from-secondary via-background to-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
       </section>
 
       {/* Main Content Section */}
-      <div className="py-16 bg-background">
+      <div className="py-16 bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg max-w-none dark:prose-invert">
             <div className="space-y-8">
@@ -352,3 +352,5 @@ export default function PrivacyPolicy() {
     </main>
   )
 }
+
+

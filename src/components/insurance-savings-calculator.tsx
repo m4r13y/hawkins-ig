@@ -145,7 +145,7 @@ export default function InsuranceSavingsCalculator() {
   }
 
   return (
-    <section className="py-24 bg-background relative backdrop-blur-sm">
+    <section className="py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -160,7 +160,7 @@ export default function InsuranceSavingsCalculator() {
           </p>
         </motion.div>
 
-        <div className="bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden">
+        <div className="bg-card border border-border rounded-3xl p-8 relative">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Step Form */}
             <div className="space-y-8">
@@ -171,7 +171,7 @@ export default function InsuranceSavingsCalculator() {
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-200 ${
                         step < currentStep
-                          ? "bg-green-500 text-white"
+                          ? "bg-white/100 text-white"
                           : step === currentStep
                           ? "bg-primary text-primary-foreground"
                           : "bg-muted text-muted-foreground"
@@ -182,7 +182,7 @@ export default function InsuranceSavingsCalculator() {
                     {step < 4 && (
                       <div
                         className={`w-8 h-1 mx-2 transition-all duration-200 ${
-                          step < currentStep ? "bg-green-500" : "bg-muted"
+                          step < currentStep ? "bg-white/100" : "bg-muted"
                         }`}
                       />
                     )}
@@ -278,7 +278,7 @@ export default function InsuranceSavingsCalculator() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleAgeSelect(age.value)}
-                          className="p-4 rounded-xl border border-border bg-card/50 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-200 text-center"
+                          className="p-4 rounded-xl border border-border bg-card/50 hover:border-white/20 hover:bg-white/10 transition-all duration-200 text-center"
                         >
                           <div className="font-medium text-foreground text-lg">{age.value}</div>
                         </motion.button>
@@ -417,7 +417,7 @@ export default function InsuranceSavingsCalculator() {
                     <div className="text-muted-foreground text-sm">per month</div>
                   </div>
 
-                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-2xl p-6 text-center">
+                  <div className="bg-white/10 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-2xl p-6 text-center">
                     <div className="text-green-600 dark:text-green-400 text-sm mb-2">With Our Help</div>
                     <motion.div
                       key={`with-${selectedCategory}-${selectedProduct}-${selectedAge}`}
@@ -496,3 +496,6 @@ export default function InsuranceSavingsCalculator() {
     </section>
   )
 }
+
+
+
