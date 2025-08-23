@@ -374,7 +374,6 @@ export default function MedicareQuoter() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <Stethoscope className="w-16 h-16 text-primary mx-auto mb-6" />
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
             Medicare Quote Tool
           </h1>

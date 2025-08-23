@@ -374,7 +374,6 @@ export default function FamilyHealthQuoter({
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          {icon}
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 mt-6">
             {title}
           </h1>
