@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Star, ArrowRight, Shield, Heart, Users, TrendingDown } from "lucide-react"
 import { useState, useRef } from "react"
+import Image from "next/image"
 
 const stories = [
   {
@@ -118,10 +119,16 @@ export default function SuccessStoriesRedesign() {
             >
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-xl overflow-hidden">
-                  <img 
+                  <Image 
                     src={story.image} 
                     alt={story.company}
+                    width={48}
+                    height={48}
                     className="w-full h-full object-cover"
+                    priority={index === 0} // Priority load for first image
+                    quality={85}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                   />
                 </div>
                 <div className="ml-4">
@@ -194,10 +201,16 @@ export default function SuccessStoriesRedesign() {
 
             <div className="relative order-first lg:order-last">
               <div className="aspect-video bg-muted rounded-2xl overflow-hidden">
-                <img
+                <Image
                   src={stories[activeStory].image || "/placeholder.svg"}
                   alt={`${stories[activeStory].company} results`}
+                  width={600}
+                  height={400}
                   className="w-full h-full object-cover object-center-top"
+                  priority={true} // Priority load for main display image
+                  quality={90}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                 />
               </div>
             </div>

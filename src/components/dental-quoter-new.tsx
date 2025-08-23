@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -271,10 +272,13 @@ export default function DentalQuoter() {
                       <div className="flex items-center space-x-3">
                         {quote.carrier.logo_url && (
                           <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
-                            <img 
+                            <Image 
                               src={quote.carrier.logo_url} 
                               alt={quote.carrier.name}
+                              width={48}
+                              height={48}
                               className="h-8 w-auto"
+                              quality={85}
                             />
                           </div>
                         )}

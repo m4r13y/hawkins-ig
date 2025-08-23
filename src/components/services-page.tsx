@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import InsuranceConsultationTool from "@/components/insurance-consultation-tool"
 import InsuranceSavingsCalculator from "@/components/insurance-savings-calculator"
 import { 
@@ -216,21 +217,27 @@ export default function ServicesPage() {
         >
           {carrierLogos.map((logo, index) => (
             <div key={`first-${index}`} className="flex-shrink-0 min-w-fit flex items-center justify-center w-48">
-              <img 
+              <Image 
                 className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 filter" 
                 alt={`Carrier ${index + 1}`}
                 src={logo}
                 title={`Carrier ${index + 1}`}
+                width={192}
+                height={64}
+                quality={85}
               />
             </div>
           ))}
           {carrierLogos.map((logo, index) => (
             <div key={`second-${index}`} className="flex-shrink-0 min-w-fit flex items-center justify-center w-48">
-              <img 
+              <Image 
                 className="h-16 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0 filter" 
                 alt={`Carrier ${index + 1}`}
                 src={logo}
                 title={`Carrier ${index + 1}`}
+                width={192}
+                height={64}
+                quality={85}
               />
             </div>
           ))}

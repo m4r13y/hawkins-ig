@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useState } from "react"
+import Image from "next/image"
 import { ArrowRight, Users, Award, Phone, Mail, MapPin, Star, Shield, Heart, Facebook, Calendar, CheckCircle } from "lucide-react"
 import AnimatedButton from "./animated-button"
 import ContactFormModal from "./contact-form-modal"
@@ -217,9 +218,11 @@ export default function TeamPage() {
                 <div className="relative p-6 rounded-e-full rounded-s-xl bg-transparent">
                   {/* Circular Profile Image - Top Right */}
                   <div className="absolute -top-2 -right-2 z-20">
-                    <img 
+                    <Image 
                       src={member.image} 
                       alt={member.name}
+                      width={192}
+                      height={192}
                       className="w-48 h-48 rounded-full object-cover border-4 border-border shadow-xl"
                       style={{ 
                         objectPosition: member.id === 1 ? 'center 30%' : 
@@ -227,6 +230,8 @@ export default function TeamPage() {
                                       member.id === 3 ? 'center 35%' : 
                                       'center 30%'
                       }}
+                      quality={90}
+                      priority={member.id === 1}
                       onError={(e) => {
                         console.log(`Failed to load image for ${member.name}: ${member.image}`);
                         // Fallback to placeholder if image fails to load

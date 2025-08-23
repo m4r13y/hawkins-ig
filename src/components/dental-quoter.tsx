@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useState } from "react"
+import Image from "next/image"
 import { Smile, Shield, Users, CheckCircle, ArrowRight, Calendar, MapPin, Phone, Mail, Sparkles } from "lucide-react"
 import AnimatedButton from "./animated-button"
 import { getDentalQuotes, type DentalQuoteParams, type DentalQuote } from "@/lib/actions/dental-quotes"
@@ -333,10 +334,13 @@ export default function DentalQuoter() {
                         <div className="flex items-start space-x-4">
                           {quote.carrier.logo_url && (
                             <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
-                              <img 
+                              <Image 
                                 src={quote.carrier.logo_url} 
                                 alt={quote.carrier.name}
+                                width={64}
+                                height={64}
                                 className="max-w-full max-h-full object-contain"
+                                quality={85}
                               />
                             </div>
                           )}
