@@ -6,6 +6,8 @@ import { PerformanceMonitor, ResourceHints, CriticalCSS } from '@/components/per
 import CookieConsentOptimized from '@/components/cookie-consent-optimized'
 import AdaAccessibilityWidgetSafe from '@/components/ada-accessibility-widget-safe'
 import PagePreloader from '@/components/page-preloader'
+import { ModalProvider } from '@/contexts/modal-context'
+import GlobalPopupModals from '@/components/global-popup-modals'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -75,13 +77,16 @@ export default function RootLayout({
       <body 
         className={`${inter.className} bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-foreground antialiased`}
       >
-        <PagePreloader />
-        {children}
-        <PerformanceMonitor />
-        
-        {/* Global UI Components */}
-        <AdaAccessibilityWidgetSafe />
-        <CookieConsentOptimized />
+        <ModalProvider>
+          <PagePreloader />
+          {children}
+          <PerformanceMonitor />
+          
+          {/* Global UI Components */}
+          <AdaAccessibilityWidgetSafe />
+          <CookieConsentOptimized />
+          <GlobalPopupModals />
+        </ModalProvider>
       </body>
     </html>
   )

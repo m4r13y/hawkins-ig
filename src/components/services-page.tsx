@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import InsuranceConsultationTool from "@/components/insurance-consultation-tool"
 import InsuranceSavingsCalculator from "@/components/insurance-savings-calculator"
+import { useModal } from "@/contexts/modal-context"
 import { 
   Stethoscope, 
   Users, 
@@ -188,21 +189,12 @@ const clientServices = [
   }
 ]
 
-interface WaitlistFormData {
-  name: string
-  email: string
-  feature: string
-}
-
 export default function ServicesPage() {
   const [expandedCard, setExpandedCard] = useState<string | null>(null)
-  const [showWaitlist, setShowWaitlist] = useState(false)
-  const [waitlistForm, setWaitlistForm] = useState<WaitlistFormData>({
-    name: '',
-    email: '',
-    feature: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { 
+    setIsInformationRequestModalOpen,
+    setInformationRequestData 
+  } = useModal()
 
   // Carrier carousel component - COMMENTED OUT
   /*
@@ -251,29 +243,14 @@ export default function ServicesPage() {
     return clientServices.map(service => service.title)
   }
 
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    try {
-      // Add the service context to the form data
-      const submissionData = {
-        ...waitlistForm,
-        serviceType: 'insurance',
-        timestamp: new Date().toISOString()
-      }
-      
-      console.log('Waitlist submission:', submissionData)
-      
-      // Reset form
-      setWaitlistForm({ name: '', email: '', feature: '' })
-      setShowWaitlist(false)
-      
-    } catch (error) {
-      console.error('Error submitting waitlist entry:', error)
-    } finally {
-      setIsSubmitting(false)
-    }
+  const handleGetMoreInfo = (serviceTitle: string) => {
+    setInformationRequestData({
+      name: '',
+      email: '',
+      service: serviceTitle,
+      requestType: 'information'
+    })
+    setIsInformationRequestModalOpen(true)
   }
 
   return (
@@ -315,7 +292,7 @@ export default function ServicesPage() {
             {clientServices.map((service, index) => (
             <div
               key={service.id}
-              className={`relative bg-card border border-border/50 rounded-2xl backdrop-blur-sm hover:border-border transition-all duration-200 group cursor-pointer overflow-hidden shadow-lg hover:shadow-xl ${
+              className={`relative bg-card border border-border/50 rounded-2xl backdrop-blur-sm hover:border-border/80 transition-all duration-200 group cursor-pointer overflow-hidden shadow-lg hover:shadow-xl ${
                 expandedCard === service.id ? 'lg:col-span-2' : ''
               }`}
               onClick={() => setExpandedCard(expandedCard === service.id ? null : service.id)}
@@ -426,10 +403,7 @@ export default function ServicesPage() {
                         </Link>
                         <AnimatedButton 
                           variant="outline" 
-                          onClick={() => {
-                            setWaitlistForm(prev => ({ ...prev, feature: service.title }))
-                            setShowWaitlist(true)
-                          }}
+                          onClick={() => handleGetMoreInfo(service.title)}
                           className="flex-1"
                         >
                           Learn More
@@ -443,97 +417,6 @@ export default function ServicesPage() {
           ))}
         </div>
       </div>
-
-      {/* Waitlist Modal */}
-      <AnimatePresence>
-        {showWaitlist && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-transparent/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setShowWaitlist(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className="bg-card border border-border rounded-2xl p-8 max-w-md w-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-foreground">Get More Information</h3>
-                <button
-                  onClick={() => setShowWaitlist(false)}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              
-              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    value={waitlistForm.name}
-                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-4 py-3 bg-muted border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    value={waitlistForm.email}
-                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-4 py-3 bg-muted border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
-                    placeholder="Enter your email address"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="feature" className="block text-sm font-medium text-foreground mb-2">
-                    Most Interested Feature
-                  </label>
-                  <select
-                    id="feature"
-                    required
-                    value={waitlistForm.feature}
-                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, feature: e.target.value }))}
-                    className="w-full px-4 py-3 bg-muted border border-border rounded-xl text-foreground focus:border-primary focus:outline-none"
-                  >
-                    <option value="">Select a feature</option>
-                    {getFeatureOptions().map((feature, index) => (
-                      <option key={index} value={feature}>{feature}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-primary hover:bg-primary/90 disabled:bg-muted disabled:cursor-not-allowed text-primary-foreground px-8 py-3 rounded-xl font-medium transition-colors duration-200"
-                >
-                  {isSubmitting ? "Submitting..." : "Get Information"}
-                </button>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
       </section>
 
       {/* Insurance Tools Section */}

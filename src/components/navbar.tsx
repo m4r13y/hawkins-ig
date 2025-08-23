@@ -8,12 +8,12 @@ import { Menu, X, Search, ArrowRight } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import AnimatedButton from "./animated-button"
-import SignInModal from "./sign-in-modal"
+import { useModal } from "@/contexts/modal-context"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const { setIsSignInModalOpen } = useModal()
   const [searchQuery, setSearchQuery] = useState("")
   const searchRef = useRef<HTMLDivElement>(null)
 
@@ -260,12 +260,6 @@ export default function Navbar() {
           </div>
         )}
       </nav>
-      
-      {/* Sign In Modal */}
-      <SignInModal 
-        isOpen={isSignInModalOpen} 
-        onClose={() => setIsSignInModalOpen(false)} 
-      />
     </header>
   )
 }

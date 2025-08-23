@@ -20,20 +20,20 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/50 dark:bg-slate-900/90 backdrop-blur-sm z-[60]"
             onClick={onClose}
           />
           
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center p-4"
             onClick={onClose}
           >
             <div 
-              className="bg-card border border-border rounded-2xl p-8 w-full max-w-md shadow-2xl"
+              className="bg-white dark:bg-slate-800 border border-border rounded-2xl p-8 w-full max-w-md shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}

@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { X } from "lucide-react"
 import { submitWaitlistEntry } from "@/lib/firebase"
+import { useModal } from "@/contexts/modal-context"
 
 interface TabContent {
   id: string
@@ -81,15 +82,21 @@ const tabsData: TabContent[] = [
 export default function AboutUsTabs() {
   const [activeTab, setActiveTab] = useState("hawkins-ig")
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [waitlistForm, setWaitlistForm] = useState({
-    name: "",
-    email: "",
-    feature: ""
-  })
+  const { 
+    setIsWaitlistModalOpen,
+    setWaitlistFormData 
+  } = useModal()
 
   const activeContent = tabsData.find(tab => tab.id === activeTab) || tabsData[0]
+
+  const handleJoinWaitlist = (featureName: string) => {
+    setWaitlistFormData({
+      name: '',
+      email: '',
+      feature: featureName
+    })
+    setIsWaitlistModalOpen(true)
+  }
 
   // Auto-cycle through images for Hawkins IG tab
   useEffect(() => {
@@ -122,36 +129,6 @@ export default function AboutUsTabs() {
         return "/hawknest-admin-logo.png"
       default:
         return isDark ? "/hig-logo-white.svg" : "/hig-logo-navy.svg"
-    }
-  }
-
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    try {
-      const result = await submitWaitlistEntry({
-        name: waitlistForm.name,
-        email: waitlistForm.email,
-        feature: waitlistForm.feature,
-        product: activeTab // hawknest or hawknest-admin
-      })
-      
-      // Firebase functions return data in result.data
-      const responseData = result.data as any
-      
-      if (responseData?.success) {
-        alert(responseData.message || "Thank you for joining the waitlist! We'll notify you when it's ready.")
-        setShowWaitlistPopup(false)
-        setWaitlistForm({ name: "", email: "", feature: "" })
-      } else {
-        throw new Error('Submission failed')
-      }
-    } catch (error: any) {
-      console.error("Waitlist submission error:", error)
-      alert(error.message || "There was an error submitting your information. Please try again.")
-    } finally {
-      setIsSubmitting(false)
     }
   }
 
@@ -190,8 +167,8 @@ export default function AboutUsTabs() {
                 whileTap={{ scale: 0.95 }}
                 className={`flex items-center space-x-3 px-6 py-4 rounded-2xl border transition-all duration-300 ${
                   activeTab === tab.id
-                    ? "bg-primary/10 border-primary/30 text-primary"
-                    : "bg-card border-border text-muted-foreground hover:bg-card/80 hover:border-border hover:text-foreground"
+                    ? "bg-primary/10 border-primary/50 text-primary"
+                    : "bg-card border-border/20 hover:border-border/40 text-muted-foreground hover:bg-card/80 hover:text-foreground"
                 }`}
               >
                 <div className="w-8 h-8 flex items-center justify-center">
@@ -239,8 +216,8 @@ export default function AboutUsTabs() {
                 whileTap={{ scale: 0.95 }}
                 className={`flex items-center justify-center w-16 h-16 rounded-2xl border transition-all duration-300 ${
                   activeTab === tab.id
-                    ? "bg-primary/10 border-primary/30 text-primary"
-                    : "bg-card border-border text-muted-foreground hover:bg-card/80 hover:border-border hover:text-foreground"
+                    ? "bg-primary/10 border-primary/50 text-primary"
+                    : "bg-card border-border/20 hover:border-border/40 text-muted-foreground hover:bg-card/80 hover:text-foreground"
                 }`}
                 aria-label={tab.title}
               >
@@ -293,7 +270,7 @@ export default function AboutUsTabs() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 rounded-3xl border border-border overflow-hidden"
+              className="aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 rounded-3xl border border-border/20 overflow-hidden transition-all duration-300"
             >
               {activeContent.id === "hawkins-ig" && activeContent.images ? (
                 <div className="w-full h-full relative">
@@ -412,7 +389,7 @@ export default function AboutUsTabs() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setShowWaitlistPopup(true)}
+                onClick={() => handleJoinWaitlist(activeContent.title)}
                 className="bg-primary text-primary-foreground px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition-colors duration-300"
               >
                 Join Waitlist
@@ -421,101 +398,6 @@ export default function AboutUsTabs() {
           </div>
         </motion.div>
       </div>
-
-      {/* Waitlist Popup */}
-      <AnimatePresence>
-        {showWaitlistPopup && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-transparent/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setShowWaitlistPopup(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-card border border-border rounded-3xl p-8 max-w-md w-full"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-foreground">Join the Waitlist</h3>
-                <button
-                  onClick={() => setShowWaitlistPopup(false)}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-
-              <p className="text-foreground/90 mb-6">
-                Be the first to know when {activeContent.title} is ready! We'll notify you as soon as it's available.
-              </p>
-
-              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground/90 mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    value={waitlistForm.name}
-                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-4 py-3 bg-transparent border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground/90 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    value={waitlistForm.email}
-                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-4 py-3 bg-transparent border border-border rounded-xl text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none"
-                    placeholder="Enter your email address"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="feature" className="block text-sm font-medium text-foreground/90 mb-2">
-                    Most Interested Feature
-                  </label>
-                  <select
-                    id="feature"
-                    required
-                    value={waitlistForm.feature}
-                    onChange={(e) => setWaitlistForm(prev => ({ ...prev, feature: e.target.value }))}
-                    className="w-full px-4 py-3 bg-transparent border border-border rounded-xl text-foreground focus:border-primary focus:outline-none"
-                  >
-                    <option value="">Select a feature</option>
-                    {getFeatureOptions().map((feature, index) => (
-                      <option key={index} value={feature}>{feature}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className="w-full bg-primary hover:bg-primary/90 disabled:bg-muted disabled:cursor-not-allowed text-primary-foreground px-8 py-3 rounded-xl font-medium transition-colors duration-300"
-                >
-                  {isSubmitting ? "Joining Waitlist..." : "Join Waitlist"}
-                </motion.button>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   )
 }

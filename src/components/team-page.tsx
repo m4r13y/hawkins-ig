@@ -208,7 +208,7 @@ export default function TeamPage() {
                 whileHover={{ y: -10 }}
                 onHoverStart={() => setSelectedMember(member.id)}
                 onHoverEnd={() => setSelectedMember(null)}
-                className="bg-card/50 border border-border/50 overflow-visible backdrop-blur-sm hover:border-border transition-all duration-300 group"
+                className="bg-card/50 border border-border/50 overflow-visible backdrop-blur-sm hover:border-border/80 transition-all duration-300 group"
                 style={{
                   boxShadow: selectedMember === member.id ? "0 20px 40px rgba(0, 0, 0, 0.1) dark:rgba(71, 85, 105, 0.1)" : "none",
                   borderRadius: "12px 72px 12px 12px",
