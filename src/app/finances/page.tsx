@@ -28,10 +28,10 @@ export default function Finances() {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
                 Financial <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Planning</span>
               </h1>
-              <p className="text-xl max-w-3xl mx-auto mb-12 text-slate-400">
+              <p className="text-xl max-w-3xl mx-auto mb-12 text-gray-600 dark:text-slate-400">
                 Plan your financial future with our comprehensive tools for retirement, estate planning, 
                 and overall financial wellness. Take control of your financial destiny today.
               </p>
@@ -65,10 +65,10 @@ export default function Finances() {
                     <div className="mb-4 flex justify-center text-slate-600">
                       {feature.icon}
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-white">
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-slate-500">
+                    <p className="text-sm text-gray-600 dark:text-slate-500">
                       {feature.description}
                     </p>
                   </motion.div>

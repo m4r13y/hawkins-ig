@@ -219,13 +219,13 @@ export default function ADAAccessibilityWidget() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 320 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-4 right-12 z-50 bg-gradient-to-br from-secondary via-background to-secondary border border-border rounded-l-xl rounded-tr-xl shadow-2xl w-80 max-w-[calc(100vw-4rem)] h-80 overflow-y-auto"
+            className="fixed bottom-4 right-12 z-50 bg-background border border-border rounded-l-xl rounded-tr-xl shadow-2xl w-80 max-w-[calc(100vw-4rem)] h-80 overflow-y-auto"
           >
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
                 <button
                   onClick={toggleDarkMode}
-                  className="p-2 bg-gradient-to-br from-secondary via-background to-secondary border border-border text-foreground rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary transition-colors text-sm font-medium flex items-center gap-2"
+                  className="p-2 bg-secondary border border-border text-foreground rounded-lg hover:bg-muted transition-colors text-sm font-medium flex items-center gap-2"
                   aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
                 >
                   {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -255,7 +255,7 @@ export default function ADAAccessibilityWidget() {
                         className={`p-2 text-xs rounded border transition-colors ${
                           settings.fontSize === size
                             ? 'bg-blue-100 border-blue-500 text-blue-700'
-                            : 'bg-gradient-to-br from-secondary via-background to-secondary border-border text-foreground hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary'
+                            : 'bg-secondary border-border text-foreground hover:bg-muted'
                         }`}
                       >
                         {size === 'extra-large' ? 'XL' : size.charAt(0).toUpperCase() + size.slice(1)}
@@ -282,7 +282,7 @@ export default function ADAAccessibilityWidget() {
                         className={`w-full p-2 text-xs rounded border text-left transition-colors ${
                           settings.contrast === value
                             ? 'bg-blue-100 border-blue-500 text-blue-700'
-                            : 'bg-gradient-to-br from-secondary via-background to-secondary border-border text-foreground hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary'
+                            : 'bg-secondary border-border text-foreground hover:bg-muted'
                         }`}
                       >
                         {label}
@@ -294,7 +294,7 @@ export default function ADAAccessibilityWidget() {
                 {/* Reset Button */}
                 <button
                   onClick={resetSettings}
-                  className="w-full p-2 bg-gradient-to-br from-secondary via-background to-secondary text-foreground rounded-lg hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary transition-colors text-sm font-medium"
+                  className="w-full p-2 bg-secondary text-foreground rounded-lg hover:bg-muted transition-colors text-sm font-medium"
                 >
                   Reset to Default
                 </button>
