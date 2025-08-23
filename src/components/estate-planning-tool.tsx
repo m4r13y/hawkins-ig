@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import AnimatedButton from "./animated-button"
+import { useModal } from "@/contexts/modal-context"
 import { FileText, Shield, Users, Home, Heart, Building, DollarSign, Scale, ArrowLeft, Check } from "lucide-react"
 
 const familySituations = [
@@ -91,7 +92,7 @@ export default function EstatePlanningTool() {
   const [selectedFamily, setSelectedFamily] = useState("")
   const [selectedAssets, setSelectedAssets] = useState("")
   const [selectedPriority, setSelectedPriority] = useState("")
-  const [showComingSoon, setShowComingSoon] = useState(false)
+  const { setIsComingSoonModalOpen, setComingSoonData } = useModal()
   const [darkMode, setDarkMode] = useState(false)
 
   // Check for dark mode preference
@@ -141,8 +142,12 @@ export default function EstatePlanningTool() {
   }
 
   const handleCreatePlan = () => {
-    setShowComingSoon(true)
-    setTimeout(() => setShowComingSoon(false), 3000)
+    setComingSoonData({
+      title: 'Estate Planning Tool Coming Soon!',
+      description: 'Our comprehensive estate planning tool is currently in development. Contact us for personalized estate planning consultation.',
+      feature: 'Comprehensive estate planning solutions'
+    })
+    setIsComingSoonModalOpen(true)
   }
 
   const isComplete = selectedFamily && selectedAssets && selectedPriority
@@ -192,7 +197,7 @@ export default function EstatePlanningTool() {
                         step <= currentStep 
                           ? 'bg-green-500 text-white' 
                           : darkMode 
-                            ? 'bg-green-400 text-white'
+                            ? 'bg-gray-600 text-gray-400'
                             : 'bg-gray-200 text-gray-400'
                       }`}>
                         {step < currentStep ? <Check className="w-4 h-4" /> : step}
@@ -229,7 +234,7 @@ export default function EstatePlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your family situation?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     This helps us understand your estate planning needs
                   </p>
                   
@@ -254,7 +259,7 @@ export default function EstatePlanningTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {situation.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {situation.description}
                             </p>
                           </div>
@@ -270,7 +275,7 @@ export default function EstatePlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your total asset value?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     This determines the complexity of planning you'll need
                   </p>
                   
@@ -295,7 +300,7 @@ export default function EstatePlanningTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {level.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {level.description}
                             </p>
                           </div>
@@ -311,7 +316,7 @@ export default function EstatePlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your primary planning goal?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     This helps us focus on what matters most to you
                   </p>
                   
@@ -336,7 +341,7 @@ export default function EstatePlanningTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {priority.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {priority.description}
                             </p>
                           </div>
@@ -368,7 +373,7 @@ export default function EstatePlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Family Situation</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Family Situation</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedFamily ? getSelectedItem(familySituations, selectedFamily)?.name : 'Not selected'}
                   </div>
@@ -383,7 +388,7 @@ export default function EstatePlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Asset Level</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Asset Level</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedAssets ? getSelectedItem(assetLevels, selectedAssets)?.name : 'Not selected'}
                   </div>
@@ -398,7 +403,7 @@ export default function EstatePlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Planning Priority</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Planning Priority</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedPriority ? getSelectedItem(planningPriorities, selectedPriority)?.name : 'Not selected'}
                   </div>
@@ -422,36 +427,6 @@ export default function EstatePlanningTool() {
             </div>
           </div>
         </div>
-
-        {/* Coming Soon Modal */}
-        {showComingSoon && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-950/50 flex items-center justify-center z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
-            >
-              <FileText className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
-              <p className="text-gray-600 mb-6">
-                Our comprehensive estate planning tool is currently in development. 
-                Contact us for personalized estate planning consultation.
-              </p>
-              <button
-                onClick={() => setShowComingSoon(false)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
       </div>
     </section>
   )

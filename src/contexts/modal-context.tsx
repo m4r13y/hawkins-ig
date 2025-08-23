@@ -15,6 +15,18 @@ interface InformationRequestData {
   requestType: 'waitlist' | 'information'
 }
 
+interface ComingSoonData {
+  title: string
+  description: string
+  feature: string
+}
+
+interface ContactFormData {
+  memberName: string
+  memberPhone: string
+  memberEmail: string
+}
+
 interface ModalContextType {
   isSignInModalOpen: boolean
   setIsSignInModalOpen: (open: boolean) => void
@@ -26,6 +38,14 @@ interface ModalContextType {
   setIsInformationRequestModalOpen: (open: boolean) => void
   informationRequestData: InformationRequestData
   setInformationRequestData: (data: InformationRequestData) => void
+  isComingSoonModalOpen: boolean
+  setIsComingSoonModalOpen: (open: boolean) => void
+  comingSoonData: ComingSoonData
+  setComingSoonData: (data: ComingSoonData) => void
+  isContactFormModalOpen: boolean
+  setIsContactFormModalOpen: (open: boolean) => void
+  contactFormData: ContactFormData
+  setContactFormData: (data: ContactFormData) => void
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined)
@@ -45,6 +65,18 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     service: '',
     requestType: 'information'
   })
+  const [isComingSoonModalOpen, setIsComingSoonModalOpen] = useState(false)
+  const [comingSoonData, setComingSoonData] = useState<ComingSoonData>({
+    title: 'Coming Soon!',
+    description: 'This feature is currently in development.',
+    feature: ''
+  })
+  const [isContactFormModalOpen, setIsContactFormModalOpen] = useState(false)
+  const [contactFormData, setContactFormData] = useState<ContactFormData>({
+    memberName: '',
+    memberPhone: '',
+    memberEmail: ''
+  })
 
   return (
     <ModalContext.Provider value={{
@@ -57,7 +89,15 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       isInformationRequestModalOpen,
       setIsInformationRequestModalOpen,
       informationRequestData,
-      setInformationRequestData
+      setInformationRequestData,
+      isComingSoonModalOpen,
+      setIsComingSoonModalOpen,
+      comingSoonData,
+      setComingSoonData,
+      isContactFormModalOpen,
+      setIsContactFormModalOpen,
+      contactFormData,
+      setContactFormData
     }}>
       {children}
     </ModalContext.Provider>
@@ -72,4 +112,4 @@ export function useModal() {
   return context
 }
 
-export type { WaitlistFormData, InformationRequestData }
+export type { WaitlistFormData, InformationRequestData, ComingSoonData, ContactFormData }

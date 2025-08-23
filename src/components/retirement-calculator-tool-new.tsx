@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import AnimatedButton from "./animated-button"
+import { useModal } from "@/contexts/modal-context"
 import { PiggyBank, Calculator, TrendingUp, Target, DollarSign, Clock, ArrowLeft, Check } from "lucide-react"
 
 const ageRanges = [
@@ -91,7 +92,7 @@ export default function RetirementCalculatorTool() {
   const [selectedAge, setSelectedAge] = useState("")
   const [selectedSavings, setSelectedSavings] = useState("")
   const [selectedGoal, setSelectedGoal] = useState("")
-  const [showComingSoon, setShowComingSoon] = useState(false)
+  const { setIsComingSoonModalOpen, setComingSoonData } = useModal()
 
   const handleAgeSelect = (ageId: string) => {
     setSelectedAge(ageId)
@@ -122,8 +123,12 @@ export default function RetirementCalculatorTool() {
   }
 
   const handleCreatePlan = () => {
-    setShowComingSoon(true)
-    setTimeout(() => setShowComingSoon(false), 3000)
+    setComingSoonData({
+      title: 'Retirement Calculator Coming Soon!',
+      description: 'Our retirement planning calculator is currently in development. Contact us for personalized retirement planning consultation.',
+      feature: 'Advanced retirement planning tools'
+    })
+    setIsComingSoonModalOpen(true)
   }
 
   const isComplete = selectedAge && selectedSavings && selectedGoal
@@ -353,36 +358,6 @@ export default function RetirementCalculatorTool() {
             </div>
           </div>
         </div>
-
-        {/* Coming Soon Modal */}
-        {showComingSoon && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-950/50 flex items-center justify-center z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
-            >
-              <Calculator className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
-              <p className="text-gray-600 mb-6">
-                Our retirement calculator is currently in development. 
-                Contact us for personalized retirement planning consultation.
-              </p>
-              <button
-                onClick={() => setShowComingSoon(false)}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
       </div>
     </section>
   )

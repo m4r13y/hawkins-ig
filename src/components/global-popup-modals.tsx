@@ -4,6 +4,8 @@ import { useModal } from '@/contexts/modal-context'
 import SignInModal from '@/components/sign-in-modal'
 import WaitlistModal from '@/components/waitlist-modal'
 import InformationRequestModal from '@/components/information-request-modal'
+import ComingSoonModal from '@/components/coming-soon-modal'
+import GlobalContactFormModal from '@/components/global-contact-form-modal'
 
 export default function GlobalPopupModals() {
   const { 
@@ -12,9 +14,13 @@ export default function GlobalPopupModals() {
     isWaitlistModalOpen,
     setIsWaitlistModalOpen,
     isInformationRequestModalOpen,
-    setIsInformationRequestModalOpen
+    setIsInformationRequestModalOpen,
+    isComingSoonModalOpen,
+    setIsComingSoonModalOpen,
+    isContactFormModalOpen,
+    setIsContactFormModalOpen
   } = useModal()
-  
+
   return (
     <>
       {/* Sign In Modal */}
@@ -34,6 +40,15 @@ export default function GlobalPopupModals() {
         isOpen={isInformationRequestModalOpen} 
         onClose={() => setIsInformationRequestModalOpen(false)} 
       />
+      
+      {/* Coming Soon Modal */}
+      <ComingSoonModal 
+        isOpen={isComingSoonModalOpen} 
+        onClose={() => setIsComingSoonModalOpen(false)} 
+      />
+      
+      {/* Contact Form Modal */}
+      <GlobalContactFormModal />
     </>
   )
 }

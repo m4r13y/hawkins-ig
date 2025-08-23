@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import AnimatedButton from "./animated-button"
+import { useModal } from "@/contexts/modal-context"
 import { TrendingUp, Target, PiggyBank, Shield, Home, Briefcase, ArrowLeft, Check } from "lucide-react"
 
 const financialGoals = [
@@ -91,7 +92,10 @@ export default function FinancialPlanningTool() {
   const [selectedGoal, setSelectedGoal] = useState("")
   const [selectedTimeHorizon, setSelectedTimeHorizon] = useState("")
   const [selectedRiskLevel, setSelectedRiskLevel] = useState("")
-  const [showComingSoon, setShowComingSoon] = useState(false)
+  const { 
+    setIsComingSoonModalOpen,
+    setComingSoonData 
+  } = useModal()
 
   const handleGoalSelect = (goalId: string) => {
     setSelectedGoal(goalId)
@@ -122,8 +126,12 @@ export default function FinancialPlanningTool() {
   }
 
   const handleCreatePlan = () => {
-    setShowComingSoon(true)
-    setTimeout(() => setShowComingSoon(false), 3000)
+    setComingSoonData({
+      title: 'Financial Planning Tool Coming Soon!',
+      description: 'Our advanced financial planning tool is currently in development. Contact us for personalized financial planning consultation.',
+      feature: 'Advanced Financial Planning Calculator'
+    })
+    setIsComingSoonModalOpen(true)
   }
 
   const isComplete = selectedGoal && selectedTimeHorizon && selectedRiskLevel
@@ -354,35 +362,7 @@ export default function FinancialPlanningTool() {
           </div>
         </div>
 
-        {/* Coming Soon Modal */}
-        {showComingSoon && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
-            >
-              <TrendingUp className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
-              <p className="text-gray-600 mb-6">
-                Our financial planning tool is currently in development. 
-                Contact us for personalized financial planning consultation.
-              </p>
-              <button
-                onClick={() => setShowComingSoon(false)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
+
       </div>
     </section>
   )

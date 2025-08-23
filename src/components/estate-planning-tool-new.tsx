@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import AnimatedButton from "./animated-button"
+import { useModal } from "@/contexts/modal-context"
 import { FileText, Shield, Users, Home, Heart, Building, DollarSign, Scale, ArrowLeft, Check } from "lucide-react"
 
 const familySituations = [
@@ -91,7 +92,7 @@ export default function EstatePlanningTool() {
   const [selectedFamily, setSelectedFamily] = useState("")
   const [selectedAssets, setSelectedAssets] = useState("")
   const [selectedPriority, setSelectedPriority] = useState("")
-  const [showComingSoon, setShowComingSoon] = useState(false)
+  const { setIsComingSoonModalOpen, setComingSoonData } = useModal()
 
   const handleFamilySelect = (familyId: string) => {
     setSelectedFamily(familyId)
@@ -122,8 +123,12 @@ export default function EstatePlanningTool() {
   }
 
   const handleCreatePlan = () => {
-    setShowComingSoon(true)
-    setTimeout(() => setShowComingSoon(false), 3000)
+    setComingSoonData({
+      title: 'Estate Planning Tool Coming Soon!',
+      description: 'Our comprehensive estate planning tool is currently in development. Contact us for personalized estate planning consultation.',
+      feature: 'Comprehensive estate planning solutions'
+    })
+    setIsComingSoonModalOpen(true)
   }
 
   const isComplete = selectedFamily && selectedAssets && selectedPriority
@@ -353,36 +358,6 @@ export default function EstatePlanningTool() {
             </div>
           </div>
         </div>
-
-        {/* Coming Soon Modal */}
-        {showComingSoon && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-950/50 flex items-center justify-center z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
-            >
-              <FileText className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
-              <p className="text-gray-600 mb-6">
-                Our comprehensive estate planning tool is currently in development. 
-                Contact us for personalized estate planning consultation.
-              </p>
-              <button
-                onClick={() => setShowComingSoon(false)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
       </div>
     </section>
   )

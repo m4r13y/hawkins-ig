@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import AnimatedButton from "./animated-button"
+import { useModal } from "@/contexts/modal-context"
 import { PiggyBank, Calculator, TrendingUp, Target, DollarSign, Clock, ArrowLeft, Check } from "lucide-react"
 
 const ageRanges = [
@@ -91,7 +92,7 @@ export default function RetirementCalculatorTool() {
   const [selectedAge, setSelectedAge] = useState("")
   const [selectedSavings, setSelectedSavings] = useState("")
   const [selectedGoal, setSelectedGoal] = useState("")
-  const [showComingSoon, setShowComingSoon] = useState(false)
+  const { setIsComingSoonModalOpen, setComingSoonData } = useModal()
   const [darkMode, setDarkMode] = useState(false)
 
   // Check for dark mode preference
@@ -141,8 +142,12 @@ export default function RetirementCalculatorTool() {
   }
 
   const handleCreatePlan = () => {
-    setShowComingSoon(true)
-    setTimeout(() => setShowComingSoon(false), 3000)
+    setComingSoonData({
+      title: 'Retirement Calculator Coming Soon!',
+      description: 'Our retirement planning calculator is currently in development. Contact us for personalized retirement planning consultation.',
+      feature: 'Advanced retirement planning tools'
+    })
+    setIsComingSoonModalOpen(true)
   }
 
   const isComplete = selectedAge && selectedSavings && selectedGoal
@@ -192,7 +197,7 @@ export default function RetirementCalculatorTool() {
                         step <= currentStep 
                           ? 'bg-green-500 text-white' 
                           : darkMode 
-                            ? 'bg-green-400 text-white'
+                            ? 'bg-gray-600 text-gray-400'
                             : 'bg-gray-200 text-gray-400'
                       }`}>
                         {step < currentStep ? <Check className="w-4 h-4" /> : step}
@@ -229,7 +234,7 @@ export default function RetirementCalculatorTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your current age range?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     This helps us determine your retirement timeline
                   </p>
                   
@@ -254,7 +259,7 @@ export default function RetirementCalculatorTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {range.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {range.description}
                             </p>
                           </div>
@@ -270,7 +275,7 @@ export default function RetirementCalculatorTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     How much have you saved so far?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     Include all retirement accounts (401k, IRA, etc.)
                   </p>
                   
@@ -288,14 +293,14 @@ export default function RetirementCalculatorTool() {
                         }`}
                       >
                         <div className="flex items-start space-x-4">
-                          <div className="text-slate-600 group-hover:text-slate-500">
+                          <div className={`${darkMode ? 'text-slate-400 group-hover:text-slate-300' : 'text-slate-600 group-hover:text-slate-500'}`}>
                             {level.icon}
                           </div>
                           <div>
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {level.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {level.description}
                             </p>
                           </div>
@@ -311,7 +316,7 @@ export default function RetirementCalculatorTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your retirement goal?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     Choose what type of retirement lifestyle you want
                   </p>
                   
@@ -336,7 +341,7 @@ export default function RetirementCalculatorTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {goal.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {goal.description}
                             </p>
                           </div>
@@ -368,7 +373,7 @@ export default function RetirementCalculatorTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Age Range</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Age Range</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedAge ? getSelectedItem(ageRanges, selectedAge)?.name : 'Not selected'}
                   </div>
@@ -383,7 +388,7 @@ export default function RetirementCalculatorTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Current Savings</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Current Savings</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedSavings ? getSelectedItem(savingsLevels, selectedSavings)?.name : 'Not selected'}
                   </div>
@@ -398,7 +403,7 @@ export default function RetirementCalculatorTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Retirement Goal</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Retirement Goal</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedGoal ? getSelectedItem(retirementGoals, selectedGoal)?.name : 'Not selected'}
                   </div>
@@ -422,36 +427,6 @@ export default function RetirementCalculatorTool() {
             </div>
           </div>
         </div>
-
-        {/* Coming Soon Modal */}
-        {showComingSoon && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
-            >
-              <Calculator className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
-              <p className="text-gray-600 mb-6">
-                Our retirement calculator is currently in development. 
-                Contact us for personalized retirement planning consultation.
-              </p>
-              <button
-                onClick={() => setShowComingSoon(false)}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
       </div>
     </section>
   )

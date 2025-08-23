@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Star, ArrowRight, Shield, Heart, Users, TrendingDown } from "lucide-react"
-import { useState, useRef } from "react"
+import { useState } from "react"
 import Image from "next/image"
 
 const stories = [
@@ -66,15 +66,11 @@ const stories = [
 
 export default function SuccessStoriesRedesign() {
   const [activeStory, setActiveStory] = useState(0)
-  const featureCardRef = useRef<HTMLDivElement>(null)
 
   const handleStoryClick = (index: number) => {
     setActiveStory(index)
-    // Scroll to the feature card with offset
-    if (featureCardRef.current) {
-      const y = featureCardRef.current.getBoundingClientRect().top + window.pageYOffset - 150
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
+    // Use anchor link to scroll to featured section
+    window.location.hash = 'featured-story'
   }
 
   return (
@@ -173,7 +169,7 @@ export default function SuccessStoriesRedesign() {
 
         {/* Detailed View */}
         <motion.div
-          ref={featureCardRef}
+          id="featured-story"
           key={activeStory}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

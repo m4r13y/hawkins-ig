@@ -5,7 +5,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { ArrowRight, Users, Award, Phone, Mail, MapPin, Star, Shield, Heart, Facebook, Calendar, CheckCircle } from "lucide-react"
 import AnimatedButton from "./animated-button"
-import ContactFormModal from "./contact-form-modal"
+import { useModal } from "@/contexts/modal-context"
 
 const teamMembers = [
   {
@@ -96,33 +96,23 @@ const teamStats = [
 export default function TeamPage() {
   const [selectedMember, setSelectedMember] = useState<number | null>(null)
   const [expandedBios, setExpandedBios] = useState<Set<number>>(new Set())
-  const [contactModal, setContactModal] = useState<{
-    isOpen: boolean
-    memberName: string
-    memberPhone: string
-    memberEmail: string
-  }>({
-    isOpen: false,
-    memberName: "",
-    memberPhone: "",
-    memberEmail: ""
-  })
+  const { setIsContactFormModalOpen, setContactFormData } = useModal()
 
   const openContactModal = (name: string, phone: string, email: string) => {
-    setContactModal({
-      isOpen: true,
+    setContactFormData({
       memberName: name,
       memberPhone: phone,
       memberEmail: email
     })
+    setIsContactFormModalOpen(true)
   }
 
   const closeContactModal = () => {
-    setContactModal({
-      isOpen: false,
-      memberName: "",
-      memberPhone: "",
-      memberEmail: ""
+    setIsContactFormModalOpen(false)
+    setContactFormData({
+      memberName: '',
+      memberPhone: '',
+      memberEmail: ''
     })
   }
 
@@ -390,15 +380,6 @@ export default function TeamPage() {
         </div>
         </div>
       </section>
-
-      {/* Contact Form Modal */}
-      <ContactFormModal
-        isOpen={contactModal.isOpen}
-        onClose={closeContactModal}
-        memberName={contactModal.memberName}
-        memberPhone={contactModal.memberPhone}
-        memberEmail={contactModal.memberEmail}
-      />
     </>
   )
 }

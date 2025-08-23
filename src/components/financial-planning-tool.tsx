@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import AnimatedButton from "./animated-button"
+import { useModal } from "@/contexts/modal-context"
 import { TrendingUp, Target, PiggyBank, Shield, Home, Briefcase, ArrowLeft, Check } from "lucide-react"
 
 const financialGoals = [
@@ -91,8 +92,11 @@ export default function FinancialPlanningTool() {
   const [selectedGoal, setSelectedGoal] = useState("")
   const [selectedTimeHorizon, setSelectedTimeHorizon] = useState("")
   const [selectedRiskLevel, setSelectedRiskLevel] = useState("")
-  const [showComingSoon, setShowComingSoon] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
+  const { 
+    setIsComingSoonModalOpen,
+    setComingSoonData 
+  } = useModal()
 
   // Check for dark mode preference
   useEffect(() => {
@@ -141,8 +145,12 @@ export default function FinancialPlanningTool() {
   }
 
   const handleCreatePlan = () => {
-    setShowComingSoon(true)
-    setTimeout(() => setShowComingSoon(false), 3000)
+    setComingSoonData({
+      title: 'Financial Planning Tool Coming Soon!',
+      description: 'Our comprehensive financial planning tool is currently in development. Contact us for personalized financial planning consultation.',
+      feature: 'Financial Planning Calculator'
+    })
+    setIsComingSoonModalOpen(true)
   }
 
   const isComplete = selectedGoal && selectedTimeHorizon && selectedRiskLevel
@@ -192,7 +200,7 @@ export default function FinancialPlanningTool() {
                         step <= currentStep 
                           ? 'bg-green-500 text-white' 
                           : darkMode 
-                            ? 'bg-green-400 text-white'
+                            ? 'bg-gray-600 text-gray-400'
                             : 'bg-gray-200 text-gray-400'
                       }`}>
                         {step < currentStep ? <Check className="w-4 h-4" /> : step}
@@ -229,7 +237,7 @@ export default function FinancialPlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your primary financial goal?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     Choose what you want to focus on first
                   </p>
                   
@@ -254,7 +262,7 @@ export default function FinancialPlanningTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {goal.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {goal.description}
                             </p>
                           </div>
@@ -270,7 +278,7 @@ export default function FinancialPlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your time horizon?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     When do you want to achieve this goal?
                   </p>
                   
@@ -288,14 +296,14 @@ export default function FinancialPlanningTool() {
                         }`}
                       >
                         <div className="flex items-start space-x-4">
-                          <div className="text-slate-600 group-hover:text-slate-500">
+                          <div className={`${darkMode ? 'text-slate-400 group-hover:text-slate-300' : 'text-slate-600 group-hover:text-slate-500'}`}>
                             {horizon.icon}
                           </div>
                           <div>
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {horizon.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {horizon.description}
                             </p>
                           </div>
@@ -311,7 +319,7 @@ export default function FinancialPlanningTool() {
                   <h3 className={`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     What's your risk tolerance?
                   </h3>
-                  <p className={`mb-8 ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                  <p className={`mb-8 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                     How comfortable are you with investment risk?
                   </p>
                   
@@ -336,7 +344,7 @@ export default function FinancialPlanningTool() {
                             <h4 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                               {level.name}
                             </h4>
-                            <p className={`text-sm ${darkMode ? 'text-slate-600' : 'text-gray-600'}`}>
+                            <p className={`text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                               {level.description}
                             </p>
                           </div>
@@ -368,7 +376,7 @@ export default function FinancialPlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Primary Goal</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Primary Goal</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedGoal ? getSelectedItem(financialGoals, selectedGoal)?.name : 'Not selected'}
                   </div>
@@ -383,7 +391,7 @@ export default function FinancialPlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Time Horizon</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Time Horizon</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedTimeHorizon ? getSelectedItem(timeHorizons, selectedTimeHorizon)?.name : 'Not selected'}
                   </div>
@@ -398,7 +406,7 @@ export default function FinancialPlanningTool() {
                       ? 'bg-white/5 border-white/10'
                       : 'bg-white/30 border-gray-200'
                 }`}>
-                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>Risk Tolerance</div>
+                  <div className={`text-sm mb-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Risk Tolerance</div>
                   <div className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                     {selectedRiskLevel ? getSelectedItem(riskLevels, selectedRiskLevel)?.name : 'Not selected'}
                   </div>
@@ -422,36 +430,6 @@ export default function FinancialPlanningTool() {
             </div>
           </div>
         </div>
-
-        {/* Coming Soon Modal */}
-        {showComingSoon && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-950/50 flex items-center justify-center z-50"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-4 text-center"
-            >
-              <TrendingUp className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon!</h3>
-              <p className="text-gray-600 mb-6">
-                Our financial planning tool is currently in development. 
-                Contact us for personalized financial planning consultation.
-              </p>
-              <button
-                onClick={() => setShowComingSoon(false)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
       </div>
     </section>
   )
