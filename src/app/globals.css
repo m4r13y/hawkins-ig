@@ -54,7 +54,21 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: linear-gradient(to bottom right, rgb(239 246 255), rgb(219 234 254), rgb(196 181 253)) !important;
+  }
+  
+  .dark body {
+    background: linear-gradient(to bottom right, rgb(2 6 23), rgb(15 23 42), rgb(2 6 23)) !important;
+  }
+  
+  /* Prevent white background flashes */
+  html {
+    background: rgb(239 246 255);
+  }
+  
+  .dark html {
+    background: rgb(2 6 23);
   }
 }
 
@@ -158,6 +172,48 @@ html, body {
 
 .animate-scroll {
   animation: scroll 30s linear infinite;
+}
+
+/* Page Transition Styles */
+.page-transition-wrapper {
+  overflow-x: hidden;
+}
+
+/* Prevent white flash in dark mode */
+html {
+  background-color: rgb(2 6 23); /* slate-950 fallback */
+}
+
+html.dark {
+  background-color: rgb(2 6 23); /* slate-950 */
+}
+
+/* Ensure body maintains dark background */
+body {
+  background-color: inherit;
+}
+
+/* Prevent layout shift during transitions */
+main, section {
+  will-change: transform, opacity;
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition-wrapper * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Dynamic Mask Animation */

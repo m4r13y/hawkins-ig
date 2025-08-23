@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { PerformanceMonitor, ResourceHints, CriticalCSS } from '@/components/performance-monitor'
 import CookieConsentOptimized from '@/components/cookie-consent-optimized'
 import AdaAccessibilityWidgetSafe from '@/components/ada-accessibility-widget-safe'
+import PagePreloader from '@/components/page-preloader'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -28,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" style={{ backgroundColor: 'rgb(2, 6, 23)' }}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#03002D" />
@@ -47,7 +48,11 @@ export default function RootLayout({
         <CriticalCSS />
         <ResourceHints />
       </head>
-      <body className={`${inter.className} bg-background text-foreground antialiased`}>
+      <body 
+        className={`${inter.className} bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-foreground antialiased`}
+        style={{ backgroundColor: 'rgb(2, 6, 23)' }}
+      >
+        <PagePreloader />
         {children}
         <PerformanceMonitor />
         

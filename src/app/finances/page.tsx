@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
 import FinancialPlanningTool from "@/components/financial-planning-tool"
@@ -10,36 +10,12 @@ import { motion } from "framer-motion"
 import { Calculator, Users, Shield, TrendingUp, PiggyBank, FileText } from "lucide-react"
 
 export default function Finances() {
-  const [darkMode, setDarkMode] = useState(false)
-
   useEffect(() => {
     window.scrollTo(0, 0)
-    
-    // Check for dark mode preference
-    const checkDarkMode = () => {
-      const html = document.documentElement
-      setDarkMode(html.classList.contains('dark'))
-    }
-    
-    // Initial check
-    checkDarkMode()
-    
-    // Listen for dark mode changes
-    const observer = new MutationObserver(checkDarkMode)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    })
-    
-    return () => observer.disconnect()
   }, [])
 
-  const gradientClass = darkMode 
-    ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
-    : "bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200"
-
   return (
-    <div className={`relative min-h-screen ${gradientClass}`}>
+    <div className="relative min-h-screen">
       <div className="relative z-10">
         <Navbar />
         
@@ -52,10 +28,10 @@ export default function Finances() {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
                 Financial <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Planning</span>
               </h1>
-              <p className={`text-xl max-w-3xl mx-auto mb-12 ${darkMode ? 'text-slate-400' : 'text-gray-700'}`}>
+              <p className="text-xl max-w-3xl mx-auto mb-12 text-slate-400">
                 Plan your financial future with our comprehensive tools for retirement, estate planning, 
                 and overall financial wellness. Take control of your financial destiny today.
               </p>
@@ -84,19 +60,15 @@ export default function Finances() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={`border rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 ${
-                      darkMode 
-                        ? 'bg-white/10 border-white/20 hover:bg-white/20' 
-                        : 'bg-white/70 border-gray-200 hover:bg-white/90 shadow-lg'
-                    }`}
+                    className="bg-card border rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 hover:bg-white/90 shadow-lg"
                   >
-                    <div className={`mb-4 flex justify-center ${darkMode ? 'text-slate-600' : 'text-blue-600'}`}>
+                    <div className="mb-4 flex justify-center text-slate-600">
                       {feature.icon}
                     </div>
-                    <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className="text-lg font-semibold mb-2 text-white">
                       {feature.title}
                     </h3>
-                    <p className={`text-sm ${darkMode ? 'text-slate-500' : 'text-gray-600'}`}>
+                    <p className="text-sm text-slate-500">
                       {feature.description}
                     </p>
                   </motion.div>
