@@ -256,7 +256,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero Header Section */}
-      <section className="pt-32 pb-16 bg-transparent">
+      <section className="pt-32 pb-8 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -285,7 +285,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Main Content Section */}
-      <section className="bg-transparent text-foreground pt-20 pb-8 px-4 sm:px-6 lg:px-8">
+      <section className="bg-transparent text-foreground pt-5 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">

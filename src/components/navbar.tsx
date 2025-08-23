@@ -225,9 +225,6 @@ export default function Navbar() {
                 <Link href="/services" className="block text-foreground/80 hover:text-foreground">
                   Insurance
                 </Link>
-                <Link href="/quotes" className="block text-foreground/80 hover:text-foreground">
-                  Quotes
-                </Link>
                 <Link href="/finances" className="block text-foreground/80 hover:text-foreground">
                   Finances
                 </Link>
