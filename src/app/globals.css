@@ -62,6 +62,64 @@
     background: linear-gradient(to bottom right, rgb(2 6 23), rgb(15 23 42), rgb(2 6 23)) !important;
   }
   
+  /* Custom subtle scrollbar */
+  html, body {
+    scrollbar-width: thin; /* Firefox - thin scrollbar */
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Firefox - subtle thumb, transparent track */
+  }
+  
+  /* Webkit browsers (Chrome, Safari, Edge) custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent !important;
+    border: none;
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background: transparent !important;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    border: none;
+    transition: background 0.2s ease;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Dark mode scrollbar adjustments */
+  .dark html, .dark body {
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* Firefox dark mode */
+  }
+  
+  .dark ::-webkit-scrollbar {
+    background: transparent;
+  }
+  
+  .dark ::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+  
+  .dark ::-webkit-scrollbar-corner {
+    background: transparent !important;
+  }
+  
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  
   /* Prevent white background flashes */
   html {
     background: rgb(239 246 255);

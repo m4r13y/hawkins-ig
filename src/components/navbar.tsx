@@ -57,7 +57,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed top-4 left-4 right-4 z-50 mx-auto max-w-7xl">
+    <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[90%] max-w-7xl">
       <nav className="relative bg-background/60 dark:bg-white/10 backdrop-blur-md border border-border/50 rounded-2xl shadow-lg overflow-hidden">
         <div className="relative z-10 px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
