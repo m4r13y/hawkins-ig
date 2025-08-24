@@ -222,7 +222,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                         and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. 
                         You can customize your preferences or learn more in our{' '}
                         <Link 
-                          href="/privacy-policy" 
+                          href="/privacy" 
                           className="text-blue-600 hover:text-blue-800 underline"
                           target="_blank"
                           rel="noopener noreferrer"
