@@ -1,6 +1,15 @@
-import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
 import HospitalIndemnityQuoter from "@/components/hospital-indemnity-quoter"
+import Navbar from "@/components/navbar"
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Hospital Indemnity Insurance Quotes | Hawkins Insurance Group',
+  description: 'Get coverage for out-of-pocket costs associated with hospital stays. Receive instant quotes for hospital indemnity insurance and protect your savings.',
+  alternates: {
+    canonical: '/quotes/hospital-indemnity',
+  },
+}
 
 export default function HospitalIndemnityQuotesPage() {
   return (

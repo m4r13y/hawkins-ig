@@ -5,6 +5,9 @@ import AnimatedFooter from "@/components/animated-footer"
 export const metadata: Metadata = {
   title: 'HIPAA Notice of Privacy Practices | Hawkins Insurance Group',
   description: 'Our HIPAA Notice of Privacy Practices explaining how we protect your health information.',
+  alternates: {
+    canonical: '/hipaa',
+  },
 }
 
 export default function HIPAANotice() {

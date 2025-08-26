@@ -4,7 +4,10 @@ import AnimatedFooter from "@/components/animated-footer"
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Hawkins Insurance Group',
-  description: 'Terms of Service for Hawkins Insurance Group - Medicare insurance services and compliance.',
+  description: 'Review the Terms of Service for Hawkins Insurance Group. Understand the terms and conditions for using our website and insurance services, including important Medicare compliance information.',
+  alternates: {
+    canonical: '/terms',
+  },
 }
 
 export default function TermsOfService() {

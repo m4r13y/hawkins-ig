@@ -1,21 +1,21 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
-import FinancialPlanningTool from "@/components/financial-planning-tool"
 import EstatePlanningTool from "@/components/estate-planning-tool"
+import FinancialPlanningTool from "@/components/financial-planning-tool"
+import Navbar from "@/components/navbar"
 import RetirementCalculatorTool from "@/components/retirement-calculator-tool"
 import { motion } from "framer-motion"
-import { Calculator, Users, Shield, TrendingUp, PiggyBank, FileText } from "lucide-react"
+import { FileText, PiggyBank, TrendingUp } from "lucide-react"
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Financial Planning Tools | Hawkins Insurance Group',
+  description: 'Take control of your financial future with our comprehensive financial planning tools. Plan for retirement, manage your estate, and achieve your financial goals with Hawkins Insurance Group.',
+  alternates: {
+    canonical: '/finances',
+  },
+}
 
 export default function Finances() {
-  const [clickedCard, setClickedCard] = useState<string | null>(null)
-  
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10">
@@ -68,34 +68,27 @@ export default function Finances() {
                     whileHover={{ scale: 1.05, y: -5 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => {
-                      setClickedCard(feature.targetId)
-                      setTimeout(() => setClickedCard(null), 2000)
-                      // Use anchor navigation instead of JavaScript scroll
-                      window.location.hash = feature.targetId
+                      const element = document.getElementById(feature.targetId);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
                     }}
                     role="button"
                     tabIndex={0}
                     aria-label={`Navigate to ${feature.title} tool`}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        setClickedCard(feature.targetId)
-                        setTimeout(() => setClickedCard(null), 2000)
-                        window.location.hash = feature.targetId
+                        e.preventDefault();
+                        const element = document.getElementById(feature.targetId);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth' });
+                        }
                       }
                     }}
-                    className={`group bg-white/80 dark:bg-slate-800/80 border ${
-                      clickedCard === feature.targetId 
-                        ? 'border-primary ring-2 ring-primary/30' 
-                        : 'border-border hover:border-primary/50 dark:hover:border-primary/60'
-                    } rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 hover:bg-white/95 dark:hover:bg-slate-800/95 hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-slate-900/20 shadow-lg cursor-pointer relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary/50`}
+                    className="group bg-white/80 dark:bg-slate-800/80 border border-border hover:border-primary/50 dark:hover:border-primary/60 rounded-2xl p-6 backdrop-blur-sm transition-all duration-300 hover:bg-white/95 dark:hover:bg-slate-800/95 hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-slate-900/20 shadow-lg cursor-pointer relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary/50"
                   >
-                    {/* Gradient overlay on hover and click */}
-                    <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 ${
-                      clickedCard === feature.targetId 
-                        ? 'opacity-20' 
-                        : 'opacity-0 group-hover:opacity-100'
-                    } transition-opacity duration-300 rounded-2xl`} />
+                    {/* Gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
                     
                     {/* Content */}
                     <div className="relative z-10">
@@ -108,13 +101,9 @@ export default function Finances() {
                       <p className="text-sm text-gray-600 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300 transition-colors duration-300">
                         {feature.description}
                       </p>
-                      <div className={`mt-4 ${
-                        clickedCard === feature.targetId 
-                          ? 'opacity-100' 
-                          : 'opacity-0 group-hover:opacity-100'
-                      } transition-opacity duration-300`}>
+                      <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="text-xs text-primary font-medium">
-                          {clickedCard === feature.targetId ? 'Scrolling to section...' : 'Click to explore →'}
+                          Click to explore →
                         </span>
                       </div>
                     </div>

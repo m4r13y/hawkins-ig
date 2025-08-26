@@ -1,17 +1,17 @@
-"use client"
-
-import { useEffect } from "react"
-import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
+import Navbar from "@/components/navbar"
 import ServicesPage from "@/components/services-page"
-import InsuranceSavingsCalculator from "@/components/insurance-savings-calculator"
-import InsuranceConsultationTool from "@/components/insurance-consultation-tool"
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Our Insurance Services | Hawkins Insurance Group',
+  description: 'Explore the comprehensive insurance services offered by Hawkins Insurance Group, including health, life, and supplemental insurance. We provide tailored solutions to meet your needs.',
+  alternates: {
+    canonical: '/services',
+  },
+}
 
 export default function Services() {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10">

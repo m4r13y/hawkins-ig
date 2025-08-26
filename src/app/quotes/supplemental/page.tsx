@@ -1,7 +1,16 @@
-import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
 import GenericInsuranceQuoter from "@/components/generic-insurance-quoter"
+import Navbar from "@/components/navbar"
 import { Plus } from "lucide-react"
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Supplemental Insurance Quotes | Hawkins Insurance Group',
+  description: 'Bridge gaps in your primary health coverage. Get instant quotes for supplemental plans like cancer, accident, critical illness, and hospital indemnity insurance.',
+  alternates: {
+    canonical: '/quotes/supplemental',
+  },
+}
 
 export default function SupplementalQuotes() {
   return (

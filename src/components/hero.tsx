@@ -130,7 +130,7 @@ export default function Hero() {
                   textShadow: "0 0 20px rgba(59, 130, 246, 0.3)",
                 }}
               >
-                Families & Business
+                Insurance for Families & Businesses
               </span>
               
             </motion.h1>
