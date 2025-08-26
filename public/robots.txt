@@ -1,9 +1,9 @@
-
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
-#
-# Allow all crawlers access to all content
+# *
 User-agent: *
-Disallow:
+Allow: /
 
-# Sitemap location
+# Host
+Host: https://hawkinsig.com
+
+# Sitemaps
 Sitemap: https://hawkinsig.com/sitemap.xml

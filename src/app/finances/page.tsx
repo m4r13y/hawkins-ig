@@ -1,3 +1,5 @@
+"use client"
+
 import AnimatedFooter from "@/components/animated-footer"
 import EstatePlanningTool from "@/components/estate-planning-tool"
 import FinancialPlanningTool from "@/components/financial-planning-tool"
@@ -5,15 +7,6 @@ import Navbar from "@/components/navbar"
 import RetirementCalculatorTool from "@/components/retirement-calculator-tool"
 import { motion } from "framer-motion"
 import { FileText, PiggyBank, TrendingUp } from "lucide-react"
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Financial Planning Tools | Hawkins Insurance Group',
-  description: 'Take control of your financial future with our comprehensive financial planning tools. Plan for retirement, manage your estate, and achieve your financial goals with Hawkins Insurance Group.',
-  alternates: {
-    canonical: '/finances',
-  },
-}
 
 export default function Finances() {
   return (
