@@ -16,13 +16,44 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Hawkins Insurance Group",
-  description: "Enhanced insurance experience with precision, protection, and personalized service.",
+  metadataBase: new URL('https://hawkinsig.com'),
+  title: {
+    default: "Hawkins Insurance Group - Your Trusted Insurance Partner",
+    template: `%s | Hawkins Insurance Group`,
+  },
+  description: "Hawkins Insurance Group offers personalized insurance solutions, including life, health, and Medicare, with a commitment to precision, protection, and exceptional service.",
+  keywords: ["insurance", "life insurance", "health insurance", "Medicare", "insurance agency", "financial planning", "insurance quotes"],
+  authors: [{ name: 'Hawkins Insurance Group', url: 'https://hawkinsig.com' }],
+  creator: 'Hawkins Insurance Group',
+  publisher: 'Hawkins Insurance Group',
+  openGraph: {
+    title: "Hawkins Insurance Group - Your Trusted Insurance Partner",
+    description: "Personalized insurance solutions to protect what matters most. Get a free quote today.",
+    url: 'https://hawkinsig.com',
+    siteName: 'Hawkins Insurance Group',
+    images: [
+      {
+        url: '/hig-logo-white.svg',
+        width: 800,
+        height: 600,
+        alt: 'Hawkins Insurance Group Logo',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Hawkins Insurance Group - Your Trusted Insurance Partner",
+    description: "Discover personalized insurance options with Hawkins Insurance Group. We're here to help you secure your future.",
+    images: ['/hig-logo-white.svg'],
+  },
   icons: {
     icon: '/hig-logo-navy.svg',
     shortcut: '/hig-logo-navy.svg',
     apple: '/hig-logo-navy.svg',
   },
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({
@@ -70,6 +101,22 @@ export default function RootLayout({
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Hawkins Insurance Group",
+            "url": "https://hawkinsig.com",
+            "logo": "https://hawkinsig.com/hig-logo-white.svg",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+1-800-555-5555",
+              "contactType": "customer service"
+            }
+          }) }}
+        />
         
         <CriticalCSS />
         <ResourceHints />
