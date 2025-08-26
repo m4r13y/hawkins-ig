@@ -204,7 +204,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
             animate="visible"
             exit="exit"
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-br from-secondary via-background to-secondary border-t shadow-2xl"
+            className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-t border-border shadow-2xl"
             role="banner"
             aria-labelledby="cookie-consent-title"
           >
@@ -212,18 +212,18 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-start gap-3">
-                    <Cookie className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
+                    <Cookie className="w-6 h-6 text-blue-600 dark:text-blue-400 mt-1 flex-shrink-0" />
                     <div>
-                      <h3 id="cookie-consent-title" className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 id="cookie-consent-title" className="text-lg font-semibold text-foreground mb-2">
                         We Value Your Privacy
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-muted-foreground leading-relaxed">
                         We use cookies to enhance your browsing experience, serve personalized content, 
                         and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. 
                         You can customize your preferences or learn more in our{' '}
                         <Link 
                           href="/privacy" 
-                          className="text-blue-600 hover:text-blue-800 underline"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -238,7 +238,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                 <div className="flex flex-col sm:flex-row gap-3 lg:ml-6">
                   <button
                     onClick={() => setShowSettings(true)}
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                     aria-label="Customize cookie preferences"
                   >
                     <Settings className="w-4 h-4" />
@@ -247,14 +247,14 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                   
                   <button
                     onClick={declineAll}
-                    className="px-6 py-2 text-gray-600 hover:text-gray-800 hover:bg-gradient-to-br hover:from-secondary hover:via-background hover:to-secondary rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    className="px-6 py-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-border"
                   >
                     Decline All
                   </button>
                   
                   <button
                     onClick={acceptAll}
-                    className="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="px-6 py-2 bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   >
                     Accept All
                   </button>
@@ -274,7 +274,7 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-50"
+              className="fixed inset-0 bg-black/50 dark:bg-black/70 z-50"
               onClick={() => setShowSettings(false)}
               aria-hidden="true"
             />
@@ -286,38 +286,38 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
               animate="visible"
               exit="exit"
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="fixed inset-4 md:inset-8 lg:inset-16 z-50 bg-gradient-to-br from-secondary via-background to-secondary rounded-lg shadow-2xl overflow-hidden"
+              className="fixed inset-4 md:inset-8 lg:inset-16 z-50 bg-background border border-border rounded-lg shadow-2xl overflow-hidden"
               role="dialog"
               aria-labelledby="cookie-settings-title"
               aria-modal="true"
             >
               <div className="flex flex-col h-full">
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b">
-                  <h2 id="cookie-settings-title" className="text-xl font-bold text-gray-900">
+                <div className="flex items-center justify-between p-6 border-b border-border">
+                  <h2 id="cookie-settings-title" className="text-xl font-bold text-foreground">
                     Cookie Preferences
                   </h2>
                   <button
                     onClick={() => setShowSettings(false)}
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="p-2 hover:bg-muted rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                     aria-label="Close cookie settings"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-5 h-5 text-foreground" />
                   </button>
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 overflow-y-auto p-6">
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-muted-foreground mb-6">
                     Manage your cookie preferences below. You can enable or disable different types 
                     of cookies based on your preferences.
                   </p>
 
                   <div className="space-y-6">
                     {cookieCategories.map((category) => (
-                      <div key={category.key} className="border rounded-lg p-4">
+                      <div key={category.key} className="border border-border rounded-lg p-4">
                         <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-semibold text-gray-900">{category.title}</h3>
+                          <h3 className="font-semibold text-foreground">{category.title}</h3>
                           <label className="relative inline-flex items-center cursor-pointer">
                             <input
                               type="checkbox"
@@ -328,8 +328,8 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                             />
                             <div className={`w-11 h-6 rounded-full transition-colors ${
                               preferences[category.key] 
-                                ? 'bg-blue-600' 
-                                : 'bg-gray-300'
+                                ? 'bg-blue-600 dark:bg-blue-500' 
+                                : 'bg-muted'
                             } ${category.required ? 'opacity-50 cursor-not-allowed' : ''}`}>
                               <div className={`w-5 h-5 bg-white rounded-full transition-transform ${
                                 preferences[category.key] ? 'translate-x-5' : 'translate-x-0.5'
@@ -340,9 +340,9 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                             </span>
                           </label>
                         </div>
-                        <p className="text-sm text-gray-600">{category.description}</p>
+                        <p className="text-sm text-muted-foreground">{category.description}</p>
                         {category.required && (
-                          <p className="text-xs text-blue-600 mt-1">Required for website functionality</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">Required for website functionality</p>
                         )}
                       </div>
                     ))}
@@ -350,24 +350,24 @@ export default function CookieConsent({ onAccept, onDecline, onCustomize }: Cook
                 </div>
 
                 {/* Footer */}
-                <div className="flex flex-col sm:flex-row gap-3 p-6 border-t bg-gradient-to-br from-secondary via-background to-secondary">
+                <div className="flex flex-col sm:flex-row gap-3 p-6 border-t border-border bg-muted/30">
                   <button
                     onClick={declineAll}
-                    className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    className="flex-1 px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-border"
                   >
                     Decline All Optional
                   </button>
                   
                   <button
                     onClick={acceptAll}
-                    className="flex-1 px-4 py-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 px-4 py-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     Accept All
                   </button>
                   
                   <button
                     onClick={saveCustomPreferences}
-                    className="flex-1 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="flex-1 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   >
                     Save Preferences
                   </button>

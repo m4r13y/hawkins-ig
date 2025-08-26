@@ -197,9 +197,29 @@ export default function Navbar() {
         </div>
 
         {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-background/80 backdrop-blur-md rounded-b-2xl">
-            <div className="px-6 py-4 space-y-3">
+        <AnimatePresence>
+          {isMenuOpen && (
+            <>
+              {/* Backdrop blur */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-[60]"
+                onClick={() => setIsMenuOpen(false)}
+                aria-hidden="true"
+              />
+              
+              {/* Mobile menu panel */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="lg:hidden border-t border-border bg-background/95 backdrop-blur-md rounded-b-2xl relative z-[70]"
+              >
+                <div className="px-6 py-4 space-y-3">
               {/* Mobile Search */}
               <div className="relative">
                 <Input
@@ -220,20 +240,20 @@ export default function Navbar() {
                 </Button>
               </div>
               
-              <div className="border-t border-border pt-3">
-                <Link href="/services" className="block text-foreground/80 hover:text-foreground">
+              <div className="border-t border-border pt-4">
+                <Link href="/services" className="block py-3 text-lg font-medium text-foreground/80 hover:text-foreground transition-colors">
                   Insurance
                 </Link>
-                <Link href="/finances" className="block text-foreground/80 hover:text-foreground">
+                <Link href="/finances" className="block py-3 text-lg font-medium text-foreground/80 hover:text-foreground transition-colors">
                   Finances
                 </Link>
-                <Link href="/team" className="block text-foreground/80 hover:text-foreground">
+                <Link href="/team" className="block py-3 text-lg font-medium text-foreground/80 hover:text-foreground transition-colors">
                   Team
                 </Link>
-                <Link href="/success-stories" className="block text-foreground/80 hover:text-foreground">
+                <Link href="/success-stories" className="block py-3 text-lg font-medium text-foreground/80 hover:text-foreground transition-colors">
                   Success Stories
                 </Link>
-                <Link href="/contact" className="block text-foreground/80 hover:text-foreground">
+                <Link href="/contact" className="block py-3 text-lg font-medium text-foreground/80 hover:text-foreground transition-colors">
                   Contact
                 </Link>
               </div>
@@ -253,8 +273,10 @@ export default function Navbar() {
                 </AnimatedButton>
               </div>
             </div>
-          </div>
-        )}
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
       </nav>
     </header>
   )
