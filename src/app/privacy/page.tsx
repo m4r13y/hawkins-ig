@@ -5,7 +5,10 @@ import AnimatedFooter from "@/components/animated-footer"
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Hawkins Insurance Group',
-  description: 'Privacy Policy for Hawkins Insurance Group - How we protect your personal and health information.',
+  description: 'Read the Hawkins Insurance Group privacy policy to understand how we collect, use, and protect your personal and health information. Your privacy is our priority.',
+  alternates: {
+    canonical: '/privacy',
+  },
 }
 
 export default function PrivacyPolicy() {

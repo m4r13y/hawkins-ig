@@ -1,10 +1,13 @@
-import { Metadata } from 'next'
-import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
+import Navbar from "@/components/navbar"
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Accessibility Statement | Hawkins Insurance Group',
-  description: 'Our commitment to digital accessibility and ADA compliance for all users.',
+  description: 'Hawkins Insurance Group is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards.',
+  alternates: {
+    canonical: '/accessibility',
+  },
 }
 
 export default function AccessibilityStatement() {
