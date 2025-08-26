@@ -82,16 +82,19 @@ export default function RootLayout({
                 try {
                   const savedTheme = localStorage.getItem('theme');
                   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+                  const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark) || savedTheme === null;
                   
                   if (isDark) {
                     document.documentElement.classList.add('dark');
+                    document.documentElement.style.backgroundColor = 'rgb(2, 6, 23)';
                   } else {
                     document.documentElement.classList.remove('dark');
+                    document.documentElement.style.backgroundColor = 'rgb(248, 250, 252)';
                   }
                 } catch (e) {
                   // Fallback to dark mode if localStorage is not available
                   document.documentElement.classList.add('dark');
+                  document.documentElement.style.backgroundColor = 'rgb(2, 6, 23)';
                 }
               })();
             `
@@ -129,7 +132,11 @@ export default function RootLayout({
         <ResourceHints />
       </head>
       <body 
-        className={`${inter.className} bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-foreground antialiased`}
+        className={`${inter.className} bg-slate-950 text-white antialiased`}
+        style={{ 
+          background: 'linear-gradient(to bottom right, rgb(2, 6, 23), rgb(15, 23, 42), rgb(2, 6, 23))',
+          minHeight: '100vh'
+        }}
       >
         <ModalProvider>
           <PagePreloader />
