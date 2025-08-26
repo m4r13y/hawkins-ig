@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: 'Hawkins Insurance Group',
     images: [
       {
-        url: '/hig-logo-white.svg',
+        url: '/hig-logo-navy.svg',
         width: 800,
         height: 600,
         alt: 'Hawkins Insurance Group Logo',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Hawkins Insurance Group - Your Trusted Insurance Partner",
     description: "Discover personalized insurance options with Hawkins Insurance Group. We're here to help you secure your future.",
-    images: ['/hig-logo-white.svg'],
+    images: ['/hig-logo-navy.svg'],
   },
   icons: {
     icon: '/hig-logo-navy.svg',
@@ -66,6 +66,13 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#03002D" />
+        
+        {/* Explicit OpenGraph meta tags to ensure correct image is used */}
+        <meta property="og:image" content="https://hawkinsig.com/hig-logo-navy.svg" />
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:height" content="600" />
+        <meta property="og:image:alt" content="Hawkins Insurance Group Logo" />
+        <meta name="twitter:image" content="https://hawkinsig.com/hig-logo-navy.svg" />
         
         {/* Theme initialization script - runs before React hydration */}
         <script
@@ -109,7 +116,7 @@ export default function RootLayout({
             "@type": "Organization",
             "name": "Hawkins Insurance Group",
             "url": "https://hawkinsig.com",
-            "logo": "https://hawkinsig.com/hig-logo-white.svg",
+            "logo": "https://hawkinsig.com/hig-logo-navy.svg",
             "contactPoint": {
               "@type": "ContactPoint",
               "telephone": "+1-800-555-5555",
