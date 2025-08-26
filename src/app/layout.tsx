@@ -119,7 +119,7 @@ export default function RootLayout({
             "logo": "https://hawkinsig.com/hig-logo-navy.svg",
             "contactPoint": {
               "@type": "ContactPoint",
-              "telephone": "+1-800-555-5555",
+              "telephone": "817-800-4253",
               "contactType": "customer service"
             }
           }) }}
