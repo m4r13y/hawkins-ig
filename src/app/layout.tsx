@@ -62,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark" style={{ backgroundColor: 'rgb(2, 6, 23)' }} suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#03002D" />
@@ -86,15 +86,12 @@ export default function RootLayout({
                   
                   if (isDark) {
                     document.documentElement.classList.add('dark');
-                    document.documentElement.style.backgroundColor = 'rgb(2, 6, 23)';
                   } else {
                     document.documentElement.classList.remove('dark');
-                    document.documentElement.style.backgroundColor = 'rgb(248, 250, 252)';
                   }
                 } catch (e) {
                   // Fallback to dark mode if localStorage is not available
                   document.documentElement.classList.add('dark');
-                  document.documentElement.style.backgroundColor = 'rgb(2, 6, 23)';
                 }
               })();
             `
@@ -132,12 +129,11 @@ export default function RootLayout({
         <ResourceHints />
       </head>
       <body 
-        className={`${inter.className} bg-slate-950 text-white antialiased`}
-        style={{ 
-          background: 'linear-gradient(to bottom right, rgb(2, 6, 23), rgb(15, 23, 42), rgb(2, 6, 23))',
-          minHeight: '100vh'
-        }}
+        className={`${inter.className} bg-white dark:bg-black text-gray-900 dark:text-white antialiased min-h-screen`}
       >
+        {/* Background gradient layer */}
+        <div className="fixed inset-0 bg-gradient-to-br from-blue-900/10 via-blue-800/5 to-blue-900/15 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pointer-events-none" />
+        
         <ModalProvider>
           <PagePreloader />
           {children}

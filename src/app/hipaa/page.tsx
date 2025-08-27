@@ -16,7 +16,7 @@ export default function HIPAANotice() {
       <div className="relative z-10">
         <Navbar />
         
-        <main className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <main className="min-h-screen">
           {/* Hero Header Section */}
           <section className="pt-32 pb-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
