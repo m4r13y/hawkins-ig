@@ -9,7 +9,6 @@ export const metadata: Metadata = {
     canonical: '/accessibility',
   },
 }
-
 export default function AccessibilityStatement() {
   return (
     <div className="relative min-h-screen">

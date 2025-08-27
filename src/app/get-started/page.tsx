@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default function GetStartedPage() {
   return (
     <div className="relative min-h-screen">
-// ... existing code ...
       <div className="relative z-10">
         <Navbar />
         <GetStartedFlow />

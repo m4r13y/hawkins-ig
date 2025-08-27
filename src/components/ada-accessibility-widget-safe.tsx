@@ -7,7 +7,7 @@ import { Settings, Eye, Type, ChevronLeft, Sun, Moon } from 'lucide-react'
 export default function ADAAccessibilityWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(true)
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(true)
   const [settings, setSettings] = useState({
     fontSize: 'normal',
     contrast: 'normal'
