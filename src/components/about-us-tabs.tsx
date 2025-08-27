@@ -289,6 +289,15 @@ export default function AboutUsTabs() {
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={currentImageIndex === 0}
+                        quality={75}
+                        loading={currentImageIndex === 0 ? "eager" : "lazy"}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                        onError={(e) => {
+                          console.error('Image failed to load:', activeContent.images?.[currentImageIndex])
+                          e.currentTarget.style.display = 'none'
+                        }}
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -323,6 +332,11 @@ export default function AboutUsTabs() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={85}
+                    onError={(e) => {
+                      console.error('Image failed to load:', activeContent.placeholderImage)
+                      e.currentTarget.style.display = 'none'
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
@@ -339,6 +353,11 @@ export default function AboutUsTabs() {
                     fill
                     className="object-contain p-8"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={85}
+                    onError={(e) => {
+                      console.error('Logo failed to load:', activeContent.placeholderImage)
+                      e.currentTarget.style.display = 'none'
+                    }}
                   />
                 </div>
               )}

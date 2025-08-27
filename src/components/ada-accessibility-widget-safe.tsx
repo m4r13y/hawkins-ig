@@ -142,14 +142,13 @@ export default function ADAAccessibilityWidget() {
         setDarkMode(isDark)
         if (isDark) {
           document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
         }
       } else {
-        // Check system preference if no saved preference
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        setDarkMode(prefersDark)
-        if (prefersDark) {
-          document.documentElement.classList.add('dark')
-        }
+        // Default to dark mode (matching layout.tsx default)
+        setDarkMode(true)
+        document.documentElement.classList.add('dark')
       }
     } catch (error) {
       console.warn('Could not load saved preferences:', error)
