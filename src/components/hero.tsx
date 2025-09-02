@@ -2,18 +2,10 @@
 
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
-import { Merriweather } from "next/font/google"
 import { useEffect, useRef } from "react"
 import AnimatedButton from "./animated-button"
 import CountingStats from "./counting-stats"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
-
-const merriweather = Merriweather({
-  subsets: ["latin"],
-  weight: ["300", "400", "700", "900"],
-  variable: "--font-merriweather",
-})
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -117,22 +109,11 @@ export default function Hero() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.15 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
+              className="text-6xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-wide leading-none text-white drop-shadow-2xl"
+              style={{ wordSpacing: '100vw' }}
+              suppressHydrationWarning
             >
-
-              <span className="block text-white mb-4">INSURANCE FOR</span>
-              <span
-                className={cn(
-                  "block mb-2 bg-gradient-to-r from-red-400 via-white to-blue-400 bg-clip-text text-transparent font-black tracking-wide",
-                  merriweather.className,
-                )}
-                style={{
-                  textShadow: "0 0 20px rgba(59, 130, 246, 0.3)",
-                }}
-              >
-                Insurance for Families & Businesses
-              </span>
-              
+              HAWKINS INSURANCE GROUP
             </motion.h1>
 
               <motion.p
