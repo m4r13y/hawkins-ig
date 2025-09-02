@@ -74,10 +74,10 @@ export default function Hero() {
         <div className="absolute inset-0 bg-slate-950/0" />
       </div>
 
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto text-center lg:text-left">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center lg:text-left overflow-hidden">
           {/* Cloudy background for text visibility */}
-          <div className="relative bg-slate-950/10 dark:bg-slate-950/20 backdrop-blur-xsm rounded-3xl p-8 lg:p-12 border border-white/10">
+          <div className="relative bg-slate-950/10 dark:bg-slate-950/20 backdrop-blur-xsm rounded-3xl p-8 lg:p-12 border border-white/10 overflow-hidden">
             {/* Subtle cloud-like pattern overlay */}
             <div className="absolute inset-0 opacity-30 rounded-3xl" 
                  style={{
@@ -95,27 +95,31 @@ export default function Hero() {
               className="relative z-10 space-y-8"
             >
             <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500/20 via-white/10 to-blue-500/20 border border-white/30 rounded-full text-sm text-white font-medium backdrop-blur-sm"
-              >
-                <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse"></div>
-                <span>Trusted Insurance Solutions</span>
-              </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="text-6xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-wide leading-none text-white drop-shadow-2xl"
-              style={{ wordSpacing: '100vw' }}
-              suppressHydrationWarning
-            >
-              HAWKINS INSURANCE GROUP
-            </motion.h1>
-
+              <div className="flex flex-col items-center lg:items-start space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500/20 via-white/10 to-blue-500/20 border border-white/30 rounded-full text-sm text-white font-medium backdrop-blur-sm"
+                >
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse"></div>
+                  <span>Trusted Insurance Solutions</span>
+                </motion.div>
+                <div style={{ display: 'inline-block', width: 'min-content' }}>
+                  <h1
+                    className="font-black tracking-wide leading-none bg-gradient-to-t from-red-400 via-white to-blue-400 bg-clip-text text-transparent drop-shadow-2xl"
+                    style={{ 
+                      wordSpacing: '50vw',
+                      filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.5))',
+                      fontSize: 'clamp(2.5rem, 10vw, 5rem)',
+                      width: 'fit-content'
+                    }}
+                    suppressHydrationWarning
+                  >
+                    HAWKINS INSURANCE GROUP
+                  </h1>
+                </div>
+              </div>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
