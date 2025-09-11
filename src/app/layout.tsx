@@ -33,10 +33,10 @@ export const metadata: Metadata = {
     siteName: 'Hawkins Insurance Group',
     images: [
       {
-        url: '/hig-logo-navy.svg',
-        width: 800,
+        url: '/hawkins-ig-open-graph.jpg',
+        width: 1200,
         height: 600,
-        alt: 'Hawkins Insurance Group Logo',
+        alt: 'Hawkins Insurance Group Shield Logo',
       },
     ],
     locale: 'en_US',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Hawkins Insurance Group - Your Trusted Insurance Partner",
     description: "Discover personalized insurance options with Hawkins Insurance Group. We're here to help you secure your future.",
-    images: ['/hig-logo-navy.svg'],
+    images: ['/hawkins-ig-open-graph.jpg'],
   },
   icons: {
     icon: '/hig-logo-navy.svg',
@@ -68,11 +68,11 @@ export default function RootLayout({
         <meta name="theme-color" content="#03002D" />
         
         {/* Explicit OpenGraph meta tags to ensure correct image is used */}
-        <meta property="og:image" content="https://hawkinsig.com/hig-logo-navy.svg" />
-        <meta property="og:image:width" content="800" />
+        <meta property="og:image" content="https://hawkinsig.com/hawkins-ig-open-graph.jpg" />
+        <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
-        <meta property="og:image:alt" content="Hawkins Insurance Group Logo" />
-        <meta name="twitter:image" content="https://hawkinsig.com/hig-logo-navy.svg" />
+        <meta property="og:image:alt" content="Hawkins Insurance Group Shield Logo" />
+        <meta name="twitter:image" content="https://hawkinsig.com/hawkins-ig-open-graph.jpg" />
         
         {/* Theme initialization script - runs before React hydration */}
         <script
