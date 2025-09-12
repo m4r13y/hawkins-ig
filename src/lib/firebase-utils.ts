@@ -29,11 +29,7 @@ export async function submitGetStartedForm(formData: FormSubmission): Promise<st
   ensureFirebaseInitialized();
   
   if (!functions) {
-    console.error('Firebase functions not initialized for get started form. Config check:', {
-      hasFormData: !!formData,
-      clientType: formData.clientType,
-      email: formData.email
-    });
+    console.error('Firebase functions not initialized for get started form');
     return null;
   }
 

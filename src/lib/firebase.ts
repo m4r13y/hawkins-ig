@@ -155,12 +155,7 @@ export const submitNewsletterSubscription = async (data: {
   ensureFirebaseInitialized();
   
   if (!functions) {
-    console.error('Firebase functions not initialized. Config check:', {
-      apiKey: !!firebaseConfig.apiKey,
-      authDomain: !!firebaseConfig.authDomain,
-      projectId: firebaseConfig.projectId,
-      storageBucket: !!firebaseConfig.storageBucket
-    });
+    console.error('Firebase functions not initialized');
     throw new Error('Firebase functions not initialized');
   }
   
