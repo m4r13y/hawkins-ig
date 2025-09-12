@@ -151,41 +151,43 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
 
   const availableInsuranceTypes = getAvailableInsuranceTypes()
 
-  const nextStep = async () => {
+  const nextStep = () => {
     // Check if this is the final step (contact form completion)
-    // The contact form is always the second-to-last step, "Complete" is the last
     const contactFormStepIndex = steps.findIndex(step => step === "Contact Information");
     
-    if (currentStep === contactFormStepIndex) {
-      // Submit form data to Firestore (non-blocking - fire and forget)
-      submitGetStartedForm({
-        clientType: formData.clientType || initialClientType || '',
-        age: formData.age,
-        familySize: formData.familySize,
-        employeeCount: formData.employeeCount,
-        agentType: formData.agentType,
-        insuranceTypes: formData.insuranceTypes,
-        urgency: formData.urgency,
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        zipCode: formData.zipCode,
-        source: 'get-started-flow'
-      }).then(submissionId => {
-        if (submissionId) {
-          console.log('Form submitted successfully:', submissionId);
-        } else {
-          console.error('Failed to submit form - no submission ID returned');
-        }
-      }).catch(error => {
-        console.error('Error submitting form:', error);
-      });
-    }
-    
-    // Immediately proceed to next step without waiting for backend
+    // Immediately proceed to next step for instant UI response
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1)
+    }
+    
+    // AFTER showing success page, submit form data in background
+    if (currentStep === contactFormStepIndex) {
+      // Use setTimeout to ensure UI updates first, then submit
+      setTimeout(() => {
+        submitGetStartedForm({
+          clientType: formData.clientType || initialClientType || '',
+          age: formData.age,
+          familySize: formData.familySize,
+          employeeCount: formData.employeeCount,
+          agentType: formData.agentType,
+          insuranceTypes: formData.insuranceTypes,
+          urgency: formData.urgency,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          zipCode: formData.zipCode,
+          source: 'get-started-flow'
+        }).then(submissionId => {
+          if (submissionId) {
+            console.log('Form submitted successfully:', submissionId);
+          } else {
+            console.error('Failed to submit form - no submission ID returned');
+          }
+        }).catch(error => {
+          console.error('Error submitting form:', error);
+        });
+      }, 0);
     }
   }
 

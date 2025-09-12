@@ -201,7 +201,6 @@ function formatCustomFieldsNote(data: any, formType: string): string {
   if (data.employeeCount) note += `Employees: ${data.employeeCount}\n`;
   if (data.agentType) note += `Current Agent: ${data.agentType}\n`;
   if (data.company) note += `Company: ${data.company}\n`;
-  if (data.leadScore) note += `Lead Score: ${data.leadScore}/100\n`;
 
   // Contact form message
   if (data.message) note += `\nMessage: ${data.message}\n`;

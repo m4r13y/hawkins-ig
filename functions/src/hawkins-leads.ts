@@ -84,7 +84,6 @@ async function processLeadForAgencyBloc(leadId: string, leadData: any) {
         insuranceTypes: submission.insuranceTypes,
         clientType: submission.clientType,
         urgency: submission.urgency,
-        leadScore: submission.leadScore,
         familySize: submission.familySize,
         employeeCount: submission.employeeCount,
         agentType: submission.agentType,
@@ -100,7 +99,6 @@ async function processLeadForAgencyBloc(leadId: string, leadData: any) {
         lastName: leadData['lead-name']?.split(' ').slice(1).join(' ') || 'Contact',
         email: submission.email,
         phone: submission.phone || '',
-        leadScore: submission.leadScore || 25,
         leadId: leadId,
         message: submission.message,
         additionalNotes: `Retry sync | Contact Form | Message: ${submission.message} | Lead ID: ${leadId}`,
@@ -170,7 +168,6 @@ interface InsuranceLeadData {
   zipCode: string;
   source: string;
   leadStatus: 'new' | 'contacted' | 'qualified' | 'converted' | 'closed';
-  leadScore?: number;
 }
 
 interface ContactLeadData {
@@ -184,33 +181,6 @@ interface ContactLeadData {
 
 // Validation functions - moved to security.ts for reuse
 
-// Calculate lead score based on form data
-function calculateLeadScore(data: InsuranceLeadData): number {
-  let score = 0;
-  
-  // Urgency scoring
-  if (data.urgency === 'immediate') score += 30;
-  else if (data.urgency === 'within-30-days') score += 20;
-  else if (data.urgency === 'within-3-months') score += 10;
-  
-  // Insurance types count (more types = higher score)
-  score += data.insuranceTypes.length * 5;
-  
-  // Client type scoring
-  if (data.clientType === 'business') score += 25;
-  else if (data.clientType === 'family') score += 15;
-  else if (data.clientType === 'individual') score += 10;
-  
-  // Age scoring for Medicare-related products
-  if (data.age && parseInt(data.age) >= 65) score += 20;
-  else if (data.age && parseInt(data.age) >= 60) score += 10;
-  
-  // Company name provided (business leads)
-  if (data.company) score += 15;
-  
-  return Math.min(score, 100); // Cap at 100
-}
-
 // NEW LEAD FUNCTIONS - These won't conflict with your existing user/agent functions
 
 // OPTIMIZED VERSION: Minimal lead submission for speed
@@ -220,9 +190,6 @@ export const submitInsuranceLeadFast = functions.https.onCall(async (data: Insur
     if (!data.name || !data.email) {
       throw new functions.https.HttpsError('invalid-argument', 'Name and email required');
     }
-
-    // Quick lead score calculation
-    const leadScore = calculateLeadScore(data);
 
     // Simplified lead data structure
     const leadData = {
@@ -236,7 +203,6 @@ export const submitInsuranceLeadFast = functions.https.onCall(async (data: Insur
         email: data.email,
         phone: data.phone,
         zipCode: data.zipCode,
-        leadScore: leadScore,
         leadStatus: 'new',
         // Minimal tracking
         ipAddress: context.rawRequest?.ip || 'unknown',
@@ -254,7 +220,6 @@ export const submitInsuranceLeadFast = functions.https.onCall(async (data: Insur
     return {
       success: true,
       leadId: docRef.id,
-      leadScore,
       message: 'Lead captured successfully'
     };
 
@@ -295,9 +260,6 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
       throw new functions.https.HttpsError('permission-denied', 'Submission blocked for security reasons');
     }
 
-    // Calculate lead score
-    const leadScore = calculateLeadScore(sanitizedData);
-
     // Prepare lead data with your specified structure
     const leadData = {
       'lead-name': sanitizedData.name,
@@ -318,7 +280,6 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
         zipCode: sanitizedData.zipCode,
         // Additional tracking data
         formSource: sanitizedData.source || 'get-started-flow',
-        leadScore: leadScore,
         leadStatus: 'new',
         followUpRequired: true,
         // Security and audit data
@@ -331,7 +292,8 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
         nextFollowUpDate: null,
         notes: [],
         conversionValue: null,
-        leadQuality: leadScore >= 70 ? 'high' : leadScore >= 40 ? 'medium' : 'low'
+        // Audit data
+        leadQuality: 'standard'
       }
     };
 
@@ -341,7 +303,6 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
     // Log successful lead capture
     console.log('Insurance lead captured successfully:', {
       leadId: docRef.id,
-      leadScore,
       clientType: sanitizedData.clientType,
       urgency: sanitizedData.urgency
     });
@@ -362,12 +323,11 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
         agentType: sanitizedData.agentType,
         company: sanitizedData.company,
         urgency: sanitizedData.urgency,
-        leadScore: leadScore,
         leadId: docRef.id,
         source: sanitizedData.source || 'get-started-flow',
         ipAddress: context.rawRequest?.ip || 'unknown',
         userAgent: context.rawRequest?.headers?.['user-agent'] || 'unknown',
-        additionalNotes: `Firestore Lead ID: ${docRef.id} | Client Type: ${sanitizedData.clientType} | Timeline: ${sanitizedData.urgency} | Score: ${leadScore}/100`,
+        additionalNotes: `Firestore Lead ID: ${docRef.id} | Client Type: ${sanitizedData.clientType} | Timeline: ${sanitizedData.urgency}`,
       };
 
       const agencyBlocResult = await createLeadWithNote(agencyBlocData, 'Get Started Form');
@@ -397,7 +357,6 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
     return {
       success: true,
       leadId: docRef.id,
-      leadScore,
       message: 'Lead captured successfully'
     };
 
@@ -449,7 +408,6 @@ export const submitContactLead = functions.https.onCall(async (data: ContactLead
         phone: sanitizedData.phone || null,
         message: sanitizedData.message,
         // Lead management data
-        leadScore: 25, // Base score for contact form submissions
         leadStatus: 'new',
         followUpRequired: true,
         // Security and audit data
@@ -480,7 +438,6 @@ export const submitContactLead = functions.https.onCall(async (data: ContactLead
         lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Unknown',
         email: sanitizedData.email,
         phone: sanitizedData.phone || '',
-        leadScore: 25,
         leadId: docRef.id,
         message: sanitizedData.message,
         comments: sanitizedData.message,
@@ -587,7 +544,6 @@ export const onNewLeadCreated = functions.firestore
       leadName: leadData['lead-name'],
       clientType: submission.clientType || submission.contactType,
       urgency: submission.urgency || 'not-specified',
-      leadScore: submission.leadScore,
       source: leadData.source,
       leadQuality: submission.leadQuality
     });
@@ -607,7 +563,6 @@ export const onNewLeadCreated = functions.firestore
           insuranceType: submission.insuranceTypes?.join(', ') || 'Unknown',
           clientType: submission.clientType,
           urgency: submission.urgency,
-          leadScore: submission.leadScore,
           additionalNotes: `Background sync | Lead ID: ${leadId} | Client Type: ${submission.clientType}`,
         };
 
@@ -664,12 +619,9 @@ export const getLeadAnalytics = functions.https.onCall(async (data, context) => 
       contactedLeads: 0,
       qualifiedLeads: 0,
       convertedLeads: 0,
-      averageLeadScore: 0,
       leadsBySource: {} as Record<string, number>,
       leadsByClientType: {} as Record<string, number>
     };
-
-    let totalScore = 0;
 
     leadsSnapshot.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
       const leadData = doc.data();
@@ -681,9 +633,6 @@ export const getLeadAnalytics = functions.https.onCall(async (data, context) => 
       else if (submission.leadStatus === 'qualified') analytics.qualifiedLeads++;
       else if (submission.leadStatus === 'converted') analytics.convertedLeads++;
 
-      // Lead score average (from submission data)
-      totalScore += submission.leadScore || 0;
-
       // Source breakdown (using top-level source field)
       const source = leadData.source || 'unknown';
       analytics.leadsBySource[source] = (analytics.leadsBySource[source] || 0) + 1;
@@ -692,8 +641,6 @@ export const getLeadAnalytics = functions.https.onCall(async (data, context) => 
       const clientType = submission.clientType || submission.contactType || 'unknown';
       analytics.leadsByClientType[clientType] = (analytics.leadsByClientType[clientType] || 0) + 1;
     });
-
-    analytics.averageLeadScore = analytics.totalLeads > 0 ? Math.round(totalScore / analytics.totalLeads) : 0;
 
     return analytics;
 
@@ -781,7 +728,6 @@ export const submitNewsletterSubscription = functions.https.onCall(async (data: 
             firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
             lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Newsletter',
             email: sanitizedData.email,
-            leadScore: 15,
             source: sanitizedData.source || 'newsletter-update',
             ipAddress: clientIP,
             userAgent: context.rawRequest?.headers?.['user-agent'] || 'unknown',
@@ -813,7 +759,6 @@ export const submitNewsletterSubscription = functions.https.onCall(async (data: 
             firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
             lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Newsletter',
             email: sanitizedData.email,
-            leadScore: 10,
             source: sanitizedData.source || 'newsletter-signup',
             ipAddress: clientIP,
             userAgent: context.rawRequest?.headers?.['user-agent'] || 'unknown',
