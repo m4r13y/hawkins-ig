@@ -27,21 +27,28 @@ export default function ContactPage() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    try {
-      await submitContactLead({
-        name: formData.name,
-        email: formData.email,
-        message: `Subject: ${formData.subject}\n\nMessage: ${formData.message}`,
-        source: "Contact Page"
-      })
-      setIsSubmitted(true)
-      setFormData({ name: '', email: '', subject: '', message: '' }) // Reset form
-    } catch (error) {
-      console.error('Form submission error:', error)
-      // Handle error - you might want to show an error message to the user
-    } finally {
-      setIsSubmitting(false)
-    }
+    // Immediately show success state
+    setIsSubmitted(true)
+    setFormData({ name: '', email: '', subject: '', message: '' }) // Reset form
+    setIsSubmitting(false)
+    
+    // Submit to backend in background (fire and forget)
+    submitContactLead({
+      name: formData.name,
+      email: formData.email,
+      message: `Subject: ${formData.subject}\n\nMessage: ${formData.message}`,
+      source: "Contact Page"
+    }).then(leadId => {
+      if (leadId) {
+        console.log('Contact form submitted successfully:', leadId);
+      } else {
+        console.error('Failed to submit contact form');
+      }
+    }).catch(error => {
+      console.error('Contact form submission error:', error);
+      // Note: We don't show error to user since they already saw success
+      // You might want to implement background retry or notification
+    });
   }
 
   return (

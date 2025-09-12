@@ -21,8 +21,9 @@ interface AgencyBlocLeadData {
   zip?: string;
   date_of_birth?: string;
   gender?: string;
-  coverage_type?: string;
   lead_source?: string;
+  status?: string;
+  agent_notes?: string;
 }
 
 interface AgencyBlocResponse {
@@ -174,140 +175,39 @@ export async function attachLeadNote(
 }
 
 /**
- * Format custom fields data into a readable note
+ * Format custom fields data into a concise note for agent_notes field
  */
 function formatCustomFieldsNote(data: any, formType: string): string {
   const timestamp = new Date().toLocaleString('en-US', {
     timeZone: 'America/Chicago',
-    year: 'numeric',
     month: '2-digit',
     day: '2-digit',
+    year: 'numeric',
     hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
+    minute: '2-digit'
   });
 
-  let note = `=== HAWKINS INSURANCE GROUP LEAD ===\n`;
-  note += `Lead Date: ${timestamp} CST\n`;
-  note += `Form Type: ${formType}\n`;
-  note += `Lead Source: Website - hawkinsig.com\n`;
-  note += `Submission Method: Online Form\n\n`;
+  let note = `${formType} - ${timestamp} CST\n`;
+  note += `Source: hawkinsig.com\n\n`;
 
-  // Form Steps Information
-  if (formType === 'Get Started Form') {
-    note += `=== FORM COMPLETION STEPS ===\n`;
-    note += `Step 1: Client Type Selection - ${data.clientType || 'Not specified'}\n`;
-    if (data.age) note += `Step 2: Age Information - ${data.age} years old\n`;
-    if (data.familySize || data.employeeCount) {
-      note += `Step 3: Household/Business Size - ${data.familySize ? `Family: ${data.familySize}` : ''} ${data.employeeCount ? `Employees: ${data.employeeCount}` : ''}\n`;
-    }
-    if (data.agentType) note += `Step 4: Agent Relationship - ${data.agentType}\n`;
-    if (data.insuranceTypes) {
-      note += `Step 5: Insurance Types - ${Array.isArray(data.insuranceTypes) ? data.insuranceTypes.join(', ') : data.insuranceTypes}\n`;
-    }
-    if (data.urgency) note += `Step 6: Timeline - ${data.urgency}\n`;
-    note += `Step 7: Contact Information - Completed\n`;
-    note += `\n`;
+  // Essential form information
+  if (data.clientType) note += `Client Type: ${data.clientType}\n`;
+  if (data.age) note += `Age: ${data.age}\n`;
+  if (data.insuranceTypes) {
+    note += `Insurance Types: ${Array.isArray(data.insuranceTypes) ? data.insuranceTypes.join(', ') : data.insuranceTypes}\n`;
   }
+  if (data.urgency) note += `Timeline: ${data.urgency}\n`;
+  if (data.familySize) note += `Family Size: ${data.familySize}\n`;
+  if (data.employeeCount) note += `Employees: ${data.employeeCount}\n`;
+  if (data.agentType) note += `Current Agent: ${data.agentType}\n`;
+  if (data.company) note += `Company: ${data.company}\n`;
+  if (data.leadScore) note += `Lead Score: ${data.leadScore}/100\n`;
 
-  // Insurance Information
-  if (data.insuranceTypes || data.insuranceType || data.currentCoverage || data.healthConditions) {
-    note += `=== INSURANCE INFORMATION ===\n`;
-    if (data.insuranceTypes) {
-      note += `Interested Insurance Types: ${Array.isArray(data.insuranceTypes) ? data.insuranceTypes.join(', ') : data.insuranceTypes}\n`;
-    }
-    if (data.insuranceType && !data.insuranceTypes) {
-      note += `Insurance Type: ${data.insuranceType}\n`;
-    }
-    if (data.currentCoverage) note += `Current Coverage: ${data.currentCoverage}\n`;
-    if (data.healthConditions) note += `Health Conditions: ${data.healthConditions}\n`;
-    if (data.urgency) note += `Timeline/Urgency: ${data.urgency}\n`;
-    note += `\n`;
-  }
+  // Contact form message
+  if (data.message) note += `\nMessage: ${data.message}\n`;
 
-  // Client Information
-  if (data.clientType || data.age || data.familySize || data.employeeCount || data.company) {
-    note += `=== CLIENT INFORMATION ===\n`;
-    if (data.clientType) note += `Client Type: ${data.clientType}\n`;
-    if (data.age) note += `Age: ${data.age} years old\n`;
-    if (data.familySize) note += `Family/Household Size: ${data.familySize}\n`;
-    if (data.employeeCount) note += `Number of Employees: ${data.employeeCount}\n`;
-    if (data.company) note += `Company Name: ${data.company}\n`;
-    note += `\n`;
-  }
-
-  // Agent/Relationship Information
-  if (data.agentType || data.referralSource) {
-    note += `=== AGENT RELATIONSHIP ===\n`;
-    if (data.agentType) note += `Current Agent Status: ${data.agentType}\n`;
-    if (data.referralSource) note += `Referral Source: ${data.referralSource}\n`;
-    note += `\n`;
-  }
-
-  // Household/Financial Information
-  if (data.householdSize || data.annualIncome || data.retirementPlanning) {
-    note += `=== HOUSEHOLD INFORMATION ===\n`;
-    if (data.householdSize) note += `Household Size: ${data.householdSize}\n`;
-    if (data.annualIncome) note += `Annual Income: ${data.annualIncome}\n`;
-    if (data.retirementPlanning) note += `Retirement Planning: ${data.retirementPlanning}\n`;
-    note += `\n`;
-  }
-
-  // Contact Preferences
-  if (data.preferredContactMethod || data.preferredContactTime || data.phone || data.email) {
-    note += `=== CONTACT PREFERENCES ===\n`;
-    if (data.preferredContactMethod) note += `Preferred Contact Method: ${data.preferredContactMethod}\n`;
-    if (data.preferredContactTime) note += `Best Time to Call: ${data.preferredContactTime}\n`;
-    if (data.phone) note += `Phone Number: ${data.phone}\n`;
-    if (data.email) note += `Email Address: ${data.email}\n`;
-    note += `\n`;
-  }
-
-  // Lead Scoring and Analysis
-  if (data.leadScore || data.leadPriority || data.urgency) {
-    note += `=== LEAD ANALYSIS ===\n`;
-    if (data.leadScore) note += `Lead Score: ${data.leadScore}/100\n`;
-    if (data.leadPriority) note += `Priority Level: ${data.leadPriority}\n`;
-    if (data.urgency) note += `Urgency: ${data.urgency}\n`;
-    
-    // Add urgency explanation
-    if (data.urgency === 'immediate') {
-      note += `Urgency Note: Client needs coverage immediately - HIGH PRIORITY\n`;
-    } else if (data.urgency === 'within-30-days') {
-      note += `Urgency Note: Client needs coverage within 30 days - MEDIUM PRIORITY\n`;
-    } else if (data.urgency === 'within-3-months') {
-      note += `Urgency Note: Client needs coverage within 3 months - STANDARD PRIORITY\n`;
-    }
-    note += `\n`;
-  }
-
-  // Contact Form Specific
-  if (data.message || data.comments) {
-    note += `=== CLIENT MESSAGE ===\n`;
-    note += `"${data.message || data.comments}"\n`;
-    note += `\n`;
-  }
-
-  // Additional Notes
-  if (data.additionalNotes) {
-    note += `=== ADDITIONAL NOTES ===\n`;
-    note += `${data.additionalNotes}\n`;
-    note += `\n`;
-  }
-
-  // System Information
-  note += `=== SYSTEM INFORMATION ===\n`;
-  note += `Form Type: ${formType}\n`;
-  note += `Submission Timestamp: ${timestamp}\n`;
-  note += `Lead Source: Website Form (hawkinsig.com)\n`;
-  if (data.ipAddress) note += `IP Address: ${data.ipAddress}\n`;
-  if (data.userAgent) note += `Browser: ${data.userAgent.substring(0, 100)}...\n`;
-  note += `\n`;
-
-  // Technical Data (for debugging/reference)
-  note += `=== TECHNICAL DATA ===\n`;
-  note += `Firestore Lead ID: ${data.leadId || 'Not yet assigned'}\n`;
-  note += `Form Data Keys: ${Object.keys(data).join(', ')}\n`;
+  // Firestore reference
+  if (data.leadId) note += `\nFirestore ID: ${data.leadId}`;
   
   return note;
 }
@@ -331,44 +231,6 @@ export function mapToAgencyBlocLead(formData: any, formType: string = 'Website F
     if (lower.includes('male') && !lower.includes('female')) return 'Male';
     if (lower.includes('female')) return 'Female';
     return gender;
-  };
-
-  // Map coverage types
-  const mapCoverageType = (insuranceType: string | string[]): string => {
-    let typeStr = '';
-    if (Array.isArray(insuranceType)) {
-      typeStr = insuranceType.join(', ').toLowerCase();
-    } else {
-      typeStr = insuranceType.toLowerCase();
-    }
-    
-    if (typeStr.includes('medicare')) return 'Medicare';
-    if (typeStr.includes('life')) return 'Life';
-    if (typeStr.includes('health')) return 'Health';
-    if (typeStr.includes('dental')) return 'Dental';
-    if (typeStr.includes('vision')) return 'Vision';
-    if (typeStr.includes('supplement')) return 'Medicare Supplement';
-    if (typeStr.includes('advantage')) return 'Medicare Advantage';
-    return 'Other';
-  };
-
-  // Determine lead source based on form type and data
-  const determineLeadSource = (data: any, type: string): string => {
-    if (data.source) return data.source;
-    if (data.leadSource) return data.leadSource;
-    
-    switch (type.toLowerCase()) {
-      case 'get started form':
-      case 'insurance lead':
-        return 'Website - Get Started Form';
-      case 'contact form':
-        return 'Website - Contact Form';
-      case 'newsletter subscription':
-      case 'newsletter update':
-        return 'Website - Newsletter';
-      default:
-        return 'Website - hawkinsig.com';
-    }
   };
 
   const leadData: AgencyBlocLeadData = {
@@ -399,18 +261,19 @@ export function mapToAgencyBlocLead(formData: any, formType: string = 'Website F
   }
   
   if (formData.gender) leadData.gender = mapGender(formData.gender);
-  if (formData.insuranceType || formData.insuranceTypes) {
-    leadData.coverage_type = mapCoverageType(formData.insuranceType || formData.insuranceTypes);
-  }
   
-  // Lead source - more specific based on form type
-  leadData.lead_source = determineLeadSource(formData, formType);
+  // Set standard values as requested
+  leadData.lead_source = 'website';
+  leadData.status = 'open';
+
+  // Add detailed notes as agent_notes custom field
+  leadData.agent_notes = formatCustomFieldsNote(formData, formType);
 
   return leadData;
 }
 
 /**
- * Main function to create lead and attach note
+ * Main function to create lead with notes in agent_notes field
  */
 export async function createLeadWithNote(
   formData: any, 
@@ -430,7 +293,7 @@ export async function createLeadWithNote(
       }
     }
 
-    // Create the lead
+    // Create the lead with notes included in agent_notes field
     const leadData = mapToAgencyBlocLead(formData, formType);
     const recordId = await createAgencyBlocLead(leadData);
 
@@ -441,13 +304,8 @@ export async function createLeadWithNote(
       };
     }
 
-    // Attach the note with custom fields
-    const noteCreated = await attachLeadNote(recordId, formData, formType);
+    functions.logger.info('AgencyBloc lead created with notes in agent_notes field:', recordId);
     
-    if (!noteCreated) {
-      functions.logger.warn('Lead created but note attachment failed for record:', recordId);
-    }
-
     return {
       success: true,
       recordId: recordId,

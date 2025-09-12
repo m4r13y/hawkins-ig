@@ -77,7 +77,7 @@ exports.retryAgencyBlocSync = functions.https.onCall(async (data, context) => {
 });
 // Helper function to process a single lead for AgencyBloc
 async function processLeadForAgencyBloc(leadId, leadData) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d;
     try {
         const submission = leadData.submission || {};
         // Prepare AgencyBloc data based on lead type
@@ -92,14 +92,15 @@ async function processLeadForAgencyBloc(leadId, leadData) {
                 email: submission.email,
                 phone: submission.phone,
                 zipCode: submission.zipCode,
-                insuranceType: ((_c = submission.insuranceTypes) === null || _c === void 0 ? void 0 : _c.join(', ')) || 'Unknown',
+                insuranceTypes: submission.insuranceTypes,
                 clientType: submission.clientType,
                 urgency: submission.urgency,
                 leadScore: submission.leadScore,
-                householdSize: submission.familySize,
+                familySize: submission.familySize,
                 employeeCount: submission.employeeCount,
                 agentType: submission.agentType,
                 company: submission.company,
+                leadId: leadId,
                 additionalNotes: `Retry sync | Lead ID: ${leadId} | Client Type: ${submission.clientType}`,
             };
         }
@@ -107,14 +108,14 @@ async function processLeadForAgencyBloc(leadId, leadData) {
             // Contact lead
             formType = 'Contact Form';
             agencyBlocData = {
-                firstName: ((_d = leadData['lead-name']) === null || _d === void 0 ? void 0 : _d.split(' ')[0]) || 'Unknown',
-                lastName: ((_e = leadData['lead-name']) === null || _e === void 0 ? void 0 : _e.split(' ').slice(1).join(' ')) || 'Contact',
+                firstName: ((_c = leadData['lead-name']) === null || _c === void 0 ? void 0 : _c.split(' ')[0]) || 'Unknown',
+                lastName: ((_d = leadData['lead-name']) === null || _d === void 0 ? void 0 : _d.split(' ').slice(1).join(' ')) || 'Contact',
                 email: submission.email,
                 phone: submission.phone || '',
-                insuranceType: 'General Inquiry',
                 leadScore: submission.leadScore || 25,
+                leadId: leadId,
+                message: submission.message,
                 additionalNotes: `Retry sync | Contact Form | Message: ${submission.message} | Lead ID: ${leadId}`,
-                comments: submission.message,
             };
         }
         else {
@@ -321,7 +322,6 @@ exports.submitInsuranceLead = functions.https.onCall(async (data, context) => {
                 phone: sanitizedData.phone,
                 zipCode: sanitizedData.zipCode,
                 insuranceTypes: sanitizedData.insuranceTypes,
-                insuranceType: sanitizedData.insuranceTypes.join(', '),
                 clientType: sanitizedData.clientType,
                 age: sanitizedData.age,
                 familySize: sanitizedData.familySize,
@@ -437,7 +437,6 @@ exports.submitContactLead = functions.https.onCall(async (data, context) => {
                 lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Unknown',
                 email: sanitizedData.email,
                 phone: sanitizedData.phone || '',
-                insuranceType: 'General Inquiry',
                 leadScore: 25,
                 leadId: docRef.id,
                 message: sanitizedData.message,
@@ -692,7 +691,6 @@ exports.submitNewsletterSubscription = functions.https.onCall(async (data, conte
                         firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
                         lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Newsletter',
                         email: sanitizedData.email,
-                        insuranceType: 'Newsletter Subscription',
                         leadScore: 15,
                         source: sanitizedData.source || 'newsletter-update',
                         ipAddress: clientIP,
@@ -724,7 +722,6 @@ exports.submitNewsletterSubscription = functions.https.onCall(async (data, conte
                         firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
                         lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Newsletter',
                         email: sanitizedData.email,
-                        insuranceType: 'Newsletter Subscription',
                         leadScore: 10,
                         source: sanitizedData.source || 'newsletter-signup',
                         ipAddress: clientIP,
