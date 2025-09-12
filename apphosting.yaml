@@ -2,21 +2,59 @@
 # https://firebase.google.com/docs/app-hosting/configure
 
 runConfig:
-  # Increase this value if you'd like to automatically spin up
-  # more instances in response to increased traffic.
   maxInstances: 1
+
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyAlxFZmc9fxLgwMuguAviHo36m0bwigvbQ
+    availability:
+      - BUILD
+      - RUNTIME
   
-  # Environment variables for Firebase App Hosting
-  env:
-    # Firebase Configuration
-    NEXT_PUBLIC_FIREBASE_API_KEY: "AIzaSyAlxFZmc9fxLgwMuguAviHo36m0bwigvbQ"
-    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "medicareally.firebaseapp.com"
-    NEXT_PUBLIC_FIREBASE_PROJECT_ID: "medicareally"
-    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: "medicareally.firebasestorage.app"
-    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "168459812655"
-    NEXT_PUBLIC_FIREBASE_APP_ID: "1:168459812655:web:a7ed283f208bd144672bda"
-    NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: "G-K907VE7QFS"
-    
-    # Site Configuration
-    NEXT_PUBLIC_CONSTRUCTION_MODE: "false"
-    NEXT_PUBLIC_DOMAIN: "hawkinsig.com"
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: medicareally.firebaseapp.com
+    availability:
+      - BUILD
+      - RUNTIME
+  
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: medicareally
+    availability:
+      - BUILD
+      - RUNTIME
+  
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: medicareally.firebasestorage.app
+    availability:
+      - BUILD
+      - RUNTIME
+  
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "168459812655"
+    availability:
+      - BUILD
+      - RUNTIME
+  
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: 1:168459812655:web:a7ed283f208bd144672bda
+    availability:
+      - BUILD
+      - RUNTIME
+  
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    value: G-K907VE7QFS
+    availability:
+      - BUILD
+      - RUNTIME
+  
+  - variable: NEXT_PUBLIC_CONSTRUCTION_MODE
+    value: "false"
+    availability:
+      - BUILD
+      - RUNTIME
+  
+  - variable: NEXT_PUBLIC_DOMAIN
+    value: hawkinsig.com
+    availability:
+      - BUILD
+      - RUNTIME
