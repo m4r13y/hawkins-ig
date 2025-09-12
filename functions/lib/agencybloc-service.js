@@ -155,23 +155,74 @@ function formatCustomFieldsNote(data, formType) {
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
+        second: '2-digit'
     });
-    let note = `=== LEAD DETAILS ===\n`;
+    let note = `=== HAWKINS INSURANCE GROUP LEAD ===\n`;
+    note += `Lead Date: ${timestamp} CST\n`;
     note += `Form Type: ${formType}\n`;
-    note += `Submission Date: ${timestamp}\n`;
-    note += `Lead Source: Website - hawkinsig.com\n\n`;
+    note += `Lead Source: Website - hawkinsig.com\n`;
+    note += `Submission Method: Online Form\n\n`;
+    // Form Steps Information
+    if (formType === 'Get Started Form') {
+        note += `=== FORM COMPLETION STEPS ===\n`;
+        note += `Step 1: Client Type Selection - ${data.clientType || 'Not specified'}\n`;
+        if (data.age)
+            note += `Step 2: Age Information - ${data.age} years old\n`;
+        if (data.familySize || data.employeeCount) {
+            note += `Step 3: Household/Business Size - ${data.familySize ? `Family: ${data.familySize}` : ''} ${data.employeeCount ? `Employees: ${data.employeeCount}` : ''}\n`;
+        }
+        if (data.agentType)
+            note += `Step 4: Agent Relationship - ${data.agentType}\n`;
+        if (data.insuranceTypes) {
+            note += `Step 5: Insurance Types - ${Array.isArray(data.insuranceTypes) ? data.insuranceTypes.join(', ') : data.insuranceTypes}\n`;
+        }
+        if (data.urgency)
+            note += `Step 6: Timeline - ${data.urgency}\n`;
+        note += `Step 7: Contact Information - Completed\n`;
+        note += `\n`;
+    }
     // Insurance Information
-    if (data.insuranceType || data.currentCoverage || data.healthConditions) {
+    if (data.insuranceTypes || data.insuranceType || data.currentCoverage || data.healthConditions) {
         note += `=== INSURANCE INFORMATION ===\n`;
-        if (data.insuranceType)
+        if (data.insuranceTypes) {
+            note += `Interested Insurance Types: ${Array.isArray(data.insuranceTypes) ? data.insuranceTypes.join(', ') : data.insuranceTypes}\n`;
+        }
+        if (data.insuranceType && !data.insuranceTypes) {
             note += `Insurance Type: ${data.insuranceType}\n`;
+        }
         if (data.currentCoverage)
             note += `Current Coverage: ${data.currentCoverage}\n`;
         if (data.healthConditions)
             note += `Health Conditions: ${data.healthConditions}\n`;
+        if (data.urgency)
+            note += `Timeline/Urgency: ${data.urgency}\n`;
         note += `\n`;
     }
-    // Household Information
+    // Client Information
+    if (data.clientType || data.age || data.familySize || data.employeeCount || data.company) {
+        note += `=== CLIENT INFORMATION ===\n`;
+        if (data.clientType)
+            note += `Client Type: ${data.clientType}\n`;
+        if (data.age)
+            note += `Age: ${data.age} years old\n`;
+        if (data.familySize)
+            note += `Family/Household Size: ${data.familySize}\n`;
+        if (data.employeeCount)
+            note += `Number of Employees: ${data.employeeCount}\n`;
+        if (data.company)
+            note += `Company Name: ${data.company}\n`;
+        note += `\n`;
+    }
+    // Agent/Relationship Information
+    if (data.agentType || data.referralSource) {
+        note += `=== AGENT RELATIONSHIP ===\n`;
+        if (data.agentType)
+            note += `Current Agent Status: ${data.agentType}\n`;
+        if (data.referralSource)
+            note += `Referral Source: ${data.referralSource}\n`;
+        note += `\n`;
+    }
+    // Household/Financial Information
     if (data.householdSize || data.annualIncome || data.retirementPlanning) {
         note += `=== HOUSEHOLD INFORMATION ===\n`;
         if (data.householdSize)
@@ -183,37 +234,72 @@ function formatCustomFieldsNote(data, formType) {
         note += `\n`;
     }
     // Contact Preferences
-    if (data.preferredContactMethod || data.preferredContactTime) {
+    if (data.preferredContactMethod || data.preferredContactTime || data.phone || data.email) {
         note += `=== CONTACT PREFERENCES ===\n`;
         if (data.preferredContactMethod)
-            note += `Preferred Contact: ${data.preferredContactMethod}\n`;
+            note += `Preferred Contact Method: ${data.preferredContactMethod}\n`;
         if (data.preferredContactTime)
             note += `Best Time to Call: ${data.preferredContactTime}\n`;
+        if (data.phone)
+            note += `Phone Number: ${data.phone}\n`;
+        if (data.email)
+            note += `Email Address: ${data.email}\n`;
         note += `\n`;
     }
-    // Lead Scoring
-    if (data.leadScore) {
+    // Lead Scoring and Analysis
+    if (data.leadScore || data.leadPriority || data.urgency) {
         note += `=== LEAD ANALYSIS ===\n`;
-        note += `Lead Score: ${data.leadScore}/100\n`;
+        if (data.leadScore)
+            note += `Lead Score: ${data.leadScore}/100\n`;
         if (data.leadPriority)
-            note += `Priority: ${data.leadPriority}\n`;
+            note += `Priority Level: ${data.leadPriority}\n`;
+        if (data.urgency)
+            note += `Urgency: ${data.urgency}\n`;
+        // Add urgency explanation
+        if (data.urgency === 'immediate') {
+            note += `Urgency Note: Client needs coverage immediately - HIGH PRIORITY\n`;
+        }
+        else if (data.urgency === 'within-30-days') {
+            note += `Urgency Note: Client needs coverage within 30 days - MEDIUM PRIORITY\n`;
+        }
+        else if (data.urgency === 'within-3-months') {
+            note += `Urgency Note: Client needs coverage within 3 months - STANDARD PRIORITY\n`;
+        }
+        note += `\n`;
+    }
+    // Contact Form Specific
+    if (data.message || data.comments) {
+        note += `=== CLIENT MESSAGE ===\n`;
+        note += `"${data.message || data.comments}"\n`;
         note += `\n`;
     }
     // Additional Notes
-    if (data.additionalNotes || data.comments) {
+    if (data.additionalNotes) {
         note += `=== ADDITIONAL NOTES ===\n`;
-        note += `${data.additionalNotes || data.comments}\n`;
+        note += `${data.additionalNotes}\n`;
         note += `\n`;
     }
-    // Raw data for debugging (optional)
+    // System Information
+    note += `=== SYSTEM INFORMATION ===\n`;
+    note += `Form Type: ${formType}\n`;
+    note += `Submission Timestamp: ${timestamp}\n`;
+    note += `Lead Source: Website Form (hawkinsig.com)\n`;
+    if (data.ipAddress)
+        note += `IP Address: ${data.ipAddress}\n`;
+    if (data.userAgent)
+        note += `Browser: ${data.userAgent.substring(0, 100)}...\n`;
+    note += `\n`;
+    // Technical Data (for debugging/reference)
     note += `=== TECHNICAL DATA ===\n`;
-    note += `Raw Form Data: ${JSON.stringify(data, null, 2)}\n`;
+    note += `Firestore Lead ID: ${data.leadId || 'Not yet assigned'}\n`;
+    note += `Form Data Keys: ${Object.keys(data).join(', ')}\n`;
     return note;
 }
 /**
  * Map form data to AgencyBloc lead format
  */
-function mapToAgencyBlocLead(formData) {
+function mapToAgencyBlocLead(formData, formType = 'Website Form') {
+    var _a, _b;
     // Clean phone number to format (xxx) xxx-xxxx
     const formatPhone = (phone) => {
         const cleaned = phone.replace(/\D/g, '');
@@ -233,22 +319,51 @@ function mapToAgencyBlocLead(formData) {
     };
     // Map coverage types
     const mapCoverageType = (insuranceType) => {
-        const type = insuranceType.toLowerCase();
-        if (type.includes('medicare'))
+        let typeStr = '';
+        if (Array.isArray(insuranceType)) {
+            typeStr = insuranceType.join(', ').toLowerCase();
+        }
+        else {
+            typeStr = insuranceType.toLowerCase();
+        }
+        if (typeStr.includes('medicare'))
             return 'Medicare';
-        if (type.includes('life'))
+        if (typeStr.includes('life'))
             return 'Life';
-        if (type.includes('health'))
+        if (typeStr.includes('health'))
             return 'Health';
-        if (type.includes('dental'))
+        if (typeStr.includes('dental'))
             return 'Dental';
-        if (type.includes('vision'))
+        if (typeStr.includes('vision'))
             return 'Vision';
+        if (typeStr.includes('supplement'))
+            return 'Medicare Supplement';
+        if (typeStr.includes('advantage'))
+            return 'Medicare Advantage';
         return 'Other';
     };
+    // Determine lead source based on form type and data
+    const determineLeadSource = (data, type) => {
+        if (data.source)
+            return data.source;
+        if (data.leadSource)
+            return data.leadSource;
+        switch (type.toLowerCase()) {
+            case 'get started form':
+            case 'insurance lead':
+                return 'Website - Get Started Form';
+            case 'contact form':
+                return 'Website - Contact Form';
+            case 'newsletter subscription':
+            case 'newsletter update':
+                return 'Website - Newsletter';
+            default:
+                return 'Website - hawkinsig.com';
+        }
+    };
     const leadData = {
-        first_name: formData.firstName || formData.first_name || '',
-        last_name: formData.lastName || formData.last_name || '',
+        first_name: formData.firstName || formData.first_name || ((_a = formData.name) === null || _a === void 0 ? void 0 : _a.split(' ')[0]) || '',
+        last_name: formData.lastName || formData.last_name || ((_b = formData.name) === null || _b === void 0 ? void 0 : _b.split(' ').slice(1).join(' ')) || '',
     };
     // Optional fields
     if (formData.email)
@@ -277,10 +392,11 @@ function mapToAgencyBlocLead(formData) {
     }
     if (formData.gender)
         leadData.gender = mapGender(formData.gender);
-    if (formData.insuranceType)
-        leadData.coverage_type = mapCoverageType(formData.insuranceType);
-    // Lead source
-    leadData.lead_source = 'Website Form';
+    if (formData.insuranceType || formData.insuranceTypes) {
+        leadData.coverage_type = mapCoverageType(formData.insuranceType || formData.insuranceTypes);
+    }
+    // Lead source - more specific based on form type
+    leadData.lead_source = determineLeadSource(formData, formType);
     return leadData;
 }
 exports.mapToAgencyBlocLead = mapToAgencyBlocLead;
@@ -302,7 +418,7 @@ async function createLeadWithNote(formData, formType = 'Website Form') {
             }
         }
         // Create the lead
-        const leadData = mapToAgencyBlocLead(formData);
+        const leadData = mapToAgencyBlocLead(formData, formType);
         const recordId = await createAgencyBlocLead(leadData);
         if (!recordId) {
             return {

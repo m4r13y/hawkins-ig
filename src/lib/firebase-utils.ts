@@ -34,7 +34,7 @@ export async function submitGetStartedForm(formData: FormSubmission): Promise<st
   }
 
   try {
-    const submitInsuranceLead = httpsCallable(functions, 'submitInsuranceLead');
+    const submitInsuranceLead = httpsCallable(functions, 'submitInsuranceLeadFast');
     const result = await submitInsuranceLead(formData);
     return (result.data as any)?.leadId || null;
   } catch (error) {

@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.submitWaitlistEntry = exports.submitNewsletterSubscription = exports.getLeadAnalytics = exports.onNewLeadCreated = exports.updateLeadStatus = exports.submitContactLead = exports.submitInsuranceLead = exports.retryAgencyBlocSync = void 0;
+exports.submitWaitlistEntry = exports.submitNewsletterSubscription = exports.getLeadAnalytics = exports.onNewLeadCreated = exports.updateLeadStatus = exports.submitContactLead = exports.submitInsuranceLead = exports.submitInsuranceLeadFast = exports.retryAgencyBlocSync = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const firestore_1 = require("firebase-admin/firestore");
@@ -192,9 +192,59 @@ function calculateLeadScore(data) {
     return Math.min(score, 100); // Cap at 100
 }
 // NEW LEAD FUNCTIONS - These won't conflict with your existing user/agent functions
-// Submit Insurance Lead from Get Started Flow
+// OPTIMIZED VERSION: Minimal lead submission for speed
+exports.submitInsuranceLeadFast = functions.https.onCall(async (data, context) => {
+    var _a;
+    try {
+        // Minimal validation for speed
+        if (!data.name || !data.email) {
+            throw new functions.https.HttpsError('invalid-argument', 'Name and email required');
+        }
+        // Quick lead score calculation
+        const leadScore = calculateLeadScore(data);
+        // Simplified lead data structure
+        const leadData = {
+            'lead-name': data.name,
+            'date-time': admin.firestore.FieldValue.serverTimestamp(),
+            source: 'hawkins-ig-website',
+            submission: {
+                clientType: data.clientType,
+                insuranceTypes: data.insuranceTypes || [],
+                urgency: data.urgency,
+                email: data.email,
+                phone: data.phone,
+                zipCode: data.zipCode,
+                leadScore: leadScore,
+                leadStatus: 'new',
+                // Minimal tracking
+                ipAddress: ((_a = context.rawRequest) === null || _a === void 0 ? void 0 : _a.ip) || 'unknown',
+                formSource: data.source || 'get-started-flow',
+                // Mark for background processing
+                agencyBlocSynced: false,
+                needsProcessing: true
+            }
+        };
+        // Save to Firestore immediately
+        const docRef = await leadsCollection.add(leadData);
+        // Return success immediately (no AgencyBloc wait)
+        return {
+            success: true,
+            leadId: docRef.id,
+            leadScore,
+            message: 'Lead captured successfully'
+        };
+    }
+    catch (error) {
+        console.error('Error submitting insurance lead (fast):', error);
+        if (error instanceof functions.https.HttpsError) {
+            throw error;
+        }
+        throw new functions.https.HttpsError('internal', 'Failed to capture lead');
+    }
+});
+// Original version with full security (keep for high-security scenarios)
 exports.submitInsuranceLead = functions.https.onCall(async (data, context) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     try {
         // Security: Rate limiting
         if (!(0, security_1.rateLimit)(context.rawRequest)) {
@@ -270,15 +320,21 @@ exports.submitInsuranceLead = functions.https.onCall(async (data, context) => {
                 email: sanitizedData.email,
                 phone: sanitizedData.phone,
                 zipCode: sanitizedData.zipCode,
+                insuranceTypes: sanitizedData.insuranceTypes,
                 insuranceType: sanitizedData.insuranceTypes.join(', '),
                 clientType: sanitizedData.clientType,
-                urgency: sanitizedData.urgency,
-                leadScore: leadScore,
-                householdSize: sanitizedData.familySize,
+                age: sanitizedData.age,
+                familySize: sanitizedData.familySize,
                 employeeCount: sanitizedData.employeeCount,
                 agentType: sanitizedData.agentType,
                 company: sanitizedData.company,
-                additionalNotes: `Lead ID: ${docRef.id} | Client Type: ${sanitizedData.clientType} | Urgency: ${sanitizedData.urgency}`,
+                urgency: sanitizedData.urgency,
+                leadScore: leadScore,
+                leadId: docRef.id,
+                source: sanitizedData.source || 'get-started-flow',
+                ipAddress: ((_j = context.rawRequest) === null || _j === void 0 ? void 0 : _j.ip) || 'unknown',
+                userAgent: ((_l = (_k = context.rawRequest) === null || _k === void 0 ? void 0 : _k.headers) === null || _l === void 0 ? void 0 : _l['user-agent']) || 'unknown',
+                additionalNotes: `Firestore Lead ID: ${docRef.id} | Client Type: ${sanitizedData.clientType} | Timeline: ${sanitizedData.urgency} | Score: ${leadScore}/100`,
             };
             const agencyBlocResult = await (0, agencybloc_service_1.createLeadWithNote)(agencyBlocData, 'Get Started Form');
             if (agencyBlocResult.success) {
@@ -321,7 +377,7 @@ exports.submitInsuranceLead = functions.https.onCall(async (data, context) => {
 });
 // Submit Contact Lead
 exports.submitContactLead = functions.https.onCall(async (data, context) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     try {
         // Security: Rate limiting
         if (!(0, security_1.rateLimit)(context.rawRequest)) {
@@ -383,8 +439,13 @@ exports.submitContactLead = functions.https.onCall(async (data, context) => {
                 phone: sanitizedData.phone || '',
                 insuranceType: 'General Inquiry',
                 leadScore: 25,
-                additionalNotes: `Contact Form Submission | Message: ${sanitizedData.message} | Lead ID: ${docRef.id}`,
+                leadId: docRef.id,
+                message: sanitizedData.message,
                 comments: sanitizedData.message,
+                source: sanitizedData.source || 'contact-form',
+                ipAddress: ((_j = context.rawRequest) === null || _j === void 0 ? void 0 : _j.ip) || 'unknown',
+                userAgent: ((_l = (_k = context.rawRequest) === null || _k === void 0 ? void 0 : _k.headers) === null || _l === void 0 ? void 0 : _l['user-agent']) || 'unknown',
+                additionalNotes: `Contact Form Submission | Firestore Lead ID: ${docRef.id} | Source: Contact Page`,
             };
             const agencyBlocResult = await (0, agencybloc_service_1.createLeadWithNote)(agencyBlocData, 'Contact Form');
             if (agencyBlocResult.success) {
@@ -456,11 +517,12 @@ exports.updateLeadStatus = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('internal', 'Failed to update lead status');
     }
 });
-// Firestore trigger for new leads - sends notification
+// Firestore trigger for new leads - sends notification and processes AgencyBloc
 exports.onNewLeadCreated = functions.firestore
     .database('hawknest-database')
     .document('leads/{leadId}')
     .onCreate(async (snap, context) => {
+    var _a, _b, _c;
     const leadData = snap.data();
     const leadId = context.params.leadId;
     const submission = leadData.submission || {};
@@ -474,8 +536,51 @@ exports.onNewLeadCreated = functions.firestore
         source: leadData.source,
         leadQuality: submission.leadQuality
     });
-    // You can add email notifications, CRM integrations, etc. here
-    // For example, integrate with your existing notification system
+    // Process AgencyBloc integration in background if needed
+    if (submission.needsProcessing && !submission.agencyBlocSynced) {
+        try {
+            console.log('Processing AgencyBloc integration for lead:', leadId);
+            // Prepare AgencyBloc data
+            const agencyBlocData = {
+                firstName: ((_a = leadData['lead-name']) === null || _a === void 0 ? void 0 : _a.split(' ')[0]) || 'Unknown',
+                lastName: ((_b = leadData['lead-name']) === null || _b === void 0 ? void 0 : _b.split(' ').slice(1).join(' ')) || 'Lead',
+                email: submission.email,
+                phone: submission.phone,
+                zipCode: submission.zipCode,
+                insuranceType: ((_c = submission.insuranceTypes) === null || _c === void 0 ? void 0 : _c.join(', ')) || 'Unknown',
+                clientType: submission.clientType,
+                urgency: submission.urgency,
+                leadScore: submission.leadScore,
+                additionalNotes: `Background sync | Lead ID: ${leadId} | Client Type: ${submission.clientType}`,
+            };
+            const agencyBlocResult = await (0, agencybloc_service_1.createLeadWithNote)(agencyBlocData, 'Get Started Form');
+            if (agencyBlocResult.success) {
+                // Update with success
+                await snap.ref.update({
+                    'submission.agencyBlocRecordId': agencyBlocResult.recordId,
+                    'submission.agencyBlocSynced': true,
+                    'submission.agencyBlocSyncDate': admin.firestore.FieldValue.serverTimestamp(),
+                    'submission.needsProcessing': false
+                });
+                console.log('AgencyBloc integration completed for lead:', leadId);
+            }
+            else {
+                // Mark for retry
+                await snap.ref.update({
+                    'submission.agencyBlocSyncError': agencyBlocResult.error,
+                    'submission.agencyBlocSyncAttempted': admin.firestore.FieldValue.serverTimestamp()
+                });
+                console.error('AgencyBloc integration failed for lead:', leadId, agencyBlocResult.error);
+            }
+        }
+        catch (error) {
+            console.error('Background AgencyBloc processing error:', error);
+            await snap.ref.update({
+                'submission.agencyBlocSyncError': error instanceof Error ? error.message : 'Unknown error',
+                'submission.agencyBlocSyncAttempted': admin.firestore.FieldValue.serverTimestamp()
+            });
+        }
+    }
     return null;
 });
 // Get Lead Analytics (for dashboard)
@@ -533,6 +638,7 @@ exports.getLeadAnalytics = functions.https.onCall(async (data, context) => {
 });
 // Submit newsletter subscription
 exports.submitNewsletterSubscription = functions.https.onCall(async (data, context) => {
+    var _a, _b, _c, _d;
     try {
         // Rate limiting check
         const clientIP = context.rawRequest.ip;
@@ -588,6 +694,9 @@ exports.submitNewsletterSubscription = functions.https.onCall(async (data, conte
                         email: sanitizedData.email,
                         insuranceType: 'Newsletter Subscription',
                         leadScore: 15,
+                        source: sanitizedData.source || 'newsletter-update',
+                        ipAddress: clientIP,
+                        userAgent: ((_b = (_a = context.rawRequest) === null || _a === void 0 ? void 0 : _a.headers) === null || _b === void 0 ? void 0 : _b['user-agent']) || 'unknown',
                         additionalNotes: `Newsletter subscription updated | Source: ${sanitizedData.source} | Firestore ID: ${docRef.id}`,
                     };
                     const agencyBlocResult = await (0, agencybloc_service_1.createLeadWithNote)(agencyBlocData, 'Newsletter Update');
@@ -617,6 +726,9 @@ exports.submitNewsletterSubscription = functions.https.onCall(async (data, conte
                         email: sanitizedData.email,
                         insuranceType: 'Newsletter Subscription',
                         leadScore: 10,
+                        source: sanitizedData.source || 'newsletter-signup',
+                        ipAddress: clientIP,
+                        userAgent: ((_d = (_c = context.rawRequest) === null || _c === void 0 ? void 0 : _c.headers) === null || _d === void 0 ? void 0 : _d['user-agent']) || 'unknown',
                         additionalNotes: `Newsletter subscription | Source: ${sanitizedData.source} | Firestore ID: ${docRef.id}`,
                     };
                     const agencyBlocResult = await (0, agencybloc_service_1.createLeadWithNote)(agencyBlocData, 'Newsletter Subscription');
