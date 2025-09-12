@@ -16,9 +16,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Export all lead functions from hawkins-leads.ts
 __exportStar(require("./hawkins-leads"), exports);
-// Temporarily commenting out quote functions to resolve deployment timeout
+// Quote functions are handled on a separate website
 // export * from './quote-functions';
 // This file serves as the main entry point for all Firebase Functions
 // Your existing functions remain untouched and are deployed separately
-// These new lead functions are specifically for the Hawkins IG website
+// These lead functions are specifically for the Hawkins IG website
 //# sourceMappingURL=index.js.map

@@ -9,6 +9,132 @@ import {
   detectSuspiciousActivity,
   logSecurityEvent 
 } from './security';
+import { createLeadWithNote } from './agencybloc-service';
+
+// Helper function to retry failed AgencyBloc syncs
+export const retryAgencyBlocSync = functions.https.onCall(async (data: { leadId?: string }, context) => {
+  try {
+    // Only allow authenticated users (agents/admins)
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    let query = leadsCollection.where('submission.agencyBlocSynced', '==', false);
+    
+    // If specific leadId provided, only retry that one
+    if (data.leadId) {
+      const docRef = leadsCollection.doc(data.leadId);
+      const doc = await docRef.get();
+      if (!doc.exists) {
+        throw new functions.https.HttpsError('not-found', 'Lead not found');
+      }
+      const leadData = doc.data();
+      
+      // Check if it needs retry
+      if (leadData?.submission?.agencyBlocSynced !== false) {
+        return { success: true, message: 'Lead already synced', processed: 0 };
+      }
+      
+      // Process single lead
+      const result = await processLeadForAgencyBloc(doc.id, leadData);
+      return { success: true, message: 'Retry completed', processed: 1, results: [result] };
+    }
+
+    // Get failed syncs (limit to 10 per call to avoid timeouts)
+    const failedSyncs = await query.limit(10).get();
+    const results = [];
+    
+    for (const doc of failedSyncs.docs) {
+      const leadData = doc.data();
+      const result = await processLeadForAgencyBloc(doc.id, leadData);
+      results.push(result);
+    }
+
+    return {
+      success: true,
+      message: `Processed ${results.length} failed syncs`,
+      processed: results.length,
+      results
+    };
+
+  } catch (error) {
+    console.error('Error retrying AgencyBloc sync:', error);
+    throw new functions.https.HttpsError('internal', 'Failed to retry AgencyBloc sync');
+  }
+});
+
+// Helper function to process a single lead for AgencyBloc
+async function processLeadForAgencyBloc(leadId: string, leadData: any) {
+  try {
+    const submission = leadData.submission || {};
+    
+    // Prepare AgencyBloc data based on lead type
+    let agencyBlocData;
+    let formType = 'Unknown Form';
+    
+    if (submission.clientType) {
+      // Insurance lead
+      formType = 'Get Started Form';
+      agencyBlocData = {
+        firstName: leadData['lead-name']?.split(' ')[0] || 'Unknown',
+        lastName: leadData['lead-name']?.split(' ').slice(1).join(' ') || 'Lead',
+        email: submission.email,
+        phone: submission.phone,
+        zipCode: submission.zipCode,
+        insuranceType: submission.insuranceTypes?.join(', ') || 'Unknown',
+        clientType: submission.clientType,
+        urgency: submission.urgency,
+        leadScore: submission.leadScore,
+        householdSize: submission.familySize,
+        employeeCount: submission.employeeCount,
+        agentType: submission.agentType,
+        company: submission.company,
+        additionalNotes: `Retry sync | Lead ID: ${leadId} | Client Type: ${submission.clientType}`,
+      };
+    } else if (submission.contactType) {
+      // Contact lead
+      formType = 'Contact Form';
+      agencyBlocData = {
+        firstName: leadData['lead-name']?.split(' ')[0] || 'Unknown',
+        lastName: leadData['lead-name']?.split(' ').slice(1).join(' ') || 'Contact',
+        email: submission.email,
+        phone: submission.phone || '',
+        insuranceType: 'General Inquiry',
+        leadScore: submission.leadScore || 25,
+        additionalNotes: `Retry sync | Contact Form | Message: ${submission.message} | Lead ID: ${leadId}`,
+        comments: submission.message,
+      };
+    } else {
+      throw new Error('Unknown lead type');
+    }
+
+    const agencyBlocResult = await createLeadWithNote(agencyBlocData, formType);
+    
+    if (agencyBlocResult.success) {
+      // Update Firestore with success
+      await leadsCollection.doc(leadId).update({
+        'submission.agencyBlocRecordId': agencyBlocResult.recordId,
+        'submission.agencyBlocSynced': true,
+        'submission.agencyBlocSyncDate': admin.firestore.FieldValue.serverTimestamp(),
+        'submission.agencyBlocRetryCount': admin.firestore.FieldValue.increment(1)
+      });
+      
+      return { leadId, success: true, recordId: agencyBlocResult.recordId };
+    } else {
+      // Update failure count
+      await leadsCollection.doc(leadId).update({
+        'submission.agencyBlocSyncError': agencyBlocResult.error,
+        'submission.agencyBlocRetryCount': admin.firestore.FieldValue.increment(1),
+        'submission.lastRetryAttempt': admin.firestore.FieldValue.serverTimestamp()
+      });
+      
+      return { leadId, success: false, error: agencyBlocResult.error };
+    }
+  } catch (error) {
+    console.error(`Error processing lead ${leadId} for AgencyBloc:`, error);
+    return { leadId, success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
 
 // Initialize Firebase Admin with your existing configuration
 // Since you have existing functions, this should already be initialized
@@ -163,6 +289,49 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
       urgency: sanitizedData.urgency
     });
 
+    // Integrate with AgencyBloc CRM (non-blocking)
+    try {
+      const agencyBlocData = {
+        firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
+        lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Unknown',
+        email: sanitizedData.email,
+        phone: sanitizedData.phone,
+        zipCode: sanitizedData.zipCode,
+        insuranceType: sanitizedData.insuranceTypes.join(', '),
+        clientType: sanitizedData.clientType,
+        urgency: sanitizedData.urgency,
+        leadScore: leadScore,
+        householdSize: sanitizedData.familySize,
+        employeeCount: sanitizedData.employeeCount,
+        agentType: sanitizedData.agentType,
+        company: sanitizedData.company,
+        additionalNotes: `Lead ID: ${docRef.id} | Client Type: ${sanitizedData.clientType} | Urgency: ${sanitizedData.urgency}`,
+      };
+
+      const agencyBlocResult = await createLeadWithNote(agencyBlocData, 'Get Started Form');
+      
+      if (agencyBlocResult.success) {
+        console.log('AgencyBloc lead created:', agencyBlocResult.recordId);
+        // Update Firestore record with AgencyBloc ID
+        await docRef.update({
+          'submission.agencyBlocRecordId': agencyBlocResult.recordId,
+          'submission.agencyBlocSynced': true,
+          'submission.agencyBlocSyncDate': admin.firestore.FieldValue.serverTimestamp()
+        });
+      } else {
+        console.warn('AgencyBloc integration failed:', agencyBlocResult.error);
+        // Update Firestore record to note sync failure (for retry later)
+        await docRef.update({
+          'submission.agencyBlocSynced': false,
+          'submission.agencyBlocSyncError': agencyBlocResult.error,
+          'submission.agencyBlocSyncAttempted': admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    } catch (agencyBlocError) {
+      console.error('AgencyBloc integration error (non-blocking):', agencyBlocError);
+      // Don't throw - AgencyBloc failure shouldn't prevent Firestore success
+    }
+
     return {
       success: true,
       leadId: docRef.id,
@@ -241,6 +410,43 @@ export const submitContactLead = functions.https.onCall(async (data: ContactLead
 
     // Log successful contact lead
     console.log('Contact lead captured successfully:', docRef.id);
+
+    // Integrate with AgencyBloc CRM (non-blocking)
+    try {
+      const agencyBlocData = {
+        firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
+        lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Unknown',
+        email: sanitizedData.email,
+        phone: sanitizedData.phone || '',
+        insuranceType: 'General Inquiry',
+        leadScore: 25,
+        additionalNotes: `Contact Form Submission | Message: ${sanitizedData.message} | Lead ID: ${docRef.id}`,
+        comments: sanitizedData.message,
+      };
+
+      const agencyBlocResult = await createLeadWithNote(agencyBlocData, 'Contact Form');
+      
+      if (agencyBlocResult.success) {
+        console.log('AgencyBloc contact lead created:', agencyBlocResult.recordId);
+        // Update Firestore record with AgencyBloc ID
+        await docRef.update({
+          'submission.agencyBlocRecordId': agencyBlocResult.recordId,
+          'submission.agencyBlocSynced': true,
+          'submission.agencyBlocSyncDate': admin.firestore.FieldValue.serverTimestamp()
+        });
+      } else {
+        console.warn('AgencyBloc contact integration failed:', agencyBlocResult.error);
+        // Update Firestore record to note sync failure (for retry later)
+        await docRef.update({
+          'submission.agencyBlocSynced': false,
+          'submission.agencyBlocSyncError': agencyBlocResult.error,
+          'submission.agencyBlocSyncAttempted': admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    } catch (agencyBlocError) {
+      console.error('AgencyBloc contact integration error (non-blocking):', agencyBlocError);
+      // Don't throw - AgencyBloc failure shouldn't prevent Firestore success
+    }
 
     return {
       success: true,
@@ -457,6 +663,27 @@ export const submitNewsletterSubscription = functions.https.onCall(async (data: 
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         status: 'active' // Reactivate if previously unsubscribed
       });
+
+      // AgencyBloc integration for newsletter updates (non-blocking)
+      try {
+        if (sanitizedData.name) {
+          const agencyBlocData = {
+            firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
+            lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Newsletter',
+            email: sanitizedData.email,
+            insuranceType: 'Newsletter Subscription',
+            leadScore: 15,
+            additionalNotes: `Newsletter subscription updated | Source: ${sanitizedData.source} | Firestore ID: ${docRef.id}`,
+          };
+
+          const agencyBlocResult = await createLeadWithNote(agencyBlocData, 'Newsletter Update');
+          if (agencyBlocResult.success) {
+            console.log('AgencyBloc newsletter update recorded:', agencyBlocResult.recordId);
+          }
+        }
+      } catch (agencyBlocError) {
+        console.error('AgencyBloc newsletter integration error (non-blocking):', agencyBlocError);
+      }
       
       return { 
         success: true, 
@@ -466,6 +693,33 @@ export const submitNewsletterSubscription = functions.https.onCall(async (data: 
     } else {
       // Create new entry
       const docRef = await db.collection('newsletter').add(newsletterEntry);
+
+      // AgencyBloc integration for new newsletter subscriptions (non-blocking)
+      try {
+        if (sanitizedData.name) {
+          const agencyBlocData = {
+            firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
+            lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Newsletter',
+            email: sanitizedData.email,
+            insuranceType: 'Newsletter Subscription',
+            leadScore: 10,
+            additionalNotes: `Newsletter subscription | Source: ${sanitizedData.source} | Firestore ID: ${docRef.id}`,
+          };
+
+          const agencyBlocResult = await createLeadWithNote(agencyBlocData, 'Newsletter Subscription');
+          if (agencyBlocResult.success) {
+            console.log('AgencyBloc newsletter lead created:', agencyBlocResult.recordId);
+            // Update Firestore record with AgencyBloc ID
+            await docRef.update({
+              agencyBlocRecordId: agencyBlocResult.recordId,
+              agencyBlocSynced: true,
+              agencyBlocSyncDate: admin.firestore.FieldValue.serverTimestamp()
+            });
+          }
+        }
+      } catch (agencyBlocError) {
+        console.error('AgencyBloc newsletter integration error (non-blocking):', agencyBlocError);
+      }
       
       return { 
         success: true, 

@@ -1,0 +1,623 @@
+This is information for the funciton to send leads data to AgencyBloc.
+
+API KEY:     7f9a756960f51c8f3063c9f15e1cbe5242c3a1c0
+API SID:     8WPMJORYKG56QCG86D2R
+
+Making API Requests
+API Request Resources
+Security
+Base URL
+API Request Format
+Rate Limits
+
+Security
+Security for the API is handled by two parameters that need to be used on every call and be posted via the body. For information on how to obtain these parameters, visit this article.
+
+Parameter	Description
+sid	This value will be provided to you by AMS+ for consuming the API.
+key	This value will be provided to you by AMS+ for consuming the API.
+API Key Security
+API keys grant full access to your AMS+ account, so you should protect them the same way you protect your AMS+ account password. Never email the API key; in the event that your email account becomes compromised, the emailed key would allow hackers to access your AMS+ account as well.
+
+
+Base URL
+All URLs referenced in the documentation have the following base:
+
+https://app.agencybloc.com/api/v1/
+
+The REST API is served only over HTTPS. This ensures data privacy by encrypting all traffic to and from the API. HTTP is not allowed to ensure data protection.
+
+
+API Request Format
+Our REST API is based on open standards, so you can use any web development language to access the API.
+
+To make a request, you'll make an HTTPS POST to the applicable endpoint URL.
+
+For example: https://app.agencybloc.com/api/v1/individuals/create
+
+No parameters should be in the URL or querystring. The body of the request must contain the security credentials, as well as the method-specific parameters.
+
+For example:
+
+sid=mySID
+key=myKey
+lastName=Doe
+firstName=John
+And the Request Content-Type must be application/x-www-form-urlencoded.
+
+For example:
+
+POST /i HTTP/1.1
+Host: https://app.agencybloc.com/api/v1/individuals/create
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+sid=mySID&key=myKey&lastName=Doe&firstName=John
+Note: The responses from the API are in JSON format as described in the method descriptions, but you do not POST JSON-formatted requests. They must be in application/x-www-form-urlencoded format per the above.
+
+
+Rate Limits
+The API is rate limited. You may access the API up to 2,000 times per 5-minute period. If the rate limit is exceeded, the API responds with a 403 HTTP response.
+
+
+
+Create
+RESOURCE URI
+https://app.agencybloc.com/api/v1/salesEnablement/leads/create
+
+REQUIRED POST PARAMETERS
+You must POST the following parameters via the body of the request. Parameters found in the querystring of the request will be ignored:
+
+Parameter	Description
+first_name	The first name of the new Sales Record that is being created in your AMS+ account.
+last_name	The last name of the new Sales Record that is being created in your AMS+ account.
+ADDITIONAL POST PARAMETERS
+You may also POST any of the following parameters:
+
+Parameter	Description
+middle_name	
+The middle name of the new Sales Record that is being created.
+
+title	
+The title for the new Sales Record that is being created.
+
+nickname	
+The nickname of the new Sales Record that is being created.
+
+date_of_birth	
+The birth date of the new Sales Record that is being created.
+
+social_security_number	The social security number of the new Sales Record that is being created.
+drivers_license_number	The driver's license number of the new Sales Record that is being created.
+med_beneficiary_number	The Medicare Beneficiary ID (MBI) of the new Sales Record that is being created.
+med_effective_date_part_a	The Medicare Part A Effective Date of the new Sales Record that is being created.
+med_effective_date_part_b	The Medicare Part B Effective Date of the new Sales Record that is being created.
+gender	
+The gender of the new Sales Record that is being created.
+
+smoker_status	The smoker/tobacco status for the new Sales Record that is being created, 'Yes' or 'No'.
+email	The email of the new Sales Record that is being created.
+secondary_email	The secondary email of the new Sales Record that is being created.
+coverage_type*	The coverage of the new Sales Record that is being created.
+status_id* or status*	The status of the new Sales Record that is being created.
+lead_source_id* or lead_source*	The lead source of the new Sales Record that is being created.
+When sending gender via POST, please format using Male for a male or Female for a female. When sending email field via POST, please ensure that all email addresses are formatted as name@example.com. When sending dates via POST, please ensure that the dates are formatted as 01/01/2013.
+
+* We will attempt to find, if it exists, the value you are passing via the API inside your AMS+ account, otherwise the value will be left blank.
+You may also POST phone numbers for the new Sales Record using these parameters:
+
+Parameter	Description
+phone	The phone number of the new Sales Record that is being created. This value will be displayed in the 'Information' tab of the new Sales Record.
+cellphone	
+The cell phone number of the new Sales Record that is being created. This value will be displayed in the 'Information' tab of the new Sales Record.
+
+When sending phone numbers via POST, we recommend that all phone numbers are formatted as (319) 555-0000.
+
+You may also POST address information for the new Sales Record using these parameters:
+
+Parameter	Description
+address	
+The first line of the address of the new Sales Record that is being created. This value will be displayed in the 'Information' tab of the new Sales Record.
+
+city	The city of the new Sales Record that is being created. This value will be displayed in the 'Information' tab of the new Sales Record.
+county	The county of the new Sales Record that is being created. This value will be displayed in the 'Information' tab of the new Sales Record.
+state	
+The state of the new Sales Record that is being created. This value will be displayed in the 'Information' tab of the new Sales Record.
+
+Two-char state code is preferred; if full name is provided e.g. “Iowa”, will be converted to two-char code “IA”.
+
+Required for populating the county.
+
+zip	
+The zip code of the new Sales Record that is being created. This value will be displayed in the 'Information' tab of the new Sales Record.
+
+You may also POST agent information for the new Sales Record using these parameters:
+
+Parameter	Description
+assigned_ab_agent_id* or agent	
+The assigned user of the new Sales Record that is being created.
+
+assigned_ab_agent_id: The Agent ID of the servicing agent that is linked to a user account.
+agent: The user’s first and last name. Searches for a user on first last. That’s the user that is assigned.
+* To get the corresponding 'Agent ID' from AMS+, you will need to get the unique identifier used within AMS+. To get this value you will need to navigate to the 'Agent Detail' screen within AMS+. Once you have reached that page you can get the value from the URL:
+
+https://app.agencybloc.com/agents/######/detail
+
+The assigned_ab_agent_id' used by AMS+ is represented by the ###### in the link above. By sending this value via POST, the API will assign the corresponding agent's linked user to the new Sales Record being created.
+
+Note: If your AMS+ subscription package includes premium workflow actions, you can use Sales Workflows to trigger Lead Routing Rules to assign agents to new Sales Records created by the Lead POST. Posting the word “Auto” in the first name field and leaving the last name field blank will trigger Lead Routing Rules.
+
+Custom Fields
+The REST API allows access to the custom fields inside your account when creating a new Sales Record.  To obtain the name values for the custom fields, you will need to access the custom fields page below.
+
+https://app.agencybloc.com/settings/custom-fields/Individual/list
+
+By selecting the entity type from the dropdown, you will see the list of that entity's custom fields. All names must be lowercase, but otherwise match exactly what is listed on the page.
+
+For Checkbox List custom fields, you can only send one value currently. For Checkbox fields, you need to provide either "true" or "false".
+
+RESPONSE
+A return response will be generated after you have consumed the API. Upon successfully creating a new Sales Record inside your AMS+ account, you will get a return status of 200 along with the record_id as seen below.
+
+{
+  "Agencybloc Response": {
+    "Status":"200",
+    "record_id":"123456",
+    "Action":"create"
+  }
+}
+
+Search
+RESPONSE URI
+https://app.agencybloc.com/api/v1/salesEnablement/leads/searchphone
+
+REQUIRED POST PARAMETERS
+Phone number is a required POST parameter for searching.
+
+ADDITIONAL POST PARAMETERS
+You may POST any of the following parameters to search for a Sales Record:
+
+Parameter	Description
+PhoneNumberSearchQuery	
+The phone number of the Sales Record being searched.
+
+RESPONSE
+The response will be a list of Sales Records matching your criteria in JSON format.
+
+[
+  {
+    "type":"My Lead",
+    "name":"Aedion Asher",
+    "address":"",
+    "email":"",
+    "city":"",
+    "state":"IA",
+    "zip":"",
+    "county":null”,
+    "phone":"1234567890",
+    "cell":"",
+    "coverage_type":null”,
+    "temperature":"Cold",
+    "status":"Quoting",
+    "record_id":3983”,
+    "create_date":"2024-01-30T09:27:01.000-07:00",
+    "last_update":"2024-02-15T09:55:00.000-07:00",
+    "assigned_user":"Unassigned",
+    "date_of_birth":null”,
+    "height":"",
+    "weight":null”,
+    "gender":"",
+    "tags":"”,
+    "facebook_username":"",
+    "twitter_username":"",
+    "linkedin_username":"",
+    "unsubscribe":"No",
+    "notes": [
+             "Notes body"
+],
+    "med_effective_date_part_a":null”,
+    "med_effective_date_part_b":null”,
+    "custom_fields": 
+                   {
+                   "checkbox":"false"
+                   },
+    "products": [
+             "carrier":"ACA Carrier",
+             "product":null,
+             "status":"Active",
+             "coverage_type":"Life",
+             "premium":null,
+             "policy_no":"",
+             "customer_number":"",
+             "effective_date":null,
+             "renewal_date":null,
+             "created_at":"2024-02-13T10:32:11.000-07:00",
+             "updated_at":"2024-02-13T10:32:11.000-07:00",
+             "id":370,
+             "record_id":3588,
+             "record_type":"Lead",
+             "type":"LeadProduct",
+             ]
+             }
+]
+
+Detail
+RESOURCE URI
+https://app.agencybloc.com/api/v1/salesEnablement/Leads/detail
+
+REQUIRED POST PARAMETERS
+Parameter	Description
+record_id	The record_id returned from the search response.
+RESPONSE
+The response will be the full detail of the Sales Record selected and include all addresses associated with a Sales Record.
+
+{
+    "type":"My Lead",
+    "name":"Aedion Asher",
+    "address":"",
+    "email":"",
+    "city":"",
+    "state":"IA",
+    "zip":"",
+    "county":null”,
+    "phone":"1234567890",
+    "cell":"",
+    "coverage_type":null”,
+    "temperature":"Cold",
+    "status":"Quoting",
+    "record_id":3983”,
+    "create_date":"2024-01-30T09:27:01.000-07:00",
+    "last_update":"2024-02-15T09:55:00.000-07:00",
+    "assigned_user":"Unassigned",
+    "date_of_birth":null”,
+    "height":"",
+    "weight":null”,
+    "gender":"",
+    "tags":"”,
+    "facebook_username":"",
+    "twitter_username":"",
+    "linkedin_username":"",
+    "unsubscribe":"No",
+    "notes": [
+             "Notes body"
+],
+    "med_effective_date_part_a":null”,
+    "med_effective_date_part_b":null”,
+    "custom_fields": 
+                   {
+                   "checkbox":"false"
+                   },
+    "products": [
+             "carrier":"ACA Carrier",
+             "product":null,
+             "status":"Active",
+             "coverage_type":"Life",
+             "premium":null,
+             "policy_no":"",
+             "customer_number":"",
+             "effective_date":null,
+             "renewal_date":null,
+             "created_at":"2024-02-13T10:32:11.000-07:00",
+             "updated_at":"2024-02-13T10:32:11.000-07:00",
+             "id":370,
+             "record_id":3588,
+             "record_type":"Lead",
+             "type":"LeadProduct",
+             "Custom_fields":
+                 {
+                  "Name":"Value",
+                  "Name (multi-select)":[
+                  "Option 1",”Option 2”
+                       ]
+                       }
+              }
+]
+}
+
+Update
+RESPONSE URL
+https://app.agencybloc.com/api/v1/salesEnablement/leads/update
+
+REQUIRED POST PARAMETERS
+You must POST the following parameters via the body of the request. Parameters found in the querystring of the request will be ignored:
+
+Parameter	Description
+record_id	The record_id of the Sales Record that is being updated.
+ADDITIONAL POST PARAMETERS
+You may also POST any of the following parameters:
+
+Parameter	Description
+first_name	The first name of the new Sales Record that is being updated  in your AMS+ account.
+last_name	The last name of the new Sales Record that is being updated in your AMS+ account.
+middle_name	
+The middle name of the new Sales Record that is being updated.
+
+title	
+The title for the new Sales Record that is being updated.
+
+nickname	
+The nickname of the new Sales Record that is being updated.
+
+date_of_birth	
+The birth date of the new Sales Record that is being updated.
+
+social_security_number	The social security number of the new Sales Record that is being updated.
+drivers_license_number	The driver's license number of the new Sales Record that is being updated.
+med_beneficiary_number	The Medicare Beneficiary ID (MBI) of the new Sales Record that is being updated.
+med_effective_date_part_a	The Medicare Part A Effective Date of the new Sales Record that is being updated.
+med_effective_date_part_b	The Medicare Part B Effective Date of the new Sales Record that is being updated.
+gender	
+The gender of the new Sales Record that is being updated.
+
+smoker_status	The smoker/tobacco status for the new Sales Record that is being updated, 'Yes' or 'No'.
+email	The email of the new Sales Record that is being updated.
+secondary_email	The secondary email of the new Sales Record that is being updated.
+coverage_type*	The coverage of the new Sales Record that is being updated.
+status_id* or status*	The status of the new Sales Record that is being updated.
+lead_source_id* or lead_source*	The lead source of the new Sales Record that is being updated.
+When sending gender via POST, please format using Male for a male or Female for a female. When sending email field via POST, please ensure that all email addresses are formatted as name@example.com. When sending dates via POST, please ensure that the dates are formatted as 01/01/2013.
+
+* We will attempt to find, if it exists, the value you are passing via the API inside your AMS+ account, otherwise the value will be left blank.
+You may also POST phone numbers for the Sales Record using these parameters:
+
+Parameter	Description
+phone	The phone number of the Sales Record that is being updated. This value will be displayed in the 'Information' tab of the Sales Record.
+cellphone	
+The cell phone number of the Sales Record that is being updated. This value will be displayed in the 'Information' tab of the Sales Record.
+
+When sending phone numbers via POST, we recommend that all phone numbers are formatted as (319) 555-0000.
+
+You may also POST address information for the Sales Record using these parameters:
+
+Parameter	Description
+address	
+The first line of the address of the Sales Record that is being updated. This value will be displayed in the 'Information' tab of the Sales Record.
+
+city	The city of the Sales Record that is being updated. This value will be displayed in the 'Information' tab of the Sales Record.
+county	The county of the Sales Record that is being updated. This value will be displayed in the 'Information' tab of the Sales Record.
+state	
+The state of the Sales Record that is being updated. This value will be displayed in the 'Information' tab of the Sales Record.
+
+Two-char state code is preferred; if full name is provided e.g. “Iowa”, will be converted to two-char code “IA”.
+
+Required for populating the county.
+
+zip	
+The zip code of the Sales Record that is being updated. This value will be displayed in the 'Information' tab of the Sales Record.
+
+You may also POST agent information for the Sales Record using these parameters:
+
+Parameter	Description
+assigned_ab_agent_id* or agent	
+The assigned user of the Sales Record that is being updated.
+
+assigned_ab_agent_id: The Agent ID of the servicing agent that is linked to a user account.
+agent: The user’s first and last name. Searches for a user on first last. That’s the user that is assigned.
+* To get the corresponding 'Agent ID' from AMS+, you will need to get the unique identifier used within AMS+. To get this value you will need to navigate to the 'Agent Detail' screen within AMS+. Once you have reached that page you can get the value from the URL:
+
+https://app.agencybloc.com/agents/######/detail
+
+The 'Agent ID' used by AMS+ is represented by the ###### in the link above. By sending this value via POST, the API will assign the corresponding agent's linked user to the Sales Record being updated.
+
+Note: If your AMS+ subscription package includes premium workflow actions, you can use Sales Workflows to trigger Lead Routing Rules to assign agents to new Sales Records created by the Lead POST. Posting the word “Auto” in the first name field and leaving the last name field blank will trigger Lead Routing Rules.
+
+Custom Fields
+The REST API allows access to the custom fields inside your account when updating a Sales Record. To obtain the name values for the custom fields, you will need to access the custom fields page below.
+
+https://app.agencybloc.com/settings/custom-fields/Individual/list
+
+By selecting the entity type from the dropdown, you will see the list of that entity's custom fields. All names must be lowercase, but otherwise match exactly what is listed on the page.
+
+For Checkbox List custom fields, you can only send one value currently. For Checkbox fields, you need to provide either "true" or "false".
+
+RESPONSE
+A return response will be generated after you have consumed the API. Upon successfully updating a Sales Record inside your AMS+ account, you will get a return status of 200.
+
+{ 
+  "Agencybloc Response": { 
+     "Status":"200", 
+     "record_id":"123456", 
+     "Action":"update" 
+  } 
+}
+Exception Responses
+The exception responses will include status, title, and message and be in JSON format.
+
+{
+  "Agencybloc Response": { 
+    "Exception": {
+      "Status":"Status Code",
+      "Title":"Title of Error",
+      "Message":"Error Message"
+    }
+  }
+}                
+
+
+Notes & Attachments
+REST API: Notes & Attachments
+Using the REST API, you can create notes and attachments within your AMS+ account. For auditing purposes, you may not update or delete notes or attachments in AMS+ via API.
+
+Note & Attachment Resources
+Create
+List
+Examples
+
+Create
+RESOURCE URL
+https://app.agencybloc.com/api/v1/notes/create
+
+REQUIRED POST PARAMETERS
+You must POST the following parameters via the body of the request. Parameters found in the querystring of the request will be ignored:
+
+Parameter	Description
+entity_id	The ID of the entity (agent, group, individual, or policy) the note/attachment will be created under.
+entity_type	The entity type you are attaching the note/attachment to.
+The entityType parameter must be one of the following values:
+
+Agent
+Group
+Individual
+Policy
+ADDITIONAL POST PARAMETERS
+For each note/attachment record (“collection”), a note body and note subject are required.
+
+Along with each note, you can also post up to 5 files (optional). For each file within a collection, a filename must be supplied as well as a valid URL or base64 encoded file. You may post up to 5 Notes/Attachment collections, with each one containing up to 5 files.
+
+See the Examples section at the end for text files with demo data.
+
+Parameter	Description	Parameter Collection
+attachment_note_1_body_text	Note body - Appears in the detail view of a note entry. Must not exceed 4,294,977,295 bytes.	1
+attachment_note_1_subject_text	Note subject - Appears in note lists for entities in the web app. Must not exceed 65,535 bytes.	1
+attachment_note_1_pinned	Flag indicating whether this item will be pinned. Any other previously pinned notes will become un-pinned. Must be either a 1 or a 0. Any other value will be treated as a 0.	1
+attach_file_to_note_1	Flag indicating whether this note will have file attachments. Must be either a 1 or a 0. Any other value will be treated as a 0.	1
+attachment_note_1_file_url_1	A valid URL where a file attachment can be downloaded from. When provided, we download the file and attach to the note entry. Must start with “http://” or “https://”. Anything else will be ignored.	1
+attachment_note_1_file_body_1	The file contents as a base64 encoded string. Any non-empty, base64 encoding that is invalid will not be accepted and the file will not be attached.	1
+attachment_note_1_file_name_1	
+The filename of the uploaded file. Invalid characters in the filename may be replaced and filenames may be shortened under certain conditions.
+
+Invalid characters include:
+
+\ { } [ ] ^ % ` ” ’ < > ~ # |
+ASCII Character codes 128-255
+Things like ¥,ë
+1
+attachment_note_1_file_url_2	A valid URL where a file attachment can be downloaded from. When provided, we download the file and attach to the note entry. Must start with “http://” or “https://”. Anything else will be ignored.	1
+attachment_note_1_file_body_2	The file contents as a base64 encoded string. Any non-empty, base64 encoding that is invalid will not be accepted and the file will not be attached.	1
+attachment_note_1_file_name_2	
+The filename of the uploaded file. Invalid characters in the filename may be replaced and filenames may be shortened under certain conditions.
+
+Invalid characters include:
+
+\ { } [ ] ^ % ` ” ’ < > ~ # |
+ASCII Character codes 128-255
+Things like ¥,ë
+1
+...	...	...
+attachment_note_1_file_url_5	A valid URL where a file attachment can be downloaded from. When supplied, we download the file and attach to the note entry. Must start with “http://” or “https://”. Anything else will be ignored.	 
+attachment_note_1_file_body_5	The file contents as a base64 encoded string. Any non-empty, base64 encoding that is invalid will not be accepted and the file will not be attached.	1
+attachment_note_1_file_name_5	
+The filename of the uploaded file. Invalid characters in the filename may be replaced and filenames may be shortened under certain conditions.
+
+Invalid characters include:
+
+\ { } [ ] ^ % ` ” ’ < > ~ # |
+ASCII Character codes 128-255
+Things like ¥,ë
+1
+attachment_note_2_body_text	Note body - Appears in the detail view of a note entry. Must not exceed 4,294,977,295 bytes.	1
+attachment_note_2_subject_text	Note subject - Appears in note lists for entities in the web app. Must not exceed 65,535 bytes.	1
+attachment_note_2_pinned	Flag indicating whether this item will be pinned. Any other previously pinned notes will become un-pinned. Must be either 1 or 0. Any other value will be treated as a 0.	1
+attach_file_to_note_2	Flag indicating whether this note will have file attachments. Must be either 1 or 0, any other value will be treated as a 0.	1
+attachment_note_2_file_url_1	A valid URL where a file attachment can be downloaded from. When supplied, we download the file and attach to the note entry. Must start with “http://” or “https://”. Anything else will be ignored.	1
+attachment_note_2_file_body_1	The file contents as a base64 encoded string. Any non-empty, base64 encoding that is invalid will not be accepted and the file will not be attached.	1
+attachment_note_2_file_name_1	
+The filename of the uploaded file. Invalid characters in the filename may be replaced and filenames may be shortened under certain conditions.
+
+Invalid characters include:
+
+\ { } [ ] ^ % ` ” ’ < > ~ # |
+ASCII Character codes 128-255
+Things like ¥,ë
+1
+...	...	...
+attachment_note_5_file_body_5	The file contents as a base64 encoded string. Any non-empty, base64 encoding that is invalid will not be accepted and the file will not be attached.	1
+attachment_note_5_file_name_5	
+The filename of the uploaded file. Invalid characters in the filename may be replaced and filenames may be shortened under certain conditions.
+
+Invalid characters include:
+
+\ { } [ ] ^ % ` ” ’ < > ~ # |
+ASCII Character codes 128-255
+Things like ¥,ë
+1
+RESPONSE
+A return response will be generated after you have consumed the API. Upon successfully creating a new note inside your AMS+ account, you will get a return status of 200 along with the noteID as seen below.
+
+{
+"Agencybloc Response": {
+ "Status":"200",
+ "note_ids":[123456],
+ "Action":"create"
+ }
+Exception Responses
+The exception responses will include status, title, and message and be in JSON format.
+
+{
+  "Agencybloc Response": {
+     "Exception": {
+        "Status":"Status Code",
+        "Title":"Title of Error",
+        "Message":"Error Message"
+      }
+   }
+}
+
+List
+RESOURCE URL
+https://app.agencybloc.com/api/v1/notes/list
+
+REQUIRED POST PARAMETERS
+Returns a JSON list of note & attachment objects. Notes are ordered by modification date, newest to oldest, with the contained attachments ordered by filename.
+
+Parameter	Description
+entity_ID	The ID of the entity (agent, group, individual, or policy) the note/attachment will be created under.
+entity_Type	The entity type you are attaching the note/attachment to.
+RESPONSE
+A return response will be generated after you have consumed the API. Upon successfully creating a new note inside your AMS+ account, you will get a return status of 200 along with the noteID as seen below.
+
+{
+     "Agencybloc Response":
+     {
+        "Status":"200",
+        "notes":
+        [
+            {	
+	         "note_id":1,
+                 "body_text":"Not Pinned - No attachments",
+                 "create_datetime":"7/9/2018 11:10:22 AM",
+                 "create_username":"John Doe",
+                 "update_datetime":"7/9/2018 11:10:22 AM",
+                 "update_username":"John Doe",
+                 "subject_text":"Note Number 2 - Not Pinned",
+                 "pinned":"0",
+                 "Attachments":[]
+            },
+            {	
+	         "note_id":2,
+                 "body_text":"Pinned Note",
+                 "create_datetime":"7/9/2018 11:09:59 AM",
+                 "create_username":"John Doe",
+                 "update_datetime":"7/9/2018 11:09:59 AM",
+                 "update_username":"John Doe",
+                 "subject_text":"Note Number 1 - Pinned",
+                 "pinned":"1",
+                 "Attachments":
+                 [
+                     {
+                          "file_name":"Bagel.png",
+                          "file_url":"Download.aspx?f=61507_bagel.png\u0026type=7"
+                     }
+                 ]
+            }
+        ],
+        "Action":"list"
+     }
+}
+Exception Responses
+The exception responses will include status, title, and message and be in JSON format.
+
+{
+  "Agencybloc Response": {
+     "Exception": {
+        "Status":"Status Code",
+        "Title":"Title of Error",
+        "Message":"Error Message"
+      }
+   }
+}
+
+Examples
+The attached files demonstrate the naming conventions for a single note with a single attached file (minimum functional implementation of notes & attachments) and 5 five notes with 5 attached files per note (25 files, maximum functional implementation at this time).
+
+Note: The parameters in the text files are not URL encoded for readability purposes. Depending on your API endpoint or integration you may need to include additional parameters to complete your request.
