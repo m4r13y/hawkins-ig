@@ -153,10 +153,28 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
 
   const nextStep = async () => {
     // Check if this is the final step (contact form completion)
-    const finalStep = initialClientType ? 3 : 4;
+    // The contact form is always the second-to-last step, "Complete" is the last
+    const contactFormStepIndex = steps.findIndex(step => step === "Contact Information");
     
-    if (currentStep === finalStep) {
+    console.log('Step navigation debug:', {
+      currentStep,
+      steps,
+      contactFormStepIndex,
+      isContactFormStep: currentStep === contactFormStepIndex
+    });
+    
+    if (currentStep === contactFormStepIndex) {
       // Submit form data to Firestore
+      console.log('Attempting to submit get started form:', {
+        contactFormStepIndex,
+        currentStep,
+        formData: {
+          clientType: formData.clientType || initialClientType || '',
+          email: formData.email,
+          name: formData.name
+        }
+      });
+      
       try {
         const submissionId = await submitGetStartedForm({
           clientType: formData.clientType || initialClientType || '',
@@ -174,10 +192,12 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
           source: 'get-started-flow'
         });
         
+        console.log('Get started form submission result:', submissionId);
+        
         if (submissionId) {
-          // Form submitted successfully
+          console.log('Form submitted successfully with ID:', submissionId);
         } else {
-          console.error('Failed to submit form');
+          console.error('Failed to submit form - no submission ID returned');
         }
       } catch (error) {
         console.error('Error submitting form:', error);

@@ -1,5 +1,4 @@
 import * as functions from 'firebase-functions/v2';
-import * as admin from 'firebase-admin';
 import axios from 'axios';
 
 // CSG API Token Management (you'll need to add your token)

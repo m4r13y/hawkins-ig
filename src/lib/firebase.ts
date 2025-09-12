@@ -53,6 +53,10 @@ const initializeFirebase = () => {
     // Initialize Functions (works on both server and client)
     functions = getFunctions(app);
     
+    // Ensure we're using the correct region - Firebase Functions default to us-central1
+    // but we should explicitly set it to avoid any region issues
+    // functions = getFunctions(app, 'us-central1');
+    
     // Initialize Analytics only in browser environment
     if (isBrowser && firebaseConfig.measurementId) {
       try {
@@ -94,6 +98,7 @@ if (isBrowser) {
       db = getFirestore(app);
       storage = getStorage(app);
       functions = getFunctions(app);
+      // functions = getFunctions(app, 'us-central1'); // Explicit region if needed
       isFirebaseConfigured = true;
     } catch (e) {
       console.error("Server-side Firebase initialization error:", e);
@@ -148,12 +153,25 @@ export const submitNewsletterSubscription = async (data: {
   source?: string;
 }) => {
   ensureFirebaseInitialized();
+  
   if (!functions) {
+    console.error('Firebase functions not initialized. Config check:', {
+      apiKey: !!firebaseConfig.apiKey,
+      authDomain: !!firebaseConfig.authDomain,
+      projectId: firebaseConfig.projectId,
+      storageBucket: !!firebaseConfig.storageBucket
+    });
     throw new Error('Firebase functions not initialized');
   }
   
-  const submitNewsletter = httpsCallable(functions, 'submitNewsletterSubscription');
-  return await submitNewsletter(data);
+  try {
+    const submitNewsletter = httpsCallable(functions, 'submitNewsletterSubscription');
+    const result = await submitNewsletter(data);
+    return result;
+  } catch (error) {
+    console.error('Newsletter submission error:', error);
+    throw error;
+  }
 };
 
 export { app, db, storage, functions, analytics, isFirebaseConfigured };

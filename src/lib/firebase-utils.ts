@@ -25,29 +25,21 @@ export interface ContactFormData {
   source: string;
 }
 
-// Create callable functions for lead management
-let submitInsuranceLeadFunction: any = null;
-let submitContactLeadFunction: any = null;
-
-// Initialize functions when called
-const initializeFunctions = () => {
-  ensureFirebaseInitialized();
-  if (functions && !submitInsuranceLeadFunction) {
-    submitInsuranceLeadFunction = httpsCallable(functions, 'submitInsuranceLead');
-    submitContactLeadFunction = httpsCallable(functions, 'submitContactLead');
-  }
-};
-
 export async function submitGetStartedForm(formData: FormSubmission): Promise<string | null> {
-  initializeFunctions();
+  ensureFirebaseInitialized();
   
-  if (!submitInsuranceLeadFunction) {
-    console.error('Firebase Functions is not initialized');
+  if (!functions) {
+    console.error('Firebase functions not initialized for get started form. Config check:', {
+      hasFormData: !!formData,
+      clientType: formData.clientType,
+      email: formData.email
+    });
     return null;
   }
 
   try {
-    const result = await submitInsuranceLeadFunction(formData);
+    const submitInsuranceLead = httpsCallable(functions, 'submitInsuranceLead');
+    const result = await submitInsuranceLead(formData);
     return (result.data as any)?.leadId || null;
   } catch (error) {
     console.error('Error submitting insurance lead:', error);
@@ -56,15 +48,16 @@ export async function submitGetStartedForm(formData: FormSubmission): Promise<st
 }
 
 export async function submitContactForm(contactData: ContactFormData): Promise<string | null> {
-  initializeFunctions();
+  ensureFirebaseInitialized();
   
-  if (!submitContactLeadFunction) {
-    console.error('Firebase Functions is not initialized');
+  if (!functions) {
+    console.error('Firebase functions not initialized for contact form');
     return null;
   }
 
   try {
-    const result = await submitContactLeadFunction(contactData);
+    const submitContactLead = httpsCallable(functions, 'submitContactLead');
+    const result = await submitContactLead(contactData);
     return (result.data as any)?.leadId || null;
   } catch (error) {
     console.error('Error submitting contact lead:', error);
