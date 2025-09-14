@@ -75,13 +75,13 @@ export const trackQuoteRequest = () => {
 }
 
 export const trackPhoneCall = () => {
-  trackEvent('Contact', { content_type: 'product', content_ids: ['contact_phone'], user_bucket: 'contact_request' })
+  trackEvent('Contact', { content_type: 'product', content_ids: ['contact_phone'] })
 }
 
 export const trackEmailContact = () => {
-  trackEvent('Contact', { content_type: 'product', content_ids: ['contact_email'], user_bucket: 'contact_request' })
+  trackEvent('Contact', { content_type: 'product', content_ids: ['contact_email'] })
 }
 
 export const trackFormSubmission = (formType: string) => {
-  trackEvent('Lead', { content_type: 'product', content_ids: [`form_${formType}`], user_bucket: 'lead' })
+  trackEvent('Lead', { content_type: 'product', content_ids: [`form_${formType}`] })
 }

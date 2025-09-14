@@ -15,18 +15,13 @@
 - `CI_006`: group
 - `CI_007`: newsletter_subscription
 
-### **LE_** = lead_event_source (Form Sources)
-- `LE_001`: get_started_form
-- `LE_002`: newsletter_signup
-- `LE_003`: contact_form
-- `LE_004`: quote_request
+### **LE_** = lead_event_source (Form Sources) - REMOVED
+- **Note**: Removed due to Business Tools Terms compliance
+- **Alternative**: Use `content_ids` for form identification
 
-### **UB_** = user_bucket (Client Segments)
-- `UB_001`: individual
-- `UB_002`: family
-- `UB_003`: business
-- `UB_004`: agent
-- `UB_005`: newsletter_subscriber
+### **UB_** = user_bucket (Client Segments) - REMOVED  
+- **Note**: Removed due to Business Tools Terms compliance
+- **Alternative**: Server-side segmentation via Conversions API
 
 ---
 
@@ -42,8 +37,8 @@
 
 #### CV_002: Primary Lead Generation  
 - **Event:** Lead
-- **Rule:** `lead_event_source` equals "get_started_form"
-- **Index:** LE_001
+- **Rule:** `content_ids` contains "get_started_form"
+- **Index:** CI_form_identification
 - **Priority:** Main conversion funnel
 
 #### CV_003: Newsletter Acquisition
@@ -52,65 +47,45 @@
 - **Index:** CI_007
 - **Priority:** Top-funnel lead nurturing
 
-### **Phase 2: Client Segmentation (Create Second)**
+### **Phase 2: Product-Specific Targeting (Create Second)**
 
-#### CV_004: Individual Client Leads
-- **Event:** Any event
-- **Rule:** `user_bucket` equals "individual"
-- **Index:** UB_001
-- **Priority:** Volume targeting
-
-#### CV_005: Family Insurance Plans
-- **Event:** Any event
-- **Rule:** `user_bucket` equals "family"
-- **Index:** UB_002
-- **Priority:** Mid-tier value targeting
-
-#### CV_006: Business Insurance Clients
-- **Event:** Any event
-- **Rule:** `user_bucket` equals "business"
-- **Index:** UB_003
-- **Priority:** High-value targeting
-
-### **Phase 3: Product-Specific (Create Third)**
-
-#### CV_007: Medicare Prospects
+#### CV_004: Medicare Prospects
 - **Event:** Any event
 - **Rule:** `content_ids` contains "medicare"
 - **Index:** CI_002
 - **Priority:** Medicare-specific campaigns
 
-#### CV_008: Health Insurance Prospects
+#### CV_005: Health Insurance Prospects
 - **Event:** Any event
 - **Rule:** `content_ids` contains "health"
 - **Index:** CI_001
 - **Priority:** Health insurance campaigns
 
-#### CV_009: Life Insurance Prospects
+#### CV_006: Life Insurance Prospects
 - **Event:** Any event
 - **Rule:** `content_ids` contains "life"
 - **Index:** CI_003
 - **Priority:** Life insurance campaigns
 
-### **Phase 4: Advanced Combinations**
+### **Phase 3: Value-Based Targeting (Create Third)**
 
-#### CV_010: High-Value Business Medicare
-- **Event:** Any event
-- **Rule:** `user_bucket` equals "business" AND `content_ids` contains "medicare" AND `value` ≥ 400
-- **Index:** UB_003 + CI_002 + VALUE
-- **Priority:** Premium group Medicare
+#### CV_007: High-Value Consultations
+- **Event:** Schedule
+- **Rule:** `content_type` equals "product" AND `value` ≥ 300
+- **Index:** CT_001 + HIGH_VALUE
+- **Priority:** Premium consultation bookings
 
-#### CV_011: Multi-Product Individual Leads
+#### CV_008: Premium Leads
+- **Event:** Lead
+- **Rule:** `content_type` equals "product" AND `value` ≥ 400
+- **Index:** CT_001 + PREMIUM_VALUE
+- **Priority:** High-value lead generation
+
+#### CV_009: Multi-Product Interest
 - **Event:** Any event
-- **Rule:** `user_bucket` equals "individual" AND multiple `content_ids`
-- **Index:** UB_001 + Multiple CI_
+- **Rule:** Multiple insurance types in `content_ids`
+- **Index:** Multiple CI_ values
 - **Priority:** Cross-sell opportunities
-
-#### CV_012: Business Health Insurance
-- **Event:** Any event
-- **Rule:** `user_bucket` equals "business" AND `content_ids` contains "health"
-- **Index:** UB_003 + CI_001
-- **Priority:** Group health plans
 
 ---
 

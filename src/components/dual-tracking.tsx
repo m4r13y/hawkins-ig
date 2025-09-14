@@ -135,9 +135,8 @@ export const trackCustomizeProductDual = async (
     userData,
     customData: {
       content_type: 'product', // Standard parameter ✅
-      content_ids: [`${productType}_customization`], // Standard parameter ✅
-      item_number: `CI_${productType.toLowerCase()}`, // Indexed insurance type
-      user_bucket: 'prospect' // Standard parameter ✅
+      content_ids: [`${productType}_customization`] // Standard parameter ✅
+      // Note: PII handled server-side via Conversions API
     }
   })
 }
@@ -151,8 +150,8 @@ export const trackSearchDual = async (
     customData: {
       content_type: 'product', // Standard parameter ✅
       search_string: searchTerm, // Standard parameter ✅
-      content_ids: [`search_${searchTerm.toLowerCase().replace(/\s+/g, '_')}`], // Standard parameter ✅
-      user_bucket: 'searcher' // Standard parameter ✅
+      content_ids: [`search_${searchTerm.toLowerCase().replace(/\s+/g, '_')}`] // Standard parameter ✅
+      // Note: PII handled server-side via Conversions API
     }
   })
 }
@@ -165,9 +164,8 @@ export const trackContactDual = async (
     userData,
     customData: { 
       content_type: 'product', // Standard parameter ✅
-      content_ids: [`contact_${contactMethod}`], // Standard parameter ✅
-      item_number: `LE_${contactMethod}`, // Indexed lead source
-      user_bucket: 'contact_request' // Standard parameter ✅
+      content_ids: [`contact_${contactMethod}`] // Standard parameter ✅
+      // Note: PII handled server-side via Conversions API
     }
   })
 }
@@ -214,9 +212,8 @@ export const trackSubmitApplicationDual = async (
     userData,
     customData: {
       content_type: 'product', // Standard parameter ✅
-      content_ids: [`${applicationType}_application`], // Standard parameter ✅
-      item_number: `CV_${applicationType.toLowerCase()}`, // Indexed conversion type
-      user_bucket: 'applicant' // Standard parameter ✅
+      content_ids: [`${applicationType}_application`] // Standard parameter ✅
+      // Note: PII handled server-side via Conversions API
     }
   })
 }
@@ -276,6 +273,6 @@ export const trackEvent = (eventName: string, parameters?: any) => {
 export const trackContact = () => trackEvent('Contact')
 export const trackLead = () => trackEvent('Lead')
 export const trackQuoteRequest = () => trackEvent('InitiateCheckout')
-export const trackPhoneCall = () => trackEvent('Contact', { content_type: 'product', content_ids: ['contact_phone'], user_bucket: 'contact_request' })
-export const trackEmailContact = () => trackEvent('Contact', { content_type: 'product', content_ids: ['contact_email'], user_bucket: 'contact_request' })
-export const trackFormSubmission = (formType: string) => trackEvent('Lead', { content_type: 'product', content_ids: [`form_${formType}`], user_bucket: 'lead' })
+export const trackPhoneCall = () => trackEvent('Contact', { content_type: 'product', content_ids: ['contact_phone'] })
+export const trackEmailContact = () => trackEvent('Contact', { content_type: 'product', content_ids: ['contact_email'] })
+export const trackFormSubmission = (formType: string) => trackEvent('Lead', { content_type: 'product', content_ids: [`form_${formType}`] })

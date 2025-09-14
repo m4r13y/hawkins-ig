@@ -23,10 +23,8 @@ export const trackNewsletterSignup = async (email: string, source: string = 'foo
     content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
     content_ids: ['newsletter_subscription'], // ✅ Compliant: Newsletter as product ID
     value: 25, // ✅ Standard parameter
-    currency: 'USD', // ✅ Standard parameter
-    lead_event_source: source, // ✅ Compliant: Newsletter source
-    item_number: `CV_003_newsletter_${Date.now()}`, // ✅ Compliant: Unique identifier
-    user_bucket: 'newsletter_subscriber' // ✅ Compliant: Newsletter audience bucket
+    currency: 'USD' // ✅ Standard parameter
+    // Note: PII handled server-side via Conversions API
   })
   
   console.log(`📧 Newsletter signup tracked: ${email} from ${source}`)
@@ -65,12 +63,8 @@ export const trackGetStartedSubmission = async (
     content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
     content_ids: formData.insuranceNeeds, // ✅ Compliant: Insurance types as product IDs
     value: 250, // ✅ Standard parameter
-    currency: 'USD', // ✅ Standard parameter
-    postal_code: formData.zipCode, // ✅ Standard parameter
-    region: formData.state, // ✅ Standard parameter
-    lead_event_source: 'get_started_form', // ✅ Compliant: Lead source
-    item_number: `CV_001_schedule_${Date.now()}`, // ✅ Compliant: Unique identifier
-    user_bucket: formData.clientType // ✅ Compliant: Use for client type (individual/family/business)
+    currency: 'USD' // ✅ Standard parameter
+    // Note: PII (postal_code, region) handled server-side via Conversions API
   })
   
   // Also track as Lead (they're a qualified lead)
@@ -78,12 +72,8 @@ export const trackGetStartedSubmission = async (
     content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
     content_ids: formData.insuranceNeeds, // ✅ Compliant: Insurance types as product IDs
     value: 500, // ✅ Standard parameter
-    currency: 'USD', // ✅ Standard parameter
-    postal_code: formData.zipCode, // ✅ Standard parameter
-    region: formData.state, // ✅ Standard parameter
-    lead_event_source: 'get_started_form', // ✅ Compliant: Lead source
-    item_number: `CV_002_lead_${Date.now()}`, // ✅ Compliant: Unique identifier
-    user_bucket: formData.clientType // ✅ Compliant: Use for client type (individual/family/business)
+    currency: 'USD' // ✅ Standard parameter
+    // Note: PII (postal_code, region) handled server-side via Conversions API
   })
   
   console.log(`🎯 Get Started form tracked: Schedule + Lead for ${formData.clientType} - ${formData.email}`)

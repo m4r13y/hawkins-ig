@@ -108,8 +108,6 @@ export const trackCrossDomainJourney = async (
     customData: {
       content_type: 'product', // ✅ Core Setup compliant
       content_ids: ['cross_domain_journey'], // ✅ Standard parameter
-      user_bucket: 'journey_transition', // ✅ Standard parameter
-      item_number: `LE_cross_domain`, // ✅ Indexed tracking
       from_domain: journeyData.fromDomain,
       to_domain: journeyData.toDomain,
       user_action: journeyData.userAction,
@@ -118,6 +116,7 @@ export const trackCrossDomainJourney = async (
       utm_medium: journeyData.crossDomainData?.utmMedium,
       insurance_type: journeyData.crossDomainData?.insuranceType,
       referrer: journeyData.crossDomainData?.referrer
+      // Note: PII handled server-side via Conversions API
     },
     eventId: journeyData.eventId
   })
@@ -163,12 +162,11 @@ export const trackPageViewWithJourney = async (
     customData: {
       content_type: 'product', // ✅ Core Setup compliant
       content_ids: [contentType], // ✅ Standard parameter
-      user_bucket: 'page_visitor', // ✅ Standard parameter
-      item_number: `LE_${contentType}`, // ✅ Indexed tracking
       referral_source: userContext?.referralSource,
       user_journey: userContext?.userJourney,
       from_cross_domain: userContext?.fromCrossDomain || false,
       insurance_type: userContext?.insuranceType
+      // Note: PII handled server-side via Conversions API
     }
   })
   
@@ -189,11 +187,10 @@ export const trackQuoteReferral = async (
     customData: {
       content_type: 'product', // ✅ Core Setup compliant
       content_ids: [`quote_referral_${insuranceType}`], // ✅ Standard parameter
-      user_bucket: 'quote_prospect', // ✅ Standard parameter
-      item_number: `LE_quote_referral`, // ✅ Indexed tracking
       insurance_type: insuranceType,
       destination_url: destinationUrl,
       referral_type: 'cross_domain'
+      // Note: PII handled server-side via Conversions API
     }
   })
   
