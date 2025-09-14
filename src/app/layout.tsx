@@ -33,10 +33,11 @@ export const metadata: Metadata = {
     siteName: 'Hawkins Insurance Group',
     images: [
       {
-        url: '/hawkins-ig-open-graph.jpg',
+        url: '/hawkins-ig-open-graph.png',
         width: 1200,
         height: 600,
         alt: 'Hawkins Insurance Group Shield Logo',
+        type: 'image/png',
       },
     ],
     locale: 'en_US',
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Hawkins Insurance Group - Your Trusted Insurance Partner",
     description: "Discover personalized insurance options with Hawkins Insurance Group. We're here to help you secure your future.",
-    images: ['/hawkins-ig-open-graph.jpg'],
+    images: ['/hawkins-ig-open-graph.png'],
   },
   icons: {
     icon: '/hig-logo-navy.svg',
@@ -68,11 +69,26 @@ export default function RootLayout({
         <meta name="theme-color" content="#03002D" />
         
         {/* Explicit OpenGraph meta tags to ensure correct image is used */}
-        <meta property="og:image" content="https://hawkinsig.com/hawkins-ig-open-graph.jpg" />
+        <meta property="og:image" content="https://hawkinsig.com/hawkins-ig-open-graph.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
         <meta property="og:image:alt" content="Hawkins Insurance Group Shield Logo" />
-        <meta name="twitter:image" content="https://hawkinsig.com/hawkins-ig-open-graph.jpg" />
+        <meta property="og:image:type" content="image/png" />
+        <meta name="twitter:image" content="https://hawkinsig.com/hawkins-ig-open-graph.png" />
+        
+        {/* Additional meta tags for Google Search logo recognition */}
+        <meta name="organization" content="Hawkins Insurance Group" />
+        <meta name="logo" content="https://hawkinsig.com/hawkins-ig-open-graph.png" />
+        <meta name="google-site-verification" content="" />
+        
+        {/* Brand and business information */}
+        <meta name="business:contact_data:street_address" content="" />
+        <meta name="business:contact_data:locality" content="" />
+        <meta name="business:contact_data:region" content="" />
+        <meta name="business:contact_data:postal_code" content="" />
+        <meta name="business:contact_data:country_name" content="United States" />
+        <meta name="business:contact_data:phone_number" content="817-800-4253" />
+        <meta name="business:contact_data:website" content="https://hawkinsig.com" />
         
         {/* Theme initialization script - runs before React hydration */}
         <script
@@ -115,12 +131,43 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Hawkins Insurance Group",
+            "alternateName": "Hawkins IG",
             "url": "https://hawkinsig.com",
-            "logo": "https://hawkinsig.com/hig-logo-navy.svg",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://hawkinsig.com/hawkins-ig-open-graph.png",
+              "width": 1200,
+              "height": 600,
+              "caption": "Hawkins Insurance Group Logo"
+            },
+            "image": "https://hawkinsig.com/hawkins-ig-open-graph.png",
+            "description": "Hawkins Insurance Group offers personalized insurance solutions, including life, health, and Medicare, with a commitment to precision, protection, and exceptional service.",
             "contactPoint": {
               "@type": "ContactPoint",
               "telephone": "817-800-4253",
-              "contactType": "customer service"
+              "contactType": "customer service",
+              "areaServed": "US",
+              "availableLanguage": "English"
+            },
+            "sameAs": [
+              "https://hawkinsig.com"
+            ],
+            "foundingDate": "2020",
+            "founder": {
+              "@type": "Person",
+              "name": "Jonathan Hawkins"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "US"
+            },
+            "makesOffer": {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Insurance Services",
+                "description": "Life, Health, and Medicare Insurance Solutions"
+              }
             }
           }) }}
         />

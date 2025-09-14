@@ -5,13 +5,19 @@
     "icons": [
         {
             "src": "/hig-logo-navy.svg",
-            "sizes": "192x192",
-            "type": "image/svg+xml"
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
         },
         {
-            "src": "/hig-logo-navy.svg",
+            "src": "/hawkins-ig-open-graph.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/hawkins-ig-open-graph.png",
             "sizes": "512x512",
-            "type": "image/svg+xml"
+            "type": "image/png"
         }
     ],
     "theme_color": "#03002D",
