@@ -65,6 +65,7 @@ async function trackEventDual(
       event_id: eventId // For deduplication
     }
     
+    console.log(`🎯 Sending to Meta Pixel - Event: ${eventName}`, pixelData)
     window.fbq('track', eventName, pixelData)
   }
 
