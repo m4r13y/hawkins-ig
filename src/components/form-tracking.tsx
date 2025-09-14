@@ -37,23 +37,39 @@ export const trackGetStartedSubmission = async (
     dateOfBirth?: string
     clientType: 'individual' | 'family' | 'business' | 'agent'
     insuranceNeeds: string[]
+    ageRange?: string
     currentCoverage?: string
     timeline?: string
   },
   source: string
 ) => {
-  // Track as Submit Application (highest value event)
-  await trackSubmitApplicationDual(`get_started_${formData.clientType}`, {
+  const userData = {
     email: formData.email,
     phone: formData.phone,
     firstName: formData.firstName,
     lastName: formData.lastName,
     zipCode: formData.zipCode,
     state: formData.state,
-    dateOfBirth: formData.dateOfBirth, // Important for insurance
+    dateOfBirth: formData.dateOfBirth,
+  }
+
+  // Track as Schedule event first (they're scheduling a consultation)
+  await trackScheduleDual('consultation', userData, {
+    content_name: `Get Started Consultation - ${formData.clientType}`,
+    content_category: 'Insurance Consultation',
+    content_type: formData.clientType,
+    description: `${formData.insuranceNeeds.join(', ')} - ${formData.timeline || 'timeline not specified'} - Age: ${formData.ageRange || 'not specified'}`
   })
   
-  console.log(`🎯 Get Started form tracked: ${formData.clientType} - ${formData.email}`)
+  // Also track as Lead (they're a qualified lead)
+  await trackLeadDual('get_started_form', userData, {
+    content_name: `Insurance Lead - ${formData.clientType}`, 
+    content_category: 'Insurance Lead',
+    content_type: formData.clientType,
+    description: `Types: ${formData.insuranceNeeds.join(', ')} | Timeline: ${formData.timeline || 'not specified'} | Age: ${formData.ageRange || 'not specified'}`
+  })
+  
+  console.log(`🎯 Get Started form tracked: Schedule + Lead for ${formData.clientType} - ${formData.email}`)
 }
 
 // Quote Request Tracking (for specific insurance products)
@@ -109,10 +125,9 @@ export const trackPageView = async (route: string, userContext?: any) => {
     contentType = 'insurance_product'
     const productType = route.split('/quotes/')[1]?.replace('/', '') || 'unknown'
     await trackViewContentDual(`${productType}_info`, userContext)
-  } else if (route.includes('/get-started/')) {
+  } else if (route.includes('/get-started')) {
     contentType = 'get_started_flow'
-    const clientType = route.split('/get-started/')[1]?.replace('/', '') || 'general'
-    await trackViewContentDual(`get_started_${clientType}`, userContext)
+    await trackViewContentDual('get_started_flow', userContext)
   } else if (route === '/contact') {
     contentType = 'contact_page'
     await trackViewContentDual('contact_info', userContext)

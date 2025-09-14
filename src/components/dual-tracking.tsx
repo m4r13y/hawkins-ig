@@ -170,28 +170,32 @@ export const trackContactDual = async (
 
 export const trackLeadDual = async (
   leadSource: string = 'website',
-  userData?: UserInfo
+  userData?: UserInfo,
+  additionalData?: Record<string, any>
 ) => {
   await trackEventDual('Lead', {
     userData,
     customData: { 
-      content_name: 'Lead Generation',
+      content_name: additionalData?.content_name || 'Lead Generation',
       lead_source: leadSource,
-      content_category: 'Lead'
+      content_category: additionalData?.content_category || 'Lead',
+      ...additionalData
     }
   })
 }
 
 export const trackScheduleDual = async (
   appointmentType: string = 'consultation',
-  userData?: UserInfo
+  userData?: UserInfo,
+  additionalData?: Record<string, any>
 ) => {
   await trackEventDual('Schedule', {
     userData,
     customData: {
-      content_name: `${appointmentType} Scheduled`,
+      content_name: additionalData?.content_name || `${appointmentType} Scheduled`,
       appointment_type: appointmentType,
-      content_category: 'Appointment'
+      content_category: additionalData?.content_category || 'Appointment',
+      ...additionalData
     }
   })
 }

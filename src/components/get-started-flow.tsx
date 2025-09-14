@@ -196,6 +196,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
               zipCode: formData.zipCode,
               clientType: clientType as 'individual' | 'family' | 'business' | 'agent',
               insuranceNeeds: formData.insuranceTypes || [],
+              ageRange: formData.age, // Add age range for better targeting
               currentCoverage: undefined, // Not collected in this form
               timeline: formData.urgency
             }, `get_started_${clientType}`);
