@@ -188,6 +188,10 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
             const [firstName, ...lastNameParts] = (formData.name || '').split(' ');
             const lastName = lastNameParts.join(' ');
             
+            // Convert IDs to human-readable text for tracking
+            const ageRangeText = ageRanges.find(range => range.id === formData.age)?.name || formData.age;
+            const timelineText = urgencyLevels.find(level => level.id === formData.urgency)?.name || formData.urgency;
+            
             await trackGetStartedSubmission({
               firstName: firstName,
               lastName: lastName,
@@ -196,9 +200,9 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
               zipCode: formData.zipCode,
               clientType: clientType as 'individual' | 'family' | 'business' | 'agent',
               insuranceNeeds: formData.insuranceTypes || [],
-              ageRange: formData.age, // Add age range for better targeting
+              ageRange: ageRangeText, // Convert ID to readable text
               currentCoverage: undefined, // Not collected in this form
-              timeline: formData.urgency
+              timeline: timelineText // Convert ID to readable text
             }, `get_started_${clientType}`);
             
           } else {
