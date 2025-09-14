@@ -1,53 +1,141 @@
-# Optimized Custom Conversions for Insurance Business
+# Indexed Custom Conversions System for Insurance Business
+*Using # marked standard parameters for organized targeting*
 
-High-Priority (Create First):
-1. 🔥 Insurance Consultations
+## 🏷️ Parameter Index System:
 
-Event: Schedule
-Rule: content_category contains Insurance Consultation
-Why: Highest intent - they're booking appointments
-2. 💰 All Insurance Leads
+### **CT_** = content_type (Product Types)
+- `CT_001`: product (All insurance products)
 
-Event: Lead
-Rule: content_category contains Insurance Lead
-Why: Qualified prospects from forms
-3. 📧 Newsletter Subscribers
+### **CI_** = content_ids (Insurance Products)
+- `CI_001`: health
+- `CI_002`: medicare
+- `CI_003`: life
+- `CI_004`: disability
+- `CI_005`: supplemental
+- `CI_006`: group
+- `CI_007`: newsletter_subscription
 
-Event: CompleteRegistration
-Rule: registration_method contains newsletter
-Why: Top-of-funnel lead nurturing audience
-Segmentation Conversions (Create Second):
-4. 👤 Individual Client Leads
+### **LE_** = lead_event_source (Form Sources)
+- `LE_001`: get_started_form
+- `LE_002`: newsletter_signup
+- `LE_003`: contact_form
+- `LE_004`: quote_request
 
-Event: Any event
-Rule: content_type contains individual
-Why: Your highest volume segment for targeting
-5. 👨‍👩‍👧‍👦 Family Client Leads
+### **UB_** = user_bucket (Client Segments)
+- `UB_001`: individual
+- `UB_002`: family
+- `UB_003`: business
+- `UB_004`: agent
+- `UB_005`: newsletter_subscriber
 
-Event: Any event
-Rule: content_type contains family
-Why: Higher-value policies, different messaging
-6. 🏢 Business Client Leads
+---
 
-Event: Any event
-Rule: content_type contains business
-Why: Highest-value prospects (group policies)
-Insurance-Type Specific (Create Third):
-7. 🩺 Medicare Prospects
+## 🎯 Organized Custom Conversions:
 
-Event: Any event
-Rule: description contains medicare
-Why: Specific product targeting
-8. ❤️ Health Insurance Prospects
+### **Phase 1: Core Funnel (Create First)**
 
-Event: Any event
-Rule: description contains health
-Why: Largest insurance category
-🚀 Recommended Implementation Order:
-Phase 1 (This week): Create #1-3 (Core conversions) Phase 2 (Next week): Add #4-6 (Client type segmentation) Phase 3 (Later): Add #7-8 (Product-specific)
+#### CV_001: Insurance Consultations
+- **Event:** Schedule
+- **Rule:** `content_type` equals "product" AND `value` ≥ 200
+- **Index:** CT_001 + VALUE
+- **Priority:** Highest intent conversions
 
-This gives you:
+#### CV_002: Primary Lead Generation  
+- **Event:** Lead
+- **Rule:** `lead_event_source` equals "get_started_form"
+- **Index:** LE_001
+- **Priority:** Main conversion funnel
 
-Funnel optimization (Newsletter → Lead → Consultation)
-Client segmentation (Individual/Family/Business)
-Product targeting (Medicare/Health specific)
+#### CV_003: Newsletter Acquisition
+- **Event:** Lead
+- **Rule:** `content_ids` contains "newsletter_subscription"
+- **Index:** CI_007
+- **Priority:** Top-funnel lead nurturing
+
+### **Phase 2: Client Segmentation (Create Second)**
+
+#### CV_004: Individual Client Leads
+- **Event:** Any event
+- **Rule:** `user_bucket` equals "individual"
+- **Index:** UB_001
+- **Priority:** Volume targeting
+
+#### CV_005: Family Insurance Plans
+- **Event:** Any event
+- **Rule:** `user_bucket` equals "family"
+- **Index:** UB_002
+- **Priority:** Mid-tier value targeting
+
+#### CV_006: Business Insurance Clients
+- **Event:** Any event
+- **Rule:** `user_bucket` equals "business"
+- **Index:** UB_003
+- **Priority:** High-value targeting
+
+### **Phase 3: Product-Specific (Create Third)**
+
+#### CV_007: Medicare Prospects
+- **Event:** Any event
+- **Rule:** `content_ids` contains "medicare"
+- **Index:** CI_002
+- **Priority:** Medicare-specific campaigns
+
+#### CV_008: Health Insurance Prospects
+- **Event:** Any event
+- **Rule:** `content_ids` contains "health"
+- **Index:** CI_001
+- **Priority:** Health insurance campaigns
+
+#### CV_009: Life Insurance Prospects
+- **Event:** Any event
+- **Rule:** `content_ids` contains "life"
+- **Index:** CI_003
+- **Priority:** Life insurance campaigns
+
+### **Phase 4: Advanced Combinations**
+
+#### CV_010: High-Value Business Medicare
+- **Event:** Any event
+- **Rule:** `user_bucket` equals "business" AND `content_ids` contains "medicare" AND `value` ≥ 400
+- **Index:** UB_003 + CI_002 + VALUE
+- **Priority:** Premium group Medicare
+
+#### CV_011: Multi-Product Individual Leads
+- **Event:** Any event
+- **Rule:** `user_bucket` equals "individual" AND multiple `content_ids`
+- **Index:** UB_001 + Multiple CI_
+- **Priority:** Cross-sell opportunities
+
+#### CV_012: Business Health Insurance
+- **Event:** Any event
+- **Rule:** `user_bucket` equals "business" AND `content_ids` contains "health"
+- **Index:** UB_003 + CI_001
+- **Priority:** Group health plans
+
+---
+
+## 🚀 Implementation Benefits:
+
+### **Organized Naming:**
+- Easy to identify: CV_001, CV_002, etc.
+- Parameter mapping: CT_ (product), CI_ (insurance types), LE_ (sources), UB_ (client types)
+- Logical progression: Core → Segments → Products → Advanced
+
+### **Scalable System:**
+- Add new conversions with sequential numbers
+- Clear parameter indexing with compliant usage
+- Easy to track performance by category
+
+### **Campaign Optimization:**
+- Target specific insurance products via `content_ids`
+- Segment by client type via `user_bucket`
+- Track conversion sources via `lead_event_source`
+- Measure funnel performance by conversion type
+
+### **Compliance Benefits:**
+- ✅ content_type: Always "product" (compliant)
+- ✅ content_ids: Insurance types as product SKUs (compliant)
+- ✅ user_bucket: Client segmentation (compliant)
+- ✅ All parameters follow Meta's standard parameter guidelines
+
+This gives you a **professional, scalable, AND fully compliant conversion system**! 🎯

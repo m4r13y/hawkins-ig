@@ -108,9 +108,8 @@ export const trackViewContentDual = async (
   await trackEventDual('ViewContent', {
     userData,
     customData: {
-      content_type: contentType,
-      content_name: document.title,
-      content_category: 'Insurance Information'
+      content_type: contentType, // Standard parameter ✅
+      search_string: document.title // Standard parameter ✅
     }
   })
 }
@@ -122,9 +121,8 @@ export const trackCompleteRegistrationDual = async (
   await trackEventDual('CompleteRegistration', {
     userData,
     customData: {
-      content_name: 'User Registration',
-      registration_method: registrationType,
-      content_category: 'Account'
+      search_string: 'User Registration', // Standard parameter ✅
+      content_type: registrationType // Standard parameter ✅
     }
   })
 }
@@ -136,9 +134,10 @@ export const trackCustomizeProductDual = async (
   await trackEventDual('CustomizeProduct', {
     userData,
     customData: {
-      content_name: `${productType} Customization`,
-      content_category: 'Insurance Product',
-      product_type: productType
+      content_type: 'product', // Standard parameter ✅
+      content_ids: [`${productType}_customization`], // Standard parameter ✅
+      item_number: `CI_${productType.toLowerCase()}`, // Indexed insurance type
+      user_bucket: 'prospect' // Standard parameter ✅
     }
   })
 }
@@ -150,8 +149,10 @@ export const trackSearchDual = async (
   await trackEventDual('Search', {
     userData,
     customData: {
-      search_string: searchTerm,
-      content_category: 'Site Search'
+      content_type: 'product', // Standard parameter ✅
+      search_string: searchTerm, // Standard parameter ✅
+      content_ids: [`search_${searchTerm.toLowerCase().replace(/\s+/g, '_')}`], // Standard parameter ✅
+      user_bucket: 'searcher' // Standard parameter ✅
     }
   })
 }
@@ -163,8 +164,10 @@ export const trackContactDual = async (
   await trackEventDual('Contact', {
     userData,
     customData: { 
-      contact_method: contactMethod,
-      content_name: 'Contact Request'
+      content_type: 'product', // Standard parameter ✅
+      content_ids: [`contact_${contactMethod}`], // Standard parameter ✅
+      item_number: `LE_${contactMethod}`, // Indexed lead source
+      user_bucket: 'contact_request' // Standard parameter ✅
     }
   })
 }
@@ -177,9 +180,10 @@ export const trackLeadDual = async (
   await trackEventDual('Lead', {
     userData,
     customData: { 
-      content_name: additionalData?.content_name || 'Lead Generation',
-      lead_source: leadSource,
-      content_category: additionalData?.content_category || 'Lead',
+      content_type: additionalData?.content_type || 'lead', // Standard parameter ✅
+      content_ids: additionalData?.content_ids || [leadSource], // Standard parameter ✅
+      search_string: additionalData?.search_string || 'Lead Generation', // Standard parameter ✅
+      value: additionalData?.value || 100, // Standard parameter ✅
       ...additionalData
     }
   })
@@ -193,9 +197,10 @@ export const trackScheduleDual = async (
   await trackEventDual('Schedule', {
     userData,
     customData: {
-      content_name: additionalData?.content_name || `${appointmentType} Scheduled`,
-      appointment_type: appointmentType,
-      content_category: additionalData?.content_category || 'Appointment',
+      content_type: additionalData?.content_type || appointmentType, // Standard parameter ✅
+      content_ids: additionalData?.content_ids || [appointmentType], // Standard parameter ✅
+      search_string: additionalData?.search_string || `${appointmentType} Scheduled`, // Standard parameter ✅
+      value: additionalData?.value || 200, // Standard parameter ✅
       ...additionalData
     }
   })
@@ -208,9 +213,10 @@ export const trackSubmitApplicationDual = async (
   await trackEventDual('SubmitApplication', {
     userData,
     customData: {
-      content_name: `${applicationType} Application`,
-      application_type: applicationType,
-      content_category: 'Application'
+      content_type: 'product', // Standard parameter ✅
+      content_ids: [`${applicationType}_application`], // Standard parameter ✅
+      item_number: `CV_${applicationType.toLowerCase()}`, // Indexed conversion type
+      user_bucket: 'applicant' // Standard parameter ✅
     }
   })
 }
@@ -270,6 +276,6 @@ export const trackEvent = (eventName: string, parameters?: any) => {
 export const trackContact = () => trackEvent('Contact')
 export const trackLead = () => trackEvent('Lead')
 export const trackQuoteRequest = () => trackEvent('InitiateCheckout')
-export const trackPhoneCall = () => trackEvent('Contact', { contact_method: 'phone' })
-export const trackEmailContact = () => trackEvent('Contact', { contact_method: 'email' })
-export const trackFormSubmission = (formType: string) => trackEvent('Lead', { form_type: formType })
+export const trackPhoneCall = () => trackEvent('Contact', { content_type: 'product', content_ids: ['contact_phone'], user_bucket: 'contact_request' })
+export const trackEmailContact = () => trackEvent('Contact', { content_type: 'product', content_ids: ['contact_email'], user_bucket: 'contact_request' })
+export const trackFormSubmission = (formType: string) => trackEvent('Lead', { content_type: 'product', content_ids: [`form_${formType}`], user_bucket: 'lead' })

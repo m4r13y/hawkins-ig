@@ -106,8 +106,10 @@ export const trackCrossDomainJourney = async (
   await trackCustomEventDual('ViewContent', {
     userData: journeyData.userData || {},
     customData: {
-      content_name: 'Cross Domain Journey',
-      content_type: 'journey_transition',
+      content_type: 'product', // ✅ Core Setup compliant
+      content_ids: ['cross_domain_journey'], // ✅ Standard parameter
+      user_bucket: 'journey_transition', // ✅ Standard parameter
+      item_number: `LE_cross_domain`, // ✅ Indexed tracking
       from_domain: journeyData.fromDomain,
       to_domain: journeyData.toDomain,
       user_action: journeyData.userAction,
@@ -159,8 +161,10 @@ export const trackPageViewWithJourney = async (
       zipCode: userContext?.zipCode
     },
     customData: {
-      content_name: contentName,
-      page_type: contentType,
+      content_type: 'product', // ✅ Core Setup compliant
+      content_ids: [contentType], // ✅ Standard parameter
+      user_bucket: 'page_visitor', // ✅ Standard parameter
+      item_number: `LE_${contentType}`, // ✅ Indexed tracking
       referral_source: userContext?.referralSource,
       user_journey: userContext?.userJourney,
       from_cross_domain: userContext?.fromCrossDomain || false,
@@ -183,8 +187,10 @@ export const trackQuoteReferral = async (
   await trackCustomEventDual('ViewContent', {
     userData: userData || {},
     customData: {
-      content_name: 'Quote Referral to Insurance Hawk',
-      content_type: 'referral',
+      content_type: 'product', // ✅ Core Setup compliant
+      content_ids: [`quote_referral_${insuranceType}`], // ✅ Standard parameter
+      user_bucket: 'quote_prospect', // ✅ Standard parameter
+      item_number: `LE_quote_referral`, // ✅ Indexed tracking
       insurance_type: insuranceType,
       destination_url: destinationUrl,
       referral_type: 'cross_domain'

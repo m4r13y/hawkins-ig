@@ -19,7 +19,14 @@ export const trackNewsletterSignup = async (email: string, source: string = 'foo
   // Also track as Lead for broader funnel tracking
   await trackLeadDual('newsletter_signup', {
     email: email,
-    // Add source context
+  }, {
+    content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
+    content_ids: ['newsletter_subscription'], // ✅ Compliant: Newsletter as product ID
+    value: 25, // ✅ Standard parameter
+    currency: 'USD', // ✅ Standard parameter
+    lead_event_source: source, // ✅ Compliant: Newsletter source
+    item_number: `CV_003_newsletter_${Date.now()}`, // ✅ Compliant: Unique identifier
+    user_bucket: 'newsletter_subscriber' // ✅ Compliant: Newsletter audience bucket
   })
   
   console.log(`📧 Newsletter signup tracked: ${email} from ${source}`)
@@ -55,18 +62,28 @@ export const trackGetStartedSubmission = async (
 
   // Track as Schedule event first (they're scheduling a consultation)
   await trackScheduleDual('consultation', userData, {
-    content_name: `Get Started Consultation - ${formData.clientType}`,
-    content_category: 'Insurance Consultation',
-    content_type: formData.clientType,
-    description: `${formData.insuranceNeeds.join(', ')} - ${formData.timeline || 'timeline not specified'} - Age: ${formData.ageRange || 'not specified'}`
+    content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
+    content_ids: formData.insuranceNeeds, // ✅ Compliant: Insurance types as product IDs
+    value: 250, // ✅ Standard parameter
+    currency: 'USD', // ✅ Standard parameter
+    postal_code: formData.zipCode, // ✅ Standard parameter
+    region: formData.state, // ✅ Standard parameter
+    lead_event_source: 'get_started_form', // ✅ Compliant: Lead source
+    item_number: `CV_001_schedule_${Date.now()}`, // ✅ Compliant: Unique identifier
+    user_bucket: formData.clientType // ✅ Compliant: Use for client type (individual/family/business)
   })
   
   // Also track as Lead (they're a qualified lead)
   await trackLeadDual('get_started_form', userData, {
-    content_name: `Insurance Lead - ${formData.clientType}`, 
-    content_category: 'Insurance Lead',
-    content_type: formData.clientType,
-    description: `Types: ${formData.insuranceNeeds.join(', ')} | Timeline: ${formData.timeline || 'not specified'} | Age: ${formData.ageRange || 'not specified'}`
+    content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
+    content_ids: formData.insuranceNeeds, // ✅ Compliant: Insurance types as product IDs
+    value: 500, // ✅ Standard parameter
+    currency: 'USD', // ✅ Standard parameter
+    postal_code: formData.zipCode, // ✅ Standard parameter
+    region: formData.state, // ✅ Standard parameter
+    lead_event_source: 'get_started_form', // ✅ Compliant: Lead source
+    item_number: `CV_002_lead_${Date.now()}`, // ✅ Compliant: Unique identifier
+    user_bucket: formData.clientType // ✅ Compliant: Use for client type (individual/family/business)
   })
   
   console.log(`🎯 Get Started form tracked: Schedule + Lead for ${formData.clientType} - ${formData.email}`)
