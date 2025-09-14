@@ -247,12 +247,4 @@ userData.em = [hashData(email.toLowerCase().trim())]
 userData.ph = [hashData(phone.replace(/\D/g, ''))]
 ```
 
-### **Test Events:**
-```typescript
-// Add test_event_code in development
-if (process.env.NODE_ENV === 'development') {
-  payload.test_event_code = process.env.META_TEST_EVENT_CODE
-}
-```
-
 This aligns perfectly with Meta's specifications and gives you the exact parameter requirements for each event type!
