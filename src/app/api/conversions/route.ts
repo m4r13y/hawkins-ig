@@ -147,8 +147,8 @@ export async function POST(req: NextRequest) {
       data: [event]
     }
 
-    // Add test event code if in development
-    if (process.env.NODE_ENV === 'development' && process.env.META_TEST_EVENT_CODE) {
+    // Add test event code if available (for testing purposes)
+    if (process.env.META_TEST_EVENT_CODE) {
       payload.test_event_code = process.env.META_TEST_EVENT_CODE
     }
 

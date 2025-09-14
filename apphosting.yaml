@@ -64,6 +64,12 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  
+  - variable: META_TEST_EVENT_CODE
+    value: "TEST88538"
+    availability:
+      - RUNTIME
+  
   - variable: META_CONVERSIONS_API_ACCESS_TOKEN
     secret: meta_conversions_api_access_token
     availability:
