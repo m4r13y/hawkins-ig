@@ -8,6 +8,7 @@ import AdaAccessibilityWidgetSafe from '@/components/ada-accessibility-widget-sa
 import PagePreloader from '@/components/page-preloader'
 import { ModalProvider } from '@/contexts/modal-context'
 import GlobalPopupModals from '@/components/global-popup-modals'
+import MetaPixel from '@/components/meta-pixel'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -89,6 +90,31 @@ export default function RootLayout({
         <meta name="business:contact_data:country_name" content="United States" />
         <meta name="business:contact_data:phone_number" content="817-800-4253" />
         <meta name="business:contact_data:website" content="https://hawkinsig.com" />
+        
+        {/* Meta Pixel Code */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+            `
+          }}
+        />
+        <noscript>
+          <img 
+            height="1" 
+            width="1" 
+            style={{display: 'none'}}
+            src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
         
         {/* Theme initialization script - runs before React hydration */}
         <script
@@ -190,6 +216,11 @@ export default function RootLayout({
           <AdaAccessibilityWidgetSafe />
           <CookieConsentOptimized />
           <GlobalPopupModals />
+          
+          {/* Meta Pixel Tracking */}
+          {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
+            <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
+          )}
         </ModalProvider>
       </body>
     </html>

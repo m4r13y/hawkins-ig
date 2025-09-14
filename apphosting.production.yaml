@@ -61,3 +61,9 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  
+  - variable: NEXT_PUBLIC_META_PIXEL_ID
+    value: "1274893120216161"
+    availability:
+      - BUILD
+      - RUNTIME
