@@ -6,6 +6,7 @@ import { ArrowRight, ArrowLeft, Check, User, Users, Building, UserCheck, Heart, 
 import AnimatedButton from "./animated-button"
 import Link from "next/link"
 import { submitGetStartedForm } from "@/lib/firebase-utils"
+import { trackGetStartedSubmission } from "./form-tracking"
 
 const clientTypes = [
   {
@@ -178,9 +179,27 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
           company: formData.company,
           zipCode: formData.zipCode,
           source: 'get-started-flow'
-        }).then(submissionId => {
+        }).then(async (submissionId) => {
           if (submissionId) {
             console.log('Form submitted successfully:', submissionId);
+            
+            // Track the get started form submission
+            const clientType = formData.clientType || initialClientType || '';
+            const [firstName, ...lastNameParts] = (formData.name || '').split(' ');
+            const lastName = lastNameParts.join(' ');
+            
+            await trackGetStartedSubmission({
+              firstName: firstName,
+              lastName: lastName,
+              email: formData.email,
+              phone: formData.phone,
+              zipCode: formData.zipCode,
+              clientType: clientType as 'individual' | 'family' | 'business' | 'agent',
+              insuranceNeeds: formData.insuranceTypes || [],
+              currentCoverage: undefined, // Not collected in this form
+              timeline: formData.urgency
+            }, `get_started_${clientType}`);
+            
           } else {
             console.error('Failed to submit form - no submission ID returned');
           }

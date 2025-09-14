@@ -67,3 +67,8 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  
+  - variable: META_CONVERSIONS_API_ACCESS_TOKEN
+    secret: meta_conversions_api_access_token
+    availability:
+      - RUNTIME

@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import { Instagram, Facebook, Youtube, Mail, Phone, MapPin, ArrowRight, ExternalLink } from "lucide-react"
 import AnimatedButton from "./animated-button"
 import { submitNewsletterSubscription } from "@/lib/firebase"
+import { trackNewsletterSignup } from "./form-tracking"
 import MedicareDisclaimer from "./medicare-disclaimer"
 
 export default function AnimatedFooter() {
@@ -30,6 +31,9 @@ export default function AnimatedFooter() {
       const responseData = result.data as any
       
       if (responseData?.success) {
+        // Track the newsletter signup
+        await trackNewsletterSignup(email.trim(), 'footer_newsletter')
+        
         setIsSubscribed(true)
         setEmail("")
         setTimeout(() => setIsSubscribed(false), 5000)

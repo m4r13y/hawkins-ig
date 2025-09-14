@@ -1,8 +1,16 @@
+"use client"
+
+import { useEffect } from "react"
 import Navbar from "@/components/navbar"
 import AnimatedFooter from "@/components/animated-footer"
 import GetStartedFlow from "@/components/get-started-flow"
+import { trackPageView } from "@/components/form-tracking"
 
 export default function AgentGetStartedPage() {
+  useEffect(() => {
+    trackPageView('/get-started/agent')
+  }, [])
+
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10">

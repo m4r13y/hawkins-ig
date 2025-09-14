@@ -50,6 +50,17 @@ export const trackEvent = (eventName: string, parameters?: any) => {
   }
 }
 
+// Helper function to track custom events with event ID for deduplication
+export const trackEventWithId = (eventName: string, eventId: string, parameters?: any) => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    const eventData = {
+      ...parameters,
+      event_id: eventId // Critical for deduplication with Conversions API
+    }
+    window.fbq('track', eventName, eventData)
+  }
+}
+
 // Common event tracking functions
 export const trackContact = () => {
   trackEvent('Contact')

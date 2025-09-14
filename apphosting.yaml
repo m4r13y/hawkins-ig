@@ -10,57 +10,61 @@ env:
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
     value: medicareally.firebaseapp.com
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
     value: medicareally
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
     value: medicareally.firebasestorage.app
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
     value: "168459812655"
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_FIREBASE_APP_ID
     value: 1:168459812655:web:a7ed283f208bd144672bda
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
     value: G-K907VE7QFS
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_CONSTRUCTION_MODE
     value: "false"
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_DOMAIN
     value: hawkinsig.com
     availability:
       - BUILD
       - RUNTIME
-  
+
   - variable: NEXT_PUBLIC_META_PIXEL_ID
     value: "1274893120216161"
     availability:
       - BUILD
+      - RUNTIME
+  - variable: META_CONVERSIONS_API_ACCESS_TOKEN
+    secret: meta_conversions_api_access_token
+    availability:
       - RUNTIME
