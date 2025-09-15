@@ -58,25 +58,16 @@ export const trackGetStartedSubmission = async (
     dateOfBirth: formData.dateOfBirth,
   }
 
-  // Track as Schedule event first (they're scheduling a consultation)
-  await trackScheduleDual('consultation', userData, {
-    content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
-    content_ids: formData.insuranceNeeds, // ✅ Compliant: Insurance types as product IDs
-    value: 250, // ✅ Standard parameter
-    currency: 'USD' // ✅ Standard parameter
-    // Note: PII (postal_code, region) handled server-side via Conversions API
-  })
-  
-  // Also track as Lead (they're a qualified lead)
+  // Track as Lead (they're a qualified lead interested in consultation)
   await trackLeadDual('get_started_form', userData, {
     content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
     content_ids: formData.insuranceNeeds, // ✅ Compliant: Insurance types as product IDs
-    value: 500, // ✅ Standard parameter
+    value: 500, // ✅ Standard parameter - High value for get started form completion
     currency: 'USD' // ✅ Standard parameter
     // Note: PII (postal_code, region) handled server-side via Conversions API
   })
   
-  console.log(`🎯 Get Started form tracked: Schedule + Lead for ${formData.clientType} - ${formData.email}`)
+  console.log(`🎯 Get Started form tracked: Lead for ${formData.clientType} - ${formData.email}`)
 }
 
 // Quote Request Tracking (for specific insurance products)

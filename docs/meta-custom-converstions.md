@@ -1,116 +1,150 @@
-# Indexed Custom Conversions System for Insurance Business
-*Using # marked standard parameters for organized targeting*
+# Meta Custom Conversions Setup Guide
+*Simple, step-by-step instructions for Hawkins Insurance Group*
 
-## 🏷️ Parameter Index System:
+## 🎯 **What You Need to Know**
 
-### **CT_** = content_type (Product Types)
-- `CT_001`: product (All insurance products)
+Your Meta tracking sends **3 key parameters** that work perfectly for custom conversions:
+- `content_type` = "product" (always the same)
+- `content_ids` = ["health", "medicare", "life"] (insurance types)  
+- `value` = 250, 500, etc. (dollar amounts)
 
-### **CI_** = content_ids (Insurance Products)
-- `CI_001`: health
-- `CI_002`: medicare
-- `CI_003`: life
-- `CI_004`: disability
-- `CI_005`: supplemental
-- `CI_006`: group
-- `CI_007`: newsletter_subscription
-
-### **LE_** = lead_event_source (Form Sources) - REMOVED
-- **Note**: Removed due to Business Tools Terms compliance
-- **Alternative**: Use `content_ids` for form identification
-
-### **UB_** = user_bucket (Client Segments) - REMOVED  
-- **Note**: Removed due to Business Tools Terms compliance
-- **Alternative**: Server-side segmentation via Conversions API
+**All parameters are Business Tools Terms compliant!** ✅
 
 ---
 
-## 🎯 Organized Custom Conversions:
+## 📋 **Step-by-Step Custom Conversions Setup**
 
-### **Phase 1: Core Funnel (Create First)**
+### **STEP 1: Create Core Conversions (Do These First)**
 
-#### CV_001: Insurance Consultations
+Go to **Meta Ads Manager → Events Manager → Custom Conversions → Create**
+
+#### **CV_001: All Insurance Consultations**
 - **Event:** Schedule
-- **Rule:** `content_type` equals "product" AND `value` ≥ 200
-- **Index:** CT_001 + VALUE
-- **Priority:** Highest intent conversions
+- **Rule:** `content_type` equals `product`
+- **Value:** Use event value
+- **Description:** Tracks all consultation bookings
 
-#### CV_002: Primary Lead Generation  
+#### **CV_002: All Insurance Leads** 
 - **Event:** Lead
-- **Rule:** `content_ids` contains "get_started_form"
-- **Index:** CI_form_identification
-- **Priority:** Main conversion funnel
+- **Rule:** `content_type` equals `product`
+- **Value:** Use event value  
+- **Description:** Tracks all lead generation
 
-#### CV_003: Newsletter Acquisition
-- **Event:** Lead
-- **Rule:** `content_ids` contains "newsletter_subscription"
-- **Index:** CI_007
-- **Priority:** Top-funnel lead nurturing
+#### **CV_003: Newsletter Signups**
+- **Event:** CompleteRegistration
+- **Rule:** `content_ids` contains `newsletter_subscription`
+- **Value:** Use event value
+- **Description:** Tracks email subscriptions
 
-### **Phase 2: Product-Specific Targeting (Create Second)**
+### **STEP 2: Create Product-Specific Conversions (Do These Second)**
 
-#### CV_004: Medicare Prospects
+#### **CV_004: Medicare Prospects**
 - **Event:** Any event
-- **Rule:** `content_ids` contains "medicare"
-- **Index:** CI_002
-- **Priority:** Medicare-specific campaigns
+- **Rule:** `content_ids` contains `medicare`
+- **Value:** Use event value
+- **Description:** Anyone interested in Medicare
 
-#### CV_005: Health Insurance Prospects
+#### **CV_005: Health Insurance Prospects**
+- **Event:** Any event  
+- **Rule:** `content_ids` contains `health`
+- **Value:** Use event value
+- **Description:** Anyone interested in health insurance
+
+#### **CV_006: Life Insurance Prospects**
 - **Event:** Any event
-- **Rule:** `content_ids` contains "health"
-- **Index:** CI_001
-- **Priority:** Health insurance campaigns
+- **Rule:** `content_ids` contains `life`
+- **Value:** Use event value
+- **Description:** Anyone interested in life insurance
 
-#### CV_006: Life Insurance Prospects
-- **Event:** Any event
-- **Rule:** `content_ids` contains "life"
-- **Index:** CI_003
-- **Priority:** Life insurance campaigns
+### **STEP 3: Create High-Value Conversions (Do These Third)**
 
-### **Phase 3: Value-Based Targeting (Create Third)**
-
-#### CV_007: High-Value Consultations
+#### **CV_007: Premium Consultations**
 - **Event:** Schedule
-- **Rule:** `content_type` equals "product" AND `value` ≥ 300
-- **Index:** CT_001 + HIGH_VALUE
-- **Priority:** Premium consultation bookings
+- **Rule:** `content_type` equals `product` AND `value` greater than or equal to `300`
+- **Value:** Use event value
+- **Description:** High-value consultation bookings
 
-#### CV_008: Premium Leads
+#### **CV_008: Premium Leads**
 - **Event:** Lead
-- **Rule:** `content_type` equals "product" AND `value` ≥ 400
-- **Index:** CT_001 + PREMIUM_VALUE
-- **Priority:** High-value lead generation
-
-#### CV_009: Multi-Product Interest
-- **Event:** Any event
-- **Rule:** Multiple insurance types in `content_ids`
-- **Index:** Multiple CI_ values
-- **Priority:** Cross-sell opportunities
+- **Rule:** `content_type` equals `product` AND `value` greater than or equal to `500`
+- **Value:** Use event value
+- **Description:** High-value lead generation
 
 ---
 
-## 🚀 Implementation Benefits:
+## 🎪 **Current Event Values in Your System**
 
-### **Organized Naming:**
-- Easy to identify: CV_001, CV_002, etc.
-- Parameter mapping: CT_ (product), CI_ (insurance types), LE_ (sources), UB_ (client types)
-- Logical progression: Core → Segments → Products → Advanced
+| Event Type | Current Value | When It Triggers |
+|------------|---------------|------------------|
+| Newsletter Signup | $25 | Email subscription |
+| Get Started - Schedule | $250 | Consultation booking |
+| Get Started - Lead | $500 | Form completion |
+| Contact Form | $100 | Contact inquiry |
+| Quote Request | $300 | Insurance quote |
+| Page View | $50 | Content engagement |
 
-### **Scalable System:**
-- Add new conversions with sequential numbers
-- Clear parameter indexing with compliant usage
-- Easy to track performance by category
+---
 
-### **Campaign Optimization:**
-- Target specific insurance products via `content_ids`
-- Segment by client type via `user_bucket`
-- Track conversion sources via `lead_event_source`
-- Measure funnel performance by conversion type
+## 🏷️ **Current Insurance Types Tracked**
 
-### **Compliance Benefits:**
-- ✅ content_type: Always "product" (compliant)
-- ✅ content_ids: Insurance types as product SKUs (compliant)
-- ✅ user_bucket: Client segmentation (compliant)
-- ✅ All parameters follow Meta's standard parameter guidelines
+Your `content_ids` include these insurance types:
+- `health` - Health Insurance
+- `medicare` - Medicare Plans
+- `life` - Life Insurance  
+- `disability` - Disability Insurance
+- `supplemental` - Supplemental Coverage
+- `group` - Group Insurance
+- `newsletter_subscription` - Newsletter
 
-This gives you a **professional, scalable, AND fully compliant conversion system**! 🎯
+---
+
+## ✅ **Easy Copy-Paste Rules**
+
+### For Meta Ads Manager Rule Builder:
+
+**All Consultations:**
+```
+content_type equals product
+```
+
+**All Leads:**  
+```
+content_type equals product
+```
+
+**Medicare Interest:**
+```
+content_ids contains medicare
+```
+
+**Health Insurance Interest:**
+```
+content_ids contains health
+```
+
+**Life Insurance Interest:**
+```
+content_ids contains life
+```
+
+**High-Value Consultations:**
+```
+content_type equals product AND value >= 300
+```
+
+**High-Value Leads:**
+```
+content_type equals product AND value >= 500
+```
+
+---
+
+## 🚀 **Why This Works**
+
+✅ **Simple Rules** - Easy to set up and understand
+✅ **Business Tools Terms Compliant** - No prohibited parameters
+✅ **Flexible Targeting** - Target by product type or value
+✅ **Scalable** - Add more conversions as needed
+✅ **Working Data** - Your tracking is already sending perfect data
+
+**Just copy the rules above into Meta Ads Manager and you're done!** 🎯

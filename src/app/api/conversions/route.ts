@@ -33,7 +33,6 @@ interface ConversionsAPIEvent {
 
 interface ConversionsAPIPayload {
   data: ConversionsAPIEvent[]
-  test_event_code?: string
 }
 
 // Hash function for PII data
@@ -145,11 +144,6 @@ export async function POST(req: NextRequest) {
     // Prepare the payload
     const payload: ConversionsAPIPayload = {
       data: [event]
-    }
-
-    // Add test event code if available (for testing purposes)
-    if (process.env.META_TEST_EVENT_CODE) {
-      payload.test_event_code = process.env.META_TEST_EVENT_CODE
     }
 
     // Send to Facebook Conversions API

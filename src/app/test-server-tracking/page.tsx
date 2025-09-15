@@ -11,6 +11,26 @@ type TestResult = {
 }
 
 export default function TestServerTracking() {
+  // Only show in development
+  if (process.env.NODE_ENV === 'production') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+            🚫 Page Not Available
+          </h1>
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <p className="text-gray-600">
+              This testing page is only available in development mode.
+            </p>
+            <a href="/" className="inline-block mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+              Return Home
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
   const [results, setResults] = useState<TestResult[]>([])
   const [loading, setLoading] = useState<string | null>(null)
 
@@ -46,8 +66,8 @@ export default function TestServerTracking() {
     }
   }
 
-  const testGetStartedForm = () => testAPI('Get Started Form (Schedule + Lead)', {
-    eventName: 'Schedule',
+  const testGetStartedForm = () => testAPI('Get Started Form (Lead)', {
+    eventName: 'Lead',
     userData: {
       email: 'test-getstartedform@hawkinsig.com',
       firstName: 'John',
@@ -59,7 +79,7 @@ export default function TestServerTracking() {
     customData: {
       content_type: 'product',
       content_ids: ['health', 'life', 'medicare'],
-      value: 250,
+      value: 500,
       currency: 'USD'
     }
   })
@@ -143,6 +163,22 @@ export default function TestServerTracking() {
     }
   })
 
+  const testCalendarScheduling = () => testAPI('Calendar Scheduling (Schedule)', {
+    eventName: 'Schedule',
+    userData: {
+      email: 'test-calendar@hawkinsig.com',
+      firstName: 'Calendar',
+      lastName: 'User',
+      phone: '+15558888888'
+    },
+    customData: {
+      content_type: 'product',
+      content_ids: ['consultation'],
+      value: 250,
+      currency: 'USD'
+    }
+  })
+
   const runAllTests = async () => {
     const tests = [
       testGetStartedForm,
@@ -150,7 +186,8 @@ export default function TestServerTracking() {
       testContactForm,
       testQuoteRequest,
       testLeadGeneration,
-      testViewContent
+      testViewContent,
+      testCalendarScheduling
     ]
 
     for (let i = 0; i < tests.length; i++) {
@@ -178,10 +215,10 @@ export default function TestServerTracking() {
             <div className="space-y-3">
               <button
                 onClick={testGetStartedForm}
-                disabled={loading === 'Get Started Form (Schedule + Lead)'}
+                disabled={loading === 'Get Started Form (Lead)'}
                 className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
               >
-                {loading === 'Get Started Form (Schedule + Lead)' ? 'Testing...' : '📋 Get Started Form'}
+                {loading === 'Get Started Form (Lead)' ? 'Testing...' : '📋 Get Started Form'}
               </button>
               
               <button
@@ -222,6 +259,14 @@ export default function TestServerTracking() {
                 className="w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:opacity-50"
               >
                 {loading === 'Page View (ViewContent)' ? 'Testing...' : '👀 Page View'}
+              </button>
+              
+              <button
+                onClick={testCalendarScheduling}
+                disabled={loading === 'Calendar Scheduling (Schedule)'}
+                className="w-full bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 disabled:opacity-50"
+              >
+                {loading === 'Calendar Scheduling (Schedule)' ? 'Testing...' : '📅 Calendar Scheduling'}
               </button>
             </div>
           </div>
