@@ -139,8 +139,18 @@ export async function POST(req: NextRequest) {
     const accessToken = process.env.META_CONVERSIONS_API_ACCESS_TOKEN
     
     if (!pixelId || !accessToken) {
+      const missingVars = []
+      if (!pixelId) missingVars.push('NEXT_PUBLIC_META_PIXEL_ID')
+      if (!accessToken) missingVars.push('META_CONVERSIONS_API_ACCESS_TOKEN')
+      
+      console.error('Missing environment variables:', missingVars)
       return NextResponse.json(
-        { error: 'Missing required configuration' },
+        { 
+          error: 'Missing required configuration', 
+          missing: missingVars,
+          hasPixelId: !!pixelId,
+          hasAccessToken: !!accessToken
+        },
         { status: 500 }
       )
     }
@@ -168,6 +178,17 @@ export async function POST(req: NextRequest) {
     const url = new URL(`https://graph.facebook.com/v18.0/${pixelId}/events`)
     url.searchParams.append('access_token', accessToken)
 
+    // Log event details for debugging (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Sending Conversions API event:', {
+        eventName,
+        eventId: event.event_id,
+        pixelId: pixelId.slice(0, 4) + '...' + pixelId.slice(-4),
+        url: url.origin + url.pathname, // Don't log the access token
+        customData
+      });
+    }
+
     // Send to Facebook Conversions API
     const response = await fetch(url.toString(), {
         method: 'POST',
@@ -181,23 +202,57 @@ export async function POST(req: NextRequest) {
     const result = await response.json()
 
     if (!response.ok) {
-      console.error('Conversions API Error:', result)
+      console.error('Conversions API Error Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: result,
+        eventName,
+        eventId: event.event_id,
+        timestamp: new Date().toISOString()
+      })
       return NextResponse.json(
-        { error: 'Failed to send event', details: result },
+        { 
+          error: 'Failed to send event', 
+          details: result,
+          status: response.status,
+          eventId: event.event_id
+        },
         { status: response.status }
       )
     }
 
+    // Log success for debugging
+    console.log('Conversions API Success:', {
+      eventName,
+      eventId: event.event_id,
+      status: response.status,
+      result,
+      timestamp: new Date().toISOString()
+    });
+
     return NextResponse.json({ 
       success: true, 
       eventId: event.event_id,
-      message: 'Event sent successfully' 
+      message: 'Event sent successfully',
+      result 
     })
 
   } catch (error) {
-    console.error('Conversions API Error:', error)
+    console.error('Conversions API Unhandled Error:', {
+      error: error instanceof Error ? error.message : error,
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString(),
+      env: {
+        hasPixelId: !!process.env.NEXT_PUBLIC_META_PIXEL_ID,
+        hasAccessToken: !!process.env.META_CONVERSIONS_API_ACCESS_TOKEN,
+        nodeEnv: process.env.NODE_ENV
+      }
+    })
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error',
+        timestamp: new Date().toISOString()
+      },
       { status: 500 }
     )
   }

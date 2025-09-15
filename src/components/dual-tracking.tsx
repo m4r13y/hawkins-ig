@@ -80,7 +80,7 @@ async function trackEventDual(
       fbc: getFacebookClickId()
     }
 
-    await fetch('/api/conversions', {
+    const response = await fetch('/api/conversions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -95,6 +95,20 @@ async function trackEventDual(
         }
       }),
     })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      console.error('Server-side tracking failed:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorData,
+        eventName,
+        eventId
+      })
+    } else if (process.env.NODE_ENV === 'development') {
+      const result = await response.json()
+      console.log('✅ Server-side event sent successfully:', result)
+    }
   } catch (error) {
     console.error('Failed to send server-side event:', error)
     // Don't throw - pixel tracking should still work
