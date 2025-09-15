@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { notFound } from 'next/navigation'
 
 type TestResult = {
   name: string
@@ -11,26 +12,7 @@ type TestResult = {
 }
 
 export default function TestServerTracking() {
-  // Only show in development
-  if (process.env.NODE_ENV === 'production') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            🚫 Page Not Available
-          </h1>
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <p className="text-gray-600">
-              This testing page is only available in development mode.
-            </p>
-            <a href="/" className="inline-block mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-              Return Home
-            </a>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  // Enable for testing (remove production restriction temporarily)
   const [results, setResults] = useState<TestResult[]>([])
   const [loading, setLoading] = useState<string | null>(null)
 
@@ -38,6 +20,34 @@ export default function TestServerTracking() {
     setResults(prev => [...prev, { ...result, timestamp: new Date().toLocaleTimeString() }])
   }
 
+  // Browser event testing functions
+  const testBrowserEvent = (eventName: string, eventData: any, description: string) => {
+    try {
+      // Check if Meta Pixel is loaded
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('trackCustom', eventName, eventData)
+        addResult({
+          name: `Browser: ${description}`,
+          status: 200,
+          data: { eventName, eventData, method: 'Meta Pixel' },
+        })
+      } else {
+        addResult({
+          name: `Browser: ${description}`,
+          status: 404,
+          error: 'Meta Pixel not loaded'
+        })
+      }
+    } catch (error) {
+      addResult({
+        name: `Browser: ${description}`,
+        status: 500,
+        error: error instanceof Error ? error.message : 'Unknown browser error'
+      })
+    }
+  }
+
+  // Server event testing function
   const testAPI = async (testName: string, payload: any) => {
     setLoading(testName)
     try {
@@ -78,9 +88,8 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['health', 'life', 'medicare'],
-      value: 500,
-      currency: 'USD'
+      content_ids: ['health', 'life', 'medicare']
+      // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
 
@@ -93,9 +102,8 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['newsletter_subscription'],
-      value: 25,
-      currency: 'USD'
+      content_ids: ['newsletter_subscription']
+      // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
 
@@ -109,9 +117,8 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['contact_form'],
-      value: 100,
-      currency: 'USD'
+      content_ids: ['contact_form']
+      // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
 
@@ -126,9 +133,8 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['medicare'],
-      value: 300,
-      currency: 'USD'
+      content_ids: ['medicare']
+      // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
 
@@ -144,9 +150,8 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['health', 'life'],
-      value: 500,
-      currency: 'USD'
+      content_ids: ['health', 'life']
+      // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
 
@@ -157,9 +162,8 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['medicare'],
-      value: 50,
-      currency: 'USD'
+      content_ids: ['medicare']
+      // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
 
@@ -173,14 +177,44 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['consultation'],
-      value: 250,
-      currency: 'USD'
+      content_ids: ['consultation']
+      // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
 
+  // Browser Event Tests
+  const testBrowserGetStarted = () => testBrowserEvent('Lead', {
+    content_type: 'product',
+    content_ids: ['health', 'life', 'medicare']
+    // Note: Values configured in Meta Custom Conversions (no hardcoded values)
+  }, 'Get Started Form (Lead)')
+
+  const testBrowserQuoteRequest = () => testBrowserEvent('SubmitApplication', {
+    content_type: 'product', 
+    content_ids: ['medicare']
+    // Note: Values configured in Meta Custom Conversions (no hardcoded values)
+  }, 'Quote Request (SubmitApplication)')
+
+  const testBrowserViewContent = () => testBrowserEvent('ViewContent', {
+    content_type: 'product',
+    content_ids: ['services']
+    // Note: Values configured in Meta Custom Conversions (no hardcoded values)
+  }, 'Page View (ViewContent)')
+
+  const testBrowserNewsletter = () => testBrowserEvent('CompleteRegistration', {
+    content_type: 'product',
+    content_ids: ['newsletter']
+    // Note: Values configured in Meta Custom Conversions (no hardcoded values)
+  }, 'Newsletter Signup (CompleteRegistration)')
+
+  const testBrowserSchedule = () => testBrowserEvent('Schedule', {
+    content_type: 'product',
+    content_ids: ['consultation']
+    // Note: Values configured in Meta Custom Conversions (no hardcoded values)
+  }, 'Calendar Scheduling (Schedule)')
+
   const runAllTests = async () => {
-    const tests = [
+    const serverTests = [
       testGetStartedForm,
       testNewsletterSignup, 
       testContactForm,
@@ -190,11 +224,32 @@ export default function TestServerTracking() {
       testCalendarScheduling
     ]
 
-    for (let i = 0; i < tests.length; i++) {
-      await tests[i]()
+    const browserTests = [
+      testBrowserGetStarted,
+      testBrowserQuoteRequest,
+      testBrowserViewContent,
+      testBrowserNewsletter,
+      testBrowserSchedule
+    ]
+
+    // Run server tests first
+    for (let i = 0; i < serverTests.length; i++) {
+      await serverTests[i]()
       // Small delay between tests
-      if (i < tests.length - 1) {
+      if (i < serverTests.length - 1) {
         await new Promise(resolve => setTimeout(resolve, 1000))
+      }
+    }
+
+    // Small delay before browser tests
+    await new Promise(resolve => setTimeout(resolve, 1500))
+
+    // Run browser tests
+    for (let i = 0; i < browserTests.length; i++) {
+      browserTests[i]() // Browser tests are synchronous
+      // Small delay between tests
+      if (i < browserTests.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 500))
       }
     }
   }
@@ -208,10 +263,10 @@ export default function TestServerTracking() {
           🧪 Meta Tracking Test Suite
         </h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Individual Tests */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Server Tests */}
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Individual Tests</h2>
+            <h2 className="text-xl font-semibold mb-4">🖥️ Server Tests (Conversions API)</h2>
             <div className="space-y-3">
               <button
                 onClick={testGetStartedForm}
@@ -271,17 +326,86 @@ export default function TestServerTracking() {
             </div>
           </div>
 
+          {/* Browser Tests */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">🌐 Browser Tests (Meta Pixel)</h2>
+            <div className="space-y-3">
+              <button
+                onClick={testBrowserGetStarted}
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border-2 border-blue-300"
+              >
+                🌐📋 Browser: Get Started
+              </button>
+              
+              <button
+                onClick={testBrowserQuoteRequest}
+                className="w-full bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 border-2 border-orange-300"
+              >
+                🌐💰 Browser: Quote Request
+              </button>
+              
+              <button
+                onClick={testBrowserViewContent}
+                className="w-full bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 border-2 border-indigo-300"
+              >
+                🌐👀 Browser: Page View
+              </button>
+              
+              <button
+                onClick={testBrowserNewsletter}
+                className="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 border-2 border-green-300"
+              >
+                🌐📧 Browser: Newsletter
+              </button>
+              
+              <button
+                onClick={testBrowserSchedule}
+                className="w-full bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 border-2 border-teal-300"
+              >
+                🌐📅 Browser: Schedule
+              </button>
+            </div>
+          </div>
+
           {/* Batch Tests */}
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Batch Tests</h2>
+            <h2 className="text-xl font-semibold mb-4">🚀 Batch Tests</h2>
             <div className="space-y-4">
               <button
                 onClick={runAllTests}
                 disabled={loading !== null}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 font-semibold"
               >
-                {loading ? `Testing: ${loading}` : '🚀 Run All Tests'}
+                {loading ? `Testing: ${loading}` : '🚀 Run All Tests (Server + Browser)'}
               </button>
+              
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={async () => {
+                    const serverTests = [testGetStartedForm, testNewsletterSignup, testContactForm, testQuoteRequest, testLeadGeneration, testViewContent, testCalendarScheduling]
+                    for (let i = 0; i < serverTests.length; i++) {
+                      await serverTests[i]()
+                      if (i < serverTests.length - 1) await new Promise(resolve => setTimeout(resolve, 1000))
+                    }
+                  }}
+                  disabled={loading !== null}
+                  className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 disabled:opacity-50 text-sm"
+                >
+                  🖥️ Server Only
+                </button>
+                
+                <button
+                  onClick={() => {
+                    const browserTests = [testBrowserGetStarted, testBrowserQuoteRequest, testBrowserViewContent, testBrowserNewsletter, testBrowserSchedule]
+                    browserTests.forEach((test, i) => {
+                      setTimeout(() => test(), i * 500)
+                    })
+                  }}
+                  className="bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700 text-sm"
+                >
+                  🌐 Browser Only
+                </button>
+              </div>
               
               <button
                 onClick={clearResults}
@@ -292,10 +416,14 @@ export default function TestServerTracking() {
             </div>
 
             <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded">
-              <h4 className="font-semibold text-yellow-800 mb-2">Test Event Code: TEST88538</h4>
-              <p className="text-yellow-700 text-sm">
-                All events use test code TEST88538 for verification in Meta Events Manager.
-              </p>
+              <h4 className="font-semibold text-yellow-800 mb-2">🧪 Test Configuration</h4>
+              <div className="text-yellow-700 text-sm space-y-1">
+                <p><strong>Test Event Code:</strong> TEST88538 (for Meta Events Manager verification)</p>
+                <p><strong>Data Format:</strong> Production-clean (no hardcoded values/currency)</p>
+                <p><strong>Values:</strong> Configured in Meta Custom Conversions</p>
+                <p><strong>Server:</strong> Conversions API with advanced matching</p>
+                <p><strong>Browser:</strong> Meta Pixel events with deduplication</p>
+              </div>
             </div>
           </div>
         </div>

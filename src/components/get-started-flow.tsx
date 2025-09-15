@@ -97,7 +97,8 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
     agentType: "",
     insuranceTypes: [] as string[],
     urgency: "",
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     company: "",
@@ -173,7 +174,8 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
           agentType: formData.agentType,
           insuranceTypes: formData.insuranceTypes,
           urgency: formData.urgency,
-          name: formData.name,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
           email: formData.email,
           phone: formData.phone,
           company: formData.company,
@@ -185,16 +187,14 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
             
             // Track the get started form submission
             const clientType = formData.clientType || initialClientType || '';
-            const [firstName, ...lastNameParts] = (formData.name || '').split(' ');
-            const lastName = lastNameParts.join(' ');
             
             // Convert IDs to human-readable text for tracking
             const ageRangeText = ageRanges.find(range => range.id === formData.age)?.name || formData.age;
             const timelineText = urgencyLevels.find(level => level.id === formData.urgency)?.name || formData.urgency;
             
             await trackGetStartedSubmission({
-              firstName: firstName,
-              lastName: lastName,
+              firstName: formData.firstName,
+              lastName: formData.lastName,
               email: formData.email,
               phone: formData.phone,
               zipCode: formData.zipCode,
@@ -491,16 +491,29 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground/90 mb-2">Name *</label>
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
-                      placeholder="Your full name"
-                      required
-                    />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground/90 mb-2">First Name *</label>
+                      <input
+                        type="text"
+                        value={formData.firstName}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, firstName: e.target.value }))}
+                        className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
+                        placeholder="First name"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground/90 mb-2">Last Name *</label>
+                      <input
+                        type="text"
+                        value={formData.lastName}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, lastName: e.target.value }))}
+                        className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
+                        placeholder="Last name"
+                        required
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground/90 mb-2">Email *</label>
@@ -530,9 +543,16 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                     <input
                       type="text"
                       value={formData.zipCode}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, zipCode: e.target.value }))}
+                      onChange={(e) => {
+                        // Only allow digits and limit to 5 characters
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 5)
+                        setFormData((prev) => ({ ...prev, zipCode: value }))
+                      }}
                       className="w-full px-4 py-3 bg-transparent border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="12345"
+                      maxLength={5}
+                      pattern="[0-9]{5}"
+                      title="Please enter a 5-digit ZIP code"
                       required
                     />
                   </div>
@@ -725,7 +745,7 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
                       // Step 3: Timeline (for non-initial) or Contact (for initial)
                       (currentStep === 3 && !initialClientType && !formData.urgency) ||
                       // Contact step validation
-                      (currentStep === (initialClientType ? 3 : 4) && (!formData.name || !formData.email || !formData.phone || !formData.zipCode))
+                      (currentStep === (initialClientType ? 3 : 4) && (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.zipCode))
                     }
                     className="bg-primary text-primary-foreground hover:bg-primary/90"
                   >

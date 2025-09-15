@@ -108,8 +108,10 @@ export const trackViewContentDual = async (
   await trackEventDual('ViewContent', {
     userData,
     customData: {
-      content_type: contentType, // Standard parameter ✅
-      search_string: document.title // Standard parameter ✅
+      content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
+      content_ids: [contentType], // ✅ Standard parameter
+      search_string: document.title // ✅ Standard parameter
+      // Note: Values configured in Meta Custom Conversions
     }
   })
 }
@@ -178,10 +180,10 @@ export const trackLeadDual = async (
   await trackEventDual('Lead', {
     userData,
     customData: { 
-      content_type: additionalData?.content_type || 'lead', // Standard parameter ✅
-      content_ids: additionalData?.content_ids || [leadSource], // Standard parameter ✅
-      search_string: additionalData?.search_string || 'Lead Generation', // Standard parameter ✅
-      value: additionalData?.value || 100, // Standard parameter ✅
+      content_type: additionalData?.content_type || 'product', // ✅ Compliant
+      content_ids: additionalData?.content_ids || [leadSource], // ✅ Standard parameter
+      search_string: additionalData?.search_string || 'Lead Generation', // ✅ Standard parameter
+      // Note: Values configured in Meta Custom Conversions
       ...additionalData
     }
   })
@@ -195,10 +197,10 @@ export const trackScheduleDual = async (
   await trackEventDual('Schedule', {
     userData,
     customData: {
-      content_type: additionalData?.content_type || appointmentType, // Standard parameter ✅
-      content_ids: additionalData?.content_ids || [appointmentType], // Standard parameter ✅
-      search_string: additionalData?.search_string || `${appointmentType} Scheduled`, // Standard parameter ✅
-      value: additionalData?.value || 200, // Standard parameter ✅
+      content_type: additionalData?.content_type || 'product', // ✅ Compliant
+      content_ids: additionalData?.content_ids || [appointmentType], // ✅ Standard parameter
+      search_string: additionalData?.search_string || `${appointmentType} Scheduled`, // ✅ Standard parameter
+      // Note: Values configured in Meta Custom Conversions
       ...additionalData
     }
   })

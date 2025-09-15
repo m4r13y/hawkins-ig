@@ -52,30 +52,48 @@ function processUserData(rawUserData: any, req: NextRequest): UserData {
     userData.em = [hashData(rawUserData.email)]
   }
 
-  // Hash phone if provided
+  // Hash phone if provided - ensure includes country code (1 for US)
   if (rawUserData.phone) {
-    const cleanPhone = rawUserData.phone.replace(/\D/g, '') // Remove non-digits
+    let cleanPhone = rawUserData.phone.replace(/\D/g, '') // Remove non-digits
+    
+    // Add US country code if not present (assuming US market)
+    if (cleanPhone.length === 10 && !cleanPhone.startsWith('1')) {
+      cleanPhone = '1' + cleanPhone
+    }
+    
     userData.ph = [hashData(cleanPhone)]
   }
 
-  // Hash first name if provided
+  // Hash first name if provided - ensure lowercase letters only
   if (rawUserData.firstName) {
-    userData.fn = [hashData(rawUserData.firstName)]
+    const cleanFirstName = rawUserData.firstName.toLowerCase().replace(/[^a-z]/g, '')
+    if (cleanFirstName) {
+      userData.fn = [hashData(cleanFirstName)]
+    }
   }
 
-  // Hash last name if provided
+  // Hash last name if provided - ensure lowercase letters only
   if (rawUserData.lastName) {
-    userData.ln = [hashData(rawUserData.lastName)]
+    const cleanLastName = rawUserData.lastName.toLowerCase().replace(/[^a-z]/g, '')
+    if (cleanLastName) {
+      userData.ln = [hashData(cleanLastName)]
+    }
   }
 
-  // Hash city if provided
+  // Hash city if provided - ensure lowercase, spaces removed
   if (rawUserData.city) {
-    userData.ct = [hashData(rawUserData.city)]
+    const cleanCity = rawUserData.city.toLowerCase().replace(/\s+/g, '')
+    if (cleanCity) {
+      userData.ct = [hashData(cleanCity)]
+    }
   }
 
-  // Hash state if provided
+  // Hash state if provided - ensure lowercase two-letter code
   if (rawUserData.state) {
-    userData.st = [hashData(rawUserData.state)]
+    const cleanState = rawUserData.state.toLowerCase().replace(/[^a-z]/g, '').substring(0, 2)
+    if (cleanState.length === 2) {
+      userData.st = [hashData(cleanState)]
+    }
   }
 
   // Hash zip code if provided
@@ -146,14 +164,17 @@ export async function POST(req: NextRequest) {
       data: [event]
     }
 
+    // Build the URL with test event code for testing
+    const url = new URL(`https://graph.facebook.com/v18.0/${pixelId}/events`)
+    url.searchParams.append('access_token', accessToken)
+    // Add test event code for testing and verification
+    url.searchParams.append('test_event_code', 'TEST88538')
+
     // Send to Facebook Conversions API
-    const response = await fetch(
-      `https://graph.facebook.com/v18.0/${pixelId}/events`,
-      {
+    const response = await fetch(url.toString(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify(payload),
       }

@@ -9,7 +9,8 @@ export interface FormSubmission {
   agentType?: string;
   insuranceTypes: string[];
   urgency: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
   company?: string;

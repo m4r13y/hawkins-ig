@@ -21,10 +21,9 @@ export const trackNewsletterSignup = async (email: string, source: string = 'foo
     email: email,
   }, {
     content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
-    content_ids: ['newsletter_subscription'], // ✅ Compliant: Newsletter as product ID
-    value: 25, // ✅ Standard parameter
-    currency: 'USD' // ✅ Standard parameter
+    content_ids: ['newsletter_subscription'] // ✅ Compliant: Newsletter as product ID
     // Note: PII handled server-side via Conversions API
+    // Note: Values configured in Meta Custom Conversions
   })
   
   console.log(`📧 Newsletter signup tracked: ${email} from ${source}`)
@@ -61,10 +60,9 @@ export const trackGetStartedSubmission = async (
   // Track as Lead (they're a qualified lead interested in consultation)
   await trackLeadDual('get_started_form', userData, {
     content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
-    content_ids: formData.insuranceNeeds, // ✅ Compliant: Insurance types as product IDs
-    value: 500, // ✅ Standard parameter - High value for get started form completion
-    currency: 'USD' // ✅ Standard parameter
+    content_ids: formData.insuranceNeeds // ✅ Compliant: Insurance types as product IDs
     // Note: PII (postal_code, region) handled server-side via Conversions API
+    // Note: Values configured in Meta Custom Conversions
   })
   
   console.log(`🎯 Get Started form tracked: Lead for ${formData.clientType} - ${formData.email}`)
@@ -109,6 +107,10 @@ export const trackContactFormSubmission = async (
     phone: formData.phone,
     firstName: firstName,
     lastName: lastName,
+  }, {
+    content_type: 'product', // ✅ Compliant: Must be "product" or "product_group"
+    content_ids: ['contact_inquiry'] // ✅ Compliant: Contact as product ID
+    // Note: Values configured in Meta Custom Conversions
   })
   
   console.log(`📞 Contact form tracked: ${formData.email}`)

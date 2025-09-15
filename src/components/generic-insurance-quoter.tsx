@@ -161,10 +161,16 @@ export default function GenericInsuranceQuoter({
                 <input
                   type="text"
                   value={formData.zipCode}
-                  onChange={(e) => handleInputChange("zipCode", e.target.value)}
+                  onChange={(e) => {
+                    // Only allow digits and limit to 5 characters
+                    const value = e.target.value.replace(/\D/g, '').slice(0, 5)
+                    handleInputChange("zipCode", value)
+                  }}
                   className="w-full px-4 py-3 bg-transparent border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your ZIP code"
                   maxLength={5}
+                  pattern="[0-9]{5}"
+                  title="Please enter a 5-digit ZIP code"
                 />
                 {errors.zipCode && <p className="text-red-500 text-sm mt-1">{errors.zipCode}</p>}
               </div>

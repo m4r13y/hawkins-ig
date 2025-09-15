@@ -161,7 +161,8 @@ interface InsuranceLeadData {
   agentType?: string;
   insuranceTypes: string[];
   urgency: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
   company?: string;
@@ -187,13 +188,13 @@ interface ContactLeadData {
 export const submitInsuranceLeadFast = functions.https.onCall(async (data: InsuranceLeadData, context) => {
   try {
     // Minimal validation for speed
-    if (!data.name || !data.email) {
-      throw new functions.https.HttpsError('invalid-argument', 'Name and email required');
+    if (!data.firstName || !data.lastName || !data.email) {
+      throw new functions.https.HttpsError('invalid-argument', 'First name, last name, and email required');
     }
 
     // Simplified lead data structure
     const leadData = {
-      'lead-name': data.name,
+      'lead-name': `${data.firstName} ${data.lastName}`,
       'date-time': admin.firestore.FieldValue.serverTimestamp(),
       source: 'hawkins-ig-website',
       submission: {
@@ -262,7 +263,7 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
 
     // Prepare lead data with your specified structure
     const leadData = {
-      'lead-name': sanitizedData.name,
+      'lead-name': `${sanitizedData.firstName} ${sanitizedData.lastName}`,
       'date-time': admin.firestore.FieldValue.serverTimestamp(),
       source: context.rawRequest?.headers?.referer || 'hawkins-ig-website',
       submission: {
@@ -310,8 +311,8 @@ export const submitInsuranceLead = functions.https.onCall(async (data: Insurance
     // Integrate with AgencyBloc CRM (non-blocking)
     try {
       const agencyBlocData = {
-        firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
-        lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Unknown',
+        firstName: sanitizedData.firstName,
+        lastName: sanitizedData.lastName,
         email: sanitizedData.email,
         phone: sanitizedData.phone,
         zipCode: sanitizedData.zipCode,

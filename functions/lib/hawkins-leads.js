@@ -167,12 +167,12 @@ exports.submitInsuranceLeadFast = functions.https.onCall(async (data, context) =
     var _a;
     try {
         // Minimal validation for speed
-        if (!data.name || !data.email) {
-            throw new functions.https.HttpsError('invalid-argument', 'Name and email required');
+        if (!data.firstName || !data.lastName || !data.email) {
+            throw new functions.https.HttpsError('invalid-argument', 'First name, last name, and email required');
         }
         // Simplified lead data structure
         const leadData = {
-            'lead-name': data.name,
+            'lead-name': `${data.firstName} ${data.lastName}`,
             'date-time': admin.firestore.FieldValue.serverTimestamp(),
             source: 'hawkins-ig-website',
             submission: {
@@ -233,7 +233,7 @@ exports.submitInsuranceLead = functions.https.onCall(async (data, context) => {
         }
         // Prepare lead data with your specified structure
         const leadData = {
-            'lead-name': sanitizedData.name,
+            'lead-name': `${sanitizedData.firstName} ${sanitizedData.lastName}`,
             'date-time': admin.firestore.FieldValue.serverTimestamp(),
             source: ((_e = (_d = context.rawRequest) === null || _d === void 0 ? void 0 : _d.headers) === null || _e === void 0 ? void 0 : _e.referer) || 'hawkins-ig-website',
             submission: {
@@ -278,8 +278,8 @@ exports.submitInsuranceLead = functions.https.onCall(async (data, context) => {
         // Integrate with AgencyBloc CRM (non-blocking)
         try {
             const agencyBlocData = {
-                firstName: sanitizedData.name.split(' ')[0] || sanitizedData.name,
-                lastName: sanitizedData.name.split(' ').slice(1).join(' ') || 'Unknown',
+                firstName: sanitizedData.firstName,
+                lastName: sanitizedData.lastName,
                 email: sanitizedData.email,
                 phone: sanitizedData.phone,
                 zipCode: sanitizedData.zipCode,

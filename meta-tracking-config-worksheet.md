@@ -17,12 +17,12 @@
 | Event Type | Description | Current Value | YOUR VALUE |
 |------------|-------------|---------------|------------|
 | Newsletter Signup | Email subscription | $25 | $20 |
-| Get Started - Lead | Form completion | $500 | $50 |
+| Get Started - Lead | Form completion | $500 | $100 |
 | Contact Form | Contact inquiry | $100 | $10 |
 | Quote Request | Insurance quote | $300 | $200 |
-| High-Value Lead | Premium prospect | $500 | $1000 |
+| High-Value Lead | Premium prospect | $500 | $500 |
 | Page View | Content engagement | $50 | $1 |
-| Appointment Scheduled | Calendar booking | Not set | $500 |
+| Appointment Scheduled | Calendar booking | Not set | $200 |
 | Product Customization | Tool usage | Not set | $100 |
 
 ---
