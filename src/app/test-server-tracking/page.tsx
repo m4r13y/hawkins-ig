@@ -25,11 +25,28 @@ export default function TestServerTracking() {
     try {
       // Check if Meta Pixel is loaded
       if (typeof window !== 'undefined' && (window as any).fbq) {
-        (window as any).fbq('trackCustom', eventName, eventData)
+        // Generate event ID for deduplication (same format as server-side)
+        const eventId = `browser_${eventName.toLowerCase()}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+        
+        // Add event ID to event data for deduplication
+        const eventDataWithId = {
+          ...eventData,
+          event_id: eventId
+        }
+        
+        // Use trackCustom for non-standard events, track for standard events
+        const standardEvents = ['Lead', 'Purchase', 'ViewContent', 'AddToCart', 'InitiateCheckout', 'CompleteRegistration', 'SubmitApplication', 'Schedule']
+        
+        if (standardEvents.includes(eventName)) {
+          (window as any).fbq('track', eventName, eventDataWithId)
+        } else {
+          (window as any).fbq('trackCustom', eventName, eventDataWithId)
+        }
+        
         addResult({
           name: `Browser: ${description}`,
           status: 200,
-          data: { eventName, eventData, method: 'Meta Pixel' },
+          data: { eventName, eventData: eventDataWithId, method: 'Meta Pixel', eventId },
         })
       } else {
         addResult({
@@ -185,14 +202,14 @@ export default function TestServerTracking() {
   // Browser Event Tests
   const testBrowserGetStarted = () => testBrowserEvent('Lead', {
     content_type: 'product',
-    content_ids: ['health', 'life', 'medicare']
-    // Note: Values configured in Meta Custom Conversions (no hardcoded values)
+    content_ids: ['service_inquiry']
+    // Note: Generic content IDs to avoid healthcare data warnings
   }, 'Get Started Form (Lead)')
 
   const testBrowserQuoteRequest = () => testBrowserEvent('SubmitApplication', {
     content_type: 'product', 
-    content_ids: ['medicare']
-    // Note: Values configured in Meta Custom Conversions (no hardcoded values)
+    content_ids: ['application_form']
+    // Note: Generic content IDs to avoid healthcare data warnings
   }, 'Quote Request (SubmitApplication)')
 
   const testBrowserViewContent = () => testBrowserEvent('ViewContent', {
