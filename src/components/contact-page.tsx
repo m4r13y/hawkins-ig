@@ -40,7 +40,9 @@ export default function ContactPage() {
       source: "Contact Page"
     }).then(leadId => {
       if (leadId) {
-        console.log('Contact form submitted successfully:', leadId);
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Contact form submitted successfully:', leadId);
+        }
       } else {
         console.error('Failed to submit contact form');
       }

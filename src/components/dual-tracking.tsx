@@ -65,7 +65,10 @@ async function trackEventDual(
       event_id: eventId // For deduplication
     }
     
-    console.log(`🎯 Sending to Meta Pixel - Event: ${eventName}`, pixelData)
+    // Log only in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🎯 Sending to Meta Pixel - Event: ${eventName}`, pixelData)
+    }
     window.fbq('track', eventName, pixelData)
   }
 
@@ -230,14 +233,14 @@ export const trackQuoteRequestDual = async (
   // Map healthcare terms to generic categories to avoid Meta warnings
   const mapInsuranceType = (type: string) => {
     const mappings: Record<string, string> = {
-      'health': 'service_a',
-      'medicare': 'service_b',
-      'life': 'service_c',
-      'disability': 'service_d', 
-      'supplemental': 'service_e',
-      'group': 'service_f'
+      'health': 'product_a',
+      'medicare': 'product_b',
+      'life': 'product_c',
+      'disability': 'product_d', 
+      'supplemental': 'product_e',
+      'group': 'product_f'
     }
-    return mappings[type] || `service_${type}`
+    return mappings[type] || `product_${type}`
   }
 
   // Use SubmitApplication for quote requests as it's closest match
@@ -259,12 +262,12 @@ export const trackFormSubmissionDual = async (
   // Map healthcare terms to generic categories to avoid Meta warnings
   const mapFormType = (type: string) => {
     const mappings: Record<string, string> = {
-      'health': 'form_a',
-      'medicare': 'form_b', 
-      'life': 'form_c',
-      'disability': 'form_d',
-      'supplemental': 'form_e',
-      'group': 'form_f'
+      'health': 'product_a',
+      'medicare': 'product_b', 
+      'life': 'product_c',
+      'disability': 'product_d',
+      'supplemental': 'product_e',
+      'group': 'product_f'
     }
     // Handle compound terms like 'health_quote'
     let mappedType = type
@@ -297,14 +300,14 @@ export const trackInsuranceQuoteCustomizationDual = async (
   // Map healthcare terms to generic categories to avoid Meta warnings
   const mapInsuranceType = (type: string) => {
     const mappings: Record<string, string> = {
-      'health': 'service_a',
-      'medicare': 'service_b',
-      'life': 'service_c',
-      'disability': 'service_d',
-      'supplemental': 'service_e', 
-      'group': 'service_f'
+      'health': 'product_a',
+      'medicare': 'product_b',
+      'life': 'product_c',
+      'disability': 'product_d',
+      'supplemental': 'product_e', 
+      'group': 'product_f'
     }
-    return mappings[type] || `service_${type}`
+    return mappings[type] || `product_${type}`
   }
 
   await trackCustomizeProductDual(mapInsuranceType(insuranceType), userData)

@@ -36,14 +36,16 @@ const initializeFirebase = () => {
   );
 
   // Enhanced debugging for Firebase App Hosting
-  console.log("Firebase initialization debug:", {
-    hasEssentialConfig,
-    projectId: firebaseConfig.projectId,
-    authDomain: firebaseConfig.authDomain,
-    hasApiKey: !!firebaseConfig.apiKey,
-    isBrowser,
-    environment: process.env.NODE_ENV
-  });
+  if (process.env.NODE_ENV === 'development') {
+    console.log("Firebase initialization debug:", {
+      hasEssentialConfig,
+      projectId: firebaseConfig.projectId,
+      authDomain: firebaseConfig.authDomain,
+      hasApiKey: !!firebaseConfig.apiKey,
+      isBrowser,
+      environment: process.env.NODE_ENV
+    });
+  }
 
   if (!hasEssentialConfig) {
     console.warn("Essential Firebase configuration is missing. Please check your environment variables.");
@@ -70,11 +72,13 @@ const initializeFirebase = () => {
     functions = getFunctions(app);
     
     // Debug Functions initialization
-    console.log("Firebase Functions initialization:", {
-      functionsInitialized: !!functions,
-      appName: app.name,
-      projectId: app.options.projectId
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log("Firebase Functions initialization:", {
+        functionsInitialized: !!functions,
+        appName: app.name,
+        projectId: app.options.projectId
+      });
+    }
     
     // Ensure we're using the correct region - Firebase Functions default to us-central1
     // but we should explicitly set it to avoid any region issues

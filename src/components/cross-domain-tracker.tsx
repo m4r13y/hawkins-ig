@@ -65,12 +65,14 @@ export default function CrossDomainTracker({
           sourceEventId: urlData.eventId || undefined
         })
         
-        console.log('🔗 Cross-domain journey tracked:', {
-          from: 'hawkinsig.com',
-          to: window.location.hostname,
-          action: urlData.userJourney,
-          eventId: urlData.eventId
-        })
+        if (process.env.NODE_ENV === 'development') {
+          console.log('🔗 Cross-domain journey tracked:', {
+            from: 'hawkinsig.com',
+            to: window.location.hostname,
+            action: urlData.userJourney,
+            eventId: urlData.eventId
+          })
+        }
       }
       
       // Track page view with journey context
@@ -121,7 +123,9 @@ export const trackCrossDomainJourney = async (
     eventId: journeyData.eventId
   })
   
-  console.log(`🔗 Cross-domain: ${journeyData.fromDomain} → ${journeyData.toDomain} (${journeyData.userAction})`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`🔗 Cross-domain: ${journeyData.fromDomain} → ${journeyData.toDomain} (${journeyData.userAction})`)
+  }
 }
 
 // Page View with Cross-Domain Context
@@ -170,7 +174,9 @@ export const trackPageViewWithJourney = async (
     }
   })
   
-  console.log(`👀 Page view: ${route} (${contentType}) - Journey: ${userContext?.userJourney || 'new'}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`👀 Page view: ${route} (${contentType}) - Journey: ${userContext?.userJourney || 'new'}`)
+  }
 }
 
 // Enhanced Quote Referral Tracking (for Hawkins IG)
@@ -194,5 +200,7 @@ export const trackQuoteReferral = async (
     }
   })
   
-  console.log(`🔗 Quote referral: ${insuranceType} → ${destinationUrl}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`🔗 Quote referral: ${insuranceType} → ${destinationUrl}`)
+  }
 }

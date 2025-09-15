@@ -3,6 +3,18 @@
 import { useState } from 'react'
 import { notFound } from 'next/navigation'
 
+/**
+ * Test Server Tracking Page
+ * 
+ * Generic Content ID Mapping (to avoid healthcare data warnings):
+ * - health → product_a
+ * - medicare → product_b  
+ * - life → product_c
+ * - disability → product_d
+ * - supplemental → product_e
+ * - group → product_f
+ */
+
 type TestResult = {
   name: string
   status?: number
@@ -12,7 +24,11 @@ type TestResult = {
 }
 
 export default function TestServerTracking() {
-  // Enable for testing (remove production restriction temporarily)
+  // Hide test page from production
+  if (process.env.NODE_ENV === 'production') {
+    notFound()
+  }
+
   const [results, setResults] = useState<TestResult[]>([])
   const [loading, setLoading] = useState<string | null>(null)
 
@@ -105,7 +121,7 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['health', 'life', 'medicare']
+      content_ids: ['product_a', 'product_c', 'product_b'] // health, life, medicare mapped to generic IDs
       // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
@@ -150,7 +166,7 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['medicare']
+      content_ids: ['product_b'] // medicare mapped to generic ID
       // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
@@ -167,7 +183,7 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['health', 'life']
+      content_ids: ['product_a', 'product_c'] // health, life mapped to generic IDs
       // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
@@ -179,7 +195,7 @@ export default function TestServerTracking() {
     },
     customData: {
       content_type: 'product',
-      content_ids: ['medicare']
+      content_ids: ['product_b'] // medicare mapped to generic ID
       // Note: Values configured in Meta Custom Conversions (no hardcoded values)
     }
   })
@@ -432,10 +448,10 @@ export default function TestServerTracking() {
               </button>
             </div>
 
-            <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded">
-              <h4 className="font-semibold text-yellow-800 mb-2">🧪 Test Configuration</h4>
-              <div className="text-yellow-700 text-sm space-y-1">
-                <p><strong>Test Event Code:</strong> TEST88538 (for Meta Events Manager verification)</p>
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded">
+              <h4 className="font-semibold text-blue-800 mb-2">🧪 Development Test Configuration</h4>
+              <div className="text-blue-700 text-sm space-y-1">
+                <p><strong>Environment:</strong> Development/Testing Only</p>
                 <p><strong>Data Format:</strong> Production-clean (no hardcoded values/currency)</p>
                 <p><strong>Values:</strong> Configured in Meta Custom Conversions</p>
                 <p><strong>Server:</strong> Conversions API with advanced matching</p>
@@ -491,11 +507,12 @@ export default function TestServerTracking() {
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h4 className="font-semibold text-blue-800 mb-2">How to verify in Meta Events Manager:</h4>
           <ol className="list-decimal list-inside text-blue-700 space-y-1 text-sm">
-            <li>Go to Meta Events Manager → Test Events</li>
-            <li>Look for events with test code "TEST88538"</li>
+            <li>Go to Meta Events Manager → Data Sources → Your Pixel</li>
+            <li>Check "Recent Activity" or "Events" tab</li>
             <li>Verify each event type appears with proper parameters</li>
             <li>Check that user data is properly hashed</li>
             <li>Confirm deduplication IDs are unique</li>
+            <li><strong>Note:</strong> Content IDs use generic format (product_a, product_b, etc.) to avoid healthcare data warnings</li>
           </ol>
         </div>
       </div>

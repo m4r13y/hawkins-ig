@@ -183,7 +183,9 @@ export default function GetStartedFlow({ initialClientType }: { initialClientTyp
           source: 'get-started-flow'
         }).then(async (submissionId) => {
           if (submissionId) {
-            console.log('Form submitted successfully:', submissionId);
+            if (process.env.NODE_ENV === 'development') {
+              console.log('Form submitted successfully:', submissionId);
+            }
             
             // Track the get started form submission
             const clientType = formData.clientType || initialClientType || '';

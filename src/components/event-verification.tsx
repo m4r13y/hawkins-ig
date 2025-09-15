@@ -94,11 +94,15 @@ export function verifyEventData(
 
 // Test function to check your current setup
 export function testEventCapture() {
-  console.log('🔍 Testing Event Data Capture...')
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🔍 Testing Event Data Capture...')
+  }
   
   // Test with minimal data
   const minimalTest = verifyEventData('Lead', {})
-  console.log('Minimal Data Test:', minimalTest)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Minimal Data Test:', minimalTest)
+  }
   
   // Test with complete data
   const completeTest = verifyEventData('Lead', {
@@ -109,7 +113,9 @@ export function testEventCapture() {
     zipCode: '12345',
     state: 'TX'
   })
-  console.log('Complete Data Test:', completeTest)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Complete Data Test:', completeTest)
+  }
   
   return { minimalTest, completeTest }
 }

@@ -26,7 +26,9 @@ export const trackNewsletterSignup = async (email: string, source: string = 'foo
     // Note: Values configured in Meta Custom Conversions
   })
   
-  console.log(`📧 Newsletter signup tracked: ${email} from ${source}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`📧 Newsletter signup tracked: ${email} from ${source}`)
+  }
 }
 
 // Get Started Form Tracking
@@ -79,7 +81,9 @@ export const trackGetStartedSubmission = async (
     // Note: Values configured in Meta Custom Conversions
   })
   
-  console.log(`🎯 Get Started form tracked: Lead for ${formData.clientType} - ${formData.email}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`🎯 Get Started form tracked: Lead for ${formData.clientType} - ${formData.email}`)
+  }
 }
 
 // Quote Request Tracking (for specific insurance products)
@@ -98,21 +102,23 @@ export const trackQuoteRequest = async (
   // Map healthcare terms to generic product categories to avoid Meta warnings
   const mapInsuranceType = (type: string) => {
     const mappings: Record<string, string> = {
-      'health': 'service_a',
-      'medicare': 'service_b',
-      'life': 'service_c', 
-      'disability': 'service_d',
-      'supplemental': 'service_e',
-      'group': 'service_f'
+      'health': 'product_a',
+      'medicare': 'product_b',
+      'life': 'product_c', 
+      'disability': 'product_d',
+      'supplemental': 'product_e',
+      'group': 'product_f'
     }
-    return mappings[type] || `service_${type}`
+    return mappings[type] || `product_${type}`
   }
 
   await trackSubmitApplicationDual(`${mapInsuranceType(insuranceType)}_quote`, {
     ...userData
   })
   
-  console.log(`💰 Quote request tracked: ${insuranceType} - ${userData.email}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`💰 Quote request tracked: ${insuranceType} - ${userData.email}`)
+  }
 }
 
 // Contact Form Tracking
@@ -140,7 +146,9 @@ export const trackContactFormSubmission = async (
     // Note: Values configured in Meta Custom Conversions
   })
   
-  console.log(`📞 Contact form tracked: ${formData.email}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`📞 Contact form tracked: ${formData.email}`)
+  }
 }
 
 // Page View Tracking with Route Context
@@ -168,7 +176,9 @@ export const trackPageView = async (route: string, userContext?: any) => {
     await trackViewContentDual(contentType, userContext)
   }
   
-  console.log(`👀 Page view tracked: ${route} (${contentType})`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`👀 Page view tracked: ${route} (${contentType})`)
+  }
 }
 
 // Appointment Scheduling Tracking
@@ -189,7 +199,9 @@ export const trackAppointmentScheduled = async (
     lastName: appointmentData.lastName,
   })
   
-  console.log(`📅 Appointment scheduled: ${appointmentData.appointmentType} - ${appointmentData.email}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`📅 Appointment scheduled: ${appointmentData.appointmentType} - ${appointmentData.email}`)
+  }
 }
 
 // Insurance Product Customization Tracking
@@ -200,7 +212,9 @@ export const trackProductCustomization = async (
 ) => {
   await trackCustomizeProductDual(productType, userContext)
   
-  console.log(`⚙️ Product customization tracked: ${productType}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`⚙️ Product customization tracked: ${productType}`)
+  }
 }
 
 // Funnel Step Tracking (for multi-step forms)
@@ -213,7 +227,9 @@ export const trackFunnelStep = async (
   // Use ViewContent for funnel steps
   await trackViewContentDual(`funnel_${stepName}`, userData)
   
-  console.log(`📊 Funnel step tracked: ${stepName} (${stepNumber}/${totalSteps})`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`📊 Funnel step tracked: ${stepName} (${stepNumber}/${totalSteps})`)
+  }
 }
 
 // Utility function to extract user context from various sources

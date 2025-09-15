@@ -164,11 +164,9 @@ export async function POST(req: NextRequest) {
       data: [event]
     }
 
-    // Build the URL with test event code for testing
+    // Build the production URL
     const url = new URL(`https://graph.facebook.com/v18.0/${pixelId}/events`)
     url.searchParams.append('access_token', accessToken)
-    // Add test event code for testing and verification
-    url.searchParams.append('test_event_code', 'TEST88538')
 
     // Send to Facebook Conversions API
     const response = await fetch(url.toString(), {
